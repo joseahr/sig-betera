@@ -1,0 +1,16 @@
+.spacer {
+  -webkit-box-flex : 1;
+  -ms-flex : 1 1 auto;
+  flex : 1 1 auto;
+}
+
+md-toolbar button {
+  justify-content: space-around;
+  margin-left: 5px;
+}
+
+@media screen and (max-width: 480px) {
+  md-toolbar button {
+    visibility: hidden;
+  }
+}

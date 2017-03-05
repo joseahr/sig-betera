@@ -1,0 +1,76 @@
+<aside #sidebar id="sidebar" class="navigation">
+  <h4><md-icon>layers</md-icon> Mapas</h4>
+  <div *ngIf="map && map.getLayers().getArray()" class="list" [dragula]='"layers"' [dragulaModel]='map.getLayers().getArray()'>
+    <div class="list-item" *ngFor="let layer of map.getLayers().getArray(); let i = index;">
+      <div class="buttons">
+        <button md-button (click)="moveLayerDown(layer.get('name'))"><md-icon>keyboard_arrow_up</md-icon></button>
+        <button md-button (click)="moveLayerUp(layer.get('name'))"><md-icon>keyboard_arrow_down</md-icon></button>
+      </div>
+      <div class="content">
+        <md-slide-toggle (change)="changeVisible($event, layer.get('name'))" [checked]="layer.getVisible()">
+          {{ layer.get('name') }}
+        </md-slide-toggle>
+        <md-slider (input)="changeOpacity($event, layer.get('name'))" step="0.05" [min]="0" [max]="1" [value]="layer.getOpacity()">
+        </md-slider>
+        <div class="actions">
+          <button *ngIf="layer.get('layers')" md-button (click)="groups._results[i].nativeElement.classList.toggle('collapsed')"><md-icon>add</md-icon></button>
+          <button md-button><md-icon>zoom_out_map</md-icon></button>
+          <button md-button><md-icon>map</md-icon></button>
+          <button md-button class="handle" style="float : right;"><md-icon>drag_handle</md-icon></button>
+        </div>
+      </div>
+      <div #group class="group collapsed">
+        <div *ngIf="layer.get('layers')" [dragula]='"layerGroup"' [dragulaModel]="layer.get('layers').getArray()">
+          <div class="list-item" *ngFor="let layer_ of layer.get('layers').getArray()">
+            <div class="buttons">
+              <button md-button (click)="moveLayerInGroupDown(layer.get('name'), layer_.get('name'))"><md-icon>keyboard_arrow_up</md-icon></button>
+              <button md-button (click)="moveLayerInGroupUp(layer.get('name'), layer_.get('name'))"><md-icon>keyboard_arrow_down</md-icon></button>
+            </div>
+            <div class="content">
+              <md-slide-toggle (change)="changeVisible($event, layer_.get('name'))" [checked]="layer.getVisible()">
+                {{ layer_.get('name') }}
+              </md-slide-toggle>
+              <md-slider (input)="changeOpacity($event, layer_.get('name'))" step="0.05" [min]="0" [max]="1" [value]="layer.getOpacity()">
+              </md-slider>
+              <div class="actions">
+                <button md-button><md-icon>info</md-icon></button>
+                <button md-button><md-icon>zoom_out_map</md-icon></button>
+                <button md-button><md-icon>map</md-icon></button>
+                <button md-button class="handleGroup" style="float : right;"><md-icon>drag_handle</md-icon></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>  
+<button md-mini-fab id="burguer" class="burguer" (click)="toggleMenu($event)">
+  <md-icon>add</md-icon>
+</button>
+<div class="full" #mapEl id="map">
+</div>
+
+<!-- <md-sidenav-container fullscreen class="sidenav-fab-container">
+  <md-sidenav #sidenav mode="side" opened="isPanelOpen">
+    <div class="scrolling-content">
+      <md-list *ngIf="layers">
+        <md-list-item>
+          <h3>Mapas</h3>
+        </md-list-item>
+        <md-list-item *ngFor="let layer of layers">
+          <md-icon md-list-avatar>folder</md-icon>
+          <p md-line><md-slide-toggle (change)="changeVisible($event, layer.get('name'))" [checked]="layer.getVisible()"> {{ layer.get('name') }} </md-slide-toggle></p>
+          <p md-line><md-slider (input)="changeOpacity($event, layer.get('name'))" step="0.05" [min]="0" [max]="1" [value]="layer.getOpacity()"></md-slider></p>
+        </md-list-item>
+        <md-divider></md-divider>
+      </md-list>
+
+    </div>
+  </md-sidenav>
+  <button md-mini-fab class="fab" (click)="sidenav.toggle()" [ngClass]="{'rotated': isPanelOpen }">
+    <md-icon>add</md-icon>
+  </button>
+  <div id="map" class="scrolling-content">
+  </div>
+</md-sidenav-container>-->

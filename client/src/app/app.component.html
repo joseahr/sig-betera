@@ -1,0 +1,36 @@
+<md-toolbar color="primary">
+  <span>SIG Bétera</span>
+  <span class="spacer"></span>
+  <button md-button [routerLink]="['']">
+    Inicio
+  </button>
+  <button md-button [routerLink]="['map']">
+    Mapa
+  </button>
+  <button md-icon-button [mdMenuTriggerFor]="menu">
+    <md-icon>more_vert</md-icon>
+  </button>
+  <md-menu #userDetailsMenu="mdMenu">
+    <button md-menu-item *ngIf="authUser">
+      <div class="user-actions">
+        <span>{{authUser.auth.displayName}} </span>
+        <img src="{{authUser.auth.photoURL}}">
+      </div>
+    </button> 
+  </md-menu>
+  <md-menu #menu="mdMenu">
+    <button md-menu-item *ngIf="!authUser" (click)="login()">
+      <md-icon>fingerprint</md-icon>
+      <span>Login</span>
+    </button>
+    <button md-menu-item *ngIf="authUser" (click)="logout()">
+      <md-icon>fingerprint</md-icon>
+      <span>Logout</span>
+    </button>
+    <button md-menu-item>
+      <md-icon>fingerprint</md-icon>
+      <span>Acerca de</span>
+    </button>
+  </md-menu>
+</md-toolbar>
+<router-outlet></router-outlet>
