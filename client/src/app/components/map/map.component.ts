@@ -7,7 +7,7 @@ import { DragulaService, DragulaDirective } from 'ng2-dragula';
 import { ProjectionService } from './services/projection.service';
 
 import * as ol from 'openlayers';
-import * as proj4 from 'proj4';
+//import * as proj4 from 'proj4';
 
 @Component({
   selector: 'app-map',

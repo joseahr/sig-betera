@@ -2,6 +2,7 @@
 **/config/**
 **/.vscode
 **/.npmignore
+**/
 
 # Logs
 logs
