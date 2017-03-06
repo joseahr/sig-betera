@@ -9,14 +9,15 @@ export const parser =  ( serviceUrl : string ) =>
 
         return request({ url : serviceUrl, method : 'GET' })
         .then( ( capabilities : any ) =>{
-            
+
             let capabilitiesJSON = JSON.parse(xmlParser.toJson(capabilities));
             try {
-                //console.log(capabilitiesJSON)
-                let layers = ( capabilitiesJSON['WMS_Capabilities'] || capabilitiesJSON['WMT_MS_Capabilities'] )['Capability']['Layer']['Layer']
+                console.log(capabilitiesJSON)
+                let layers = ( capabilitiesJSON['WMS_Capabilities'] || capabilitiesJSON['WMT_MS_Capabilities'] || capabilitiesJSON['Capabilities'] )['Capability']['Layer']['Layer']
                 console.log(layers);
                 return layers;
             } catch (e){
+                console.log('error')
                 return [];
             }
         })

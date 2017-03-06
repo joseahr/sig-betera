@@ -1,6 +1,6 @@
 webpackJsonp([2,4],{
 
-/***/ 286:
+/***/ 287:
 /***/ (function(module, exports) {
 
 /*
@@ -253,88 +253,7 @@ function updateLink(linkElement, obj) {
 
 /***/ }),
 
-/***/ 472:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(692);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__(286)(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./dragula.css", function() {
-			var newContent = require("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./dragula.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 473:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(693);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__(286)(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./ol.css", function() {
-			var newContent = require("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./ol.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 474:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(694);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__(286)(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../node_modules/postcss-loader/index.js!./styles.css", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../node_modules/postcss-loader/index.js!./styles.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 51:
+/***/ 39:
 /***/ (function(module, exports) {
 
 /*
@@ -391,10 +310,91 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 691:
+/***/ 474:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(51)();
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(694);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(287)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./dragula.css", function() {
+			var newContent = require("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./dragula.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 475:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(695);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(287)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./ol.css", function() {
+			var newContent = require("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./ol.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 476:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(696);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(287)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../node_modules/postcss-loader/index.js!./styles.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../node_modules/postcss-loader/index.js!./styles.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 693:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(39)();
 // imports
 
 
@@ -406,10 +406,10 @@ exports.push([module.i, ".mat-elevation-z0{box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0
 
 /***/ }),
 
-/***/ 692:
+/***/ 694:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(51)();
+exports = module.exports = __webpack_require__(39)();
 // imports
 
 
@@ -421,10 +421,10 @@ exports.push([module.i, ".gu-mirror {\n  position: fixed !important;\n  margin: 
 
 /***/ }),
 
-/***/ 693:
+/***/ 695:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(51)();
+exports = module.exports = __webpack_require__(39)();
 // imports
 
 
@@ -436,12 +436,12 @@ exports.push([module.i, ".ol-control,.ol-scale-line{position:absolute;padding:2p
 
 /***/ }),
 
-/***/ 694:
+/***/ 696:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(51)();
+exports = module.exports = __webpack_require__(39)();
 // imports
-exports.i(__webpack_require__(691), "");
+exports.i(__webpack_require__(693), "");
 
 // module
 exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\nhtml, body {\n    margin : 0px;\n    width : 100%;\n    max-height : 100%;\n}", ""]);
@@ -451,15 +451,15 @@ exports.push([module.i, "/* You can add global styles to this file, and also imp
 
 /***/ }),
 
-/***/ 796:
+/***/ 800:
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(476);
 __webpack_require__(474);
-__webpack_require__(472);
-module.exports = __webpack_require__(473);
+module.exports = __webpack_require__(475);
 
 
 /***/ })
 
-},[796]);
+},[800]);
 //# sourceMappingURL=styles.bundle.js.map

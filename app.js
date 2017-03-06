@@ -1,13 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
-var path = require("path");
 var logger = require("morgan");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
+var passport = require("passport");
+var expressSession = require("express-session");
+var passport_1 = require("./core/passport");
+//import { router as routes } from './routes/index';
+var users_1 = require("./routes/users");
 exports.app = express();
 // view engine setup
-exports.app.set('views', path.join(__dirname, 'views'));
 exports.app.set('view engine', 'pug');
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -15,9 +18,14 @@ exports.app.use(logger('dev'));
 exports.app.use(bodyParser.json());
 exports.app.use(bodyParser.urlencoded({ extended: false }));
 exports.app.use(cookieParser());
-exports.app.use(express.static(path.join(__dirname, 'client/dist')));
+exports.app.use(expressSession({ secret: 'mySecretKey', resave: true, saveUninitialized: true }));
+exports.app.use(passport.initialize());
+// Luego las sesiones de passport
+exports.app.use(passport.session());
+passport_1.passportConfig(passport);
 //app.use('/', routes);
-//app.use('/users', users);
+exports.app.use('/user', users_1.router);
+exports.app.use('/', express.static('client/dist'));
 // catch 404 and forward to error handler
 exports.app.use(function (req, res, next) {
     var err = new Error('Not Found');
@@ -46,4 +54,4 @@ exports.app.use(function (err, req, res, next) {
     });
 });
 var capabilities_parser_1 = require("./core/capabilities-parser");
-capabilities_parser_1.parser('http://www.ign.es/wms-inspire/pnoa-ma?request=GetCapabilities&service=WMS');
+capabilities_parser_1.parser('http://www.ign.es/wmts/mapa-raster?request=GetCapabilities&service=WMTS');

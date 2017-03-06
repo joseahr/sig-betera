@@ -4,14 +4,19 @@ import * as favicon from 'serve-favicon';
 import * as logger from 'morgan';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
+import * as pug from 'pug';
+import * as passport from 'passport';
+import * as expressSession from 'express-session';
+import { passportConfig } from './core/passport';
 
 //import { router as routes } from './routes/index';
-import { router as users } from './routes/users';
+import { router as user } from './routes/users';
 
 export let app = express();
 
+
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
@@ -21,10 +26,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'client/dist')));
+app.use(expressSession({secret: 'mySecretKey', resave : true, saveUninitialized : true}));
+app.use(passport.initialize());
+// Luego las sesiones de passport
+app.use(passport.session());
+
+passportConfig(passport);
 
 //app.use('/', routes);
-//app.use('/users', users);
+app.use('/user', user);
+
+app.use('/', express.static('client/dist'));
 
 // catch 404 and forward to error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -60,4 +72,4 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 
 import { parser } from './core/capabilities-parser';
 
-parser('http://www.ign.es/wms-inspire/pnoa-ma?request=GetCapabilities&service=WMS')
+parser('http://www.ign.es/wmts/mapa-raster?request=GetCapabilities&service=WMTS')

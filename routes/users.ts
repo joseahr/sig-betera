@@ -2,7 +2,8 @@ import * as express from 'express';
 import * as passport from 'passport';
 import { db } from '../core/db';
 import * as mailer from '../core/mailer';
-import * as recaptcha from '../core/recaptcha';
+import { recaptcha } from '../core/recaptcha';
+
 
 export let router = express.Router();
 
@@ -10,6 +11,7 @@ router.post('/login', (req: express.Request, res: express.Response, next: expres
   
   console.log(req.body.username, req.body.password);
   // Comprobamos que req.body.username && req.body.password existan
+  console.log(req.body);
   if(!req.body.username || !req.body.password)
     return res.status(400).json('Faltan credenciales de acceso');
   
@@ -25,7 +27,7 @@ router.post('/login', (req: express.Request, res: express.Response, next: expres
     // Intentamos logearnos en la sesión
     req.logIn(user, err =>{
       // Enviamos un status 200
-      res.status(200).json(user.toString() + info);
+      res.status(200).json(user);
     });
   // llamamos a la función middleware que devuelve passport.authenticate() 
   // con los parámetros req y res

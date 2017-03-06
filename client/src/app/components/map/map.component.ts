@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
-
 import { MdSidenav } from '@angular/material';
 
 import { DragulaService, DragulaDirective } from 'ng2-dragula';

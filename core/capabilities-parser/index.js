@@ -11,12 +11,13 @@ exports.parser = function (serviceUrl) {
             .then(function (capabilities) {
             var capabilitiesJSON = JSON.parse(xmlParser.toJson(capabilities));
             try {
-                //console.log(capabilitiesJSON)
-                var layers = (capabilitiesJSON['WMS_Capabilities'] || capabilitiesJSON['WMT_MS_Capabilities'])['Capability']['Layer']['Layer'];
+                console.log(capabilitiesJSON);
+                var layers = (capabilitiesJSON['WMS_Capabilities'] || capabilitiesJSON['WMT_MS_Capabilities'] || capabilitiesJSON['Capabilities'])['Capability']['Layer']['Layer'];
                 console.log(layers);
                 return layers;
             }
             catch (e) {
+                console.log('error');
                 return [];
             }
         })

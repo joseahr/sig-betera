@@ -16,12 +16,14 @@ import { MaterialModule } from '@angular/material';
 import { DragulaModule } from 'ng2-dragula';
 
 import 'hammerjs';
+import { LoginComponent } from './dialogs/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MapComponent
+    MapComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -29,8 +31,9 @@ import 'hammerjs';
     HttpModule,
     DragulaModule,
     MaterialModule.forRoot(),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, { useHash: true })
   ],
+  entryComponents : [LoginComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

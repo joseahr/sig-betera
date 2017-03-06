@@ -5,7 +5,7 @@ var passport_local_1 = require("passport-local");
 //const LocalStrategy = require('passport-local').Strategy;
 var localLogin = require("./local-login");
 var localSignup = require("./local-signup");
-exports.default = function (passport) {
+exports.passportConfig = function (passport) {
     // Serializa al usuario para almacenarlo en la sesión
     passport.serializeUser(function (user, done) {
         done(null, user.id);

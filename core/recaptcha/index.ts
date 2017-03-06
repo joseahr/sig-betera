@@ -1,7 +1,7 @@
-import * as recaptcha from 'express-recaptcha';
+import  * as recaptcha_ from 'express-recaptcha';
 
 import { recaptchaConfig } from '../config';
 
-recaptcha.init(recaptchaConfig.SITE_KEY, recaptchaConfig.SITE_SECRET);
+recaptcha_.init(recaptchaConfig.SITE_KEY, recaptchaConfig.SITE_SECRET);
 
-export default recaptcha;
+export const recaptcha = recaptcha_;

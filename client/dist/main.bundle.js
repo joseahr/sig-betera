@@ -1,6 +1,6 @@
 webpackJsonp([1,4],{
 
-/***/ 432:
+/***/ 433:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24,8 +24,8 @@ var HomeComponent = (function () {
     HomeComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-home',
-            template: __webpack_require__(748),
-            styles: [__webpack_require__(699)]
+            template: __webpack_require__(751),
+            styles: [__webpack_require__(701)]
         }), 
         __metadata('design:paramtypes', [])
     ], HomeComponent);
@@ -35,15 +35,15 @@ var HomeComponent = (function () {
 
 /***/ }),
 
-/***/ 433:
+/***/ 434:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_dragula__ = __webpack_require__(447);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_dragula__ = __webpack_require__(449);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_dragula___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_dragula__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_projection_service__ = __webpack_require__(632);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_openlayers__ = __webpack_require__(448);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_projection_service__ = __webpack_require__(633);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_openlayers__ = __webpack_require__(450);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_openlayers__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -259,8 +259,8 @@ var MapComponent = (function () {
     MapComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-map',
-            template: __webpack_require__(749),
-            styles: [__webpack_require__(700)],
+            template: __webpack_require__(752),
+            styles: [__webpack_require__(702)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__services_projection_service__["a" /* ProjectionService */], __WEBPACK_IMPORTED_MODULE_1_ng2_dragula__["DragulaService"]],
             host: {
                 '(window:resize)': 'fitMap()'
@@ -275,7 +275,54 @@ var MapComponent = (function () {
 
 /***/ }),
 
-/***/ 469:
+/***/ 435:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(634);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var LoginComponent = (function () {
+    function LoginComponent(dialogRef, authService) {
+        this.dialogRef = dialogRef;
+        this.authService = authService;
+        this.userNotLoggedParams = {};
+    }
+    LoginComponent.prototype.login = function () {
+        var _a = this.userNotLoggedParams, nameOrEmail = _a.nameOrEmail, password = _a.password;
+        this.authService.login(nameOrEmail, password).subscribe(function (result) { return console.log(result); }, function (err) { return console.log(err); });
+        console.log(this.userNotLoggedParams);
+    };
+    LoginComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-login',
+            template: __webpack_require__(753),
+            styles: [__webpack_require__(703)],
+            providers: [__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]]
+        }), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === 'function' && _b) || Object])
+    ], LoginComponent);
+    return LoginComponent;
+    var _a, _b;
+}());
+//# sourceMappingURL=login.component.js.map
+
+/***/ }),
+
+/***/ 471:
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -284,20 +331,20 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 469;
+webpackEmptyContext.id = 471;
 
 
 /***/ }),
 
-/***/ 470:
+/***/ 472:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(598);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(630);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(633);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(599);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(631);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(635);
 
 
 
@@ -310,11 +357,13 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 
 /***/ }),
 
-/***/ 629:
+/***/ 630:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dialogs_login_login_component__ = __webpack_require__(435);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -326,42 +375,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'app works!';
+    function AppComponent(dialog) {
+        this.dialog = dialog;
     }
+    AppComponent.prototype.openLoginDialog = function () {
+        var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_2__dialogs_login_login_component__["a" /* LoginComponent */]);
+        dialogRef.afterClosed().subscribe(function (result) { return console.log(result); });
+    };
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-root',
-            template: __webpack_require__(747),
-            styles: [__webpack_require__(698)]
+            template: __webpack_require__(750),
+            styles: [__webpack_require__(700)]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialog */]) === 'function' && _a) || Object])
     ], AppComponent);
     return AppComponent;
+    var _a;
 }());
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
 
-/***/ 630:
+/***/ 631:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(629);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_home_home_component__ = __webpack_require__(432);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_map_map_component__ = __webpack_require__(433);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_routes__ = __webpack_require__(631);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_router__ = __webpack_require__(618);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_material__ = __webpack_require__(582);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ng2_dragula__ = __webpack_require__(447);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(630);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_home_home_component__ = __webpack_require__(433);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_map_map_component__ = __webpack_require__(434);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_routes__ = __webpack_require__(632);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_router__ = __webpack_require__(619);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_material__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ng2_dragula__ = __webpack_require__(449);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ng2_dragula___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_ng2_dragula__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_hammerjs__ = __webpack_require__(701);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_hammerjs__ = __webpack_require__(704);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_hammerjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__dialogs_login_login_component__ = __webpack_require__(435);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -384,6 +441,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AppModule = (function () {
     function AppModule() {
     }
@@ -392,7 +450,8 @@ var AppModule = (function () {
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
                 __WEBPACK_IMPORTED_MODULE_5__components_home_home_component__["a" /* HomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__components_map_map_component__["a" /* MapComponent */]
+                __WEBPACK_IMPORTED_MODULE_6__components_map_map_component__["a" /* MapComponent */],
+                __WEBPACK_IMPORTED_MODULE_12__dialogs_login_login_component__["a" /* LoginComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -400,8 +459,9 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_10_ng2_dragula__["DragulaModule"],
                 __WEBPACK_IMPORTED_MODULE_9__angular_material__["a" /* MaterialModule */].forRoot(),
-                __WEBPACK_IMPORTED_MODULE_8__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_routes__["a" /* appRoutes */])
+                __WEBPACK_IMPORTED_MODULE_8__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_routes__["a" /* appRoutes */], { useHash: true })
             ],
+            entryComponents: [__WEBPACK_IMPORTED_MODULE_12__dialogs_login_login_component__["a" /* LoginComponent */]],
             providers: [],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
         }), 
@@ -413,12 +473,12 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 631:
+/***/ 632:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_home_home_component__ = __webpack_require__(432);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_map_map_component__ = __webpack_require__(433);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_home_home_component__ = __webpack_require__(433);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_map_map_component__ = __webpack_require__(434);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return appRoutes; });
 
 
@@ -431,15 +491,15 @@ var appRoutes = [
 
 /***/ }),
 
-/***/ 632:
+/***/ 633:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(448);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(450);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_openlayers__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_proj4__ = __webpack_require__(720);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_proj4__ = __webpack_require__(723);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_proj4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_proj4__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectionService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -496,7 +556,46 @@ var ProjectionService = (function () {
 
 /***/ }),
 
-/***/ 633:
+/***/ 634:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(95);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AuthService = (function () {
+    function AuthService(http) {
+        this.http = http;
+    }
+    AuthService.prototype.login = function (username, password) {
+        return this.http.post('/user/login', {
+            username: username,
+            password: password
+        });
+    };
+    AuthService = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === 'function' && _a) || Object])
+    ], AuthService);
+    return AuthService;
+    var _a;
+}());
+//# sourceMappingURL=auth.service.js.map
+
+/***/ }),
+
+/***/ 635:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -512,15 +611,15 @@ var environment = {
 
 /***/ }),
 
-/***/ 698:
+/***/ 700:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(51)();
+exports = module.exports = __webpack_require__(39)();
 // imports
 
 
 // module
-exports.push([module.i, ".spacer {\r\n  -webkit-box-flex : 1;\r\n  -ms-flex : 1 1 auto;\r\n  flex : 1 1 auto;\r\n}\r\n\r\nmd-toolbar button {\r\n  -ms-flex-pack: distribute;\r\n      justify-content: space-around;\r\n  margin-left: 5px;\r\n}\r\n\r\n.logo-betera {\r\n  height: 100%;\r\n}\r\n\r\ntitle {\r\n  box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\r\n}\r\n\r\n@media screen and (max-width: 480px) {\r\n  md-toolbar button {\r\n    visibility: hidden;\r\n  }\r\n}\r\n", ""]);
+exports.push([module.i, ".spacer {\r\n  -webkit-box-flex : 1;\r\n  -ms-flex : 1 1 auto;\r\n  flex : 1 1 auto;\r\n}\r\n\r\nmd-toolbar {\r\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\r\n    position: relative;\r\n    z-index: 1;\r\n}\r\n\r\nmd-toolbar button {\r\n  -ms-flex-pack: distribute;\r\n      justify-content: space-around;\r\n  margin-left: 5px;\r\n}\r\n\r\n.logo-betera {\r\n  height: 100%;\r\n}\r\n\r\ntitle {\r\n  box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\r\n}\r\n\r\n@media screen and (max-width: 480px) {\r\n  md-toolbar button {\r\n    visibility: hidden;\r\n  }\r\n}\r\n", ""]);
 
 // exports
 
@@ -530,10 +629,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 699:
+/***/ 701:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(51)();
+exports = module.exports = __webpack_require__(39)();
 // imports
 
 
@@ -548,10 +647,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 700:
+/***/ 702:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(51)();
+exports = module.exports = __webpack_require__(39)();
 // imports
 
 
@@ -566,34 +665,59 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 747:
-/***/ (function(module, exports) {
+/***/ 703:
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<md-toolbar color=\"primary\">\n  <img src=\"assets/escudo.png\" alt=\"\" class=\"logo-betera\">\n  <span class=\"title\">SIG Bétera</span>\n  <span class=\"spacer\"></span>\n  <button md-button [routerLink]=\"['']\">\n    Inicio\n  </button>\n  <button md-button [routerLink]=\"['map']\">\n    Mapa\n  </button>\n  <button md-icon-button [mdMenuTriggerFor]=\"menu\">\n    <md-icon>more_vert</md-icon>\n  </button>\n  <md-menu #userDetailsMenu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"authUser\">\n      <div class=\"user-actions\">\n        <span>{{authUser.auth.displayName}} </span>\n        <img src=\"{{authUser.auth.photoURL}}\">\n      </div>\n    </button> \n  </md-menu>\n  <md-menu #menu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"!authUser\" (click)=\"login()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Login</span>\n    </button>\n    <button md-menu-item *ngIf=\"authUser\" (click)=\"logout()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Logout</span>\n    </button>\n    <button md-menu-item>\n      <md-icon>fingerprint</md-icon>\n      <span>Acerca de</span>\n    </button>\n  </md-menu>\n</md-toolbar>\n<router-outlet></router-outlet>"
+exports = module.exports = __webpack_require__(39)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 748:
+/***/ 750:
+/***/ (function(module, exports) {
+
+module.exports = "<md-toolbar color=\"primary\">\n  <img src=\"assets/escudo.png\" alt=\"\" class=\"logo-betera\">\n  <span class=\"title\">SIG Bétera</span>\n  <span class=\"spacer\"></span>\n  <button md-button [routerLink]=\"['']\">\n    Inicio\n  </button>\n  <button md-button [routerLink]=\"['map']\">\n    Mapa\n  </button>\n  <button md-icon-button [mdMenuTriggerFor]=\"menu\">\n    <md-icon>more_vert</md-icon>\n  </button>\n  <md-menu #userDetailsMenu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"authUser\">\n      <div class=\"user-actions\">\n        <span>{{authUser.auth.displayName}} </span>\n        <img src=\"{{authUser.auth.photoURL}}\">\n      </div>\n    </button> \n  </md-menu>\n  <md-menu #menu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"!authUser\" (click)=\"openLoginDialog()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Login</span>\n    </button>\n    <button md-menu-item *ngIf=\"authUser\" (click)=\"logout()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Logout</span>\n    </button>\n    <button md-menu-item>\n      <md-icon>fingerprint</md-icon>\n      <span>Acerca de</span>\n    </button>\n  </md-menu>\n</md-toolbar>\n<router-outlet></router-outlet>"
+
+/***/ }),
+
+/***/ 751:
 /***/ (function(module, exports) {
 
 module.exports = "home"
 
 /***/ }),
 
-/***/ 749:
+/***/ 752:
 /***/ (function(module, exports) {
 
 module.exports = "<aside #sidebar id=\"sidebar\" class=\"navigation\">\n  <button md-button class=\"list-button\" (click)=\"toggleMaps()\">\n    <md-icon style=\"float : left;\">layers</md-icon> MAPAS\n  </button>\n  <!-- control de capas -->\n  <div #mapsDetailsContainer *ngIf=\"map && map.getLayers().getArray()\" class=\"list\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n    <div class=\"list-item\" *ngFor=\"let layer of map.getLayers().getArray(); let i = index;\">\n      <div class=\"buttons\">\n        <button md-button *ngIf=\"i > 0\" (click)=\"moveLayerDown(layer.get('name'))\"><md-icon>keyboard_arrow_up</md-icon></button>\n        <button md-button *ngIf=\"i < map.getLayers().getArray().length - 1\" (click)=\"moveLayerUp(layer.get('name'))\"><md-icon>keyboard_arrow_down</md-icon></button>\n      </div>\n      <div class=\"content\">\n        <md-slide-toggle (change)=\"changeVisible($event, layer.get('name'))\" [checked]=\"layer.getVisible()\">\n          {{ layer.get('name') }}\n        </md-slide-toggle>\n        <md-slider (input)=\"changeOpacity($event, layer.get('name'))\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n        </md-slider>\n        <div class=\"actions\">\n          <button *ngIf=\"layer.get('layers')\" md-button (click)=\"groups._results[i].nativeElement.classList.toggle('collapsed')\"><md-icon>add</md-icon></button>\n          <button md-button><md-icon>zoom_out_map</md-icon></button>\n          <button md-button><md-icon>map</md-icon></button>\n          <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n        </div>\n      </div>\n      <div #group class=\"group collapsed\">\n        <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n          <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray()\">\n            <div class=\"buttons\">\n              <button md-button (click)=\"moveLayerInGroupDown(layer.get('name'), layer_.get('name'))\"><md-icon>keyboard_arrow_up</md-icon></button>\n              <button md-button (click)=\"moveLayerInGroupUp(layer.get('name'), layer_.get('name'))\"><md-icon>keyboard_arrow_down</md-icon></button>\n            </div>\n            <div class=\"content\">\n              <md-slide-toggle (change)=\"changeVisible($event, layer_.get('name'))\" [checked]=\"layer.getVisible()\">\n                {{ layer_.get('name') }}\n              </md-slide-toggle>\n              <md-slider (input)=\"changeOpacity($event, layer_.get('name'))\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n              </md-slider>\n              <div class=\"actions\">\n                <button md-button><md-icon>info</md-icon></button>\n                <button md-button><md-icon>zoom_out_map</md-icon></button>\n                <button md-button><md-icon>map</md-icon></button>\n                <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- control de capas -->\n  <button md-button class=\"list-button\">\n    <md-icon style=\"float : left;\">layers</md-icon> MINIATURA\n  </button>\n  <button md-button class=\"list-button\">\n    <md-icon style=\"float : left;\">layers</md-icon> DESCARGAR MAPA\n  </button>\n</aside>  \n<button md-mini-fab id=\"burguer\" class=\"burguer\" (click)=\"toggleMenu($event)\">\n  <md-icon>add</md-icon>\n</button>\n<div class=\"full\" #mapEl id=\"map\">\n</div>\n\n<!-- <md-sidenav-container fullscreen class=\"sidenav-fab-container\">\n  <md-sidenav #sidenav mode=\"side\" opened=\"isPanelOpen\">\n    <div class=\"scrolling-content\">\n      <md-list *ngIf=\"layers\">\n        <md-list-item>\n          <h3>Mapas</h3>\n        </md-list-item>\n        <md-list-item *ngFor=\"let layer of layers\">\n          <md-icon md-list-avatar>folder</md-icon>\n          <p md-line><md-slide-toggle (change)=\"changeVisible($event, layer.get('name'))\" [checked]=\"layer.getVisible()\"> {{ layer.get('name') }} </md-slide-toggle></p>\n          <p md-line><md-slider (input)=\"changeOpacity($event, layer.get('name'))\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\"></md-slider></p>\n        </md-list-item>\n        <md-divider></md-divider>\n      </md-list>\n\n    </div>\n  </md-sidenav>\n  <button md-mini-fab class=\"fab\" (click)=\"sidenav.toggle()\" [ngClass]=\"{'rotated': isPanelOpen }\">\n    <md-icon>add</md-icon>\n  </button>\n  <div id=\"map\" class=\"scrolling-content\">\n  </div>\n</md-sidenav-container>-->\n"
 
 /***/ }),
 
-/***/ 794:
+/***/ 753:
+/***/ (function(module, exports) {
+
+module.exports = "\n<h1 md-dialog-title>Iniciar Sesión</h1>\n<div md-dialog-content>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.nameOrEmail\" placeholder=\"Usuario o Email\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.password\" placeholder=\"Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n</div>\n<div md-dialog-actions>\n  <button md-button (click)=\"login()\">Iniciar</button>\n  <button md-button (click)=\"dialogRef.close('Option 2')\">Cancelar</button>\n</div>"
+
+/***/ }),
+
+/***/ 798:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(470);
+module.exports = __webpack_require__(472);
 
 
 /***/ })
 
-},[794]);
+},[798]);
 //# sourceMappingURL=main.bundle.js.map

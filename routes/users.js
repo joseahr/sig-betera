@@ -4,11 +4,12 @@ var express = require("express");
 var passport = require("passport");
 var db_1 = require("../core/db");
 var mailer = require("../core/mailer");
-var recaptcha = require("../core/recaptcha");
+var recaptcha_1 = require("../core/recaptcha");
 exports.router = express.Router();
 exports.router.post('/login', function (req, res, next) {
     console.log(req.body.username, req.body.password);
     // Comprobamos que req.body.username && req.body.password existan
+    console.log(req.body);
     if (!req.body.username || !req.body.password)
         return res.status(400).json('Faltan credenciales de acceso');
     passport.authenticate('', function () { });
@@ -23,14 +24,14 @@ exports.router.post('/login', function (req, res, next) {
         // Intentamos logearnos en la sesión
         req.logIn(user, function (err) {
             // Enviamos un status 200
-            res.status(200).json(user.toString() + info);
+            res.status(200).json(user);
         });
         // llamamos a la función middleware que devuelve passport.authenticate() 
         // con los parámetros req y res
     });
     expressHandler(req, res, next);
 });
-exports.router.post('/signup', recaptcha.middleware.verify, function (req, res, next) {
+exports.router.post('/signup', recaptcha_1.recaptcha.middleware.verify, function (req, res, next) {
     console.log(req.body);
     if (req.recaptcha.error)
         return res.status(500).json('No has verificado el re-captcha');
