@@ -22,6 +22,8 @@ export class MapComponent implements OnInit {
   
   map : ol.Map;
   @ViewChild('mapEl') mapElement: ElementRef;
+  @ViewChild('mapsDetailsContainer') mapsDetailsContainer: ElementRef;
+
   isPanelOpen : Boolean = true;
   @ViewChild('sidebar') sidebar: ElementRef;
   @ViewChildren('group') groups: QueryList<ElementRef>;
@@ -115,6 +117,10 @@ export class MapComponent implements OnInit {
       });
       this.map.render();
     }
+  }
+
+  toggleMaps(){
+    this.mapsDetailsContainer.nativeElement.classList.toggle('collapsed');
   }
 
   changeOpacity(event, name){

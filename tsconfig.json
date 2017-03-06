@@ -10,7 +10,10 @@
         "noLib": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "sourceMap": true        
+        "sourceMap": true,
+        "types": [
+            "node", "core-js"
+        ]      
     },
     "exclude": [
         "node_modules",

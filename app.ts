@@ -5,7 +5,7 @@ import * as logger from 'morgan';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 
-import { router as routes } from './routes/index';
+//import { router as routes } from './routes/index';
 import { router as users } from './routes/users';
 
 export let app = express();
@@ -56,3 +56,8 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     error: {}
   });
 });
+
+
+import { parser } from './core/capabilities-parser';
+
+parser('http://www.ign.es/wms-inspire/pnoa-ma?request=GetCapabilities&service=WMS')

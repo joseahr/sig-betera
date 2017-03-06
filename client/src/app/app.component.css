@@ -9,6 +9,14 @@ md-toolbar button {
   margin-left: 5px;
 }
 
+.logo-betera {
+  height: 100%;
+}
+
+title {
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
+}
+
 @media screen and (max-width: 480px) {
   md-toolbar button {
     visibility: hidden;

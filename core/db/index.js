@@ -1,5 +1,6 @@
 /// <reference path='../../typings/index.d.ts' />
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // Bluebird is the best promise library available today, and is the one recommended here:
 var promise = require("bluebird");
 var users = require("./repos/users");
@@ -18,27 +19,33 @@ var options = {
     extend: function (obj) {
         // Do not use 'require()' here, because this event occurs for every task
         // and transaction being executed, which should be as fast as possible.
-        obj.users = new users.Repository(obj, pgp);
-        obj.admin = new admin.Repository(obj, pgp);
-        obj.maps = new maps.Repository(obj, pgp);
-        obj.layers = new layers.Repository(obj, pgp);
-        obj.roles = new roles.Repository(obj, pgp);
-        obj.raster = new raster.Repository(obj, pgp);
+        obj.users = new users.Repository(obj, exports.pgp);
+        obj.admin = new admin.Repository(obj, exports.pgp);
+        obj.maps = new maps.Repository(obj, exports.pgp);
+        obj.layers = new layers.Repository(obj, exports.pgp);
+        obj.roles = new roles.Repository(obj, exports.pgp);
+        obj.raster = new raster.Repository(obj, exports.pgp);
     }
 };
 // Database connection parameters:
-var config = {
+var config_1 = require("../config");
+/*var config = {
     host: 'localhost',
     port: 5432,
     database: 'pg-promise-demo',
     user: 'postgres'
-};
+};*/
 // Loading and initializing pg-promise:
 var pgPromise = require("pg-promise");
-var pgp = pgPromise(options);
+exports.pgp = pgPromise(options);
 // Create the database instance with extensions:
-var db = pgp(config);
+exports.db = exports.pgp(config_1.dbConfig);
 // Load and initialize optional diagnostics:
 var diag = require("./diagnostics");
 diag.init(options);
-module.exports = db;
+// If you ever need to change the default pool size, here's an example:
+// pgp.pg.defaults.poolSize = 20;
+// Database object is all that's needed.
+// And if you even need access to the library's root (pgp object),
+// you can do it via db.$config.pgp
+// See: http://vitaly-t.github.io/pg-promise/Database.html#.$config 

@@ -43,19 +43,20 @@ var options: IOptions<IExtensions> = {
 };
 
 // Database connection parameters:
-var config = {
+import { dbConfig as config } from '../config';
+/*var config = {
     host: 'localhost',
     port: 5432,
     database: 'pg-promise-demo',
     user: 'postgres'
-};
+};*/
 
 // Loading and initializing pg-promise:
 import * as pgPromise from 'pg-promise';
-var pgp: IMain = pgPromise(options);
+export const pgp : IMain = pgPromise(options);
 
 // Create the database instance with extensions:
-var db = <IDatabase<IExtensions>&IExtensions>pgp(config);
+export const db = <IDatabase<IExtensions>&IExtensions>pgp(config);
 
 // Load and initialize optional diagnostics:
 import diag = require('./diagnostics');
@@ -68,4 +69,3 @@ diag.init(options);
 // And if you even need access to the library's root (pgp object),
 // you can do it via db.$config.pgp
 // See: http://vitaly-t.github.io/pg-promise/Database.html#.$config
-export = db;

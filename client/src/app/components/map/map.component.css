@@ -108,7 +108,7 @@ md-list-item {
     transition: all 1s cubic-bezier(.39,.575,.565,1);
 }
 
-.group.collapsed {
+.collapsed {
     display : none;
     height: 0px;
 }
@@ -127,10 +127,19 @@ md-list-item {
     height : auto;
     background: #fff;
     padding : 5px;
-    margin-top : 10px;
+    margin-bottom : 10px;
     box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
+    border-radius: 2px;
     /*border-top-left-radius: 10px;
     border-top-right-radius: 10px;*/
+}
+
+.list-button {
+    width : 100%;
+    min-width: 100% !important;
+    background: #fff;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .group .list-item{

@@ -45,3 +45,5 @@ exports.app.use(function (err, req, res, next) {
         error: {}
     });
 });
+var capabilities_parser_1 = require("./core/capabilities-parser");
+capabilities_parser_1.parser('http://www.ign.es/wms-inspire/pnoa-ma?request=GetCapabilities&service=WMS');
