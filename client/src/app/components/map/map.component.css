@@ -31,6 +31,7 @@
     z-index : 1;
     overflow-y: scroll;
 }
+
 .full {
     background : #f8f8f8;
     width : 100%;
@@ -39,6 +40,7 @@
     transition: all .5s cubic-bezier(.39,.575,.565,1);
 
 }
+
 .navigation.visible {
     left: 0;
 }
@@ -128,7 +130,7 @@ md-list-item {
     background: #fff;
     padding : 5px;
     margin-bottom : 10px;
-    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
+    box-shadow: 0 0px 4px 0 rgba(0,0,0,.3);
     border-radius: 2px;
     /*border-top-left-radius: 10px;
     border-top-right-radius: 10px;*/
@@ -140,9 +142,15 @@ md-list-item {
     background: #fff;
     margin-top: 5px;
     margin-bottom: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
+    text-align: left;
 }
 
-.group .list-item{
+.list-button  md-icon {
+    margin-right: 10px;
+}
+
+.group .list-item {
     background: #f7f7f7;
     border-radius: 0px;
 }

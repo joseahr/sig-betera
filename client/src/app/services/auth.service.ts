@@ -11,4 +11,8 @@ export class AuthService {
             password
         });
     }
+
+    logout(){
+        return this.http.get('/user/logout');
+    }
 }

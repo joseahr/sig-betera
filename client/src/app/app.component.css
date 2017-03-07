@@ -7,7 +7,7 @@
 md-toolbar {
     box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
 md-toolbar button {
@@ -22,6 +22,7 @@ md-toolbar button {
 title {
   box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
 }
+
 
 @media screen and (max-width: 480px) {
   md-toolbar button {

@@ -4,6 +4,7 @@ import { MdSidenav } from '@angular/material';
 import { DragulaService, DragulaDirective } from 'ng2-dragula';
 
 import { ProjectionService } from './services/projection.service';
+import { Profile3DService } from './services/profile3d.service';
 
 import * as ol from 'openlayers';
 //import * as proj4 from 'proj4';
@@ -12,7 +13,7 @@ import * as ol from 'openlayers';
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
-  providers: [ProjectionService, DragulaService],
+  providers: [ProjectionService, Profile3DService, DragulaService],
   host: {
     '(window:resize)': 'fitMap()'
   }
@@ -27,8 +28,11 @@ export class MapComponent implements OnInit {
   @ViewChild('sidebar') sidebar: ElementRef;
   @ViewChildren('group') groups: QueryList<ElementRef>;
   
-  constructor(private projService : ProjectionService, private dragulaService: DragulaService) {
-  }
+  constructor(
+    private projService : ProjectionService, 
+    private profileService : Profile3DService,
+    private dragulaService: DragulaService
+  ) {}
 
   ngOnInit(){
     this.dragulaService.setOptions('layers', {
@@ -223,5 +227,18 @@ export class MapComponent implements OnInit {
     }
   }
 
+  getProfile( feature : ol.Feature ){
+    this.profileService.getProfile(feature).subscribe(
+      (data)=>{
+        console.log(data);
+        /* 
+          TODO : El truco para dibujar el perfil y mostrar las coordenadas
+          en el mapa va a ser calcular la distancia al origen de cada punto
+          y asignarsela como cuarta coordenada XYZM. Luego con openlayers podemos
+          hacer LineString#getCoordinateAtM()
+        */
+      }
+    );
+  }
 
 }

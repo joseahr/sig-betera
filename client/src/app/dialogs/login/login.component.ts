@@ -17,7 +17,9 @@ export class LoginComponent {
   login(){
     let { nameOrEmail, password } = this.userNotLoggedParams;
     this.authService.login(nameOrEmail, password).subscribe(
-      (result)=> console.log(result),
+      (result)=> {
+        this.dialogRef.close(result.json())
+      },
       (err) => console.log(err)
     );
     console.log(this.userNotLoggedParams);

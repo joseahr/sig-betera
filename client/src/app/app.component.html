@@ -8,17 +8,13 @@
   <button md-button [routerLink]="['map']">
     Mapa
   </button>
+  <button md-button *ngIf="authUser">
+      {{authUser.name}}
+      <img style="max-height : 35px; border-radius: 20px; margin-left : 10px; margin-right: 10px;" src="{{authUser.gravatar}}">
+  </button> 
   <button md-icon-button [mdMenuTriggerFor]="menu">
     <md-icon>more_vert</md-icon>
   </button>
-  <md-menu #userDetailsMenu="mdMenu">
-    <button md-menu-item *ngIf="authUser">
-      <div class="user-actions">
-        <span>{{authUser.auth.displayName}} </span>
-        <img src="{{authUser.auth.photoURL}}">
-      </div>
-    </button> 
-  </md-menu>
   <md-menu #menu="mdMenu">
     <button md-menu-item *ngIf="!authUser" (click)="openLoginDialog()">
       <md-icon>fingerprint</md-icon>
