@@ -1,15 +1,15 @@
 
-<h1 md-dialog-title color="primary"><md-icon>fingerprint</md-icon>Iniciar Sesión</h1>
+<h1 md-dialog-title color="primary"><md-icon>accessibility</md-icon>Registrarse en SIG Bétera</h1>
 <div md-dialog-content>
   <img src="https://ukla.org/images/icons/user-icon.svg" alt="" style="margin : 0 auto; border-radius : 50px; max-height: 100px;">
   <md-input-container style="width : 100%" >
-    <input mdInput [(ngModel)]="userNotLoggedParams.nameOrEmail" placeholder="Usuario o Email" value="">
+    <input mdInput placeholder="Usuario o Email" value="">
   </md-input-container>
   <md-input-container style="width : 100%">
-    <input mdInput [(ngModel)]="userNotLoggedParams.password" placeholder="Contraseña" type="password" value="">
+    <input mdInput placeholder="Contraseña" type="password" value="">
   </md-input-container>
 </div>
 <div md-dialog-actions>
-  <button md-button (click)="login()">Iniciar</button>
+  <button md-button>Registrarse</button>
   <button md-button (click)="dialogRef.close('Option 2')">Cancelar</button>
 </div>

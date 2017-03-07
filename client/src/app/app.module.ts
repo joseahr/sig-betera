@@ -17,13 +17,17 @@ import { DragulaModule } from 'ng2-dragula';
 
 import 'hammerjs';
 import { LoginComponent } from './dialogs/login/login.component';
+import { SignupComponent } from './dialogs/signup/signup.component';
+import { ForgotComponent } from './dialogs/forgot/forgot.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MapComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent,
+    ForgotComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,7 @@ import { LoginComponent } from './dialogs/login/login.component';
     MaterialModule.forRoot(),
     RouterModule.forRoot(appRoutes, { useHash: true })
   ],
-  entryComponents : [LoginComponent],
+  entryComponents : [LoginComponent, SignupComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

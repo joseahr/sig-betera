@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
   userNotLoggedParams : { nameOrEmail? : string, password? : string} = {}
 
-  constructor(public dialogRef: MdDialogRef<LoginComponent>, private authService : AuthService) {}
+  constructor(private dialogRef: MdDialogRef<LoginComponent>, private authService : AuthService) {}
 
   login(){
     let { nameOrEmail, password } = this.userNotLoggedParams;

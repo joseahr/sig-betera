@@ -116,9 +116,10 @@ export class MapComponent implements OnInit {
     if(this.map){
       this.map.on('postcompose', ()=>{
         this.map.updateSize();
-        this.map.render();
       });
       this.map.render();
+      this.map.changed();
+      this.map.dispatchEvent('render')
     }
   }
 

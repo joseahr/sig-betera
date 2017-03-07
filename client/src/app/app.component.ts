@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { MdDialog } from '@angular/material';
 import { LoginComponent } from './dialogs/login/login.component';
+import { SignupComponent } from './dialogs/signup/signup.component';
 
 import { AuthService } from './services/auth.service';
 
@@ -35,5 +36,14 @@ export class AppComponent {
         this.authUser = null;
       }
     );
+  }
+
+  openSignupDialog(){
+    let dialogRef = this.dialog.open(SignupComponent);
+    dialogRef.afterClosed().subscribe(
+      result => {
+        // Hacer algo
+      }
+    )
   }
 }
