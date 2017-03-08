@@ -15,4 +15,8 @@ export class AuthService {
     logout(){
         return this.http.get('/user/logout');
     }
+
+    signup(user){
+        return this.http.post('/user/signup', user);
+    }
 }

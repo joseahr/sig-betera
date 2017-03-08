@@ -43,7 +43,7 @@ md-sidenav-container {
     z-index: 3;
 }
 
-@media only screen and (min-width:500px){
+@media only screen and (min-width:600px){
     md-sidenav {
         width: 35vw;
         min-width: 35vw;
@@ -124,6 +124,7 @@ md-toolbar {
 
 .content .actions {
     display : block;
+    min-height: 50px;
 }
 
 .separator {
@@ -133,7 +134,7 @@ md-toolbar {
 }
 
 .actions button {
-    min-width: 30px !important;
+    min-width: 20px !important;
 }
 
 .buttons {

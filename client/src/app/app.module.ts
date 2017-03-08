@@ -15,6 +15,8 @@ import { MaterialModule } from '@angular/material';
 
 import { DragulaModule } from 'ng2-dragula';
 
+import { ReCaptchaModule } from 'angular2-recaptcha';
+
 import 'hammerjs';
 import { LoginComponent } from './dialogs/login/login.component';
 import { SignupComponent } from './dialogs/signup/signup.component';
@@ -33,6 +35,7 @@ import { ForgotComponent } from './dialogs/forgot/forgot.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    ReCaptchaModule,
     DragulaModule,
     MaterialModule.forRoot(),
     RouterModule.forRoot(appRoutes, { useHash: true })

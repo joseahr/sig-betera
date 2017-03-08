@@ -1,15 +1,31 @@
 
+<!-- { name, password, repassword, nombre, apellidos, email } -->
 <h1 md-dialog-title color="primary"><md-icon>accessibility</md-icon>Registrarse en SIG Bétera</h1>
 <div md-dialog-content>
   <img src="https://ukla.org/images/icons/user-icon.svg" alt="" style="margin : 0 auto; border-radius : 50px; max-height: 100px;">
   <md-input-container style="width : 100%" >
-    <input mdInput placeholder="Usuario o Email" value="">
+    <input mdInput [(ngModel)]="userToCreate.name" placeholder="Nombre de usuario" value="">
+  </md-input-container>
+  <md-input-container style="width : 100%" >
+    <input mdInput [(ngModel)]="userToCreate.email" type="email" placeholder="Email" value="">
+  </md-input-container>
+  <md-input-container style="width : 100%" >
+    <input mdInput [(ngModel)]="userToCreate.nombre" placeholder="Nombre" value="">
+  </md-input-container>
+  <md-input-container style="width : 100%" >
+    <input mdInput [(ngModel)]="userToCreate.apellidos" placeholder="Apellidos" value="">
   </md-input-container>
   <md-input-container style="width : 100%">
-    <input mdInput placeholder="Contraseña" type="password" value="">
+    <input mdInput [(ngModel)]="userToCreate.password" placeholder="Contraseña" type="password" value="">
   </md-input-container>
+  <md-input-container style="width : 100%">
+    <input mdInput [(ngModel)]="userToCreate.repassword" placeholder="Repetir Contraseña" type="password" value="">
+  </md-input-container>
+  <div style="width : 100%; text-align: center;">
+    <re-captcha site_key="6LfjRAsUAAAAAEav71yglI9Mntr_z5faCBs3QTyw"></re-captcha>
+  </div>
 </div>
 <div md-dialog-actions>
-  <button md-button>Registrarse</button>
+  <button md-button (click)="signup()">Registrarse</button>
   <button md-button (click)="dialogRef.close('Option 2')">Cancelar</button>
 </div>
