@@ -1,4 +1,4 @@
-<md-toolbar color="primary">
+<md-toolbar #toolbarMenu color="primary">
   <img src="assets/escudo.png" alt="" class="logo-betera">
   <span class="title">SIG Bétera</span>
   <span class="spacer"></span>
@@ -30,4 +30,6 @@
     </button>
   </md-menu>
 </md-toolbar>
-<router-outlet></router-outlet>
+<div class="container-router">
+  <router-outlet></router-outlet>  
+</div>

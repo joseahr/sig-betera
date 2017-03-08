@@ -53,5 +53,3 @@ exports.app.use(function (err, req, res, next) {
         error: {}
     });
 });
-var capabilities_parser_1 = require("./core/capabilities-parser");
-capabilities_parser_1.parser('http://www.ign.es/wmts/mapa-raster?request=GetCapabilities&service=WMTS');

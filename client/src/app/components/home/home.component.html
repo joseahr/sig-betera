@@ -1,6 +1,19 @@
-<md-grid-list cols="2">
-  <md-grid-tile>1</md-grid-tile>
-  <md-grid-tile>2</md-grid-tile>
-  <md-grid-tile>3</md-grid-tile>
-  <md-grid-tile>4</md-grid-tile>
-</md-grid-list>
+<div class="container-sections" [@routerTransition]="">
+  <md-card class="card" *ngFor="let seccion of secciones" flex>
+    <md-card-header>
+      <div md-card-avatar class="example-header-image"></div>
+      <md-card-title>{{ seccion.titulo }}</md-card-title>
+      <md-card-subtitle>{{ seccion.subtitulo }}</md-card-subtitle>
+    </md-card-header>
+    <img md-card-image src="{{ seccion.img }}" alt="">
+    <md-card-content>
+      <p>
+        {{ seccion.resumen }}
+      </p>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button>LIKE</button>
+      <button md-button>SHARE</button>
+    </md-card-actions>
+  </md-card>
+</div>

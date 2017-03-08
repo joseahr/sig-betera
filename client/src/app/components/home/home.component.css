@@ -1,0 +1,25 @@
+.container-sections {
+    width: 100%;
+    height : auto;
+    text-align: center;
+    background: rgba(66, 143, 244, .1)
+}
+
+.mat-card-image {
+    height: 250px;
+    object-fit: cover;
+}
+
+.card {
+    margin : 10px auto;
+    width : 40%;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+@media only screen and (max-width:900px){
+    .card {
+        width: 80%;
+    }
+}

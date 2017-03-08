@@ -68,8 +68,3 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     error: {}
   });
 });
-
-
-import { parser } from './core/capabilities-parser';
-
-parser('http://www.ign.es/wmts/mapa-raster?request=GetCapabilities&service=WMTS')

@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, NgZone } from '@angular/core';
 import { MdSidenav } from '@angular/material';
 
 import { DragulaService, DragulaDirective } from 'ng2-dragula';
 
 import { ProjectionService } from './services/projection.service';
 import { Profile3DService } from './services/profile3d.service';
+
+import { routerTransition } from '../../router.transitions';
 
 import * as ol from 'openlayers';
 //import * as proj4 from 'proj4';
@@ -14,27 +16,45 @@ import * as ol from 'openlayers';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
   providers: [ProjectionService, Profile3DService, DragulaService],
-  host: {
-    '(window:resize)': 'fitMap()'
-  }
+  animations: [routerTransition()],
+  host : { '[@routerTransition]': '' }
 })
 export class MapComponent implements OnInit {
   
   map : ol.Map;
-  @ViewChild('mapEl') mapElement: ElementRef;
+  sideNavMapInterval : any;
   @ViewChild('mapsDetailsContainer') mapsDetailsContainer: ElementRef;
-
-  isPanelOpen : Boolean = true;
-  @ViewChild('sidebar') sidebar: ElementRef;
+  @ViewChild('sidenav') sidenav: MdSidenav;
   @ViewChildren('group') groups: QueryList<ElementRef>;
-  
+
   constructor(
+    private zone : NgZone,
+    private el : ElementRef,
     private projService : ProjectionService, 
     private profileService : Profile3DService,
     private dragulaService: DragulaService
   ) {}
+  
+  setIntervalUpdateMapSize(){
+    clearInterval(this.sideNavMapInterval);
+    this.sideNavMapInterval = setInterval( () => this.map.updateSize(), 20 );
+  }
+
+  clearIntervalUpdateMapSize(){
+    this.map.updateSize();
+    clearInterval(this.sideNavMapInterval);
+  }
 
   ngOnInit(){
+    this.sidenav.onOpenStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
+    this.sidenav.onCloseStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
+    this.sidenav.onOpen.subscribe(this.clearIntervalUpdateMapSize.bind(this))
+    this.sidenav.onClose.subscribe(this.clearIntervalUpdateMapSize.bind(this))
+    
+    this.dragulaService.drop.subscribe(
+      ()=> this.map.getLayers().getArray().forEach(l => l.changed() )
+    )
+
     this.dragulaService.setOptions('layers', {
       moves : (el, container, handle) => handle.classList.contains('handle'),
       accepts : (el, target, source, sibling) => target.attributes[2].value == 'layers'
@@ -46,12 +66,19 @@ export class MapComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.createMap();
+    console.log(this.el.nativeElement.parentNode);
+    this.el.nativeElement.parentNode.parentNode.childNodes[0].style.position = 'relative';
+    window.scrollTo(0,1);
+    document.body.style.overflow = 'hidden';
+    this.zone.runOutsideAngular(this.createMap.bind(this));
+    //this.createMap();
+  }
+
+  toggleMaps(){
+    this.mapsDetailsContainer.nativeElement.classList.toggle('collapsed');
   }
 
   createMap(){
-    //window.addEventListener('resize', this.fitMap.bind(this));
-    this.fitMap();
 
     this.map = new ol.Map({
       target : 'map',
@@ -108,25 +135,6 @@ export class MapComponent implements OnInit {
 
   }
 
-  fitMap(){
-    let offsetTop = this.mapElement.nativeElement.getBoundingClientRect().top;
-    this.mapElement.nativeElement.style.height = `calc(100vh - ${offsetTop}px)`;
-    this.sidebar.nativeElement.style.top = `${offsetTop}px`;
-    this.sidebar.nativeElement.style.height = `calc(100vh - ${offsetTop}px)`;
-    if(this.map){
-      this.map.on('postcompose', ()=>{
-        this.map.updateSize();
-      });
-      this.map.render();
-      this.map.changed();
-      this.map.dispatchEvent('render')
-    }
-  }
-
-  toggleMaps(){
-    this.mapsDetailsContainer.nativeElement.classList.toggle('collapsed');
-  }
-
   changeOpacity(event, name){
     this.map.getLayers().forEach( l =>{
       if(l.get('name') == name){
@@ -143,11 +151,6 @@ export class MapComponent implements OnInit {
     })
   }
 
-  toggleMenu(event){
-    this.sidebar.nativeElement.classList.toggle('visible');
-    this.map.on('postcompose', this.map.updateSize);
-  }
-
   moveLayerUp(name){
     let layers = this.map.getLayers().getArray();
     let index = -1;
@@ -161,6 +164,7 @@ export class MapComponent implements OnInit {
     if(index >= 0){
       let layer = this.map.getLayers().getArray().splice(index, 1)[0];
       this.map.getLayers().getArray().splice(index + 1, 0, layer);
+      layer.changed();
     }
   }
 
@@ -176,7 +180,8 @@ export class MapComponent implements OnInit {
     console.log(index);
     if(index > 0){
       let layer = this.map.getLayers().getArray().splice(index, 1)[0];
-      this.map.getLayers().getArray().splice( (index - 1 | 0), 0, layer);
+      this.map.getLayers().getArray().splice(index - 1, 0, layer);
+      layer.changed();
     }
   }
 
@@ -201,6 +206,7 @@ export class MapComponent implements OnInit {
       let layerGroup = this.map.getLayers().getArray()[indexGroup].get('layers').getArray();
       let layer = layerGroup.splice(indexLayer, 1)[0];
       layerGroup.splice(indexLayer + 1, 0, layer);
+      layer.changed();
     }
   }
 
@@ -224,7 +230,8 @@ export class MapComponent implements OnInit {
     if(indexGroup >= 0 && indexLayer > 0){
       let layerGroup = this.map.getLayers().getArray()[indexGroup].get('layers').getArray();
       let layer = layerGroup.splice(indexLayer, 1)[0];
-      layerGroup.splice( (indexLayer - 1 | 0), 0, layer);
+      layerGroup.splice(indexLayer - 1, 0, layer);
+      layer.changed();
     }
   }
 

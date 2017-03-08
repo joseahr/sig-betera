@@ -1,111 +1,68 @@
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+.example-container {
+  width: 100%;
+  height: 100%;
 }
 
-.navigation {
-    left: -301px;
-    width: 300px;
-}
-.navigation.visible ~ .full{
-    margin-left: 300px;
-    width : calc(100vw - 300px);
-}
-.navigation.visible ~ .burguer{
-    left : 290px;
-}
-.navigation.visible ~ .burguer md-icon {
-    /*color : #ff0000;*/
-}
-.navigation {
-    background-color: #f7f7f7;
-    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
-    height: 100vh;
-    padding: 12px 20px;
-    position: fixed;
-    transition: all .5s cubic-bezier(.39,.575,.565,1);
-    top: 0;
-    z-index : 1;
-    overflow-y: scroll;
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
-.full {
-    background : #f8f8f8;
-    width : 100%;
-    height : 100vh;
-    box-sizing: border-box;
-    transition: all .5s cubic-bezier(.39,.575,.565,1);
-
-}
-
-.navigation.visible {
-    left: 0;
-}
-
-.navigation ~ .full{
-    margin-left: 0px;
-}
-
-
-.navigation.visible ~ .burguer {
-    transform: rotate(-45deg);
+.example-sidenav {
+  padding: 20px;
 }
 
 .burguer {
-    /*background-color: #f7f7f7;*/
     box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
-    /*border: none;
-    cursor: pointer;
-    outline: none;
-    padding : 3px;
-
-    */
     left: 0.5em;
     position : absolute;
     z-index: 1;
-    top: 50vh;
-    /*border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;*/
+    top: 50%;
     transition: all .5s cubic-bezier(.39,.575,.565,1);
+    transition : transform .4s cubic-bezier(.25,.8,.25,1)
 }
 
-.burguer md-icon {
-    transition: all .35s cubic-bezier(.39,.575,.565,1);
+md-sidenav {
+    width: 75vw;
+    min-width: 75vw;
+    background: #f7f7f7;
+}
+md-sidenav-container {
+    bottom: 0px;
 }
 
-.menus {
-    list-style: none;
-    margin-top: 50px;
+#map {
+    transition : transform .4s cubic-bezier(.25,.8,.25,1)
 }
 
-.menu a {
-    border-bottom: 1px dashed #aaa;
-    color: #333;
-    display: block;
-    font-family: 'Barrio';
-    padding: 15px 0;
-    text-decoration: none;
+.burguer-expanded {
+    margin-left: calc(75vw + 20px);
+    transform: rotate(-45deg);
+    z-index: 3;
 }
 
-/*.navigation md-slider {
-    left : 5px;
-    min-width: 105px !important;
-    width : 50%;
+@media only screen and (min-width:500px){
+    md-sidenav {
+        width: 35vw;
+        min-width: 35vw;
+    }
+
+    .burguer-expanded {
+        margin-left: calc(35vw + 20px);
+    }
+
+    .map-expanded {
+        margin-left: calc(35vw + 40px);
+    }
+
+    .mat-sidenav-opened ~ .burguer {
+        left : calc(35vw - 10px);
+    }
 }
 
 
-md-list-item {
-    margin-top : 20px;
-    height : auto !important;
-}
-
-.mat-list-item:last-child {
-    margin-bottom : 20px !important;
-}
-*/
 .group {
     transition: all 1s cubic-bezier(.39,.575,.565,1);
 }
@@ -132,18 +89,18 @@ md-list-item {
     margin-bottom : 10px;
     box-shadow: 0 0px 4px 0 rgba(0,0,0,.3);
     border-radius: 2px;
-    /*border-top-left-radius: 10px;
-    border-top-right-radius: 10px;*/
+    margin-left : 10px;
+    margin-right: 10px;
 }
 
 .list-button {
-    width : 100%;
-    min-width: 100% !important;
     background: #fff;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin : 5px auto;
+    min-width: 95%;
+    display: block;
     box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
     text-align: left;
+
 }
 
 .list-button  md-icon {
@@ -161,13 +118,18 @@ md-slider {
     min-width: 105px;
 }
 
+md-toolbar {
+    position : relative !important;
+}
+
 .content .actions {
     display : block;
 }
 
-.actions {
-    border-top : 1px dashed #000;
-    padding-top : 5px;
+.separator {
+    border-top: 1px dashed #000;
+    padding-top: 5px;
+    filter: blur(2px);
 }
 
 .actions button {
@@ -185,18 +147,4 @@ md-slider {
     float : right;
     display : block;
     min-width: 30px !important;
-}
-
-@media only screen and (min-width:960px){
-    .navigation {
-        left: -35vw;
-        width: 35vw;
-    }
-    .navigation.visible ~ .full{
-        margin-left: 35vw;
-        width : 65vw;
-    }
-    .navigation.visible ~ .burguer{
-        left : calc(35vw - 10px);
-    }
 }

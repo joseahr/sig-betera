@@ -5,6 +5,7 @@
 }
 
 md-toolbar {
+    height: 50px !important;
     box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
     position: relative;
     z-index: 2;
@@ -27,5 +28,33 @@ title {
 @media screen and (max-width: 480px) {
   md-toolbar button {
     visibility: hidden;
+  }
+
+}
+
+.container-router {
+  position : absolute;
+  top : 64px;
+  bottom : 0px;
+  left: 0px;
+  right: 0px;
+}
+
+@media (max-width:600px) and (orientation:portrait) {
+  .container-router {
+    position : absolute;
+    top : 56px;
+    bottom : 0px;
+    left: 0px;
+    right: 0px;
+  }
+}
+@media (max-width:960px) and (orientation:landscape) {
+  .container-router {
+    position : absolute;
+    top : 48px;
+    bottom : 0px;
+    left: 0px;
+    right: 0px;
   }
 }
