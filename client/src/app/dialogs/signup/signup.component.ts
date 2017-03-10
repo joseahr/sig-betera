@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { MdDialogRef } from '@angular/material';
+import { MdDialogRef, MdSnackBar } from '@angular/material';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -16,17 +16,19 @@ export class SignupComponent implements OnInit {
 
   userToCreate : 
     { 
-      name ? : string, 
-      password ? : string, 
-      repassword ? : string, 
-      nombre ? : string, 
-      apellidos ? : string, 
-      email ? : string 
+      name ? : String, 
+      password ? : String, 
+      repassword ? : String, 
+      nombre ? : String, 
+      apellidos ? : String, 
+      email ? : String,
+      "g-recaptcha-response" ? : String
     } = {};
 
   constructor(
     private dialogRef: MdDialogRef<SignupComponent>,
-    private authService : AuthService
+    private authService : AuthService,
+    private snackBar : MdSnackBar
   ) { }
 
   @ViewChild(ReCaptchaComponent) captcha : ReCaptchaComponent;
@@ -36,15 +38,22 @@ export class SignupComponent implements OnInit {
   }
 
   signup(){
-    let token = this.captcha.getResponse();
-    console.log('token', token);
-    if(!token) return;
-    this.authService.signup(this.userToCreate).subscribe(
+    let recaptcha = this.captcha.getResponse();
+    console.log('token', recaptcha);
+    if(!recaptcha){
+      this.snackBar.open('Debes verificar el captcha', null, { duration : 1500 });
+      return;
+    }
+    let user = this.userToCreate;
+    user['g-recaptcha-response'] = recaptcha;
+    this.authService.signup(user).subscribe(
       ()=> {        
-        console.log('Usuario registrado con éxito')
+        console.log('Usuario registrado con éxito');
+        this.snackBar.open('Registrado con éxito', null, { duration : 1500 });
         this.dialogRef.close();
       },
-      (err) => console.log(err)
+      (err) => { this.snackBar.open(err, null, { duration : 1500 }); }, 
+      () => { this.captcha.reset() }
     );
   }
 

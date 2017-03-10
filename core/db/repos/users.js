@@ -40,7 +40,7 @@ var Repository = (function () {
         return compare(password, user.password);
     };
     Repository.prototype.genPassword = function (password) {
-        return hash(password, null);
+        return hash(password, null, null);
     };
     Repository.prototype.findBy = function (column, value) {
         return this.db.any(sql.findBy, {

@@ -2,10 +2,10 @@
   <img src="assets/escudo.png" alt="" class="logo-betera">
   <span class="title">SIG Bétera</span>
   <span class="spacer"></span>
-  <button md-button [routerLink]="['']">
+  <button md-button [routerLink]="['']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
     Inicio
   </button>
-  <button md-button [routerLink]="['map']">
+  <button md-button [routerLink]="['map']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
     Mapa
   </button>
   <button md-button *ngIf="authUser">

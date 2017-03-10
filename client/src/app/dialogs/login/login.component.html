@@ -1,8 +1,9 @@
-
 <h1 md-dialog-title color="primary"><md-icon>fingerprint</md-icon>Iniciar Sesión</h1>
 <div md-dialog-content>
+  <div #progress>
+  </div>
   <img src="https://ukla.org/images/icons/user-icon.svg" alt="" style="margin : 0 auto; border-radius : 50px; max-height: 100px;">
-  <md-input-container style="width : 100%" >
+  <md-input-container  style="width : 100%" >
     <input mdInput [(ngModel)]="userNotLoggedParams.nameOrEmail" placeholder="Usuario o Email" value="">
   </md-input-container>
   <md-input-container style="width : 100%">
@@ -10,6 +11,6 @@
   </md-input-container>
 </div>
 <div md-dialog-actions>
-  <button md-button (click)="login()">Iniciar</button>
-  <button md-button (click)="dialogRef.close('Option 2')">Cancelar</button>
+  <button md-button (click)="login()" [disabled]="isLoading">Iniciar</button>
+  <button md-button (click)="dialogRef.close('Option 2')" [disabled]="isLoading">Cancelar</button>
 </div>

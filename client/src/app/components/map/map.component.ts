@@ -21,8 +21,12 @@ import * as ol from 'openlayers';
 })
 export class MapComponent implements OnInit {
   
+  mapProperties : any;
   map : ol.Map;
+  overviewCtrl : ol.Map;
   sideNavMapInterval : any;
+
+  @ViewChild('overviewMap') overviewMapEl : ElementRef;
   @ViewChild('mapsDetailsContainer') mapsDetailsContainer: ElementRef;
   @ViewChild('sidenav') sidenav: MdSidenav;
   @ViewChildren('group') groups: QueryList<ElementRef>;
@@ -34,16 +38,6 @@ export class MapComponent implements OnInit {
     private profileService : Profile3DService,
     private dragulaService: DragulaService
   ) {}
-  
-  setIntervalUpdateMapSize(){
-    clearInterval(this.sideNavMapInterval);
-    this.sideNavMapInterval = setInterval( () => this.map.updateSize(), 20 );
-  }
-
-  clearIntervalUpdateMapSize(){
-    this.map.updateSize();
-    clearInterval(this.sideNavMapInterval);
-  }
 
   ngOnInit(){
     this.sidenav.onOpenStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
@@ -52,7 +46,9 @@ export class MapComponent implements OnInit {
     this.sidenav.onClose.subscribe(this.clearIntervalUpdateMapSize.bind(this))
     
     this.dragulaService.drop.subscribe(
-      ()=> this.map.getLayers().getArray().forEach(l => l.changed() )
+      ()=> {
+        this.updateMapAndOverview();
+      }
     )
 
     this.dragulaService.setOptions('layers', {
@@ -74,13 +70,36 @@ export class MapComponent implements OnInit {
     //this.createMap();
   }
 
+  setIntervalUpdateMapSize(){
+    clearInterval(this.sideNavMapInterval);
+    this.sideNavMapInterval = setInterval( () => this.map.updateSize(), 20 );
+  }
+
+  clearIntervalUpdateMapSize(){
+    if(!this.overviewCtrl){
+      this.createOverviewMap();
+    } else {
+      this.overviewCtrl.getView().setProperties(this.map.getView().getProperties());
+    }
+    this.map.updateSize();
+    clearInterval(this.sideNavMapInterval);
+  }
+
+  updateMapAndOverview(){
+    this.map.getLayers().getArray().forEach(l => l.changed() );
+    this.map.render();
+    this.map.once('postcompose', ()=>{
+      this.overviewCtrl.getLayers().clear();
+      this.overviewCtrl.getLayers().extend([...this.map.getLayers().getArray()]);
+    })
+  }
+
   toggleMaps(){
     this.mapsDetailsContainer.nativeElement.classList.toggle('collapsed');
   }
 
   createMap(){
-
-    this.map = new ol.Map({
+    this.mapProperties = {
       target : 'map',
       controls : ol.control.defaults(),
       view : new ol.View({
@@ -88,51 +107,33 @@ export class MapComponent implements OnInit {
         center : [-0.459108, 39.589353],
         zoom : 12
       })
-    });
+    }
 
+    this.map = new ol.Map(this.mapProperties);
     this.projService.setProjection(this.map, '25830');
 
-    let OSMLayer = new ol.layer.Tile({ source : new ol.source.OSM() });
-    OSMLayer.set('name', 'OSM');
-    let OSMLayer2 = new ol.layer.Tile({ source : new ol.source.OSM() });
-    OSMLayer2.set('name', 'OSM2');
-      
-    let OSMLayer3 = new ol.layer.Tile({ source : new ol.source.OSM() });
-    OSMLayer3.set('name', 'OSM3');    
-    let OSMLayer4 = new ol.layer.Tile({ source : new ol.source.OSM() });
-    OSMLayer4.set('name', 'OSM4');
-    let orto = new ol.layer.Tile({ 
-      source : new ol.source.TileWMS({
-        url : 'http://www.ign.es/wms-inspire/pnoa-ma',
-        projection : this.map.getView().getProjection(),
-        params : {
-          "LAYERS" : 'OI.OrthoimageCoverage'
-        }
+    this.addDummyLayers(this.map);
+
+  }
+
+  createOverviewMap(){
+    let overviewMapProperties = {
+      target : this.overviewMapEl.nativeElement,
+      view : new ol.View({
+        projection : 'EPSG:4326',
+        center : [-0.459108, 39.589353],
+        zoom : 12
       })
+    }
+    
+    this.overviewCtrl = new ol.Map(overviewMapProperties);
+    this.overviewCtrl.getControls().forEach( c => this.overviewCtrl.removeControl(c) );
+    this.projService.setProjection(this.overviewCtrl, '25830');
+    this.overviewCtrl.getView().on('change', ()=>{
+      this.map.getView().setProperties(this.overviewCtrl.getView().getProperties());
     });
-    orto.set('name', 'Ortofoto PNOA');
-    var groupCapasBase = new ol.layer.Group({
-        layers: [OSMLayer, OSMLayer2, OSMLayer3, OSMLayer4]
-    });
-    groupCapasBase.set('name', 'groupp');
-
-    var groupCapasBase2 = new ol.layer.Group({
-        layers: [OSMLayer, OSMLayer2, OSMLayer3, orto]
-    });
-    groupCapasBase2.set('name', 'group2');
-
-    this.map.addLayer(OSMLayer);
-    this.map.addLayer(orto);
-    this.map.addLayer(OSMLayer2);
-    this.map.addLayer(OSMLayer3);
-    this.map.addLayer(OSMLayer4);
-    this.map.addLayer(groupCapasBase);
-    this.map.addLayer(groupCapasBase2);
-
-    /*this.map.addLayer(orto);
-    this.map.addLayer(orto);
-    this.map.addLayer(orto);*/
-
+    this.overviewCtrl.getLayers().clear();
+    this.overviewCtrl.getLayers().extend([...this.map.getLayers().getArray()]);
   }
 
   changeOpacity(event, name){
@@ -165,6 +166,7 @@ export class MapComponent implements OnInit {
       let layer = this.map.getLayers().getArray().splice(index, 1)[0];
       this.map.getLayers().getArray().splice(index + 1, 0, layer);
       layer.changed();
+      this.updateMapAndOverview();
     }
   }
 
@@ -182,6 +184,7 @@ export class MapComponent implements OnInit {
       let layer = this.map.getLayers().getArray().splice(index, 1)[0];
       this.map.getLayers().getArray().splice(index - 1, 0, layer);
       layer.changed();
+      this.updateMapAndOverview();
     }
   }
 
@@ -207,6 +210,7 @@ export class MapComponent implements OnInit {
       let layer = layerGroup.splice(indexLayer, 1)[0];
       layerGroup.splice(indexLayer + 1, 0, layer);
       layer.changed();
+      this.updateMapAndOverview();
     }
   }
 
@@ -232,7 +236,52 @@ export class MapComponent implements OnInit {
       let layer = layerGroup.splice(indexLayer, 1)[0];
       layerGroup.splice(indexLayer - 1, 0, layer);
       layer.changed();
+      this.updateMapAndOverview();
     }
+  }
+
+  addDummyLayers(map){
+
+    let OSMLayer = new ol.layer.Tile({ source : new ol.source.OSM() });
+    OSMLayer.set('name', 'OSM');
+    let OSMLayer2 = new ol.layer.Tile({ source : new ol.source.OSM() });
+    OSMLayer2.set('name', 'OSM2');
+      
+    let OSMLayer3 = new ol.layer.Tile({ source : new ol.source.OSM() });
+    OSMLayer3.set('name', 'OSM3');    
+    let OSMLayer4 = new ol.layer.Tile({ source : new ol.source.OSM() });
+    OSMLayer4.set('name', 'OSM4');
+    let orto = new ol.layer.Tile({ 
+      source : new ol.source.TileWMS({
+        url : 'http://www.ign.es/wms-inspire/pnoa-ma',
+        projection : this.map.getView().getProjection(),
+        params : {
+          "LAYERS" : 'OI.OrthoimageCoverage'
+        }
+      })
+    });
+    orto.set('name', 'Ortofoto PNOA');
+    var groupCapasBase = new ol.layer.Group({
+        layers: [OSMLayer, OSMLayer2, OSMLayer3, OSMLayer4]
+    });
+    groupCapasBase.set('name', 'groupp');
+
+    var groupCapasBase2 = new ol.layer.Group({
+        layers: [OSMLayer, OSMLayer2, OSMLayer3, orto]
+    });
+    groupCapasBase2.set('name', 'group2');
+
+    map.addLayer(OSMLayer);
+    map.addLayer(orto);
+    map.addLayer(OSMLayer2);
+    map.addLayer(OSMLayer3);
+    map.addLayer(OSMLayer4);
+    map.addLayer(groupCapasBase);
+    map.addLayer(groupCapasBase2);
+
+    /*this.map.addLayer(orto);
+    this.map.addLayer(orto);
+    this.map.addLayer(orto);*/
   }
 
   getProfile( feature : ol.Feature ){

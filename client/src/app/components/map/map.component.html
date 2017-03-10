@@ -58,9 +58,10 @@
       </div>
     </div>
     <!-- control de capas -->
-    <button md-button class="list-button">
+    <button md-button class="list-button" (click)="overviewMap.classList.toggle('collapsed')">
       <md-icon>map</md-icon>MINIATURA
     </button>
+    <div #overviewMap class="overview-map" style="flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;"></div>
     <button md-button class="list-button">
       <md-icon>file_download</md-icon>DESCARGAR MAPA
     </button>

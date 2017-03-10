@@ -63,7 +63,7 @@ export class Repository {
         }
         
         genPassword( password : string ){
-            return hash(password, null);
+            return hash(password, null, null);
         }
     
         findBy( column : string, value : string ){
