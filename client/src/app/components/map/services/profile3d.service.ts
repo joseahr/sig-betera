@@ -18,7 +18,9 @@ export class Profile3DService {
             return Observable.throw('[ProfileService] - Debe pasar como parámetro un Feature de tipo LS');
         } else {
             let wkt = this.wktParser.writeFeature(featureLS);
-            return this.http.get('/api/raster/perfil');
+            return this.http.post('/api/raster/perfil', {
+                wkt
+            });
         }
     }
 

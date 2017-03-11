@@ -11,6 +11,7 @@ import { passportConfig } from './core/passport';
 
 //import { router as routes } from './routes/index';
 import { router as user } from './routes/users';
+import { router as raster } from './routes/raster';
 
 export let app = express();
 
@@ -34,7 +35,8 @@ app.use(passport.session());
 passportConfig(passport);
 
 //app.use('/', routes);
-app.use('/user', user);
+app.use('/api/user', user);
+app.use('/api/raster', raster);
 
 app.use('/', express.static('client/dist'));
 

@@ -8,28 +8,39 @@
   <button md-button [routerLink]="['map']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
     Mapa
   </button>
-  <button md-button *ngIf="authUser">
+  <button md-button *ngIf="authUser" [mdMenuTriggerFor]="menuLogedIn">
       {{authUser.name}}
       <img style="max-height : 35px; border-radius: 20px; margin-left : 10px; margin-right: 10px;" src="{{authUser.gravatar}}">
   </button> 
-  <button md-icon-button [mdMenuTriggerFor]="menu">
+  <button *ngIf="!authUser" md-icon-button [mdMenuTriggerFor]="menu">
     <md-icon>more_vert</md-icon>
   </button>
+
+
+  <!-- Menú usuario no logueado -->
   <md-menu #menu="mdMenu">
     <button md-menu-item *ngIf="!authUser" (click)="openLoginDialog()">
       <md-icon>fingerprint</md-icon>
       <span>Login</span>
     </button>
-    <button md-menu-item *ngIf="authUser" (click)="logout()">
-      <md-icon>fingerprint</md-icon>
-      <span>Logout</span>
-    </button>
     <button md-menu-item (click)="openSignupDialog()">
       <md-icon>accessibility</md-icon>
       <span>Registrarse</span>
     </button>
+    <button md-menu-item (click)="openForgotDialog()">
+      <md-icon>vpn_key</md-icon>
+      <span>¿Olvidaste credenciales?</span>
+    </button>
+  </md-menu>
+  <!-- Menú usuario logueado -->
+  <md-menu #menuLogedIn="mdMenu">
+    <button md-menu-item *ngIf="authUser" (click)="logout()">
+      <md-icon>fingerprint</md-icon>
+      <span>Logout</span>
+    </button>
   </md-menu>
 </md-toolbar>
+
 <div class="container-router">
   <router-outlet></router-outlet>  
 </div>

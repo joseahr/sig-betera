@@ -26,6 +26,17 @@ export class MapComponent implements OnInit {
   overviewCtrl : ol.Map;
   sideNavMapInterval : any;
 
+  dataChartArray = [];
+  
+  drawProfileLayer : ol.layer.Vector = new ol.layer.Vector({
+    source : new ol.source.Vector()
+  });
+  
+  drawProfileInteraction : ol.interaction.Draw = new ol.interaction.Draw({
+    type : 'LineString',
+    source : this.drawProfileLayer.getSource()
+  });
+
   @ViewChild('overviewMap') overviewMapEl : ElementRef;
   @ViewChild('mapsDetailsContainer') mapsDetailsContainer: ElementRef;
   @ViewChild('sidenav') sidenav: MdSidenav;
@@ -37,7 +48,41 @@ export class MapComponent implements OnInit {
     private projService : ProjectionService, 
     private profileService : Profile3DService,
     private dragulaService: DragulaService
-  ) {}
+  ) {
+    this.drawProfileLayer.set('name', 'DrawProfileLayer');
+    this.drawProfileInteraction.on('drawstart', (e)=>{
+      this.drawProfileLayer.getSource().clear();
+      this.drawProfileLayer.getSource().changed();
+    })
+    this.drawProfileInteraction.on('drawend', (e : ol.interaction.DrawEvent)=>{
+      this.profileService.getProfile(e.feature).subscribe(
+        (res)=> {
+          let wgs84Sphere = new ol.Sphere(6378137);
+          let geometry = new ol.geom.LineString(res.json().coordinates, 'XYZ');
+          let profile3D = new ol.Feature({
+            geometry 
+          });
+          
+          // [ [dist, cota],... ]
+          this.dataChartArray = [];
+          let dist = 0;
+          let points = geometry.getCoordinates();
+
+          for(let i = 0; i< points.length - 1; i++){
+            //console.log('pooooint', points[i])
+            this.dataChartArray.push([dist, points[i][2]]);
+            if(points[i + 1]){
+              var p = ol.proj.transform(points[i], this.map.getView().getProjection(), 'EPSG:4326');
+              var next = ol.proj.transform(points[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
+              var subLineStringGeom = new ol.geom.LineString([ p, next ]);
+              dist += wgs84Sphere.haversineDistance(p, next);
+            }
+          }
+          //console.log(this.dataChartArray)
+        }
+      );
+    })
+  }
 
   ngOnInit(){
     this.sidenav.onOpenStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
@@ -113,7 +158,8 @@ export class MapComponent implements OnInit {
     this.projService.setProjection(this.map, '25830');
 
     this.addDummyLayers(this.map);
-
+    this.map.addLayer(this.drawProfileLayer);
+    this.map.addInteraction(this.drawProfileInteraction);
   }
 
   createOverviewMap(){

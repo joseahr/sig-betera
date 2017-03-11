@@ -65,7 +65,9 @@
     <button md-button class="list-button">
       <md-icon>file_download</md-icon>DESCARGAR MAPA
     </button>
-
+    <div style="flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;">
+      <app-map-profile [data]="dataChartArray"></app-map-profile>
+    </div>
 
   </md-sidenav>
   <div id="map" #mapEl class="example-sidenav-content"
