@@ -1,1 +1,5 @@
-<div #profile class="profile"></div>
+<chart class="profile" (load)="saveInstance($event.context)" [options]="options">
+    <series>
+        <point (mouseOver)="onSelectProfile($event)"></point>
+    </series>
+</chart>

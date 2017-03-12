@@ -26,7 +26,7 @@ export class MapComponent implements OnInit {
   overviewCtrl : ol.Map;
   sideNavMapInterval : any;
 
-  dataChartArray = [];
+  profileGeom : ol.geom.LineString;
   
   drawProfileLayer : ol.layer.Vector = new ol.layer.Vector({
     source : new ol.source.Vector()
@@ -53,32 +53,14 @@ export class MapComponent implements OnInit {
     this.drawProfileInteraction.on('drawstart', (e)=>{
       this.drawProfileLayer.getSource().clear();
       this.drawProfileLayer.getSource().changed();
+      this.profileGeom = null;
     })
     this.drawProfileInteraction.on('drawend', (e : ol.interaction.DrawEvent)=>{
       this.profileService.getProfile(e.feature).subscribe(
         (res)=> {
-          let wgs84Sphere = new ol.Sphere(6378137);
-          let geometry = new ol.geom.LineString(res.json().coordinates, 'XYZ');
-          let profile3D = new ol.Feature({
-            geometry 
+          this.zone.run(()=>{
+            this.profileGeom = new ol.geom.LineString(res.json().coordinates, 'XYZ');
           });
-          
-          // [ [dist, cota],... ]
-          this.dataChartArray = [];
-          let dist = 0;
-          let points = geometry.getCoordinates();
-
-          for(let i = 0; i< points.length - 1; i++){
-            //console.log('pooooint', points[i])
-            this.dataChartArray.push([dist, points[i][2]]);
-            if(points[i + 1]){
-              var p = ol.proj.transform(points[i], this.map.getView().getProjection(), 'EPSG:4326');
-              var next = ol.proj.transform(points[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
-              var subLineStringGeom = new ol.geom.LineString([ p, next ]);
-              dist += wgs84Sphere.haversineDistance(p, next);
-            }
-          }
-          //console.log(this.dataChartArray)
         }
       );
     })

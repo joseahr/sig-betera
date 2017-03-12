@@ -154,302 +154,6 @@ module.exports = function(x) {
 
 /***/ }),
 /* 738 */
-/***/ (function(module, exports) {
-
-var HALF_PI = Math.PI/2;
-module.exports = function(eccent, ts) {
-  var eccnth = 0.5 * eccent;
-  var con, dphi;
-  var phi = HALF_PI - 2 * Math.atan(ts);
-  for (var i = 0; i <= 15; i++) {
-    con = eccent * Math.sin(phi);
-    dphi = HALF_PI - 2 * Math.atan(ts * (Math.pow(((1 - con) / (1 + con)), eccnth))) - phi;
-    phi += dphi;
-    if (Math.abs(dphi) <= 0.0000000001) {
-      return phi;
-    }
-  }
-  //console.log("phi2z has NoConvergence");
-  return -9999;
-};
-
-/***/ }),
-/* 739 */
-/***/ (function(module, exports) {
-
-var HALF_PI = Math.PI/2;
-
-module.exports = function(eccent, phi, sinphi) {
-  var con = eccent * sinphi;
-  var com = 0.5 * eccent;
-  con = Math.pow(((1 - con) / (1 + con)), com);
-  return (Math.tan(0.5 * (HALF_PI - phi)) / con);
-};
-
-/***/ }),
-/* 740 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var Subject_1 = __webpack_require__(9);
-var Subscription_1 = __webpack_require__(51);
-/**
- * @class AsyncSubject<T>
- */
-var AsyncSubject = (function (_super) {
-    __extends(AsyncSubject, _super);
-    function AsyncSubject() {
-        _super.apply(this, arguments);
-        this.value = null;
-        this.hasNext = false;
-        this.hasCompleted = false;
-    }
-    AsyncSubject.prototype._subscribe = function (subscriber) {
-        if (this.hasError) {
-            subscriber.error(this.thrownError);
-            return Subscription_1.Subscription.EMPTY;
-        }
-        else if (this.hasCompleted && this.hasNext) {
-            subscriber.next(this.value);
-            subscriber.complete();
-            return Subscription_1.Subscription.EMPTY;
-        }
-        return _super.prototype._subscribe.call(this, subscriber);
-    };
-    AsyncSubject.prototype.next = function (value) {
-        if (!this.hasCompleted) {
-            this.value = value;
-            this.hasNext = true;
-        }
-    };
-    AsyncSubject.prototype.error = function (error) {
-        if (!this.hasCompleted) {
-            _super.prototype.error.call(this, error);
-        }
-    };
-    AsyncSubject.prototype.complete = function () {
-        this.hasCompleted = true;
-        if (this.hasNext) {
-            _super.prototype.next.call(this, this.value);
-        }
-        _super.prototype.complete.call(this);
-    };
-    return AsyncSubject;
-}(Subject_1.Subject));
-exports.AsyncSubject = AsyncSubject;
-//# sourceMappingURL=AsyncSubject.js.map
-
-/***/ }),
-/* 741 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-/**
- * An error thrown when an element was queried at a certain index of an
- * Observable, but no such index or position exists in that sequence.
- *
- * @see {@link elementAt}
- * @see {@link take}
- * @see {@link takeLast}
- *
- * @class ArgumentOutOfRangeError
- */
-var ArgumentOutOfRangeError = (function (_super) {
-    __extends(ArgumentOutOfRangeError, _super);
-    function ArgumentOutOfRangeError() {
-        var err = _super.call(this, 'argument out of range');
-        this.name = err.name = 'ArgumentOutOfRangeError';
-        this.stack = err.stack;
-        this.message = err.message;
-    }
-    return ArgumentOutOfRangeError;
-}(Error));
-exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError;
-//# sourceMappingURL=ArgumentOutOfRangeError.js.map
-
-/***/ }),
-/* 742 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function isDate(value) {
-    return value instanceof Date && !isNaN(+value);
-}
-exports.isDate = isDate;
-//# sourceMappingURL=isDate.js.map
-
-/***/ }),
-/* 743 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var isArray_1 = __webpack_require__(166);
-function isNumeric(val) {
-    // parseFloat NaNs numeric-cast false positives (null|true|false|"")
-    // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
-    // subtraction forces infinities to NaN
-    // adding 1 corrects loss of precision from parseFloat (#15100)
-    return !isArray_1.isArray(val) && (val - parseFloat(val) + 1) >= 0;
-}
-exports.isNumeric = isNumeric;
-;
-//# sourceMappingURL=isNumeric.js.map
-
-/***/ }),
-/* 744 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var dragulaExpt = __webpack_require__(803);
-exports.dragula = dragulaExpt.default || dragulaExpt;
-
-
-/***/ }),
-/* 745 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var dragula_class_1 = __webpack_require__(744);
-var core_1 = __webpack_require__(0);
-var DragulaService = (function () {
-    function DragulaService() {
-        this.cancel = new core_1.EventEmitter();
-        this.cloned = new core_1.EventEmitter();
-        this.drag = new core_1.EventEmitter();
-        this.dragend = new core_1.EventEmitter();
-        this.drop = new core_1.EventEmitter();
-        this.out = new core_1.EventEmitter();
-        this.over = new core_1.EventEmitter();
-        this.remove = new core_1.EventEmitter();
-        this.shadow = new core_1.EventEmitter();
-        this.dropModel = new core_1.EventEmitter();
-        this.removeModel = new core_1.EventEmitter();
-        this.events = [
-            'cancel', 'cloned', 'drag', 'dragend', 'drop', 'out', 'over',
-            'remove', 'shadow', 'dropModel', 'removeModel'
-        ];
-        this.bags = [];
-    }
-    DragulaService.prototype.add = function (name, drake) {
-        var bag = this.find(name);
-        if (bag) {
-            throw new Error('Bag named: "' + name + '" already exists.');
-        }
-        bag = { name: name, drake: drake };
-        this.bags.push(bag);
-        if (drake.models) {
-            this.handleModels(name, drake);
-        }
-        if (!bag.initEvents) {
-            this.setupEvents(bag);
-        }
-        return bag;
-    };
-    DragulaService.prototype.find = function (name) {
-        for (var _i = 0, _a = this.bags; _i < _a.length; _i++) {
-            var bag = _a[_i];
-            if (bag.name === name) {
-                return bag;
-            }
-        }
-    };
-    DragulaService.prototype.destroy = function (name) {
-        var bag = this.find(name);
-        var i = this.bags.indexOf(bag);
-        this.bags.splice(i, 1);
-        bag.drake.destroy();
-    };
-    DragulaService.prototype.setOptions = function (name, options) {
-        var bag = this.add(name, dragula_class_1.dragula(options));
-        this.handleModels(name, bag.drake);
-    };
-    DragulaService.prototype.handleModels = function (name, drake) {
-        var _this = this;
-        var dragElm;
-        var dragIndex;
-        var dropIndex;
-        var sourceModel;
-        drake.on('remove', function (el, source) {
-            if (!drake.models) {
-                return;
-            }
-            sourceModel = drake.models[drake.containers.indexOf(source)];
-            sourceModel.splice(dragIndex, 1);
-            // console.log('REMOVE');
-            // console.log(sourceModel);
-            _this.removeModel.emit([name, el, source]);
-        });
-        drake.on('drag', function (el, source) {
-            dragElm = el;
-            dragIndex = _this.domIndexOf(el, source);
-        });
-        drake.on('drop', function (dropElm, target, source) {
-            if (!drake.models || !target) {
-                return;
-            }
-            dropIndex = _this.domIndexOf(dropElm, target);
-            sourceModel = drake.models[drake.containers.indexOf(source)];
-            // console.log('DROP');
-            // console.log(sourceModel);
-            if (target === source) {
-                sourceModel.splice(dropIndex, 0, sourceModel.splice(dragIndex, 1)[0]);
-            }
-            else {
-                var notCopy = dragElm === dropElm;
-                var targetModel = drake.models[drake.containers.indexOf(target)];
-                var dropElmModel = notCopy ? sourceModel[dragIndex] : JSON.parse(JSON.stringify(sourceModel[dragIndex]));
-                if (notCopy) {
-                    sourceModel.splice(dragIndex, 1);
-                }
-                targetModel.splice(dropIndex, 0, dropElmModel);
-                target.removeChild(dropElm); // element must be removed for ngFor to apply correctly
-            }
-            _this.dropModel.emit([name, dropElm, target, source]);
-        });
-    };
-    DragulaService.prototype.setupEvents = function (bag) {
-        bag.initEvents = true;
-        var that = this;
-        var emitter = function (type) {
-            function replicate() {
-                var args = Array.prototype.slice.call(arguments);
-                that[type].emit([bag.name].concat(args));
-            }
-            bag.drake.on(type, replicate);
-        };
-        this.events.forEach(emitter);
-    };
-    DragulaService.prototype.domIndexOf = function (child, parent) {
-        return Array.prototype.indexOf.call(parent.children, child);
-    };
-    DragulaService.decorators = [
-        { type: core_1.Injectable },
-    ];
-    /** @nocollapse */
-    DragulaService.ctorParameters = function () { return []; };
-    return DragulaService;
-}());
-exports.DragulaService = DragulaService;
-
-
-/***/ }),
-/* 746 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;var require;var require;var require;var require;var require;var require;// OpenLayers. See https://openlayers.org/
@@ -1463,6 +1167,302 @@ Ok.prototype.changed=Ok.prototype.s;Ok.prototype.dispatchEvent=Ok.prototype.b;Ok
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ }),
+/* 739 */
+/***/ (function(module, exports) {
+
+var HALF_PI = Math.PI/2;
+module.exports = function(eccent, ts) {
+  var eccnth = 0.5 * eccent;
+  var con, dphi;
+  var phi = HALF_PI - 2 * Math.atan(ts);
+  for (var i = 0; i <= 15; i++) {
+    con = eccent * Math.sin(phi);
+    dphi = HALF_PI - 2 * Math.atan(ts * (Math.pow(((1 - con) / (1 + con)), eccnth))) - phi;
+    phi += dphi;
+    if (Math.abs(dphi) <= 0.0000000001) {
+      return phi;
+    }
+  }
+  //console.log("phi2z has NoConvergence");
+  return -9999;
+};
+
+/***/ }),
+/* 740 */
+/***/ (function(module, exports) {
+
+var HALF_PI = Math.PI/2;
+
+module.exports = function(eccent, phi, sinphi) {
+  var con = eccent * sinphi;
+  var com = 0.5 * eccent;
+  con = Math.pow(((1 - con) / (1 + con)), com);
+  return (Math.tan(0.5 * (HALF_PI - phi)) / con);
+};
+
+/***/ }),
+/* 741 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Subject_1 = __webpack_require__(9);
+var Subscription_1 = __webpack_require__(51);
+/**
+ * @class AsyncSubject<T>
+ */
+var AsyncSubject = (function (_super) {
+    __extends(AsyncSubject, _super);
+    function AsyncSubject() {
+        _super.apply(this, arguments);
+        this.value = null;
+        this.hasNext = false;
+        this.hasCompleted = false;
+    }
+    AsyncSubject.prototype._subscribe = function (subscriber) {
+        if (this.hasError) {
+            subscriber.error(this.thrownError);
+            return Subscription_1.Subscription.EMPTY;
+        }
+        else if (this.hasCompleted && this.hasNext) {
+            subscriber.next(this.value);
+            subscriber.complete();
+            return Subscription_1.Subscription.EMPTY;
+        }
+        return _super.prototype._subscribe.call(this, subscriber);
+    };
+    AsyncSubject.prototype.next = function (value) {
+        if (!this.hasCompleted) {
+            this.value = value;
+            this.hasNext = true;
+        }
+    };
+    AsyncSubject.prototype.error = function (error) {
+        if (!this.hasCompleted) {
+            _super.prototype.error.call(this, error);
+        }
+    };
+    AsyncSubject.prototype.complete = function () {
+        this.hasCompleted = true;
+        if (this.hasNext) {
+            _super.prototype.next.call(this, this.value);
+        }
+        _super.prototype.complete.call(this);
+    };
+    return AsyncSubject;
+}(Subject_1.Subject));
+exports.AsyncSubject = AsyncSubject;
+//# sourceMappingURL=AsyncSubject.js.map
+
+/***/ }),
+/* 742 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * An error thrown when an element was queried at a certain index of an
+ * Observable, but no such index or position exists in that sequence.
+ *
+ * @see {@link elementAt}
+ * @see {@link take}
+ * @see {@link takeLast}
+ *
+ * @class ArgumentOutOfRangeError
+ */
+var ArgumentOutOfRangeError = (function (_super) {
+    __extends(ArgumentOutOfRangeError, _super);
+    function ArgumentOutOfRangeError() {
+        var err = _super.call(this, 'argument out of range');
+        this.name = err.name = 'ArgumentOutOfRangeError';
+        this.stack = err.stack;
+        this.message = err.message;
+    }
+    return ArgumentOutOfRangeError;
+}(Error));
+exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError;
+//# sourceMappingURL=ArgumentOutOfRangeError.js.map
+
+/***/ }),
+/* 743 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+function isDate(value) {
+    return value instanceof Date && !isNaN(+value);
+}
+exports.isDate = isDate;
+//# sourceMappingURL=isDate.js.map
+
+/***/ }),
+/* 744 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var isArray_1 = __webpack_require__(166);
+function isNumeric(val) {
+    // parseFloat NaNs numeric-cast false positives (null|true|false|"")
+    // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
+    // subtraction forces infinities to NaN
+    // adding 1 corrects loss of precision from parseFloat (#15100)
+    return !isArray_1.isArray(val) && (val - parseFloat(val) + 1) >= 0;
+}
+exports.isNumeric = isNumeric;
+;
+//# sourceMappingURL=isNumeric.js.map
+
+/***/ }),
+/* 745 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var dragulaExpt = __webpack_require__(803);
+exports.dragula = dragulaExpt.default || dragulaExpt;
+
+
+/***/ }),
+/* 746 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var dragula_class_1 = __webpack_require__(745);
+var core_1 = __webpack_require__(0);
+var DragulaService = (function () {
+    function DragulaService() {
+        this.cancel = new core_1.EventEmitter();
+        this.cloned = new core_1.EventEmitter();
+        this.drag = new core_1.EventEmitter();
+        this.dragend = new core_1.EventEmitter();
+        this.drop = new core_1.EventEmitter();
+        this.out = new core_1.EventEmitter();
+        this.over = new core_1.EventEmitter();
+        this.remove = new core_1.EventEmitter();
+        this.shadow = new core_1.EventEmitter();
+        this.dropModel = new core_1.EventEmitter();
+        this.removeModel = new core_1.EventEmitter();
+        this.events = [
+            'cancel', 'cloned', 'drag', 'dragend', 'drop', 'out', 'over',
+            'remove', 'shadow', 'dropModel', 'removeModel'
+        ];
+        this.bags = [];
+    }
+    DragulaService.prototype.add = function (name, drake) {
+        var bag = this.find(name);
+        if (bag) {
+            throw new Error('Bag named: "' + name + '" already exists.');
+        }
+        bag = { name: name, drake: drake };
+        this.bags.push(bag);
+        if (drake.models) {
+            this.handleModels(name, drake);
+        }
+        if (!bag.initEvents) {
+            this.setupEvents(bag);
+        }
+        return bag;
+    };
+    DragulaService.prototype.find = function (name) {
+        for (var _i = 0, _a = this.bags; _i < _a.length; _i++) {
+            var bag = _a[_i];
+            if (bag.name === name) {
+                return bag;
+            }
+        }
+    };
+    DragulaService.prototype.destroy = function (name) {
+        var bag = this.find(name);
+        var i = this.bags.indexOf(bag);
+        this.bags.splice(i, 1);
+        bag.drake.destroy();
+    };
+    DragulaService.prototype.setOptions = function (name, options) {
+        var bag = this.add(name, dragula_class_1.dragula(options));
+        this.handleModels(name, bag.drake);
+    };
+    DragulaService.prototype.handleModels = function (name, drake) {
+        var _this = this;
+        var dragElm;
+        var dragIndex;
+        var dropIndex;
+        var sourceModel;
+        drake.on('remove', function (el, source) {
+            if (!drake.models) {
+                return;
+            }
+            sourceModel = drake.models[drake.containers.indexOf(source)];
+            sourceModel.splice(dragIndex, 1);
+            // console.log('REMOVE');
+            // console.log(sourceModel);
+            _this.removeModel.emit([name, el, source]);
+        });
+        drake.on('drag', function (el, source) {
+            dragElm = el;
+            dragIndex = _this.domIndexOf(el, source);
+        });
+        drake.on('drop', function (dropElm, target, source) {
+            if (!drake.models || !target) {
+                return;
+            }
+            dropIndex = _this.domIndexOf(dropElm, target);
+            sourceModel = drake.models[drake.containers.indexOf(source)];
+            // console.log('DROP');
+            // console.log(sourceModel);
+            if (target === source) {
+                sourceModel.splice(dropIndex, 0, sourceModel.splice(dragIndex, 1)[0]);
+            }
+            else {
+                var notCopy = dragElm === dropElm;
+                var targetModel = drake.models[drake.containers.indexOf(target)];
+                var dropElmModel = notCopy ? sourceModel[dragIndex] : JSON.parse(JSON.stringify(sourceModel[dragIndex]));
+                if (notCopy) {
+                    sourceModel.splice(dragIndex, 1);
+                }
+                targetModel.splice(dropIndex, 0, dropElmModel);
+                target.removeChild(dropElm); // element must be removed for ngFor to apply correctly
+            }
+            _this.dropModel.emit([name, dropElm, target, source]);
+        });
+    };
+    DragulaService.prototype.setupEvents = function (bag) {
+        bag.initEvents = true;
+        var that = this;
+        var emitter = function (type) {
+            function replicate() {
+                var args = Array.prototype.slice.call(arguments);
+                that[type].emit([bag.name].concat(args));
+            }
+            bag.drake.on(type, replicate);
+        };
+        this.events.forEach(emitter);
+    };
+    DragulaService.prototype.domIndexOf = function (child, parent) {
+        return Array.prototype.indexOf.call(parent.children, child);
+    };
+    DragulaService.decorators = [
+        { type: core_1.Injectable },
+    ];
+    /** @nocollapse */
+    DragulaService.ctorParameters = function () { return []; };
+    return DragulaService;
+}());
+exports.DragulaService = DragulaService;
+
+
+/***/ }),
 /* 747 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1582,7 +1582,7 @@ var queue_1 = __webpack_require__(779);
 var Subscription_1 = __webpack_require__(51);
 var observeOn_1 = __webpack_require__(458);
 var ObjectUnsubscribedError_1 = __webpack_require__(271);
-var SubjectSubscription_1 = __webpack_require__(462);
+var SubjectSubscription_1 = __webpack_require__(461);
 /**
  * @class ReplaySubject<T>
  */
@@ -3107,8 +3107,8 @@ function getMinNorthing(zoneLetter) {
 "use strict";
 
 var core_1 = __webpack_require__(0);
-var dragula_provider_1 = __webpack_require__(745);
-var dragula_class_1 = __webpack_require__(744);
+var dragula_provider_1 = __webpack_require__(746);
+var dragula_class_1 = __webpack_require__(745);
 var DragulaDirective = (function () {
     function DragulaDirective(el, dragulaService) {
         this.el = el;
@@ -3182,9 +3182,9 @@ exports.DragulaDirective = DragulaDirective;
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
-__export(__webpack_require__(744));
-__export(__webpack_require__(760));
 __export(__webpack_require__(745));
+__export(__webpack_require__(760));
+__export(__webpack_require__(746));
 __export(__webpack_require__(807));
 
 
@@ -4657,7 +4657,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var FromObservable_1 = __webpack_require__(474);
+var FromObservable_1 = __webpack_require__(473);
 var isArray_1 = __webpack_require__(166);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
@@ -5310,7 +5310,7 @@ exports.noop = noop;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_projection_service__ = __webpack_require__(787);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_profile3d_service__ = __webpack_require__(786);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(460);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_openlayers__ = __webpack_require__(746);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_openlayers__ = __webpack_require__(738);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_openlayers__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5338,7 +5338,6 @@ var MapComponent = (function () {
         this.projService = projService;
         this.profileService = profileService;
         this.dragulaService = dragulaService;
-        this.dataChartArray = [];
         this.drawProfileLayer = new __WEBPACK_IMPORTED_MODULE_6_openlayers__["layer"].Vector({
             source: new __WEBPACK_IMPORTED_MODULE_6_openlayers__["source"].Vector()
         });
@@ -5350,29 +5349,13 @@ var MapComponent = (function () {
         this.drawProfileInteraction.on('drawstart', function (e) {
             _this.drawProfileLayer.getSource().clear();
             _this.drawProfileLayer.getSource().changed();
+            _this.profileGeom = null;
         });
         this.drawProfileInteraction.on('drawend', function (e) {
             _this.profileService.getProfile(e.feature).subscribe(function (res) {
-                var wgs84Sphere = new __WEBPACK_IMPORTED_MODULE_6_openlayers__["Sphere"](6378137);
-                var geometry = new __WEBPACK_IMPORTED_MODULE_6_openlayers__["geom"].LineString(res.json().coordinates, 'XYZ');
-                var profile3D = new __WEBPACK_IMPORTED_MODULE_6_openlayers__["Feature"]({
-                    geometry: geometry
+                _this.zone.run(function () {
+                    _this.profileGeom = new __WEBPACK_IMPORTED_MODULE_6_openlayers__["geom"].LineString(res.json().coordinates, 'XYZ');
                 });
-                // [ [dist, cota],... ]
-                _this.dataChartArray = [];
-                var dist = 0;
-                var points = geometry.getCoordinates();
-                for (var i = 0; i < points.length - 1; i++) {
-                    console.log('pooooint', points[i]);
-                    _this.dataChartArray.push([dist, points[i][2]]);
-                    if (points[i + 1]) {
-                        var p = __WEBPACK_IMPORTED_MODULE_6_openlayers__["proj"].transform(points[i], _this.map.getView().getProjection(), 'EPSG:4326');
-                        var next = __WEBPACK_IMPORTED_MODULE_6_openlayers__["proj"].transform(points[i + 1], _this.map.getView().getProjection(), 'EPSG:4326');
-                        var subLineStringGeom = new __WEBPACK_IMPORTED_MODULE_6_openlayers__["geom"].LineString([p, next]);
-                        dist += wgs84Sphere.haversineDistance(p, next);
-                    }
-                }
-                console.log(_this.dataChartArray);
             });
         });
     }
@@ -5650,7 +5633,7 @@ var MapComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(746);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(738);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_openlayers__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(852);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
@@ -5701,7 +5684,7 @@ var Profile3DService = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(746);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(738);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_openlayers__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_proj4__ = __webpack_require__(823);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_proj4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_proj4__);
@@ -5764,8 +5747,8 @@ var ProjectionService = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_highcharts__ = __webpack_require__(461);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_highcharts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers__ = __webpack_require__(738);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_openlayers__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5780,44 +5763,104 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ProfileComponent = (function () {
     function ProfileComponent() {
+        this.dataChartArray = [];
     }
-    ProfileComponent.prototype.ngOnChanges = function (changes) {
-        if (changes['data'] && this.chart) {
-            console.log('changes dataaa');
+    ProfileComponent.prototype.saveInstance = function (chartInstance) {
+        var _this = this;
+        this.chart = chartInstance;
+        if (this.chart.series[0])
             this.chart.series[0].remove();
-            this.chart.addSeries({ name: 'Perfil', data: this.data });
+        this.chart.addSeries({ name: 'Perfil', data: this.dataChartArray });
+        setTimeout(function () {
+            _this.chart.reflow();
+            _this.chart.redraw();
+        }, 500);
+    };
+    ProfileComponent.prototype.ngOnChanges = function (changes) {
+        var _this = this;
+        console.log(changes, this.profileGeom);
+        if (changes['profileGeom'] && this.profileGeom) {
+            console.log('profileGeom Changes');
+            if (!this.pointLayer) {
+                this.pointLayer = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["layer"].Vector({
+                    source: new __WEBPACK_IMPORTED_MODULE_1_openlayers__["source"].Vector()
+                });
+                this.map.addLayer(this.pointLayer);
+            }
+            this.dataChartArray = [];
+            var wgs84Sphere = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Sphere"](6378137);
+            var profile3D = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Feature"]({
+                geometry: this.profileGeom
+            });
+            // [ [dist, cota],... ]
+            this.dataChartArray = [];
+            var dist = 0;
+            var points = this.profileGeom.getCoordinates();
+            for (var i = 0; i < points.length - 1; i++) {
+                //console.log('pooooint', points[i])
+                this.dataChartArray.push([dist, points[i][2]]);
+                if (points[i + 1]) {
+                    var p = __WEBPACK_IMPORTED_MODULE_1_openlayers__["proj"].transform(points[i], this.map.getView().getProjection(), 'EPSG:4326');
+                    var next = __WEBPACK_IMPORTED_MODULE_1_openlayers__["proj"].transform(points[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
+                    var subLineStringGeom = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"].LineString([p, next]);
+                    dist += wgs84Sphere.haversineDistance(p, next);
+                }
+            }
+            console.log(this.dataChartArray);
+            if (this.chart) {
+                if (this.chart.series[0])
+                    this.chart.series[0].remove();
+                this.chart.addSeries({ name: 'Perfil', data: this.dataChartArray });
+                setTimeout(function () {
+                    _this.chart.reflow();
+                    _this.chart.redraw();
+                }, 500);
+            }
         }
     };
     ProfileComponent.prototype.ngOnInit = function () {
-        this.chart = __WEBPACK_IMPORTED_MODULE_1_highcharts__["chart"](this.profile.nativeElement, {
-            chart: {
-                zoomType: 'x',
-                events: {
-                    load: function () {
-                        var self = this;
-                        setTimeout(function () {
-                            self.reflow();
-                        }, 100);
-                    }
-                }
-            },
+        this.options = {
+            title: { text: 'Perfil seleccionado' },
+            chart: { zoomType: 'x' },
             series: [
-                { name: 'Perfil', data: this.data, type: 'line' }
+                { name: 'Perfil', data: this.dataChartArray }
             ]
+        };
+    };
+    ProfileComponent.prototype.onSelectProfile = function (event) {
+        var dist = event.context.x;
+        var coordinate = this.getClosestPointToDistance(dist);
+        var featurePoint = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Feature"]({
+            geometry: new __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"].Point(coordinate, 'XYZ')
         });
-        /*this.chart.addSeries(
-          {name: 'Poids', data: [75,75,75,76,77,78,77,77,78,75,75,77,77,76,75,76,77,76,78,75,77,75,78,77,77,78,77,78,76,75]}
-        );
-        this.chart.series[0].remove();*/
+        console.log(coordinate);
+        this.pointLayer.getSource().clear();
+        this.pointLayer.getSource().addFeature(featurePoint);
+    };
+    ProfileComponent.prototype.getClosestPointToDistance = function (distance) {
+        var wgs84Sphere = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Sphere"](6378137);
+        var coords = this.profileGeom.getCoordinates();
+        var distance_ = 0;
+        for (var i = 0; i < coords.length; i++) {
+            if (coords[i + 1]) {
+                var p = __WEBPACK_IMPORTED_MODULE_1_openlayers__["proj"].transform(coords[i], this.map.getView().getProjection(), 'EPSG:4326');
+                var next = __WEBPACK_IMPORTED_MODULE_1_openlayers__["proj"].transform(coords[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
+                var subLineStringGeom = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"].LineString([p, next]);
+                distance_ += wgs84Sphere.haversineDistance(p, next);
+                if (distance_ >= distance) {
+                    return coords[i + 1];
+                }
+            }
+        }
     };
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('profile'), 
-        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object)
-    ], ProfileComponent.prototype, "profile", void 0);
-    __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])('data'), 
-        __metadata('design:type', Object)
-    ], ProfileComponent.prototype, "data", void 0);
+        __metadata('design:type', (typeof (_a = (_b = typeof __WEBPACK_IMPORTED_MODULE_1_openlayers__ !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"]) && _b.LineString) === 'function' && _a) || Object)
+    ], ProfileComponent.prototype, "profileGeom", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])('map'), 
+        __metadata('design:type', (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_openlayers__ !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_openlayers__["Map"]) === 'function' && _c) || Object)
+    ], ProfileComponent.prototype, "map", void 0);
     ProfileComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-map-profile',
@@ -5828,7 +5871,7 @@ var ProfileComponent = (function () {
         __metadata('design:paramtypes', [])
     ], ProfileComponent);
     return ProfileComponent;
-    var _a;
+    var _a, _b, _c;
 }());
 //# sourceMappingURL=profile.component.js.map
 
@@ -7198,7 +7241,7 @@ exports = module.exports = __webpack_require__(23)();
 
 
 // module
-exports.push([module.i, ".profile {\r\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\r\n    margin-bottom: 10px;\r\n}", ""]);
+exports.push([module.i, ".profile {\r\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\r\n    -webkit-transition: opacity 0.5s linear;\r\n    transition: opacity 0.5s linear;\r\n    background: #f7f7f7;\r\n}", ""]);
 
 // exports
 
@@ -7354,7 +7397,7 @@ module.exports = {
 
 var core_1 = __webpack_require__(0);
 var dragula_directive_1 = __webpack_require__(760);
-var dragula_provider_1 = __webpack_require__(745);
+var dragula_provider_1 = __webpack_require__(746);
 var DragulaModule = (function () {
     function DragulaModule() {
     }
@@ -9916,11 +9959,11 @@ exports.names = ["Lambert Azimuthal Equal Area", "Lambert_Azimuthal_Equal_Area",
 
 var EPSLN = 1.0e-10;
 var msfnz = __webpack_require__(730);
-var tsfnz = __webpack_require__(739);
+var tsfnz = __webpack_require__(740);
 var HALF_PI = Math.PI/2;
 var sign = __webpack_require__(737);
 var adjust_lon = __webpack_require__(728);
-var phi2z = __webpack_require__(738);
+var phi2z = __webpack_require__(739);
 exports.init = function() {
 
   // array of:  r_maj,r_min,lat1,lat2,c_lon,c_lat,false_east,false_north
@@ -10077,8 +10120,8 @@ var EPSLN = 1.0e-10;
 var R2D = 57.29577951308232088;
 var adjust_lon = __webpack_require__(728);
 var FORTPI = Math.PI/4;
-var tsfnz = __webpack_require__(739);
-var phi2z = __webpack_require__(738);
+var tsfnz = __webpack_require__(740);
+var phi2z = __webpack_require__(739);
 exports.init = function() {
   var con = this.b / this.a;
   this.es = 1 - con * con;
@@ -10532,9 +10575,9 @@ exports.names = ["New_Zealand_Map_Grid", "nzmg"];
 /* 842 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var tsfnz = __webpack_require__(739);
+var tsfnz = __webpack_require__(740);
 var adjust_lon = __webpack_require__(728);
-var phi2z = __webpack_require__(738);
+var phi2z = __webpack_require__(739);
 var HALF_PI = Math.PI/2;
 var FORTPI = Math.PI/4;
 var EPSLN = 1.0e-10;
@@ -11039,8 +11082,8 @@ var HALF_PI = Math.PI/2;
 var EPSLN = 1.0e-10;
 var sign = __webpack_require__(737);
 var msfnz = __webpack_require__(730);
-var tsfnz = __webpack_require__(739);
-var phi2z = __webpack_require__(738);
+var tsfnz = __webpack_require__(740);
+var phi2z = __webpack_require__(739);
 var adjust_lon = __webpack_require__(728);
 exports.ssfn_ = function(phit, sinphi, eccen) {
   sinphi *= eccen;
@@ -11418,13 +11461,13 @@ exports.names = ["Van_der_Grinten_I", "VanDerGrinten", "vandg"];
 /* 850 */
 /***/ (function(module, exports) {
 
-module.exports = "<button \n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <div #mapsDetailsContainer *ngIf=\"map && map.getLayers().getArray()\" class=\"list collapsed\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n      <div class=\"list-item\" *ngFor=\"let layer of map.getLayers().getArray(); let i = index;\">\n        <div class=\"buttons\">\n          <button md-button *ngIf=\"i > 0\" (click)=\"moveLayerDown(layer.get('name'))\"><md-icon>keyboard_arrow_up</md-icon></button>\n          <button md-button *ngIf=\"i < map.getLayers().getArray().length - 1\" (click)=\"moveLayerUp(layer.get('name'))\"><md-icon>keyboard_arrow_down</md-icon></button>\n        </div>\n        <div class=\"content\">\n          <md-slide-toggle (change)=\"changeVisible($event, layer.get('name'))\" [checked]=\"layer.getVisible()\">\n            {{ layer.get('name') }}\n          </md-slide-toggle>\n          <md-slider (input)=\"changeOpacity($event, layer.get('name'))\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n          </md-slider>\n          <div class=\"actions\">\n            <div class=\"separator\"></div>\n            <button *ngIf=\"layer.get('layers')\" md-button (click)=\"groups._results[i].nativeElement.classList.toggle('collapsed')\"><md-icon>add</md-icon></button>\n            <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n            <!--<button md-button><md-icon>map</md-icon></button>-->\n            <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n          </div>\n        </div>\n        <div #group class=\"group collapsed\">\n          <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n            <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n              <div class=\"buttons\">\n                <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(layer.get('name'), layer_.get('name'))\"><md-icon>keyboard_arrow_up</md-icon></button>\n                <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(layer.get('name'), layer_.get('name'))\"><md-icon>keyboard_arrow_down</md-icon></button>\n              </div>\n              <div class=\"content\">\n                <md-slide-toggle (change)=\"changeVisible($event, layer_.get('name'))\" [checked]=\"layer.getVisible()\">\n                  {{ layer_.get('name') }}\n                </md-slide-toggle>\n                <md-slider (input)=\"changeOpacity($event, layer_.get('name'))\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n                </md-slider>\n                <div class=\"actions\">\n                  <div class=\"separator\"></div>\n                  <button md-button><md-icon>info</md-icon></button>\n                  <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n                  <!--<button md-button><md-icon>map</md-icon></button>-->\n                  <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    <!-- control de capas -->\n    <button md-button class=\"list-button\" (click)=\"overviewMap.classList.toggle('collapsed')\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div #overviewMap class=\"overview-map\" style=\"flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;\"></div>\n    <button md-button class=\"list-button\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n    <div style=\"flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;\">\n      <app-map-profile [data]=\"dataChartArray\"></app-map-profile>\n    </div>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{'map-expanded': sidenav.opened }\" \n  >\n  </div>\n\n</md-sidenav-container>\n"
+module.exports = "<button \n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <div #mapsDetailsContainer *ngIf=\"map && map.getLayers().getArray()\" class=\"list collapsed\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n      <div class=\"list-item\" *ngFor=\"let layer of map.getLayers().getArray(); let i = index;\">\n        <div class=\"buttons\">\n          <button md-button *ngIf=\"i > 0\" (click)=\"moveLayerDown(layer.get('name'))\"><md-icon>keyboard_arrow_up</md-icon></button>\n          <button md-button *ngIf=\"i < map.getLayers().getArray().length - 1\" (click)=\"moveLayerUp(layer.get('name'))\"><md-icon>keyboard_arrow_down</md-icon></button>\n        </div>\n        <div class=\"content\">\n          <md-slide-toggle (change)=\"changeVisible($event, layer.get('name'))\" [checked]=\"layer.getVisible()\">\n            {{ layer.get('name') }}\n          </md-slide-toggle>\n          <md-slider (input)=\"changeOpacity($event, layer.get('name'))\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n          </md-slider>\n          <div class=\"actions\">\n            <div class=\"separator\"></div>\n            <button *ngIf=\"layer.get('layers')\" md-button (click)=\"groups._results[i].nativeElement.classList.toggle('collapsed')\"><md-icon>add</md-icon></button>\n            <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n            <!--<button md-button><md-icon>map</md-icon></button>-->\n            <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n          </div>\n        </div>\n        <div #group class=\"group collapsed\">\n          <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n            <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n              <div class=\"buttons\">\n                <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(layer.get('name'), layer_.get('name'))\"><md-icon>keyboard_arrow_up</md-icon></button>\n                <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(layer.get('name'), layer_.get('name'))\"><md-icon>keyboard_arrow_down</md-icon></button>\n              </div>\n              <div class=\"content\">\n                <md-slide-toggle (change)=\"changeVisible($event, layer_.get('name'))\" [checked]=\"layer.getVisible()\">\n                  {{ layer_.get('name') }}\n                </md-slide-toggle>\n                <md-slider (input)=\"changeOpacity($event, layer_.get('name'))\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n                </md-slider>\n                <div class=\"actions\">\n                  <div class=\"separator\"></div>\n                  <button md-button><md-icon>info</md-icon></button>\n                  <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n                  <!--<button md-button><md-icon>map</md-icon></button>-->\n                  <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    <!-- control de capas -->\n    <button md-button class=\"list-button\" (click)=\"overviewMap.classList.toggle('collapsed')\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div #overviewMap class=\"overview-map\" style=\"flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;\"></div>\n    <button md-button class=\"list-button\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{'map-expanded': sidenav.opened }\" \n  >    \n  </div>\n\n  <div\n    style=\"flex : 1 1 auto; width : 100%; max-width : 100%; height : 200px; position : absolute; bottom : 0px; left : 0px; z-index: 2; overflow : hidden;\">\n    <app-map-profile [hidden]=\"!profileGeom\" \n      [data]=\"profileGeom\" \n      [map]=\"map\"\n    ></app-map-profile>\n  </div>\n\n</md-sidenav-container>\n"
 
 /***/ }),
 /* 851 */
 /***/ (function(module, exports) {
 
-module.exports = "<div #profile class=\"profile\"></div>"
+module.exports = "<chart class=\"profile\" (load)=\"saveInstance($event.context)\" [options]=\"options\">\r\n    <series>\r\n        <point (mouseOver)=\"onSelectProfile($event)\"></point>\r\n    </series>\r\n</chart>"
 
 /***/ }),
 /* 852 */
@@ -11450,7 +11493,7 @@ __webpack_require__(855);
 __webpack_require__(856);
 __webpack_require__(857);
 __webpack_require__(860);
-__webpack_require__(463);
+__webpack_require__(462);
 __webpack_require__(861);
 __webpack_require__(272);
 __webpack_require__(862);
@@ -11458,10 +11501,10 @@ __webpack_require__(863);
 __webpack_require__(864);
 __webpack_require__(865);
 __webpack_require__(866);
-__webpack_require__(464);
+__webpack_require__(463);
 __webpack_require__(870);
 __webpack_require__(867);
-__webpack_require__(465);
+__webpack_require__(464);
 __webpack_require__(868);
 __webpack_require__(869);
 __webpack_require__(871);
@@ -11478,7 +11521,7 @@ __webpack_require__(878);
 __webpack_require__(879);
 __webpack_require__(880);
 __webpack_require__(881);
-__webpack_require__(467);
+__webpack_require__(466);
 __webpack_require__(882);
 __webpack_require__(883);
 __webpack_require__(884);
@@ -11495,13 +11538,13 @@ __webpack_require__(893);
 __webpack_require__(895);
 __webpack_require__(896);
 __webpack_require__(897);
-__webpack_require__(468);
+__webpack_require__(467);
 __webpack_require__(900);
 __webpack_require__(901);
 __webpack_require__(902);
 __webpack_require__(898);
+__webpack_require__(468);
 __webpack_require__(469);
-__webpack_require__(470);
 __webpack_require__(903);
 __webpack_require__(904);
 __webpack_require__(169);
@@ -11509,7 +11552,7 @@ __webpack_require__(905);
 __webpack_require__(906);
 __webpack_require__(907);
 __webpack_require__(876);
-__webpack_require__(466);
+__webpack_require__(465);
 __webpack_require__(908);
 __webpack_require__(909);
 __webpack_require__(899);
@@ -11543,7 +11586,7 @@ __webpack_require__(935);
 __webpack_require__(936);
 __webpack_require__(937);
 __webpack_require__(938);
-__webpack_require__(471);
+__webpack_require__(470);
 __webpack_require__(939);
 __webpack_require__(940);
 __webpack_require__(941);
@@ -11551,7 +11594,7 @@ __webpack_require__(942);
 __webpack_require__(273);
 __webpack_require__(943);
 __webpack_require__(944);
-__webpack_require__(472);
+__webpack_require__(471);
 __webpack_require__(945);
 __webpack_require__(946);
 __webpack_require__(947);
@@ -11578,25 +11621,25 @@ var Subscription_1 = __webpack_require__(51);
 exports.Subscription = Subscription_1.Subscription;
 var Subscriber_1 = __webpack_require__(15);
 exports.Subscriber = Subscriber_1.Subscriber;
-var AsyncSubject_1 = __webpack_require__(740);
+var AsyncSubject_1 = __webpack_require__(741);
 exports.AsyncSubject = AsyncSubject_1.AsyncSubject;
 var ReplaySubject_1 = __webpack_require__(752);
 exports.ReplaySubject = ReplaySubject_1.ReplaySubject;
 var BehaviorSubject_1 = __webpack_require__(112);
 exports.BehaviorSubject = BehaviorSubject_1.BehaviorSubject;
-var ConnectableObservable_1 = __webpack_require__(473);
+var ConnectableObservable_1 = __webpack_require__(472);
 exports.ConnectableObservable = ConnectableObservable_1.ConnectableObservable;
 var Notification_1 = __webpack_require__(452);
 exports.Notification = Notification_1.Notification;
 var EmptyError_1 = __webpack_require__(168);
 exports.EmptyError = EmptyError_1.EmptyError;
-var ArgumentOutOfRangeError_1 = __webpack_require__(741);
+var ArgumentOutOfRangeError_1 = __webpack_require__(742);
 exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError_1.ArgumentOutOfRangeError;
 var ObjectUnsubscribedError_1 = __webpack_require__(271);
 exports.ObjectUnsubscribedError = ObjectUnsubscribedError_1.ObjectUnsubscribedError;
 var TimeoutError_1 = __webpack_require__(782);
 exports.TimeoutError = TimeoutError_1.TimeoutError;
-var UnsubscriptionError_1 = __webpack_require__(478);
+var UnsubscriptionError_1 = __webpack_require__(477);
 exports.UnsubscriptionError = UnsubscriptionError_1.UnsubscriptionError;
 var timeInterval_1 = __webpack_require__(775);
 exports.TimeInterval = timeInterval_1.TimeInterval;
@@ -12271,7 +12314,7 @@ Observable_1.Observable.prototype.isEmpty = isEmpty_1.isEmpty;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var last_1 = __webpack_require__(475);
+var last_1 = __webpack_require__(474);
 Observable_1.Observable.prototype.last = last_1.last;
 //# sourceMappingURL=last.js.map
 
@@ -12327,7 +12370,7 @@ Observable_1.Observable.prototype.max = max_1.max;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var merge_1 = __webpack_require__(476);
+var merge_1 = __webpack_require__(475);
 Observable_1.Observable.prototype.merge = merge_1.merge;
 //# sourceMappingURL=merge.js.map
 
@@ -12814,7 +12857,7 @@ Observable_1.Observable.prototype.toArray = toArray_1.toArray;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var toPromise_1 = __webpack_require__(477);
+var toPromise_1 = __webpack_require__(476);
 Observable_1.Observable.prototype.toPromise = toPromise_1.toPromise;
 //# sourceMappingURL=toPromise.js.map
 
@@ -12920,7 +12963,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Observable_1 = __webpack_require__(1);
 var tryCatch_1 = __webpack_require__(270);
 var errorObject_1 = __webpack_require__(165);
-var AsyncSubject_1 = __webpack_require__(740);
+var AsyncSubject_1 = __webpack_require__(741);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @extends {Ignored}
@@ -13194,7 +13237,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Observable_1 = __webpack_require__(1);
 var tryCatch_1 = __webpack_require__(270);
 var errorObject_1 = __webpack_require__(165);
-var AsyncSubject_1 = __webpack_require__(740);
+var AsyncSubject_1 = __webpack_require__(741);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @extends {Ignored}
@@ -13980,7 +14023,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var isNumeric_1 = __webpack_require__(743);
+var isNumeric_1 = __webpack_require__(744);
 var Observable_1 = __webpack_require__(1);
 var async_1 = __webpack_require__(450);
 /**
@@ -14334,7 +14377,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Observable_1 = __webpack_require__(1);
 var asap_1 = __webpack_require__(778);
-var isNumeric_1 = __webpack_require__(743);
+var isNumeric_1 = __webpack_require__(744);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @extends {Ignored}
@@ -14389,11 +14432,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var isNumeric_1 = __webpack_require__(743);
+var isNumeric_1 = __webpack_require__(744);
 var Observable_1 = __webpack_require__(1);
 var async_1 = __webpack_require__(450);
 var isScheduler_1 = __webpack_require__(108);
-var isDate_1 = __webpack_require__(742);
+var isDate_1 = __webpack_require__(743);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @extends {Ignored}
@@ -16516,7 +16559,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var async_1 = __webpack_require__(450);
-var isDate_1 = __webpack_require__(742);
+var isDate_1 = __webpack_require__(743);
 var Subscriber_1 = __webpack_require__(15);
 var Notification_1 = __webpack_require__(452);
 /**
@@ -17136,7 +17179,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var ArgumentOutOfRangeError_1 = __webpack_require__(741);
+var ArgumentOutOfRangeError_1 = __webpack_require__(742);
 /**
  * Emits the single value at the specified `index` in a sequence of emissions
  * from the source Observable.
@@ -18696,7 +18739,7 @@ exports.publishBehavior = publishBehavior;
 
 "use strict";
 
-var AsyncSubject_1 = __webpack_require__(740);
+var AsyncSubject_1 = __webpack_require__(741);
 var multicast_1 = __webpack_require__(451);
 /**
  * @return {ConnectableObservable<T>}
@@ -20184,7 +20227,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var ArgumentOutOfRangeError_1 = __webpack_require__(741);
+var ArgumentOutOfRangeError_1 = __webpack_require__(742);
 var EmptyObservable_1 = __webpack_require__(109);
 /**
  * Emits only the first `count` values emitted by the source Observable.
@@ -20279,7 +20322,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var ArgumentOutOfRangeError_1 = __webpack_require__(741);
+var ArgumentOutOfRangeError_1 = __webpack_require__(742);
 var EmptyObservable_1 = __webpack_require__(109);
 /**
  * Emits only the last `count` values emitted by the source Observable.
@@ -20786,7 +20829,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var async_1 = __webpack_require__(450);
-var isDate_1 = __webpack_require__(742);
+var isDate_1 = __webpack_require__(743);
 var Subscriber_1 = __webpack_require__(15);
 var TimeoutError_1 = __webpack_require__(782);
 /**
@@ -20893,7 +20936,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var async_1 = __webpack_require__(450);
-var isDate_1 = __webpack_require__(742);
+var isDate_1 = __webpack_require__(743);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /* tslint:enable:max-line-length */
@@ -21316,7 +21359,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Subject_1 = __webpack_require__(9);
 var async_1 = __webpack_require__(450);
 var Subscriber_1 = __webpack_require__(15);
-var isNumeric_1 = __webpack_require__(743);
+var isNumeric_1 = __webpack_require__(744);
 var isScheduler_1 = __webpack_require__(108);
 function windowTime(windowTimeSpan) {
     var scheduler = async_1.async;
