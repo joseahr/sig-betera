@@ -6,17 +6,17 @@ export class AuthService {
     constructor(private http : Http){}
 
     login(username, password){
-        return this.http.post('/user/login', {
+        return this.http.post('/api/user/login', {
             username,
             password
         });
     }
 
     logout(){
-        return this.http.get('/user/logout');
+        return this.http.get('/api/user/logout');
     }
 
     signup(user){
-        return this.http.post('/user/signup', user);
+        return this.http.post('/api/user/signup', user);
     }
 }

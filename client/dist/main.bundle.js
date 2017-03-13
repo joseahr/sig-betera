@@ -23,16 +23,16 @@ var AuthService = (function () {
         this.http = http;
     }
     AuthService.prototype.login = function (username, password) {
-        return this.http.post('/user/login', {
+        return this.http.post('/api/user/login', {
             username: username,
             password: password
         });
     };
     AuthService.prototype.logout = function () {
-        return this.http.get('/user/logout');
+        return this.http.get('/api/user/logout');
     };
     AuthService.prototype.signup = function (user) {
-        return this.http.post('/user/signup', user);
+        return this.http.post('/api/user/signup', user);
     };
     AuthService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
@@ -116,7 +116,7 @@ var HomeComponent = (function () {
     HomeComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-home',
-            template: __webpack_require__(702),
+            template: __webpack_require__(703),
             styles: [__webpack_require__(694)],
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
@@ -181,7 +181,7 @@ var LoginComponent = (function () {
     LoginComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-login',
-            template: __webpack_require__(704),
+            template: __webpack_require__(705),
             styles: [__webpack_require__(696)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]]
         }), 
@@ -250,7 +250,7 @@ var SignupComponent = (function () {
     SignupComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-signup',
-            template: __webpack_require__(705),
+            template: __webpack_require__(706),
             styles: [__webpack_require__(697)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]]
         }), 
@@ -268,7 +268,7 @@ var SignupComponent = (function () {
 
 var map = {
 	"./modules/map.module": [
-		727,
+		728,
 		0
 	]
 };
@@ -390,7 +390,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-root',
-            template: __webpack_require__(701),
+            template: __webpack_require__(702),
             styles: [__webpack_require__(693)],
             providers: [__WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */]]
         }), 
@@ -427,6 +427,8 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angular2_highcharts_dist_HighchartsService___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_angular2_highcharts_dist_HighchartsService__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_highcharts__ = __webpack_require__(699);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_highcharts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_highcharts_modules_exporting__ = __webpack_require__(700);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_highcharts_modules_exporting___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16_highcharts_modules_exporting__);
 /* unused harmony export highchartsFactory */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -454,7 +456,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 function highchartsFactory() {
+    __WEBPACK_IMPORTED_MODULE_16_highcharts_modules_exporting__(__WEBPACK_IMPORTED_MODULE_15_highcharts__);
     return __WEBPACK_IMPORTED_MODULE_15_highcharts__;
 }
 var AppModule = (function () {
@@ -573,7 +577,7 @@ var ForgotComponent = (function () {
     ForgotComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-forgot',
-            template: __webpack_require__(703),
+            template: __webpack_require__(704),
             styles: [__webpack_require__(695)]
         }), 
         __metadata('design:paramtypes', [])
@@ -690,42 +694,42 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 701:
+/***/ 702:
 /***/ (function(module, exports) {
 
 module.exports = "<md-toolbar #toolbarMenu color=\"primary\">\n  <img src=\"assets/escudo.png\" alt=\"\" class=\"logo-betera\">\n  <span class=\"title\">SIG Bétera</span>\n  <span class=\"spacer\"></span>\n  <button md-button [routerLink]=\"['']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n    Inicio\n  </button>\n  <button md-button [routerLink]=\"['map']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n    Mapa\n  </button>\n  <button md-button *ngIf=\"authUser\" [mdMenuTriggerFor]=\"menuLogedIn\">\n      {{authUser.name}}\n      <img style=\"max-height : 35px; border-radius: 20px; margin-left : 10px; margin-right: 10px;\" src=\"{{authUser.gravatar}}\">\n  </button> \n  <button *ngIf=\"!authUser\" md-icon-button [mdMenuTriggerFor]=\"menu\">\n    <md-icon>more_vert</md-icon>\n  </button>\n\n\n  <!-- Menú usuario no logueado -->\n  <md-menu #menu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"!authUser\" (click)=\"openLoginDialog()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Login</span>\n    </button>\n    <button md-menu-item (click)=\"openSignupDialog()\">\n      <md-icon>accessibility</md-icon>\n      <span>Registrarse</span>\n    </button>\n    <button md-menu-item (click)=\"openForgotDialog()\">\n      <md-icon>vpn_key</md-icon>\n      <span>¿Olvidaste credenciales?</span>\n    </button>\n  </md-menu>\n  <!-- Menú usuario logueado -->\n  <md-menu #menuLogedIn=\"mdMenu\">\n    <button md-menu-item *ngIf=\"authUser\" (click)=\"logout()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Logout</span>\n    </button>\n  </md-menu>\n</md-toolbar>\n\n<div class=\"container-router\">\n  <router-outlet></router-outlet>  \n</div>"
 
 /***/ }),
 
-/***/ 702:
+/***/ 703:
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <md-card class=\"card\" *ngFor=\"let seccion of secciones\" flex>\r\n    <md-card-header>\r\n      <div md-card-avatar class=\"example-header-image\"></div>\r\n      <md-card-title>{{ seccion.titulo }}</md-card-title>\r\n      <md-card-subtitle>{{ seccion.subtitulo }}</md-card-subtitle>\r\n    </md-card-header>\r\n    <img md-card-image src=\"{{ seccion.img }}\" alt=\"\">\r\n    <md-card-content>\r\n      <p>\r\n        {{ seccion.resumen }}\r\n      </p>\r\n    </md-card-content>\r\n    <md-card-actions>\r\n      <button md-button>LIKE</button>\r\n      <button md-button>SHARE</button>\r\n    </md-card-actions>\r\n  </md-card>\r\n</div>"
 
 /***/ }),
 
-/***/ 703:
+/***/ 704:
 /***/ (function(module, exports) {
 
 module.exports = "<p>\n  forgot works!\n</p>\n"
 
 /***/ }),
 
-/***/ 704:
+/***/ 705:
 /***/ (function(module, exports) {
 
 module.exports = "<h1 md-dialog-title color=\"primary\"><md-icon>fingerprint</md-icon>Iniciar Sesión</h1>\n<div md-dialog-content>\n  <div #progress>\n  </div>\n  <img src=\"https://ukla.org/images/icons/user-icon.svg\" alt=\"\" style=\"margin : 0 auto; border-radius : 50px; max-height: 100px;\">\n  <md-input-container  style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.nameOrEmail\" placeholder=\"Usuario o Email\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.password\" placeholder=\"Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n</div>\n<div md-dialog-actions>\n  <button md-button (click)=\"login()\" [disabled]=\"isLoading\">Iniciar</button>\n  <button md-button (click)=\"dialogRef.close('Option 2')\" [disabled]=\"isLoading\">Cancelar</button>\n</div>"
 
 /***/ }),
 
-/***/ 705:
+/***/ 706:
 /***/ (function(module, exports) {
 
 module.exports = "\n<!-- { name, password, repassword, nombre, apellidos, email } -->\n<h1 md-dialog-title color=\"primary\"><md-icon>accessibility</md-icon>Registrarse en SIG Bétera</h1>\n<div md-dialog-content>\n  <img src=\"https://ukla.org/images/icons/user-icon.svg\" alt=\"\" style=\"margin : 0 auto; border-radius : 50px; max-height: 100px;\">\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.name\" placeholder=\"Nombre de usuario\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.email\" type=\"email\" placeholder=\"Email\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.nombre\" placeholder=\"Nombre\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.apellidos\" placeholder=\"Apellidos\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userToCreate.password\" placeholder=\"Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userToCreate.repassword\" placeholder=\"Repetir Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n  <div style=\"width : 100%; text-align: center;\">\n    <re-captcha site_key=\"6LfjRAsUAAAAAEav71yglI9Mntr_z5faCBs3QTyw\"></re-captcha>\n  </div>\n</div>\n<div md-dialog-actions>\n  <button md-button (click)=\"signup()\">Registrarse</button>\n  <button md-button (click)=\"dialogRef.close('Option 2')\">Cancelar</button>\n</div>"
 
 /***/ }),
 
-/***/ 724:
+/***/ 725:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(445);
@@ -733,5 +737,5 @@ module.exports = __webpack_require__(445);
 
 /***/ })
 
-},[724]);
+},[725]);
 //# sourceMappingURL=main.bundle.js.map

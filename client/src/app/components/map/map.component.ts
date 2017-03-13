@@ -8,6 +8,8 @@ import { Profile3DService } from './services/profile3d.service';
 
 import { routerTransition } from '../../router.transitions';
 
+import { ProfileComponent } from '../profile/profile.component';
+
 import * as ol from 'openlayers';
 //import * as proj4 from 'proj4';
 
@@ -25,19 +27,10 @@ export class MapComponent implements OnInit {
   map : ol.Map;
   overviewCtrl : ol.Map;
   sideNavMapInterval : any;
-
-  profileGeom : ol.geom.LineString;
   
-  drawProfileLayer : ol.layer.Vector = new ol.layer.Vector({
-    source : new ol.source.Vector()
-  });
-  
-  drawProfileInteraction : ol.interaction.Draw = new ol.interaction.Draw({
-    type : 'LineString',
-    source : this.drawProfileLayer.getSource()
-  });
-
+  @ViewChild(ProfileComponent) profileControl : ProfileComponent;
   @ViewChild('overviewMap') overviewMapEl : ElementRef;
+  @ViewChild('mapTools') toolsContainer : ElementRef;
   @ViewChild('mapsDetailsContainer') mapsDetailsContainer: ElementRef;
   @ViewChild('sidenav') sidenav: MdSidenav;
   @ViewChildren('group') groups: QueryList<ElementRef>;
@@ -49,21 +42,6 @@ export class MapComponent implements OnInit {
     private profileService : Profile3DService,
     private dragulaService: DragulaService
   ) {
-    this.drawProfileLayer.set('name', 'DrawProfileLayer');
-    this.drawProfileInteraction.on('drawstart', (e)=>{
-      this.drawProfileLayer.getSource().clear();
-      this.drawProfileLayer.getSource().changed();
-      this.profileGeom = null;
-    })
-    this.drawProfileInteraction.on('drawend', (e : ol.interaction.DrawEvent)=>{
-      this.profileService.getProfile(e.feature).subscribe(
-        (res)=> {
-          this.zone.run(()=>{
-            this.profileGeom = new ol.geom.LineString(res.json().coordinates, 'XYZ');
-          });
-        }
-      );
-    })
   }
 
   ngOnInit(){
@@ -125,6 +103,20 @@ export class MapComponent implements OnInit {
     this.mapsDetailsContainer.nativeElement.classList.toggle('collapsed');
   }
 
+  toggleTools(){
+    this.toolsContainer.nativeElement.classList.toggle('collapsed');
+  }
+
+  toggleProfileControl(){
+    if(!this.profileControl.active) {
+      this.profileControl.enableDraw();
+    }
+    else {
+      this.profileControl.disableDraw();
+    }
+    this.sidenav.close();
+  }
+
   createMap(){
     this.mapProperties = {
       target : 'map',
@@ -140,8 +132,6 @@ export class MapComponent implements OnInit {
     this.projService.setProjection(this.map, '25830');
 
     this.addDummyLayers(this.map);
-    this.map.addLayer(this.drawProfileLayer);
-    this.map.addInteraction(this.drawProfileInteraction);
   }
 
   createOverviewMap(){
@@ -310,20 +300,6 @@ export class MapComponent implements OnInit {
     /*this.map.addLayer(orto);
     this.map.addLayer(orto);
     this.map.addLayer(orto);*/
-  }
-
-  getProfile( feature : ol.Feature ){
-    this.profileService.getProfile(feature).subscribe(
-      (data)=>{
-        console.log(data);
-        /* 
-          TODO : El truco para dibujar el perfil y mostrar las coordenadas
-          en el mapa va a ser calcular la distancia al origen de cada punto
-          y asignarsela como cuarta coordenada XYZM. Luego con openlayers podemos
-          hacer LineString#getCoordinateAtM()
-        */
-      }
-    );
   }
 
 }

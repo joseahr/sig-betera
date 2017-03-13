@@ -7,6 +7,16 @@
 <md-sidenav-container [@routerTransition]="" class="example-container">
   <md-sidenav #sidenav class="example-sidenav">
 
+    <button md-button class="list-button" (click)="toggleTools()">
+      <md-icon>apps</md-icon>HERRAMIENTAS
+    </button>
+
+    <div #mapTools class="collapsed">
+      <button md-button class="list-button" (click)="toggleProfileControl()">
+        <md-icon>terrain</md-icon>PERFIL
+      </button>
+    </div>
+
     <button md-button class="list-button" (click)="toggleMaps()">
       <md-icon>layers</md-icon>MAPAS
     </button>
@@ -57,7 +67,7 @@
         </div>
       </div>
     </div>
-    <!-- control de capas -->
+    <!-- END control de capas -->
     <button md-button class="list-button" (click)="overviewMap.classList.toggle('collapsed')">
       <md-icon>map</md-icon>MINIATURA
     </button>
@@ -72,12 +82,8 @@
   >    
   </div>
 
-  <div
-    style="flex : 1 1 auto; width : 100%; max-width : 100%; height : 200px; position : absolute; bottom : 0px; left : 0px; z-index: 2; overflow : hidden;">
-    <app-map-profile [hidden]="!profileGeom" 
-      [data]="profileGeom" 
-      [map]="map"
-    ></app-map-profile>
-  </div>
+  <app-map-profile
+    [map]="map"
+  ></app-map-profile>
 
 </md-sidenav-container>

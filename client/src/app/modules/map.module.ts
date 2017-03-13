@@ -13,7 +13,6 @@ import { MaterialModule } from '@angular/material';
 import { ProfileComponent } from '../components/profile/profile.component';
 
 import { ChartModule } from 'angular2-highcharts';
-import * as highcharts from 'highcharts';
 
 const mapRoutes : Route[] =  [{
     path : '',
@@ -22,7 +21,8 @@ const mapRoutes : Route[] =  [{
 
 @NgModule({
     declarations : [ MapComponent, ProfileComponent ],
-    providers : [  ],
+    providers : [
+    ],
     imports : [
         CommonModule,
         DragulaModule,

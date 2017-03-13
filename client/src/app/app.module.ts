@@ -24,10 +24,12 @@ import { LoginComponent } from './dialogs/login/login.component';
 import { SignupComponent } from './dialogs/signup/signup.component';
 import { ForgotComponent } from './dialogs/forgot/forgot.component';
 
-import {HighchartsStatic} from 'angular2-highcharts/dist/HighchartsService';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import * as highcharts from 'highcharts';
+import * as highchartsExporting from 'highcharts/modules/exporting';
 
 export function highchartsFactory() {
+  highchartsExporting(highcharts);
   return highcharts;
 }
 

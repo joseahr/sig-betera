@@ -1,5 +1,10 @@
-<chart class="profile" (load)="saveInstance($event.context)" [options]="options">
-    <series>
-        <point (mouseOver)="onSelectProfile($event)"></point>
-    </series>
-</chart>
+<div
+    id="profile-container"
+    [ngClass]="{'opened' : profileGeom }"
+>
+    <chart (load)="saveInstance($event.context)" [options]="options">
+        <series>
+            <point (mouseOver)="onSelectProfile($event)"></point>
+        </series>
+    </chart>
+</div>
