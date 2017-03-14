@@ -17,7 +17,10 @@ export class AppComponent {
   authUser : any;
 
   constructor(private dialog : MdDialog, private authService : AuthService){
-    
+    if(localStorage.getItem('authUser')){
+      this.authUser = JSON.parse(localStorage.getItem('authUser'));
+    }
+    console.log(this.authUser);
   }
 
   openLoginDialog(){
@@ -25,6 +28,7 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe(
       result => {
         this.authUser = result;
+        localStorage.setItem('authUser', JSON.stringify(result));
       }
     )
   }
@@ -34,6 +38,7 @@ export class AppComponent {
     this.authService.logout().subscribe(
       ()=>{
         this.authUser = null;
+        localStorage.removeItem('authUser');
       }
     );
   }

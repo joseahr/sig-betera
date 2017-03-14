@@ -6,7 +6,6 @@
 // which may be a little better performing, but lacks all the nice formatting
 // provided by pg-monitor.
 var os = require("os");
-var fs = require("fs");
 var pgMonitor = require("pg-monitor");
 pgMonitor.setTheme('matrix'); // changing the default theme;
 // Flag to indicate whether we are in a DEV environment:
@@ -30,7 +29,7 @@ pgMonitor.setLog(function (msg, info) {
             // and not an additional error line;
             logText = os.EOL + logText; // add another line break in front;
         }
-        fs.appendFileSync(logFile, logText); // add error handling as required;
+        //fs.appendFileSync(logFile, logText); // add error handling as required;
     }
     // We absolutely must not let the monitor write anything into the console
     // while in a PROD environment, and not just because nobody will be able

@@ -59,11 +59,11 @@ var Repository = (function () {
     // Devuelve una lista con las ids de las capas
     Repository.prototype.getLayers = function (id_map) {
         return this.db.manyOrNone(sql.getLayers, { id_map: this.pgp.as.value(id_map) })
-            .then(function (layers) { return layers.length ? layers.map(function (l) { return l.id_layer; }) : undefined; });
+            .then(function (layers) { return layers.length ? layers : undefined; });
     };
     Repository.prototype.getBaseLayers = function (id_map) {
         return this.db.manyOrNone(sql.getBaseLayers, { id_map: this.pgp.as.value(id_map) })
-            .then(function (layers) { return layers.length ? layers.map(function (l) { return l.id_base_layer; }) : undefined; });
+            .then(function (layers) { return layers.length ? layers : undefined; });
     };
     Repository.prototype.getMapsAndLayers = function (id_user) {
         var _this = this;
@@ -74,7 +74,7 @@ var Repository = (function () {
             .then(function (listOfMaps) {
             var mapIds = [];
             (listOfMaps[0] || []).forEach(function (el) { el.default = true; return el; });
-            console.log(listOfMaps[0], 'listOfMaps0');
+            //console.log(listOfMaps[0], 'listOfMaps0');
             listOfMaps = (listOfMaps[1] || []).concat((listOfMaps[0] || []));
             listOfMaps = listOfMaps.reduce(function (list, el) {
                 if (mapIds.indexOf(el.id) == -1) {
@@ -87,11 +87,11 @@ var Repository = (function () {
             if (!listOfMaps)
                 return Promise.resolve(null);
             return _this.db.tx(function (t) {
-                return t.batch(listOfMaps.map(function (m) { return m.id; }).map(_this.getLayers));
+                return t.batch(listOfMaps.map(function (m) { return m.id; }).map(_this.getLayers.bind(_this)));
             })
                 .then(function (mapLayers) {
                 return _this.db.tx(function (t) {
-                    return t.batch(listOfMaps.map(function (m) { return m.id; }).map(_this.getBaseLayers));
+                    return t.batch(listOfMaps.map(function (m) { return m.id; }).map(_this.getBaseLayers.bind(_this)));
                 })
                     .then(function (mapBaseLayers) {
                     return listOfMaps.reduce(function (arr, map, idx) {

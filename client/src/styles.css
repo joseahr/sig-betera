@@ -23,3 +23,7 @@ chart {
     display : block;
     height: 200px;
 }
+
+.ol-rotate {
+    top: 3em !important;
+}

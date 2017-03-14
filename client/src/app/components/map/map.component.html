@@ -7,7 +7,7 @@
 <md-sidenav-container [@routerTransition]="" class="example-container">
   <md-sidenav #sidenav class="example-sidenav">
 
-    <button md-button class="list-button" (click)="toggleTools()">
+    <button md-button class="list-button main" (click)="toggleTools()">
       <md-icon>apps</md-icon>HERRAMIENTAS
     </button>
 
@@ -17,7 +17,7 @@
       </button>
     </div>
 
-    <button md-button class="list-button" (click)="toggleMaps()">
+    <button md-button class="list-button main" (click)="toggleMaps()">
       <md-icon>layers</md-icon>MAPAS
     </button>
     <!-- control de capas -->
@@ -68,11 +68,11 @@
       </div>
     </div>
     <!-- END control de capas -->
-    <button md-button class="list-button" (click)="overviewMap.classList.toggle('collapsed')">
+    <button md-button class="list-button main" (click)="overviewMap.classList.toggle('collapsed')">
       <md-icon>map</md-icon>MINIATURA
     </button>
     <div #overviewMap class="overview-map" style="flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;"></div>
-    <button md-button class="list-button">
+    <button md-button class="list-button main">
       <md-icon>file_download</md-icon>DESCARGAR MAPA
     </button>
 

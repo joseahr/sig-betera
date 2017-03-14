@@ -5,6 +5,7 @@ import { DragulaService, DragulaDirective } from 'ng2-dragula';
 
 import { ProjectionService } from './services/projection.service';
 import { Profile3DService } from './services/profile3d.service';
+import { UserMapsService } from './services/user.maps.service';
 
 import { routerTransition } from '../../router.transitions';
 
@@ -17,7 +18,7 @@ import * as ol from 'openlayers';
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
-  providers: [ProjectionService, Profile3DService, DragulaService],
+  providers: [ProjectionService, Profile3DService, UserMapsService, DragulaService],
   animations: [routerTransition()],
   host : { '[@routerTransition]': '' }
 })
@@ -38,6 +39,7 @@ export class MapComponent implements OnInit {
   constructor(
     private zone : NgZone,
     private el : ElementRef,
+    private userMapsService : UserMapsService,
     private projService : ProjectionService, 
     private profileService : Profile3DService,
     private dragulaService: DragulaService
@@ -64,12 +66,15 @@ export class MapComponent implements OnInit {
       moves : (el, container, handle) => handle.classList.contains('handleGroup'),
       accepts : (el, target, source, sibling) => target.attributes[1].value == 'layerGroup' && el.parentNode == target
     });
+
+    this.userMapsService.getUserMaps();
+
   }
 
   ngAfterViewInit() {
     console.log(this.el.nativeElement.parentNode);
     this.el.nativeElement.parentNode.parentNode.childNodes[0].style.position = 'relative';
-    window.scrollTo(0,1);
+    setTimeout(function () {   window.scrollTo(0, 1); }, 1000);
     document.body.style.overflow = 'hidden';
     this.zone.runOutsideAngular(this.createMap.bind(this));
     //this.createMap();
@@ -120,7 +125,11 @@ export class MapComponent implements OnInit {
   createMap(){
     this.mapProperties = {
       target : 'map',
-      controls : ol.control.defaults(),
+      controls : ol.control.defaults().extend([
+        new ol.control.FullScreen({
+          source: 'app-body'
+        })
+      ]),
       view : new ol.View({
         projection : 'EPSG:4326',
         center : [-0.459108, 39.589353],

@@ -6,10 +6,7 @@ export class AuthService {
     constructor(private http : Http){}
 
     login(username, password){
-        return this.http.post('/api/user/login', {
-            username,
-            password
-        });
+        return this.http.post('/api/user/login', { username, password });
     }
 
     logout(){
@@ -19,4 +16,9 @@ export class AuthService {
     signup(user){
         return this.http.post('/api/user/signup', user);
     }
+
+    validateUserByToken(token){
+        return this.http.get(`/api/user/validar/${token}`)
+    }
+
 }

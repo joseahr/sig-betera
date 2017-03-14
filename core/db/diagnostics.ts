@@ -41,7 +41,7 @@ pgMonitor.setLog((msg, info) => {
             logText = os.EOL + logText; // add another line break in front;
         }
 
-        fs.appendFileSync(logFile, logText); // add error handling as required;
+        //fs.appendFileSync(logFile, logText); // add error handling as required;
     }
 
     // We absolutely must not let the monitor write anything into the console

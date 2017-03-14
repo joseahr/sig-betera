@@ -107,6 +107,11 @@ md-sidenav-container {
     margin-right: 10px;
 }
 
+.list-button.main {
+    background: #673ab7;
+    color: #fff;
+}
+
 .group .list-item {
     background: #f7f7f7;
     border-radius: 0px;

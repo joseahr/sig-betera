@@ -68,13 +68,13 @@ export class Repository {
     // Devuelve una lista con las ids de las capas
     getLayers( id_map : (string | number) ){
         return this.db.manyOrNone(sql.getLayers, { id_map : this.pgp.as.value(id_map) })
-        .then(layers => layers.length ? layers.map(l => l.id_layer) : undefined);
+        .then(layers => layers.length ? layers : undefined);
     }
 
 
     getBaseLayers( id_map : (string | number) ){
         return this.db.manyOrNone(sql.getBaseLayers, { id_map : this.pgp.as.value(id_map) })
-        .then(layers => layers.length ? layers.map(l => l.id_base_layer) : undefined);
+        .then(layers => layers.length ? layers : undefined);
     }
 
 
@@ -86,7 +86,7 @@ export class Repository {
         .then(listOfMaps =>{
             let mapIds : any[] = [];
             (listOfMaps[0] || []).forEach(el => { el.default = true; return el; });
-            console.log(listOfMaps[0], 'listOfMaps0');
+            //console.log(listOfMaps[0], 'listOfMaps0');
             listOfMaps = [...(listOfMaps[1] || []), ...(listOfMaps[0] || [])];
             listOfMaps = listOfMaps.reduce( (list, el : any)=>{
                 if(mapIds.indexOf(el.id) == -1){
@@ -99,11 +99,11 @@ export class Repository {
             console.log(listOfMaps);
             if(!listOfMaps) return Promise.resolve(null);
             return this.db.tx( t =>{
-                return t.batch(listOfMaps.map( (m : any) => m.id ).map(this.getLayers))
+                return t.batch(listOfMaps.map( (m : any) => m.id ).map(this.getLayers.bind(this)))
             })
             .then(mapLayers =>{
                 return this.db.tx( t =>{
-                    return t.batch(listOfMaps.map( (m : any) => m.id ).map(this.getBaseLayers))
+                    return t.batch(listOfMaps.map( (m : any) => m.id ).map(this.getBaseLayers.bind(this)))
                 })
                 .then(mapBaseLayers =>{
                     return listOfMaps.reduce( (arr, map : any, idx) =>{

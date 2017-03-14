@@ -444,7 +444,7 @@ exports = module.exports = __webpack_require__(23)();
 exports.i(__webpack_require__(689), "");
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\nhtml, body {\n    margin : 0px;\n    width : 100%;\n    max-height : 100%;\n    overflow-x : hidden;\n}\n\n.overview-map > .ol-viewport {\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\n}\n\n.active-link {\n    background: #fff;\n    color : #000 !important;\n}\n\n\nchart {\n    width: 100% !important;\n    display : block;\n    height: 200px;\n}", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\nhtml, body {\n    margin : 0px;\n    width : 100%;\n    max-height : 100%;\n    overflow-x : hidden;\n}\n\n.overview-map > .ol-viewport {\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\n}\n\n.active-link {\n    background: #fff;\n    color : #000 !important;\n}\n\n\nchart {\n    width: 100% !important;\n    display : block;\n    height: 200px;\n}\n\n.ol-rotate {\n    top: 3em !important;\n}", ""]);
 
 // exports
 
