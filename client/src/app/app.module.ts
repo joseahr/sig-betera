@@ -28,6 +28,9 @@ import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import * as highcharts from 'highcharts';
 import * as highchartsExporting from 'highcharts/modules/exporting';
 
+import { CanActivateAdmin } from './guards';
+
+
 export function highchartsFactory() {
   highchartsExporting(highcharts);
   return highcharts;
@@ -40,7 +43,7 @@ export function highchartsFactory() {
     //MapComponent,
     LoginComponent,
     SignupComponent,
-    ForgotComponent,
+    ForgotComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ export function highchartsFactory() {
   ],
   entryComponents : [LoginComponent, SignupComponent],
   providers: [
+    CanActivateAdmin,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory

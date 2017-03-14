@@ -49,10 +49,10 @@
                 <button *ngIf="j < layer.get('layers').getArray().length - 1" md-button (click)="moveLayerInGroupUp(layer.get('name'), layer_.get('name'))"><md-icon>keyboard_arrow_down</md-icon></button>
               </div>
               <div class="content">
-                <md-slide-toggle (change)="changeVisible($event, layer_.get('name'))" [checked]="layer.getVisible()">
+                <md-slide-toggle (change)="changeVisibleGroupLayer($event, layer_.get('name'), layer.get('name'))" [checked]="layer.getVisible()">
                   {{ layer_.get('name') }}
                 </md-slide-toggle>
-                <md-slider (input)="changeOpacity($event, layer_.get('name'))" step="0.05" [min]="0" [max]="1" [value]="layer.getOpacity()">
+                <md-slider (input)="changeOpacityGroupLayer($event, layer_.get('name'), layer.get('name') )" step="0.05" [min]="0" [max]="1" [value]="layer.getOpacity()">
                 </md-slider>
                 <div class="actions">
                   <div class="separator"></div>

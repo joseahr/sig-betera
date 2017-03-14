@@ -67,14 +67,12 @@ export class MapComponent implements OnInit {
       accepts : (el, target, source, sibling) => target.attributes[1].value == 'layerGroup' && el.parentNode == target
     });
 
-    this.userMapsService.getUserMaps();
-
   }
 
   ngAfterViewInit() {
     console.log(this.el.nativeElement.parentNode);
     this.el.nativeElement.parentNode.parentNode.childNodes[0].style.position = 'relative';
-    setTimeout(function () {   window.scrollTo(0, 1); }, 1000);
+    setTimeout(function () { window.scrollTo(0, 1); }, 1000);
     document.body.style.overflow = 'hidden';
     this.zone.runOutsideAngular(this.createMap.bind(this));
     //this.createMap();
@@ -140,7 +138,8 @@ export class MapComponent implements OnInit {
     this.map = new ol.Map(this.mapProperties);
     this.projService.setProjection(this.map, '25830');
 
-    this.addDummyLayers(this.map);
+    //this.addDummyLayers(this.map);
+    this.addUserMaps();
   }
 
   createOverviewMap(){
@@ -171,10 +170,34 @@ export class MapComponent implements OnInit {
     })
   }
 
+  changeOpacityGroupLayer(event, layerName, groupName){
+    this.map.getLayers().forEach( (l : ol.layer.Group) =>{
+      if(l.get('name') == groupName && l.get('layers')){
+        l.get('layers').forEach( ll =>{
+          if(ll.get('name') == layerName){
+            ll.setOpacity(event.value);
+          }
+        });
+      }
+    })
+  }
+
   changeVisible(event, name){
     this.map.getLayers().forEach( l =>{
       if(l.get('name') == name){
         l.setVisible(event.checked);
+      }
+    })
+  }
+
+  changeVisibleGroupLayer(event, layerName, groupName){
+    this.map.getLayers().forEach( (l : ol.layer.Group) =>{
+      if(l.get('name') == groupName && l.get('layers')){
+        l.get('layers').forEach( ll =>{
+          if(ll.get('name') == layerName){
+            ll.setVisible(event.checked);
+          }
+        });
       }
     })
   }
@@ -267,48 +290,84 @@ export class MapComponent implements OnInit {
     }
   }
 
-  addDummyLayers(map){
+  addUserMaps(){
+    let visibleMap = false;
+    this.map.getLayers().clear();
 
-    let OSMLayer = new ol.layer.Tile({ source : new ol.source.OSM() });
-    OSMLayer.set('name', 'OSM');
-    let OSMLayer2 = new ol.layer.Tile({ source : new ol.source.OSM() });
-    OSMLayer2.set('name', 'OSM2');
-      
-    let OSMLayer3 = new ol.layer.Tile({ source : new ol.source.OSM() });
-    OSMLayer3.set('name', 'OSM3');    
-    let OSMLayer4 = new ol.layer.Tile({ source : new ol.source.OSM() });
-    OSMLayer4.set('name', 'OSM4');
-    let orto = new ol.layer.Tile({ 
-      source : new ol.source.TileWMS({
-        url : 'http://www.ign.es/wms-inspire/pnoa-ma',
-        projection : this.map.getView().getProjection(),
-        params : {
-          "LAYERS" : 'OI.OrthoimageCoverage'
-        }
-      })
-    });
-    orto.set('name', 'Ortofoto PNOA');
-    var groupCapasBase = new ol.layer.Group({
-        layers: [OSMLayer, OSMLayer2, OSMLayer3, OSMLayer4]
-    });
-    groupCapasBase.set('name', 'groupp');
+    this.userMapsService.getUserMaps()
+    .subscribe( mapas =>{
+      // Obtenemos una lista de mapas con las capas ya ordenadas
+      // y la recorremos 
+      mapas.forEach( (mapa, index, arr) => {
+        // Creamos un grupo de capas vacío
+        let groupCapasMap = new ol.layer.Group({
+            visible : mapa.visible === true 
+                ? true
+                : mapa.visible === false 
+                ? false 
+                : !visibleMap && ( index == arr.length - 1)
+        });
+        // Le damos un nombre
+        groupCapasMap.set('name', mapa.mapName);
+        // Lo añadimos al mapa
+        this.map.addLayer(groupCapasMap);
 
-    var groupCapasBase2 = new ol.layer.Group({
-        layers: [OSMLayer, OSMLayer2, OSMLayer3, orto]
-    });
-    groupCapasBase2.set('name', 'group2');
+        mapa.capas.forEach( capa =>{
+          if(capa.type == 'base') 
+            this.addBaseLayerToGroup(capa, groupCapasMap);
+          else if(capa.type == 'layer') 
+            this.addLayerToGroup(capa, groupCapasMap);
+        });
 
-    map.addLayer(OSMLayer);
-    map.addLayer(orto);
-    map.addLayer(OSMLayer2);
-    map.addLayer(OSMLayer3);
-    map.addLayer(OSMLayer4);
-    map.addLayer(groupCapasBase);
-    map.addLayer(groupCapasBase2);
-
-    /*this.map.addLayer(orto);
-    this.map.addLayer(orto);
-    this.map.addLayer(orto);*/
+      });
+    })
   }
 
+  getTile(opts : any){
+      let tile = new ol.layer.Tile({
+          visible : true,
+          source : new ol.source.TileWMS({
+              url : opts.service_url,
+              gutter : opts.gutter <= 0 ? 0 : 250,
+              projection : opts.projection || 'EPSG:4326',
+              crossOrigin: opts.crossOrigin || 'anonymous', // Configurar Geoserver para orígenes remotos primero
+              //crossOrigin : 'anonymous',
+              params: {
+                  'FORMAT': 'image/png', 
+                  'VERSION': '1.1.1',
+                  'TRANSPARENT' : true,
+                  'TILED' : true, 
+                  'LAYERS': opts.layers,
+                  'STYLES': ''
+              }
+          })
+      });
+
+      tile.set('name', opts.name);
+      tile.set('wms_externo', opts.wms_externo);
+      return tile;
+  }
+
+  addBaseLayerToGroup(params : any, group : ol.layer.Group){
+    let tile = this.getTile({
+        name : params.name,
+        service_url : params.service_url,
+        layers : params.name,
+        gutter : 250,
+        wms_externo : true,
+        crossOrigin : ''  
+    });
+    group.getLayers().extend([tile]);
+  }
+
+  addLayerToGroup(params : any, group : ol.layer.Group){
+    let tile = this.getTile({ 
+      service_url : 'http://sig.betera.es:8080/geoserver/betera/wms', 
+      layers : params.name, 
+      name : params.name,
+      crossOrigin : 'anonymous'  
+    });
+    tile.set('type', params.geomColumnType);
+    group.getLayers().extend([tile]);
+  }
 }
