@@ -55,28 +55,11 @@ export class Repository {
     getDefaultMaps(){
         return this.db.any(sql.getDefaultMaps);
     }
-    // Obtener el nombre de todos los mapas
-    getMapNames( ...ids : any[] ){
-        return this.db.manyOrNone(sql.getMapNames, {ids})
-        .then(mapNames => mapNames.length ? mapNames : undefined);
-    }
+
 
     getAllMaps(){
         return this.db.any(sql.getAllMaps);
     }
-    // Obtener las capas que conforman un mapa
-    // Devuelve una lista con las ids de las capas
-    getLayers( id_map : (string | number) ){
-        return this.db.manyOrNone(sql.getLayers, { id_map : this.pgp.as.value(id_map) })
-        .then(layers => layers.length ? layers : undefined);
-    }
-
-
-    getBaseLayers( id_map : (string | number) ){
-        return this.db.manyOrNone(sql.getBaseLayers, { id_map : this.pgp.as.value(id_map) })
-        .then(layers => layers.length ? layers : undefined);
-    }
-
 
     getMapsAndLayers( id_user : (string | number) ){
         let promises = [ this.getDefaultMaps() ];
@@ -85,45 +68,16 @@ export class Repository {
         return Promise.all(promises)
         .then(listOfMaps =>{
             let mapIds : any[] = [];
-            (listOfMaps[0] || []).forEach(el => { el.default = true; return el; });
+            //(listOfMaps[0] || []).forEach(el => { el.default = true; return el; });
             //console.log(listOfMaps[0], 'listOfMaps0');
             listOfMaps = [...(listOfMaps[1] || []), ...(listOfMaps[0] || [])];
-            listOfMaps = listOfMaps.reduce( (list, el : any)=>{
+            return listOfMaps.reduce( (list : any, el : any)=>{
                 if(mapIds.indexOf(el.id) == -1){
                     mapIds.push(el.id);
                     list.push(el);
                 }
                 return list;
             }, []);
-
-            console.log(listOfMaps);
-            if(!listOfMaps) return Promise.resolve(null);
-            return this.db.tx( t =>{
-                return t.batch(listOfMaps.map( (m : any) => m.id ).map(this.getLayers.bind(this)))
-            })
-            .then(mapLayers =>{
-                return this.db.tx( t =>{
-                    return t.batch(listOfMaps.map( (m : any) => m.id ).map(this.getBaseLayers.bind(this)))
-                })
-                .then(mapBaseLayers =>{
-                    return listOfMaps.reduce( (arr, map : any, idx) =>{
-                        let obj = { 
-                            id : map.id
-                            , mapName : map.name
-                            , maplayerIds : mapLayers[idx]
-                            , orden : map.orden
-                            , visible : map.visible
-                        };
-                        if(map.default) obj['default'] = true;
-                        obj['mapbaselayerIds'] = mapBaseLayers[idx] 
-                            ? mapBaseLayers[idx] 
-                            : [];
-                        arr.push(obj);
-                        return arr;
-                    }, []);
-                });              
-            })
-
         })
     }
 }

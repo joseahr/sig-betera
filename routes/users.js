@@ -6,6 +6,11 @@ var db_1 = require("../core/db");
 var mailer = require("../core/mailer");
 var recaptcha_1 = require("../core/recaptcha");
 exports.router = express.Router();
+exports.router.post('/isAuth', function (req, res) {
+    if (req.isAuthenticated())
+        return res.status(200).send(req.user);
+    return res.status(200).send({ error: 'No está autenticado' });
+});
 exports.router.post('/login', function (req, res, next) {
     console.log(req.body.username, req.body.password);
     // Comprobamos que req.body.username && req.body.password existan

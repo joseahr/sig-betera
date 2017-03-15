@@ -66,16 +66,9 @@ module.exports = {
         getRol: sql('roles/get-rol.sql')
     },
     maps: {
-        createMapsTable: sql('maps/create.sql'),
-        createMapsUsersTable: sql('maps/create-users-fk-table.sql'),
-        createMapsLayersTable: sql('maps/create-layers-fk-table.sql'),
-        createDefaultMapsTable: sql('maps/create-default-maps-fk-table.sql'),
         hasMap: sql('maps/has-map.sql'),
         getMaps: sql('maps/user-maps.sql'),
         getDefaultMaps: sql('maps/get-default-maps.sql'),
-        getMapNames: sql('maps/map-names.sql'),
-        getLayers: sql('maps/get-layers.sql'),
-        getBaseLayers: sql('maps/get-base-layers.sql'),
         getAllMaps: sql('maps/get-all-maps.sql')
     },
     admin: {

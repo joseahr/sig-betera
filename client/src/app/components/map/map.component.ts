@@ -299,6 +299,7 @@ export class MapComponent implements OnInit {
       // Obtenemos una lista de mapas con las capas ya ordenadas
       // y la recorremos 
       mapas.forEach( (mapa, index, arr) => {
+        console.log('mapa', mapa);
         // Creamos un grupo de capas vacío
         let groupCapasMap = new ol.layer.Group({
             visible : mapa.visible === true 
@@ -308,11 +309,12 @@ export class MapComponent implements OnInit {
                 : !visibleMap && ( index == arr.length - 1)
         });
         // Le damos un nombre
-        groupCapasMap.set('name', mapa.mapName);
+        groupCapasMap.set('name', mapa.name);
         // Lo añadimos al mapa
         this.map.addLayer(groupCapasMap);
 
         mapa.capas.forEach( capa =>{
+          console.log('capaa', capa);
           if(capa.type == 'base') 
             this.addBaseLayerToGroup(capa, groupCapasMap);
           else if(capa.type == 'layer') 

@@ -15,26 +15,29 @@ exports.router.use(function (req, res, next) {
         return res.status(406).json('Permiso denegado');
     next();
 });
-exports.router.get('/', function (req, res) {
-    Promise.all([
-        db_1.db.layers.getAllLayers(),
-        db_1.db.layers.getAllBaseLayers(),
-        db_1.db.admin.getUsers(),
-        db_1.db.maps.getAllMaps(),
-        db_1.db.maps.getDefaultMaps(),
-        db_1.db.users.getAllGroups()
-    ])
-        .then(function (result) {
-        console.log(result);
-        res.json({
-            allLayers: result[0],
-            allBaseLayers: result[1],
-            allUsers: result[2],
-            allMaps: result[3],
-            allDefaultMaps: result[4],
-            allGroups: result[5]
-        });
-    });
+exports.router.get('/layers', function (req, res) {
+    db_1.db.layers.getAllLayers()
+        .then(function (layers) { return res.status(200).json(layers); })
+        .catch(function (err) { return res.status(500).json(err); });
+});
+exports.router.get('/baselayers', function (req, res) {
+    return db_1.db.layers.getAllBaseLayers()
+        .then(function (baselayers) { return res.status(200).json(baselayers); })
+        .catch(function (err) { return res.status(500).json(err); });
+});
+exports.router.get('/users', function (req, res) {
+    return db_1.db.admin.getUsers()
+        .then(function (users) { return res.status(200).json(users); })
+        .catch(function (err) { return res.status(500).json(err); });
+});
+exports.router.get('/maps', function (req, res) {
+    return db_1.db.maps.getAllMaps();
+});
+exports.router.get('/default-maps', function (req, res) {
+    return db_1.db.maps.getDefaultMaps();
+});
+exports.router.get('/groups', function (req, res) {
+    return db_1.db.users.getAllGroups();
 });
 /**************************
  * AÑADIR / ELIMINAR UN MAPA

@@ -1,15 +1,21 @@
-SELECT Maps.*, lay.*, blay.*, o.*
+SELECT Maps.*, lay.*, blay.*, o.*, TRUE as default
 FROM Maps
 LEFT JOIN LATERAL (
-    SELECT array_agg(ll.id_layer)::integer[] as layers
+    SELECT json_agg(ll) as layers
     FROM (
-        SELECT id_layer FROM Map_Layers ul WHERE ul.id_map = Maps.id
+        SELECT ul.*, l.*, 'layer' as type
+        FROM Map_Layers ul
+        LEFT JOIN Layers l ON l.id = ul.id_layer
+        WHERE ul.id_map = Maps.id
     ) ll
 ) lay ON TRUE
 LEFT JOIN LATERAL (
-    SELECT array_agg(bbll.id_base_layer)::integer[] as baselayers
+    SELECT json_agg(bbll) as baselayers
     FROM (
-        SELECT id_base_layer FROM Map_Base_Layers ul WHERE ul.id_map = Maps.id
+        SELECT bl.*, ul.*, 'base' as type
+        FROM Map_Base_Layers ul
+        LEFT JOIN Base_Layers bl ON bl.id = ul.id_base_layer
+        WHERE ul.id_map = Maps.id
     ) bbll
 ) blay ON TRUE
 LEFT JOIN LATERAL (

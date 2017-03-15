@@ -7,6 +7,11 @@ import { recaptcha } from '../core/recaptcha';
 
 export let router = express.Router();
 
+router.post('/isAuth', (req, res)=>{
+  if(req.isAuthenticated()) return res.status(200).send(req.user);
+  return res.status(200).send({ error : 'No está autenticado' });
+})
+
 router.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction)=>{
   
   console.log(req.body.username, req.body.password);

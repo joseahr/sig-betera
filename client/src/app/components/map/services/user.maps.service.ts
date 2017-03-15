@@ -4,9 +4,9 @@ import { Http, Response } from '@angular/http';
 declare interface IUserMap {
     default : boolean;
     id : number;
-    mapName : string;
-    mapbaselayerIds : IBaseLayer[];
-    maplayerIds : ILayer[];
+    name : string;
+    baselayers : IBaseLayer[];
+    layers : ILayer[];
     orden : IOrden[];
     visible ? : boolean;
     capas ? : (IBaseLayer | ILayer)[];
@@ -42,14 +42,15 @@ export class UserMapsService {
     getUserMaps(){
         return this.http.get('/api/maps')
             .map( (res : Response) : IUserMap[] =>{
+                //console.log(res.json());
                 let listOfMaps : IUserMap[] = res.json();
                 return listOfMaps.map( (mapa, index, arr) =>{
-                    mapa.maplayerIds = ( mapa.maplayerIds|| [] );
-                    mapa.mapbaselayerIds = ( mapa.mapbaselayerIds|| [] );
-                    mapa.mapbaselayerIds.forEach( l => { l.type = 'base' });
-                    mapa.maplayerIds.forEach( l => { l.type = 'layer' })
-                    let capas = [...mapa.mapbaselayerIds, ...mapa.maplayerIds];
+                    mapa.layers = ( mapa.layers || [] );
+                    mapa.baselayers = ( mapa.baselayers || [] );
+
+                    let capas = [...(mapa.baselayers || []), ...(mapa.layers || [])];
                     let orden = mapa.orden;
+
                     capas.sort((a : (IBaseLayer | ILayer), b : (IBaseLayer | ILayer))  : number =>{
                         let num : number =  (this.findPositionInOrder(a.id, a.type, orden) > this.findPositionInOrder(b.id, b.type, orden))
                             ? 1 : -1;

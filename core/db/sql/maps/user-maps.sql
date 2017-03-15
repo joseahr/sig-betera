@@ -1,12 +1,28 @@
-SELECT *
-FROM Maps m
-LEFT JOIN User_Maps um ON um.id_map = m.id
+SELECT m.*, lay.*, blay.*, orden.*
+FROM User_Maps um
+LEFT JOIN Maps m ON m.id = um.id_map
 LEFT JOIN LATERAL (
-    SELECT json_agg(oo)::json AS orden
+    SELECT json_agg(ll) as layers
     FROM (
-        SELECT *
-        FROM map_layers_order
-        WHERE id_map = m.id
-    ) oo
-) o ON TRUE
+        SELECT ul.*, l.*, 'layer' as type
+        FROM Map_Layers ul
+        LEFT JOIN Layers l ON l.id = ul.id_layer 
+        WHERE ul.id_map = m.id
+    ) ll
+) lay ON TRUE
+LEFT JOIN LATERAL (
+    SELECT json_agg(bbll) as baselayers
+    FROM (
+        SELECT ul.*, bl.*, 'base' as type
+        FROM Map_Base_Layers ul
+        LEFT JOIN Base_Layers bl ON bl.id = ul.id_base_layer
+        WHERE ul.id_map = m.id
+    ) bbll
+) blay ON TRUE
+LEFT JOIN LATERAL (
+	SELECT json_agg(oo)::json AS orden
+	FROM (
+		SELECT id_layer, layer_type, position FROM map_layers_order WHERE id_map = m.id
+	) oo
+) orden ON TRUE
 WHERE um.id_user = ${id_user}

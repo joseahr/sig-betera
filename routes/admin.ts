@@ -18,28 +18,34 @@ router.use( (req, res, next)=>{
     next();
 });
 
+router.get('/layers', (req, res)=>{
+    db.layers.getAllLayers()
+    .then(layers => res.status(200).json(layers))
+    .catch( err => res.status(500).json(err));
+});
 
-router.get('/', (req, res)=>{
-    Promise.all([
-        db.layers.getAllLayers(),
-        db.layers.getAllBaseLayers(),
-        db.admin.getUsers(),
-        db.maps.getAllMaps(),
-        db.maps.getDefaultMaps(),
-        db.users.getAllGroups()
-    ])
-    .then( ( result : any ) =>{
-        console.log(result);
-        res.json({
-            allLayers : result[0],
-            allBaseLayers : result[1],
-            allUsers : result[2],
-            allMaps : result[3],
-            allDefaultMaps : result[4],
-            allGroups : result[5]
-        });
-    })
+router.get('/baselayers', (req, res)=>{
+    return db.layers.getAllBaseLayers()
+    .then(baselayers => res.status(200).json(baselayers))
+    .catch( err => res.status(500).json(err));
+});
 
+router.get('/users', (req, res)=>{
+    return db.admin.getUsers()
+    .then(users => res.status(200).json(users))
+    .catch( err => res.status(500).json(err));
+});
+
+router.get('/maps', (req, res)=>{
+    return db.maps.getAllMaps();
+});
+
+router.get('/default-maps', (req, res)=>{
+    return db.maps.getDefaultMaps();
+});
+
+router.get('/groups', (req, res)=>{
+    return db.users.getAllGroups();
 });
 
 /**************************

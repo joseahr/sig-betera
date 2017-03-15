@@ -22,7 +22,7 @@ export class Repository {
     private pgp:IMain;
 
     // Creates the table;
-        getUsers(){
-            return this.db.manyOrNone(sql.getUsers);
-        }
+    getUsers(){
+        return this.db.manyOrNone(sql.getUsers);
+    }
 }

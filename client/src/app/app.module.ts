@@ -30,6 +30,7 @@ import * as highchartsExporting from 'highcharts/modules/exporting';
 
 import { CanActivateAdmin } from './guards';
 
+import { AuthService } from './services/auth.service';
 
 export function highchartsFactory() {
   highchartsExporting(highcharts);
@@ -40,7 +41,6 @@ export function highchartsFactory() {
   declarations: [
     AppComponent,
     HomeComponent,
-    //MapComponent,
     LoginComponent,
     SignupComponent,
     ForgotComponent
@@ -57,6 +57,7 @@ export function highchartsFactory() {
   ],
   entryComponents : [LoginComponent, SignupComponent],
   providers: [
+    AuthService,
     CanActivateAdmin,
     {
       provide: HighchartsStatic,

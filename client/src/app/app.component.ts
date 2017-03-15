@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { MdDialog } from '@angular/material';
 import { LoginComponent } from './dialogs/login/login.component';
@@ -16,9 +16,27 @@ export class AppComponent {
 
   authUser : any;
 
-  constructor(private dialog : MdDialog, private authService : AuthService){
+  constructor(
+    private dialog : MdDialog, 
+    private authService : AuthService,
+    private ngZone : NgZone
+  ){
     if(localStorage.getItem('authUser')){
-      this.authUser = JSON.parse(localStorage.getItem('authUser'));
+      this.authService.getUser().subscribe(
+        (user)=> { 
+          this.ngZone.run( ()=> {
+            console.log('useerrrr', user);
+            if(typeof user === {}){
+              this.authUser = user; 
+              localStorage.setItem('authUser', JSON.stringify(user));
+            } else {
+              this.authUser = null;
+              localStorage.removeItem('authUser');  
+            }
+          });
+        }
+      );
+      //this.authUser = JSON.parse(localStorage.getItem('authUser'));
     }
     console.log(this.authUser);
   }
@@ -28,7 +46,6 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe(
       result => {
         this.authUser = result;
-        localStorage.setItem('authUser', JSON.stringify(result));
       }
     )
   }
@@ -38,7 +55,6 @@ export class AppComponent {
     this.authService.logout().subscribe(
       ()=>{
         this.authUser = null;
-        localStorage.removeItem('authUser');
       }
     );
   }
