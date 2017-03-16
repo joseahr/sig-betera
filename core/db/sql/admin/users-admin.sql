@@ -13,7 +13,7 @@ LEFT JOIN LATERAL (
 	FROM (
 		SELECT DISTINCT ml.id_layer, r.rol, l.name
 		FROM user_maps um
-		LEFT JOIN map_layers ml ON ml.id_map = um.id_map
+		INNER JOIN map_layers ml ON ml.id_map = um.id_map
 		LEFT JOIN roles r ON r.id_layer = ml.id_layer AND r.id_user = u.id
 		LEFT JOIN layers l ON l.id = ml.id_layer
 		WHERE um.id_user = u.id

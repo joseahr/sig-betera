@@ -27,7 +27,7 @@ exports.router.get('/baselayers', function (req, res) {
 });
 exports.router.get('/users', function (req, res) {
     return db_1.db.admin.getUsers()
-        .then(function (users) { return res.status(200).json(users); })
+        .then(function (users) { return res.status(200).json({ data: users }); })
         .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/maps', function (req, res) {

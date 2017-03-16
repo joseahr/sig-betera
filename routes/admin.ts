@@ -26,13 +26,13 @@ router.get('/layers', (req, res)=>{
 
 router.get('/baselayers', (req, res)=>{
     return db.layers.getAllBaseLayers()
-    .then(baselayers => res.status(200).json(baselayers))
+    .then( baselayers => res.status(200).json(baselayers))
     .catch( err => res.status(500).json(err));
 });
 
 router.get('/users', (req, res)=>{
     return db.admin.getUsers()
-    .then(users => res.status(200).json(users))
+    .then( users => res.status(200).json({ data : users }) )
     .catch( err => res.status(500).json(err));
 });
 

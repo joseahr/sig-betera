@@ -1,4 +1,5 @@
 import { Component, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import { DragulaService } from 'ng2-dragula';
 import { MdDialog } from '@angular/material';
 import { LoginComponent } from './dialogs/login/login.component';
@@ -19,14 +20,14 @@ export class AppComponent {
   constructor(
     private dialog : MdDialog, 
     private authService : AuthService,
-    private ngZone : NgZone
+    private ngZone : NgZone,
+    private router : Router
   ){
-    if(localStorage.getItem('authUser')){
       this.authService.getUser().subscribe(
         (user)=> { 
           this.ngZone.run( ()=> {
             console.log('useerrrr', user);
-            if(typeof user === {}){
+            if(!user.error){
               this.authUser = user; 
               localStorage.setItem('authUser', JSON.stringify(user));
             } else {
@@ -36,9 +37,6 @@ export class AppComponent {
           });
         }
       );
-      //this.authUser = JSON.parse(localStorage.getItem('authUser'));
-    }
-    console.log(this.authUser);
   }
 
   openLoginDialog(){
@@ -46,6 +44,7 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe(
       result => {
         this.authUser = result;
+        this.router.navigate(['']);
       }
     )
   }
@@ -55,6 +54,7 @@ export class AppComponent {
     this.authService.logout().subscribe(
       ()=>{
         this.authUser = null;
+        this.router.navigate(['']);
       }
     );
   }

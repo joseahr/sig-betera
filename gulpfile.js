@@ -31,10 +31,12 @@ gulp.task('watch', ['compile'], () => {
                  script: 'bin/www'
                , ext: 'ts'
                , watch: '.'
+               , ignore: ['client/**']
                , tasks: ['compile']
             });
   return stream;
 });
+
 
 gulp.task('build', ['copy-static'], () => {
   return tsProject.src().pipe(tsProject())

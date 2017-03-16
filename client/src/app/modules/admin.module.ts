@@ -13,6 +13,7 @@ import { AdminMapsComponent } from '../components/admin-maps/admin-maps.componen
 import { AdminLayersComponent } from '../components/admin-layers/admin-layers.component';
 import { AdminMailComponent } from '../components/admin-mail/admin-mail.component';
 
+import { DataTablesModule } from 'angular-datatables';
 
 const adminRoutes : Route[] =  [{
     path : '',
@@ -37,6 +38,7 @@ const adminRoutes : Route[] =  [{
     ],
     imports : [
         CommonModule,
+        DataTablesModule,
         MaterialModule.forRoot(),
         RouterModule.forChild(adminRoutes)
     ]
