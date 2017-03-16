@@ -17,7 +17,7 @@ export class Repository {
 
     // if you need to access other repositories from here,
     // you will have to replace 'IDatabase<any>' with 'any':
-    private db:IDatabase<any>;
+    private db:any;
 
     private pgp:IMain;
 
@@ -61,23 +61,27 @@ export class Repository {
         return this.db.any(sql.getAllMaps);
     }
 
-    getMapsAndLayers( id_user : (string | number) ){
-        let promises = [ this.getDefaultMaps() ];
-        if(id_user) promises.push( this.getMaps(id_user) );
+  	getMapsAndLayers(id_user: (string | number)) {
+  		return this.db.task(t => {
+  			var queries = [t.maps.getMaps(id_user)];
+  			if (id_user) {
+  				queries.push(t.maps.getMaps(id_user));
+  			}
+  			return t.batch(queries)
+  				.then(listOfMaps => {
+  					let mapIds: any[] = [];
+  					//(listOfMaps[0] || []).forEach(el => { el.default = true; return el; });
+  					//console.log(listOfMaps[0], 'listOfMaps0');
+  					listOfMaps = [...(listOfMaps[1] || []), ...(listOfMaps[0] || [])];
+  					return listOfMaps.reduce((list: any, el: any) => {
+  						if (mapIds.indexOf(el.id) == -1) {
+  							mapIds.push(el.id);
+  							list.push(el);
+  						}
+  						return list;
+  					}, []);
+  				});
+  		});
+	  }
 
-        return Promise.all(promises)
-        .then(listOfMaps =>{
-            let mapIds : any[] = [];
-            //(listOfMaps[0] || []).forEach(el => { el.default = true; return el; });
-            //console.log(listOfMaps[0], 'listOfMaps0');
-            listOfMaps = [...(listOfMaps[1] || []), ...(listOfMaps[0] || [])];
-            return listOfMaps.reduce( (list : any, el : any)=>{
-                if(mapIds.indexOf(el.id) == -1){
-                    mapIds.push(el.id);
-                    list.push(el);
-                }
-                return list;
-            }, []);
-        })
-    }
 }
