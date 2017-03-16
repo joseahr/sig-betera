@@ -36,7 +36,7 @@ export class Repository {
                         let properties = schema
                             .filter( (col : any) => col.name !== geomColumn )
                             .map( (col : any) => col.name).join();
-                        return this.db.manyOrNone(
+                        return t.manyOrNone(
                             sql.getFeaturesIntersecting
                             , { wkt, geomColumn, properties, layerName }
                         ) 
