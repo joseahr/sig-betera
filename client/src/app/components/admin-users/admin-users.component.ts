@@ -5,6 +5,10 @@ import { AdminService } from '../../services/admin.service';
 
 import { DataTableDirective } from 'angular-datatables';
 
+import { Router } from '@angular/router';
+
+import { AdminUserDetailsComponent } from '../admin-user-details/admin-user-details.component';
+
 declare const $;
 
 @Component({
@@ -25,7 +29,11 @@ export class AdminUsersComponent implements OnInit {
   @ViewChild(DataTableDirective)
   private datatableElement: DataTableDirective;
 
-  constructor(private adminService : AdminService, private zone : NgZone) {
+  constructor(
+    private adminService : AdminService, 
+    private zone : NgZone,
+    private router : Router,
+  ) {
     /*this.adminService.getUsers().subscribe(
       (res) => {
         this.users = res.json();
@@ -60,12 +68,13 @@ export class AdminUsersComponent implements OnInit {
   }
 
   ngAfterViewInit(){
+    let self = this;
     this.datatableElement.dtInstance.then(dtInstance =>{
-      dtInstance.on('click', '#edit-user', function(){
+      dtInstance.on('click', '.edit-user', function(){
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
-
-      })
+        self.router.navigate([`admin/users/${row.id}`], { queryParams : { user : JSON.stringify(row) } });
+      });
     });
   }
 

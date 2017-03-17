@@ -13,6 +13,9 @@ import { AdminMapsComponent } from '../components/admin-maps/admin-maps.componen
 import { AdminLayersComponent } from '../components/admin-layers/admin-layers.component';
 import { AdminMailComponent } from '../components/admin-mail/admin-mail.component';
 
+import { AdminUserDetailsComponent } from '../components/admin-user-details/admin-user-details.component';
+
+
 import { DataTablesModule } from 'angular-datatables';
 
 const adminRoutes : Route[] =  [{
@@ -20,6 +23,7 @@ const adminRoutes : Route[] =  [{
     component : AdminComponent,
     children : [
         { path : 'users' , component : AdminUsersComponent },
+        { path : 'users/:id' , component : AdminUserDetailsComponent },
         { path : 'maps'  , component : AdminMapsComponent },
         { path : 'layers', component : AdminLayersComponent },
         { path : 'mail'  , component : AdminMailComponent }
@@ -32,7 +36,8 @@ const adminRoutes : Route[] =  [{
         AdminUsersComponent,
         AdminMapsComponent,
         AdminLayersComponent,
-        AdminMailComponent
+        AdminMailComponent,
+        AdminUserDetailsComponent
     ],
     providers : [
     ],

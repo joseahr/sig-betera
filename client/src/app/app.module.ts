@@ -43,7 +43,7 @@ export function highchartsFactory() {
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    ForgotComponent
+    ForgotComponent,
   ],
   imports: [
     BrowserModule,
