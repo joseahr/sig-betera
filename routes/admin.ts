@@ -36,6 +36,13 @@ router.get('/users', (req, res)=>{
     .catch( err => res.status(500).json(err));
 });
 
+router.get('/users/:id', (req, res)=>{
+    let id = req.params.id;
+    return db.admin.getUserDetail(id)
+    .then( user => res.status(200).json(user) )
+    .catch( err => res.status(500).json(err));
+});
+
 router.get('/maps', (req, res)=>{
     return db.maps.getAllMaps();
 });

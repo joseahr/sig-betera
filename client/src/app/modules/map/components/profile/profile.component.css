@@ -1,0 +1,20 @@
+#profile-container {
+    flex : 1 1 auto;
+    max-width: 100%;
+    height: 0px;
+    position: absolute;
+    bottom: 0px;
+    right: 0.5em;
+    left: 0.5em;
+    z-index: 2;
+    overflow: hidden;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: #fff;
+    transition: all 0.8s;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.3);
+}
+
+#profile-container.opened {
+    height: 200px;
+}

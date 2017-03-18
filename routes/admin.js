@@ -30,6 +30,12 @@ exports.router.get('/users', function (req, res) {
         .then(function (users) { return res.status(200).json({ data: users }); })
         .catch(function (err) { return res.status(500).json(err); });
 });
+exports.router.get('/users/:id', function (req, res) {
+    var id = req.params.id;
+    return db_1.db.admin.getUserDetail(id)
+        .then(function (user) { return res.status(200).json(user); })
+        .catch(function (err) { return res.status(500).json(err); });
+});
 exports.router.get('/maps', function (req, res) {
     return db_1.db.maps.getAllMaps();
 });

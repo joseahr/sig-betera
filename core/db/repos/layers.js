@@ -29,7 +29,7 @@ var Repository = (function () {
                     var properties = schema
                         .filter(function (col) { return col.name !== geomColumn; })
                         .map(function (col) { return col.name; }).join();
-                    return _this.db.manyOrNone(sql.getFeaturesIntersecting, { wkt: wkt, geomColumn: geomColumn, properties: properties, layerName: layerName });
+                    return t.manyOrNone(sql.getFeaturesIntersecting, { wkt: wkt, geomColumn: geomColumn, properties: properties, layerName: layerName });
                 });
             })).then(function (founds) { return founds.map(function (el) { return el[0]; }); });
         });

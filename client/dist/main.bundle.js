@@ -133,8 +133,8 @@ var HomeComponent = (function () {
     HomeComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-home',
-            template: __webpack_require__(712),
-            styles: [__webpack_require__(701)],
+            template: __webpack_require__(715),
+            styles: [__webpack_require__(704)],
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
@@ -198,8 +198,8 @@ var LoginComponent = (function () {
     LoginComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-login',
-            template: __webpack_require__(714),
-            styles: [__webpack_require__(703)],
+            template: __webpack_require__(717),
+            styles: [__webpack_require__(706)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */]) === 'function' && _c) || Object])
@@ -267,8 +267,8 @@ var SignupComponent = (function () {
     SignupComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-signup',
-            template: __webpack_require__(715),
-            styles: [__webpack_require__(704)],
+            template: __webpack_require__(718),
+            styles: [__webpack_require__(707)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */]) === 'function' && _d) || Object])
@@ -284,7 +284,7 @@ var SignupComponent = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__guards__ = __webpack_require__(640);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__guards__ = __webpack_require__(642);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__guards__["a"]; });
 
 //# sourceMappingURL=index.js.map
@@ -295,12 +295,12 @@ var SignupComponent = (function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./modules/admin.module": [
-		743,
+	"./modules/admin/admin.module": [
+		746,
 		1
 	],
-	"./modules/map.module": [
-		744,
+	"./modules/map/map.module": [
+		747,
 		0
 	]
 };
@@ -328,7 +328,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(605);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(636);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(641);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(644);
 
 
 
@@ -442,8 +442,8 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-root',
-            template: __webpack_require__(711),
-            styles: [__webpack_require__(700)],
+            template: __webpack_require__(714),
+            styles: [__webpack_require__(703)],
             providers: [__WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MdDialog */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _d) || Object])
@@ -464,25 +464,23 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(635);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_home_home_component__ = __webpack_require__(424);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components__ = __webpack_require__(639);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_routes__ = __webpack_require__(637);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_material__ = __webpack_require__(112);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__ = __webpack_require__(642);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__ = __webpack_require__(645);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_hammerjs__ = __webpack_require__(705);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_hammerjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__dialogs_login_login_component__ = __webpack_require__(425);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__dialogs_signup_signup_component__ = __webpack_require__(426);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__dialogs_forgot_forgot_component__ = __webpack_require__(639);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angular2_highcharts_dist_HighchartsService__ = __webpack_require__(463);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angular2_highcharts_dist_HighchartsService___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_angular2_highcharts_dist_HighchartsService__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_highcharts__ = __webpack_require__(706);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_highcharts__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_highcharts_modules_exporting__ = __webpack_require__(707);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_highcharts_modules_exporting___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16_highcharts_modules_exporting__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__guards__ = __webpack_require__(427);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_auth_service__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular2_highcharts_dist_HighchartsService__ = __webpack_require__(463);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular2_highcharts_dist_HighchartsService___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_angular2_highcharts_dist_HighchartsService__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_highcharts__ = __webpack_require__(709);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_highcharts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting__ = __webpack_require__(710);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__guards__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services__ = __webpack_require__(643);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_hammerjs__ = __webpack_require__(708);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_hammerjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__dialogs__ = __webpack_require__(641);
 /* unused harmony export highchartsFactory */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -511,11 +509,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
 function highchartsFactory() {
-    __WEBPACK_IMPORTED_MODULE_16_highcharts_modules_exporting__(__WEBPACK_IMPORTED_MODULE_15_highcharts__);
-    return __WEBPACK_IMPORTED_MODULE_15_highcharts__;
+    __WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting__(__WEBPACK_IMPORTED_MODULE_11_highcharts__);
+    return __WEBPACK_IMPORTED_MODULE_11_highcharts__;
 }
 var AppModule = (function () {
     function AppModule() {
@@ -524,27 +520,25 @@ var AppModule = (function () {
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__components_home_home_component__["a" /* HomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__dialogs_login_login_component__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__dialogs_signup_signup_component__["a" /* SignupComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__dialogs_forgot_forgot_component__["a" /* ForgotComponent */],
+                __WEBPACK_IMPORTED_MODULE_5__components__["a" /* HomeComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__dialogs__["a" /* LoginComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__dialogs__["b" /* SignupComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__dialogs__["c" /* ForgotComponent */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__["ReCaptchaModule"],
-                //DragulaModule,
-                //MapModule,
                 __WEBPACK_IMPORTED_MODULE_8__angular_material__["a" /* MaterialModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_7__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_routes__["a" /* appRoutes */], { useHash: true })
             ],
-            entryComponents: [__WEBPACK_IMPORTED_MODULE_11__dialogs_login_login_component__["a" /* LoginComponent */], __WEBPACK_IMPORTED_MODULE_12__dialogs_signup_signup_component__["a" /* SignupComponent */]],
+            entryComponents: [__WEBPACK_IMPORTED_MODULE_16__dialogs__["a" /* LoginComponent */], __WEBPACK_IMPORTED_MODULE_16__dialogs__["b" /* SignupComponent */]],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_18__services_auth_service__["a" /* AuthService */],
-                __WEBPACK_IMPORTED_MODULE_17__guards__["a" /* CanActivateAdmin */],
+                __WEBPACK_IMPORTED_MODULE_14__services__["a" /* AuthService */],
+                __WEBPACK_IMPORTED_MODULE_13__guards__["a" /* CanActivateAdmin */],
                 {
-                    provide: __WEBPACK_IMPORTED_MODULE_14_angular2_highcharts_dist_HighchartsService__["HighchartsStatic"],
+                    provide: __WEBPACK_IMPORTED_MODULE_10_angular2_highcharts_dist_HighchartsService__["HighchartsStatic"],
                     useFactory: highchartsFactory
                 }
             ],
@@ -567,11 +561,10 @@ var AppModule = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return appRoutes; });
 
 
-//import { MapComponent } from './components/map/map.component';
 var appRoutes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_0__components_home_home_component__["a" /* HomeComponent */] },
-    { path: 'map', loadChildren: './modules/map.module#MapModule' },
-    { path: 'admin', loadChildren: './modules/admin.module#AdminModule', canActivate: [__WEBPACK_IMPORTED_MODULE_1__guards__["a" /* CanActivateAdmin */]] },
+    { path: 'map', loadChildren: './modules/map/map.module#MapModule' },
+    { path: 'admin', loadChildren: './modules/admin/admin.module#AdminModule', canActivate: [__WEBPACK_IMPORTED_MODULE_1__guards__["a" /* CanActivateAdmin */]] },
     { path: '**', redirectTo: '' }
 ];
 //# sourceMappingURL=app.routes.js.map
@@ -617,6 +610,17 @@ var sections = [
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_home_component__ = __webpack_require__(424);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__home_home_component__["a"]; });
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ 640:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgotComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -637,8 +641,8 @@ var ForgotComponent = (function () {
     ForgotComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-forgot',
-            template: __webpack_require__(713),
-            styles: [__webpack_require__(702)]
+            template: __webpack_require__(716),
+            styles: [__webpack_require__(705)]
         }), 
         __metadata('design:paramtypes', [])
     ], ForgotComponent);
@@ -648,7 +652,24 @@ var ForgotComponent = (function () {
 
 /***/ }),
 
-/***/ 640:
+/***/ 641:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__login_login_component__ = __webpack_require__(425);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__login_login_component__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__signup_signup_component__ = __webpack_require__(426);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__signup_signup_component__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__forgot_forgot_component__ = __webpack_require__(640);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__forgot_forgot_component__["a"]; });
+
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ 642:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -685,7 +706,18 @@ var CanActivateAdmin = (function () {
 
 /***/ }),
 
-/***/ 641:
+/***/ 643:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth_service__ = __webpack_require__(103);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__auth_service__["a"]; });
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ 644:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -701,7 +733,7 @@ var environment = {
 
 /***/ }),
 
-/***/ 700:
+/***/ 703:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(18)();
@@ -719,7 +751,7 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 701:
+/***/ 704:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(18)();
@@ -737,7 +769,7 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 702:
+/***/ 705:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(18)();
@@ -755,7 +787,7 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 703:
+/***/ 706:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(18)();
@@ -773,7 +805,7 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 704:
+/***/ 707:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(18)();
@@ -788,45 +820,45 @@ exports.push([module.i, ".mat-dialog-title {\r\n    color: #673ab7;\r\n    font-
 
 /*** EXPORTS FROM exports-loader ***/
 module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ 711:
-/***/ (function(module, exports) {
-
-module.exports = "<md-toolbar #toolbarMenu color=\"primary\">\n  <img src=\"assets/escudo.png\" alt=\"\" class=\"logo-betera\">\n  <span class=\"title\">SIG Bétera</span>\n  <span class=\"spacer\"></span>\n  <button md-button [routerLink]=\"['']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n    Inicio\n  </button>\n  <button md-button [routerLink]=\"['map']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n    Mapa\n  </button>\n  <button md-button [routerLink]=\"['admin']\" routerLinkActive=\"active-link\" *ngIf=\"authUser && authUser.rol == 'admin'\">\n    Admin\n  </button>\n  <button md-button *ngIf=\"authUser\" [mdMenuTriggerFor]=\"menuLogedIn\">\n      {{authUser.name}}\n      <img style=\"max-height : 35px; border-radius: 20px; margin-left : 10px; margin-right: 10px;\" src=\"{{authUser.gravatar}}\">\n  </button> \n  <button *ngIf=\"!authUser\" md-icon-button [mdMenuTriggerFor]=\"menu\">\n    <md-icon>more_vert</md-icon>\n  </button>\n\n\n  <!-- Menú usuario no logueado -->\n  <md-menu #menu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"!authUser\" (click)=\"openLoginDialog()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Login</span>\n    </button>\n    <button md-menu-item (click)=\"openSignupDialog()\">\n      <md-icon>accessibility</md-icon>\n      <span>Registrarse</span>\n    </button>\n    <button md-menu-item (click)=\"openForgotDialog()\">\n      <md-icon>vpn_key</md-icon>\n      <span>¿Olvidaste credenciales?</span>\n    </button>\n  </md-menu>\n  <!-- Menú usuario logueado -->\n  <md-menu #menuLogedIn=\"mdMenu\">\n    <button md-menu-item *ngIf=\"authUser\" (click)=\"logout()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Logout</span>\n    </button>\n  </md-menu>\n</md-toolbar>\n\n<div id=\"app-body\" class=\"container-router\">\n  <router-outlet></router-outlet>  \n</div>"
-
-/***/ }),
-
-/***/ 712:
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <md-card class=\"card\" *ngFor=\"let seccion of secciones\" flex>\r\n    <md-card-header>\r\n      <div md-card-avatar class=\"example-header-image\"></div>\r\n      <md-card-title>{{ seccion.titulo }}</md-card-title>\r\n      <md-card-subtitle>{{ seccion.subtitulo }}</md-card-subtitle>\r\n    </md-card-header>\r\n    <img md-card-image src=\"{{ seccion.img }}\" alt=\"\">\r\n    <md-card-content>\r\n      <p>\r\n        {{ seccion.resumen }}\r\n      </p>\r\n    </md-card-content>\r\n    <md-card-actions>\r\n      <button md-button>LIKE</button>\r\n      <button md-button>SHARE</button>\r\n    </md-card-actions>\r\n  </md-card>\r\n</div>"
-
-/***/ }),
-
-/***/ 713:
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  forgot works!\n</p>\n"
 
 /***/ }),
 
 /***/ 714:
 /***/ (function(module, exports) {
 
-module.exports = "<h1 md-dialog-title color=\"primary\"><md-icon>fingerprint</md-icon>Iniciar Sesión</h1>\n<div md-dialog-content>\n  <div #progress>\n  </div>\n  <img src=\"https://ukla.org/images/icons/user-icon.svg\" alt=\"\" style=\"margin : 0 auto; border-radius : 50px; max-height: 100px;\">\n  <md-input-container  style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.nameOrEmail\" placeholder=\"Usuario o Email\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.password\" placeholder=\"Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n</div>\n<div md-dialog-actions>\n  <button md-button (click)=\"login()\" [disabled]=\"isLoading\">Iniciar</button>\n  <button md-button (click)=\"dialogRef.close('Option 2')\" [disabled]=\"isLoading\">Cancelar</button>\n</div>"
+module.exports = "<md-toolbar #toolbarMenu color=\"primary\">\n  <img src=\"assets/escudo.png\" alt=\"\" class=\"logo-betera\">\n  <span class=\"title\">SIG Bétera</span>\n  <span class=\"spacer\"></span>\n  <button md-button [routerLink]=\"['']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n    Inicio\n  </button>\n  <button md-button [routerLink]=\"['map']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n    Mapa\n  </button>\n  <button md-button [routerLink]=\"['admin']\" routerLinkActive=\"active-link\" *ngIf=\"authUser && authUser.rol == 'admin'\">\n    Admin\n  </button>\n  <button md-button *ngIf=\"authUser\" [mdMenuTriggerFor]=\"menuLogedIn\">\n      {{authUser.name}}\n      <img style=\"max-height : 35px; border-radius: 20px; margin-left : 10px; margin-right: 10px;\" src=\"{{authUser.gravatar}}\">\n  </button> \n  <button *ngIf=\"!authUser\" md-icon-button [mdMenuTriggerFor]=\"menu\">\n    <md-icon>more_vert</md-icon>\n  </button>\n\n\n  <!-- Menú usuario no logueado -->\n  <md-menu #menu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"!authUser\" (click)=\"openLoginDialog()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Login</span>\n    </button>\n    <button md-menu-item (click)=\"openSignupDialog()\">\n      <md-icon>accessibility</md-icon>\n      <span>Registrarse</span>\n    </button>\n    <button md-menu-item (click)=\"openForgotDialog()\">\n      <md-icon>vpn_key</md-icon>\n      <span>¿Olvidaste credenciales?</span>\n    </button>\n  </md-menu>\n  <!-- Menú usuario logueado -->\n  <md-menu #menuLogedIn=\"mdMenu\">\n    <button md-menu-item *ngIf=\"authUser\" (click)=\"logout()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Logout</span>\n    </button>\n  </md-menu>\n</md-toolbar>\n\n<div id=\"app-body\" class=\"container-router\">\n  <router-outlet></router-outlet>  \n</div>"
 
 /***/ }),
 
 /***/ 715:
 /***/ (function(module, exports) {
 
+module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <md-card class=\"card\" *ngFor=\"let seccion of secciones\" flex>\r\n    <md-card-header>\r\n      <div md-card-avatar class=\"example-header-image\"></div>\r\n      <md-card-title>{{ seccion.titulo }}</md-card-title>\r\n      <md-card-subtitle>{{ seccion.subtitulo }}</md-card-subtitle>\r\n    </md-card-header>\r\n    <img md-card-image src=\"{{ seccion.img }}\" alt=\"\">\r\n    <md-card-content>\r\n      <p>\r\n        {{ seccion.resumen }}\r\n      </p>\r\n    </md-card-content>\r\n    <md-card-actions>\r\n      <button md-button>LIKE</button>\r\n      <button md-button>SHARE</button>\r\n    </md-card-actions>\r\n  </md-card>\r\n</div>"
+
+/***/ }),
+
+/***/ 716:
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  forgot works!\n</p>\n"
+
+/***/ }),
+
+/***/ 717:
+/***/ (function(module, exports) {
+
+module.exports = "<h1 md-dialog-title color=\"primary\"><md-icon>fingerprint</md-icon>Iniciar Sesión</h1>\n<div md-dialog-content>\n  <div #progress>\n  </div>\n  <img src=\"https://ukla.org/images/icons/user-icon.svg\" alt=\"\" style=\"margin : 0 auto; border-radius : 50px; max-height: 100px;\">\n  <md-input-container  style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.nameOrEmail\" placeholder=\"Usuario o Email\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.password\" placeholder=\"Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n</div>\n<div md-dialog-actions>\n  <button md-button (click)=\"login()\" [disabled]=\"isLoading\">Iniciar</button>\n  <button md-button (click)=\"dialogRef.close('Option 2')\" [disabled]=\"isLoading\">Cancelar</button>\n</div>"
+
+/***/ }),
+
+/***/ 718:
+/***/ (function(module, exports) {
+
 module.exports = "\n<!-- { name, password, repassword, nombre, apellidos, email } -->\n<h1 md-dialog-title color=\"primary\"><md-icon>accessibility</md-icon>Registrarse en SIG Bétera</h1>\n<div md-dialog-content>\n  <img src=\"https://ukla.org/images/icons/user-icon.svg\" alt=\"\" style=\"margin : 0 auto; border-radius : 50px; max-height: 100px;\">\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.name\" placeholder=\"Nombre de usuario\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.email\" type=\"email\" placeholder=\"Email\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.nombre\" placeholder=\"Nombre\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.apellidos\" placeholder=\"Apellidos\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userToCreate.password\" placeholder=\"Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userToCreate.repassword\" placeholder=\"Repetir Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n  <div style=\"width : 100%; text-align: center;\">\n    <re-captcha site_key=\"6LfjRAsUAAAAAEav71yglI9Mntr_z5faCBs3QTyw\"></re-captcha>\n  </div>\n</div>\n<div md-dialog-actions>\n  <button md-button (click)=\"signup()\">Registrarse</button>\n  <button md-button (click)=\"dialogRef.close('Option 2')\">Cancelar</button>\n</div>"
 
 /***/ }),
 
-/***/ 739:
+/***/ 742:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(448);
@@ -834,5 +866,5 @@ module.exports = __webpack_require__(448);
 
 /***/ })
 
-},[739]);
+},[742]);
 //# sourceMappingURL=main.bundle.js.map

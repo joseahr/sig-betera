@@ -25,7 +25,7 @@ export class Repository {
         return this.db.any(sql.getOrder, { id_map : this.pgp.as.value(id_map) });
     }*/
     
-    // Crea la tabla de mapas
+    /*// Crea la tabla de mapas
     createMapsTable(){
         return this.db.none(sql.createMapsTable);
     }
@@ -36,7 +36,8 @@ export class Repository {
     // Crea la tabla maps-layers
     createMapsLayersTable(){
         return this.db.none(sql.createMapsLayersTable);
-    }
+    }*/
+
     // Comprobar si un usuario tiene asignado un mapa 
     hasMap( id_user : (string | number) , id_map : (string | number) ){
         return this.db.one(sql.hasMap, {
@@ -63,7 +64,7 @@ export class Repository {
 
   	getMapsAndLayers(id_user: (string | number)) {
   		return this.db.task(t => {
-  			var queries = [t.maps.getMaps(id_user)];
+  			var queries = [t.maps.getDefaultMaps()];
   			if (id_user) {
   				queries.push(t.maps.getMaps(id_user));
   			}

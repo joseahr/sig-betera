@@ -1,0 +1,89 @@
+<button 
+  md-mini-fab class="burguer" 
+  [ngClass]="{'burguer-expanded': sidenav.opened }"
+  (click)="sidenav.opened ? sidenav.close() : sidenav.open();">
+  <md-icon>add</md-icon>
+</button>
+<md-sidenav-container [@routerTransition]="" class="example-container">
+  <md-sidenav #sidenav class="example-sidenav">
+
+    <button md-button class="list-button main" (click)="toggleTools()">
+      <md-icon>apps</md-icon>HERRAMIENTAS
+    </button>
+
+    <div #mapTools class="collapsed">
+      <button md-button class="list-button" (click)="toggleProfileControl()">
+        <md-icon>terrain</md-icon>PERFIL
+      </button>
+    </div>
+
+    <button md-button class="list-button main" (click)="toggleMaps()">
+      <md-icon>layers</md-icon>MAPAS
+    </button>
+    <!-- control de capas -->
+    <div #mapsDetailsContainer *ngIf="map && map.getLayers().getArray()" class="list collapsed" [dragula]='"layers"' [dragulaModel]='map.getLayers().getArray()'>
+      <div class="list-item" *ngFor="let layer of map.getLayers().getArray(); let i = index;">
+        <div class="buttons">
+          <button md-button *ngIf="i > 0" (click)="moveLayerDown(layer.get('name'))"><md-icon>keyboard_arrow_up</md-icon></button>
+          <button md-button *ngIf="i < map.getLayers().getArray().length - 1" (click)="moveLayerUp(layer.get('name'))"><md-icon>keyboard_arrow_down</md-icon></button>
+        </div>
+        <div class="content">
+          <md-slide-toggle (change)="changeVisible($event, layer.get('name'))" [checked]="layer.getVisible()">
+            {{ layer.get('name') }}
+          </md-slide-toggle>
+          <md-slider (input)="changeOpacity($event, layer.get('name'))" step="0.05" [min]="0" [max]="1" [value]="layer.getOpacity()">
+          </md-slider>
+          <div class="actions">
+            <div class="separator"></div>
+            <button *ngIf="layer.get('layers')" md-button (click)="groups._results[i].nativeElement.classList.toggle('collapsed')"><md-icon>add</md-icon></button>
+            <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->
+            <!--<button md-button><md-icon>map</md-icon></button>-->
+            <button md-button class="handle" style="float : right;"><md-icon>drag_handle</md-icon></button>
+          </div>
+        </div>
+        <div #group class="group collapsed">
+          <div *ngIf="layer.get('layers')" [dragula]='"layerGroup"' [dragulaModel]="layer.get('layers').getArray()">
+            <div class="list-item" *ngFor="let layer_ of layer.get('layers').getArray(); let j = index">
+              <div class="buttons">
+                <button *ngIf="j > 0" md-button (click)="moveLayerInGroupDown(layer.get('name'), layer_.get('name'))"><md-icon>keyboard_arrow_up</md-icon></button>
+                <button *ngIf="j < layer.get('layers').getArray().length - 1" md-button (click)="moveLayerInGroupUp(layer.get('name'), layer_.get('name'))"><md-icon>keyboard_arrow_down</md-icon></button>
+              </div>
+              <div class="content">
+                <md-slide-toggle (change)="changeVisibleGroupLayer($event, layer_.get('name'), layer.get('name'))" [checked]="layer.getVisible()">
+                  {{ layer_.get('name') }}
+                </md-slide-toggle>
+                <md-slider (input)="changeOpacityGroupLayer($event, layer_.get('name'), layer.get('name') )" step="0.05" [min]="0" [max]="1" [value]="layer.getOpacity()">
+                </md-slider>
+                <div class="actions">
+                  <div class="separator"></div>
+                  <button md-button><md-icon>info</md-icon></button>
+                  <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->
+                  <!--<button md-button><md-icon>map</md-icon></button>-->
+                  <button md-button class="handleGroup" style="float : right;"><md-icon>drag_handle</md-icon></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END control de capas -->
+    <button md-button class="list-button main" (click)="overviewMap.classList.toggle('collapsed')">
+      <md-icon>map</md-icon>MINIATURA
+    </button>
+    <div #overviewMap class="overview-map" style="flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;"></div>
+    <button md-button class="list-button main">
+      <md-icon>file_download</md-icon>DESCARGAR MAPA
+    </button>
+
+  </md-sidenav>
+  <div id="map" #mapEl class="example-sidenav-content"
+    [ngClass]="{'map-expanded': sidenav.opened }" 
+  >    
+  </div>
+
+  <app-map-profile
+    [map]="map"
+  ></app-map-profile>
+
+</md-sidenav-container>

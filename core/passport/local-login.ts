@@ -37,6 +37,7 @@ export const callback = (req : any, username : string, password : string, done :
                     .then(( validPassword : Boolean ) =>{
                         console.log('Comparando contraseñas : ', validPassword)
                         if(validPassword){
+                            delete user.password;
                             req.user = user;
                             done(null, user, 'Login Correcto');
                         }

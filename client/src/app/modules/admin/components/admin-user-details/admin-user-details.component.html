@@ -1,0 +1,36 @@
+<button md-fab (click)="goBack()" style="position : fixed; z-index: 1; right: 0.5em; bottom: 0.5em;">
+  <md-icon>arrow_back</md-icon>
+</button>
+<div *ngIf="userDetail">
+  <md-card style="margin : 8px; margin-top : 15px;">
+    <div [style.background]="'url(' + userDetail.gravatar + ')'" class="user-avatar"></div>
+    <md-card-header>
+      <md-card-title>{{userDetail.name}}</md-card-title>
+      <md-card-subtitle>{{userDetail.nombre}} {{userDetail.apellidos}}</md-card-subtitle>
+    </md-card-header>
+    <div md-card-image
+      style="height : 100px; background-position-y : 350px; background: url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg'); background-size: cover;"
+    >
+    </div>
+    <md-card-content>
+      <md-tab-group>
+        <md-tab label="Grupos">
+          <md-list>
+            <h3 md-subheader>Grupos del usuario {{userDetail.name}}</h3>
+            <md-list-item *ngFor="let grupo of userDetail.grupos">
+                <md-icon md-list-avatar>group</md-icon>
+                <h4 md-line>{{grupo}}</h4>
+            </md-list-item>
+          </md-list>
+        </md-tab>
+        <md-tab label="Mapas">Content 2</md-tab>
+        <md-tab label="Permisos">Content 3</md-tab>
+      </md-tab-group>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button>LIKE</button>
+      <button md-button>SHARE</button>
+    </md-card-actions>
+  </md-card>
+
+</div>

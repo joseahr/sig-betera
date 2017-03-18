@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, HostListener, NgZone } from '@angular/core';
-
 import { sections } from './secciones';
 import { routerTransition } from '../../router.transitions';
 

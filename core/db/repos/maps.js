@@ -14,18 +14,18 @@ var Repository = (function () {
     /*getOrder( id : (string | number) ){
         return this.db.any(sql.getOrder, { id_map : this.pgp.as.value(id_map) });
     }*/
-    // Crea la tabla de mapas
-    Repository.prototype.createMapsTable = function () {
+    /*// Crea la tabla de mapas
+    createMapsTable(){
         return this.db.none(sql.createMapsTable);
-    };
+    }
     // Crea la tabla de mapas-users
-    Repository.prototype.createMapsUsersTable = function () {
+    createMapsUsersTable(){
         return this.db.none(sql.createMapsUsersTable);
-    };
+    }
     // Crea la tabla maps-layers
-    Repository.prototype.createMapsLayersTable = function () {
+    createMapsLayersTable(){
         return this.db.none(sql.createMapsLayersTable);
-    };
+    }*/
     // Comprobar si un usuario tiene asignado un mapa 
     Repository.prototype.hasMap = function (id_user, id_map) {
         return this.db.one(sql.hasMap, {
@@ -47,22 +47,25 @@ var Repository = (function () {
         return this.db.any(sql.getAllMaps);
     };
     Repository.prototype.getMapsAndLayers = function (id_user) {
-        var promises = [this.getDefaultMaps()];
-        if (id_user)
-            promises.push(this.getMaps(id_user));
-        return Promise.all(promises)
-            .then(function (listOfMaps) {
-            var mapIds = [];
-            //(listOfMaps[0] || []).forEach(el => { el.default = true; return el; });
-            //console.log(listOfMaps[0], 'listOfMaps0');
-            listOfMaps = (listOfMaps[1] || []).concat((listOfMaps[0] || []));
-            return listOfMaps.reduce(function (list, el) {
-                if (mapIds.indexOf(el.id) == -1) {
-                    mapIds.push(el.id);
-                    list.push(el);
-                }
-                return list;
-            }, []);
+        return this.db.task(function (t) {
+            var queries = [t.maps.getDefaultMaps()];
+            if (id_user) {
+                queries.push(t.maps.getMaps(id_user));
+            }
+            return t.batch(queries)
+                .then(function (listOfMaps) {
+                var mapIds = [];
+                //(listOfMaps[0] || []).forEach(el => { el.default = true; return el; });
+                //console.log(listOfMaps[0], 'listOfMaps0');
+                listOfMaps = (listOfMaps[1] || []).concat((listOfMaps[0] || []));
+                return listOfMaps.reduce(function (list, el) {
+                    if (mapIds.indexOf(el.id) == -1) {
+                        mapIds.push(el.id);
+                        list.push(el);
+                    }
+                    return list;
+                }, []);
+            });
         });
     };
     return Repository;

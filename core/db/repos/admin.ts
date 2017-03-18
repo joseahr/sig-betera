@@ -25,4 +25,8 @@ export class Repository {
     getUsers(){
         return this.db.manyOrNone(sql.getUsers);
     }
+
+    getUserDetail(id : number){
+        return this.db.one(sql.getUserDetail, { id });
+    }
 }

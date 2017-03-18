@@ -38,6 +38,7 @@ exports.callback = function (req, username, password, done) {
                         .then(function (validPassword) {
                         console.log('Comparando contraseñas : ', validPassword);
                         if (validPassword) {
+                            delete user.password;
                             req.user = user;
                             done(null, user, 'Login Correcto');
                         }

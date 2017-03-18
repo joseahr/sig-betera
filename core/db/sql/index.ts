@@ -62,7 +62,8 @@ export = {
         getAllMaps : sql('maps/get-all-maps.sql')
     },
     admin : {
-        getUsers : sql('admin/users-admin.sql')
+        getUsers : sql('admin/users-admin.sql'),
+        getUserDetail : sql('admin/user-admin-detail.sql')
     }
 };
 

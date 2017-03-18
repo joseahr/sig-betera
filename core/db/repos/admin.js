@@ -15,6 +15,9 @@ var Repository = (function () {
     Repository.prototype.getUsers = function () {
         return this.db.manyOrNone(sql.getUsers);
     };
+    Repository.prototype.getUserDetail = function (id) {
+        return this.db.one(sql.getUserDetail, { id: id });
+    };
     return Repository;
 }());
 exports.Repository = Repository;
