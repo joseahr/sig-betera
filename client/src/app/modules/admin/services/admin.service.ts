@@ -14,4 +14,8 @@ export class AdminService {
         return this.http.get(`/api/admin/users/${id}`);
     }
 
+    getAllGroups(){
+        return this.http.get('/api/admin/groups');
+    }
+
 }

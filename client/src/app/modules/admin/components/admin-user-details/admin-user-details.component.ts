@@ -15,6 +15,7 @@ import { AdminService } from '../../services';
 export class AdminUserDetailsComponent implements OnInit {
 
   userDetail;
+  allGroups;
 
   constructor(
     private route : ActivatedRoute, 
@@ -23,12 +24,8 @@ export class AdminUserDetailsComponent implements OnInit {
   ) {
     //console.log(this.route.snapshot.params, 'snapshot');
     let params : any = this.route.snapshot.params;
-    this.adminService.getUserDetail(params.id).subscribe(
-      (data)=>{
-        this.userDetail = data.json();
-        console.log(this.userDetail);
-      }
-    )
+    this.userDetail = this.adminService.getUserDetail(params.id).map(res => res.json());
+    this.allGroups = this.adminService.getAllGroups().map(res => res.json());
   }
 
   ngOnInit() {
@@ -36,6 +33,10 @@ export class AdminUserDetailsComponent implements OnInit {
 
   goBack(){
     this.location.back();
+  }
+
+  changeGroup(event){
+    console.log(event);
   }
 
 }

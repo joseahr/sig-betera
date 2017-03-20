@@ -11,7 +11,7 @@ import {
     AdminMailComponent,
     AdminUserDetailsComponent
 } from './components';
-
+import { FilterListPipe } from './pipes';
 const adminRoutes : Route[] =  [{
     path : '',
     component : AdminComponent,
@@ -31,7 +31,8 @@ const adminRoutes : Route[] =  [{
         AdminMapsComponent,
         AdminLayersComponent,
         AdminMailComponent,
-        AdminUserDetailsComponent
+        AdminUserDetailsComponent,
+        FilterListPipe
     ],
     providers : [
     ],

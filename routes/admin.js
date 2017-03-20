@@ -21,29 +21,35 @@ exports.router.get('/layers', function (req, res) {
         .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/baselayers', function (req, res) {
-    return db_1.db.layers.getAllBaseLayers()
+    db_1.db.layers.getAllBaseLayers()
         .then(function (baselayers) { return res.status(200).json(baselayers); })
         .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/users', function (req, res) {
-    return db_1.db.admin.getUsers()
+    db_1.db.admin.getUsers()
         .then(function (users) { return res.status(200).json({ data: users }); })
         .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/users/:id', function (req, res) {
     var id = req.params.id;
-    return db_1.db.admin.getUserDetail(id)
+    db_1.db.admin.getUserDetail(id)
         .then(function (user) { return res.status(200).json(user); })
         .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/maps', function (req, res) {
-    return db_1.db.maps.getAllMaps();
+    db_1.db.maps.getAllMaps()
+        .then(function (maps) { return res.status(200).json(maps); })
+        .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/default-maps', function (req, res) {
-    return db_1.db.maps.getDefaultMaps();
+    db_1.db.maps.getDefaultMaps()
+        .then(function (dmaps) { return res.status(200).json(dmaps); })
+        .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/groups', function (req, res) {
-    return db_1.db.users.getAllGroups();
+    db_1.db.users.getAllGroups()
+        .then(function (groups) { return res.status(200).json(groups); })
+        .catch(function (err) { return res.status(500).json(err); });
 });
 /**************************
  * AÑADIR / ELIMINAR UN MAPA
