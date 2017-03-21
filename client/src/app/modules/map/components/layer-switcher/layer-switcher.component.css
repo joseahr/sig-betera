@@ -1,0 +1,58 @@
+.group {
+    transition: all 1s cubic-bezier(.39,.575,.565,1);
+}
+
+.collapsed {
+    display : none;
+    height: 0px;
+}
+
+.group .list-item {
+    padding-left: 15px;
+    background: #f7f7f7;
+    border-radius: 0px;
+}
+
+.content .actions {
+    display : block;
+    min-height: 50px;
+}
+
+.actions button {
+    min-width: 20px !important;
+}
+
+.buttons {
+    display : block;
+    max-width: 50px;
+    max-height: 50px;
+    float : right;
+}
+
+.buttons button {
+    float : right;
+    display : block;
+    min-width: 30px !important;
+}
+
+.list {
+    height: auto;
+}
+
+.list-item {
+    min-height: 100px;
+    height : auto;
+    background: #fff;
+    padding : 5px;
+    margin-bottom : 10px;
+    box-shadow: 0 0px 4px 0 rgba(0,0,0,.3);
+    border-radius: 2px;
+    margin-left : 10px;
+    margin-right: 10px;
+}
+
+md-slider {
+    display: block;
+    width: 85%;
+    min-width: 105px;
+}

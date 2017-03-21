@@ -2,11 +2,11 @@
   <md-icon>arrow_back</md-icon>
 </button>
 <md-card style="margin : 8px; margin-top : 15px;">
-  <img src="{{ (userDetail | async)?.gravatar }}" alt="" class="user-avatar">
+  <img src="{{ userDetail?.gravatar }}" alt="" class="user-avatar">
   <!--<div [style.background]="'url(' + userDetail.gravatar + ')'" class="user-avatar"></div>-->
   <md-card-header>
-    <md-card-title>{{(userDetail | async)?.name}}</md-card-title>
-    <md-card-subtitle>{{(userDetail | async)?.nombre}} {{(userDetail | async)?.apellidos}}</md-card-subtitle>
+    <md-card-title>{{userDetail?.name}}</md-card-title>
+    <md-card-subtitle>{{userDetail?.nombre}} {{userDetail?.apellidos}}</md-card-subtitle>
   </md-card-header>
   <div md-card-image
     style="height : 100px; background-position-y : 350px; background: url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg'); background-size: cover;"
@@ -16,8 +16,8 @@
     <md-tab-group>
       <md-tab label="Grupos">
         <md-list>
-          <h3 md-subheader>Grupos del usuario {{(userDetail | async)?.name}}</h3>
-          <md-list-item *ngFor="let grupo of (userDetail | async)?.grupos">
+          <h3 md-subheader>Grupos del usuario {{userDetail?.name}}</h3>
+          <md-list-item *ngFor="let grupo of userDetail?.grupos">
               <md-icon md-list-avatar>group</md-icon>
               <h4 md-line>{{grupo}}</h4>
           </md-list-item>
@@ -29,7 +29,7 @@
   </md-card-content>
   <md-card-actions>
     <md-select placeholder="Grupos" (change)="changeGroup($event)">
-      <md-option *ngFor="let group of allGroups | filterList : (userDetail | async)?.grupos | async" [value]="group">{{ group }}</md-option>
+      <md-option *ngFor="let group of allGroups | filterList : userDetail?.grupos | async" [value]="group">{{ group }}</md-option>
     </md-select>
   </md-card-actions>
 </md-card>

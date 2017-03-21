@@ -5,6 +5,8 @@ import { DragulaModule } from 'ng2-dragula';
 import { MapComponent, ProfileComponent } from './components';
 import { MaterialModule } from '@angular/material';
 import { ChartModule } from 'angular2-highcharts';
+import { LayerSwitcherComponent } from './components/layer-switcher/layer-switcher.component';
+import { ReverseLayersPipe } from './pipes';
 
 const mapRoutes : Route[] =  [{
     path : '',
@@ -12,7 +14,12 @@ const mapRoutes : Route[] =  [{
 }]
 
 @NgModule({
-    declarations : [ MapComponent, ProfileComponent ],
+    declarations : [ 
+        MapComponent, 
+        ProfileComponent, 
+        LayerSwitcherComponent,
+        ReverseLayersPipe
+    ],
     providers : [
     ],
     imports : [

@@ -1,17 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, NgZone, forwardRef } from '@angular/core';
 import { MdSidenav } from '@angular/material';
-import { DragulaService, DragulaDirective } from 'ng2-dragula';
 import { ProjectionService, Profile3DService, UserMapsService } from '../../services';
 import { routerTransition } from '../../../../router.transitions';
-import { ProfileComponent } from '../';
+import { ProfileComponent, LayerSwitcherComponent } from '../';
 import * as ol from 'openlayers';
-//import * as proj4 from 'proj4';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
-  providers: [ProjectionService, Profile3DService, UserMapsService, DragulaService],
+  providers: [ProjectionService, Profile3DService, UserMapsService],
   animations: [routerTransition()],
   host : { '[@routerTransition]': '' }
 })
@@ -22,12 +20,11 @@ export class MapComponent implements OnInit {
   overviewCtrl : ol.Map;
   sideNavMapInterval : any;
   
-  @ViewChild(forwardRef(() =>ProfileComponent)) profileControl : ProfileComponent;
+  @ViewChild(forwardRef(() => ProfileComponent)) profileControl : ProfileComponent;
+  @ViewChild(forwardRef(() => LayerSwitcherComponent)) layerSwitcherControl : LayerSwitcherComponent;
   @ViewChild('overviewMap') overviewMapEl : ElementRef;
   @ViewChild('mapTools') toolsContainer : ElementRef;
-  @ViewChild('mapsDetailsContainer') mapsDetailsContainer: ElementRef;
   @ViewChild('sidenav') sidenav: MdSidenav;
-  @ViewChildren('group') groups: QueryList<ElementRef>;
 
   constructor(
     private zone : NgZone,
@@ -35,31 +32,16 @@ export class MapComponent implements OnInit {
     private userMapsService : UserMapsService,
     private projService : ProjectionService, 
     private profileService : Profile3DService,
-    private dragulaService: DragulaService
   ) {
   }
 
   ngOnInit(){
     this.sidenav.onOpenStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
     this.sidenav.onCloseStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
-    this.sidenav.onOpen.subscribe(this.clearIntervalUpdateMapSize.bind(this))
-    this.sidenav.onClose.subscribe(this.clearIntervalUpdateMapSize.bind(this))
-    
-    this.dragulaService.drop.subscribe(
-      ()=> {
-        this.updateMapAndOverview();
-      }
-    )
-
-    this.dragulaService.setOptions('layers', {
-      moves : (el, container, handle) => handle.classList.contains('handle'),
-      accepts : (el, target, source, sibling) => target.attributes[2].value == 'layers'
-    });
-    this.dragulaService.setOptions('layerGroup', {
-      moves : (el, container, handle) => handle.classList.contains('handleGroup'),
-      accepts : (el, target, source, sibling) => target.attributes[1].value == 'layerGroup' && el.parentNode == target
-    });
-
+    this.sidenav.onOpen.subscribe(this.clearIntervalUpdateMapSize.bind(this));
+    this.sidenav.onClose.subscribe(this.clearIntervalUpdateMapSize.bind(this));
+    this.zone.runOutsideAngular(this.createMap.bind(this));
+    //this.map.getLayers().on('change:length', ()=>{ this.updateMapAndOverview() });
   }
 
   ngAfterViewInit() {
@@ -67,7 +49,6 @@ export class MapComponent implements OnInit {
     this.el.nativeElement.parentNode.parentNode.childNodes[0].style.position = 'relative';
     setTimeout(function () { window.scrollTo(0, 1); }, 1000);
     document.body.style.overflow = 'hidden';
-    this.zone.runOutsideAngular(this.createMap.bind(this));
     //this.createMap();
   }
 
@@ -90,13 +71,15 @@ export class MapComponent implements OnInit {
     this.map.getLayers().getArray().forEach(l => l.changed() );
     this.map.render();
     this.map.once('postcompose', ()=>{
-      this.overviewCtrl.getLayers().clear();
-      this.overviewCtrl.getLayers().extend([...this.map.getLayers().getArray()]);
+      if(this.overviewCtrl){
+        this.overviewCtrl.getLayers().clear();
+        this.overviewCtrl.getLayers().extend(this.map.getLayers().getArray());
+      }
     })
   }
 
   toggleMaps(){
-    this.mapsDetailsContainer.nativeElement.classList.toggle('collapsed');
+    this.layerSwitcherControl.toggleMaps.call(this.layerSwitcherControl);
   }
 
   toggleTools(){
@@ -153,134 +136,6 @@ export class MapComponent implements OnInit {
     });
     this.overviewCtrl.getLayers().clear();
     this.overviewCtrl.getLayers().extend([...this.map.getLayers().getArray()]);
-  }
-
-  changeOpacity(event, name){
-    this.map.getLayers().forEach( l =>{
-      if(l.get('name') == name){
-        l.setOpacity(event.value);
-      }
-    })
-  }
-
-  changeOpacityGroupLayer(event, layerName, groupName){
-    this.map.getLayers().forEach( (l : ol.layer.Group) =>{
-      if(l.get('name') == groupName && l.get('layers')){
-        l.get('layers').forEach( ll =>{
-          if(ll.get('name') == layerName){
-            ll.setOpacity(event.value);
-          }
-        });
-      }
-    })
-  }
-
-  changeVisible(event, name){
-    this.map.getLayers().forEach( l =>{
-      if(l.get('name') == name){
-        l.setVisible(event.checked);
-      }
-    })
-  }
-
-  changeVisibleGroupLayer(event, layerName, groupName){
-    this.map.getLayers().forEach( (l : ol.layer.Group) =>{
-      if(l.get('name') == groupName && l.get('layers')){
-        l.get('layers').forEach( ll =>{
-          if(ll.get('name') == layerName){
-            ll.setVisible(event.checked);
-          }
-        });
-      }
-    })
-  }
-
-  moveLayerUp(name){
-    let layers = this.map.getLayers().getArray();
-    let index = -1;
-    for(let i = 0; i < layers.length ; i++){
-      if(layers[i].get('name') == name){
-        index = i;
-        break;
-      }
-    }
-    console.log(index);
-    if(index >= 0){
-      let layer = this.map.getLayers().getArray().splice(index, 1)[0];
-      this.map.getLayers().getArray().splice(index + 1, 0, layer);
-      layer.changed();
-      this.updateMapAndOverview();
-    }
-  }
-
-  moveLayerDown(name){
-    let layers = this.map.getLayers().getArray();
-    let index = -1;
-    for(let i = 0; i < layers.length ; i++){
-      if(layers[i].get('name') == name){
-        index = i;
-        break;
-      }
-    }
-    console.log(index);
-    if(index > 0){
-      let layer = this.map.getLayers().getArray().splice(index, 1)[0];
-      this.map.getLayers().getArray().splice(index - 1, 0, layer);
-      layer.changed();
-      this.updateMapAndOverview();
-    }
-  }
-
-  moveLayerInGroupUp(groupLayersName, layerName){
-    let layers = this.map.getLayers().getArray();
-    let indexGroup = -1;
-    let indexLayer = -1;
-    for(let i = 0; i < layers.length ; i++){
-      if(layers[i].get('name') == groupLayersName && layers[i].get('layers')){
-        indexGroup = i;
-        for(let j = 0; j < layers[i].get('layers').getArray().length; j++){
-          if(layers[i].get('layers').getArray()[j].get('name') == layerName){
-            indexLayer = j;
-            break;
-          }
-        }
-        break;
-      }
-    }
-    console.log(indexGroup, groupLayersName, indexLayer, layerName)
-    if(indexGroup >= 0 && indexLayer >= 0){
-      let layerGroup = this.map.getLayers().getArray()[indexGroup].get('layers').getArray();
-      let layer = layerGroup.splice(indexLayer, 1)[0];
-      layerGroup.splice(indexLayer + 1, 0, layer);
-      layer.changed();
-      this.updateMapAndOverview();
-    }
-  }
-
-  moveLayerInGroupDown(groupLayersName, layerName){
-    let layers = this.map.getLayers().getArray();
-    let indexGroup = -1;
-    let indexLayer = -1;
-    for(let i = 0; i < layers.length ; i++){
-      if(layers[i].get('name') == groupLayersName && layers[i].get('layers')){
-        indexGroup = i;
-        for(let j = 0; j < layers[i].get('layers').getArray().length; j++){
-          if(layers[i].get('layers').getArray()[j].get('name') == layerName){
-            indexLayer = j;
-            break;
-          }
-        }
-        break;
-      }
-    }
-    console.log(indexGroup, groupLayersName, indexLayer, layerName)
-    if(indexGroup >= 0 && indexLayer > 0){
-      let layerGroup = this.map.getLayers().getArray()[indexGroup].get('layers').getArray();
-      let layer = layerGroup.splice(indexLayer, 1)[0];
-      layerGroup.splice(indexLayer - 1, 0, layer);
-      layer.changed();
-      this.updateMapAndOverview();
-    }
   }
 
   addUserMaps(){

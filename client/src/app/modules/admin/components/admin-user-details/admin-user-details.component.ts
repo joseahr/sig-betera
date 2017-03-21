@@ -24,7 +24,9 @@ export class AdminUserDetailsComponent implements OnInit {
   ) {
     //console.log(this.route.snapshot.params, 'snapshot');
     let params : any = this.route.snapshot.params;
-    this.userDetail = this.adminService.getUserDetail(params.id).map(res => res.json());
+    this.adminService.getUserDetail(params.id)
+      .map(res => res.json())
+      .subscribe( uDetail => { this.userDetail = uDetail });
     this.allGroups = this.adminService.getAllGroups().map(res => res.json());
   }
 
