@@ -1,3 +1,15 @@
+<nav md-tab-nav-bar>
+  <a md-tab-link
+     *ngFor="let link of links"
+     [routerLink]="link.path"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive">
+    {{link.label}}
+  </a>
+</nav>
+<router-outlet></router-outlet>
+
+<!--
 <md-toolbar #toolbarMenu color="primary" style="text-align: center;">
     <button md-button [routerLink]="['/admin']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
         Inicio
@@ -16,3 +28,4 @@
     </button>
 </md-toolbar>
 <router-outlet></router-outlet>
+-->

@@ -11,6 +11,14 @@ import { routerTransition } from '../../../../router.transitions';
 })
 export class AdminComponent implements OnInit {
 
+  links = [
+    { path : 'home'   , label : 'Home'     }, 
+    { path : 'users'  , label : 'Usuarios' }, 
+    { path : 'maps'   , label : 'Mapas'    }, 
+    { path : 'layers' , label : 'Capas'    }, 
+    { path : 'mail'   , label : 'Mail'     }
+  ];
+
   constructor() { }
 
   ngOnInit() {

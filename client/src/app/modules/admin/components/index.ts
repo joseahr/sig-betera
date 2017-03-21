@@ -1,3 +1,4 @@
+export * from './admin-home/admin-home.component';
 export * from './admin/admin.component';
 export * from './admin-layers/admin-layers.component';
 export * from './admin-mail/admin-mail.component';

@@ -1,0 +1,5 @@
+<h4>Añade un servicio WMS</h4>
+<md-input-container>
+  <input mdInput [(ngModel)]="serviceUrl" placeholder="url del servidor o capabilities"  value="">
+</md-input-container>
+<button md-button (click)="getCapabilities()">OBTENER CAPAS</button>

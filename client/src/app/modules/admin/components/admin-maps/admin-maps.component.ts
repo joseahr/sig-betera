@@ -10,7 +10,27 @@ import { routerTransition } from '../../../../router.transitions';
 })
 export class AdminMapsComponent implements OnInit {
 
-  constructor() { }
+  dtOptionsDefaultMaps;
+  dtOptionsMaps;
+
+  constructor() {
+    this.dtOptionsMaps = {
+      ajax: 'api/admin/maps',
+      columns: [
+        { title: 'ID', data: 'id'}, 
+        { title: 'Nombre', data: 'name' }, 
+        { title: 'Capas', data: 'layers' },
+        { title: 'Capas Base', data: 'baselayers' }
+      ]
+    };
+    this.dtOptionsDefaultMaps = {
+      ajax: 'api/admin/default-maps',
+      columns: [
+        { title: 'ID', data: 'id'}, 
+        { title: 'Nombre', data: 'name' }, 
+      ]
+    };
+  }
 
   ngOnInit() {
   }

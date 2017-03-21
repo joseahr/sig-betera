@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { db } from '../core/db';
+import * as capabilitiesParser from '../core/capabilities-parser';
 
 export let router = express.Router();
 
@@ -16,18 +17,16 @@ router.route('/features/byGeom')
 });
 
 router
-.post('/wms/getCapabilities', (req, res)=>{
-    /*let serviceUrl = req.body.service_url;
+.post('/wms/capabilities', (req, res)=>{
+    let serviceUrl = req.body.service_url;
     console.log(serviceUrl, req.body);
     if(!serviceUrl) return res.status(500).json('Introduce una url');
-    capabilitiesParser.parse(serviceUrl)
+    capabilitiesParser.parser(serviceUrl)
     .then(layers =>{
         if(!layers || !layers.length) return res.status(500).json('No es un capabilities válido');
         res.status(200).json(layers);
     })
     .catch(err => res.status(500).json('eeer' + err));
-    */
-    res.status(200).send('Implementando');
 });
 
 router

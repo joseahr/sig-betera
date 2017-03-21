@@ -1,4 +1,4 @@
-<button 
+<button
   md-mini-fab class="burguer" 
   [ngClass]="{'burguer-expanded': sidenav.opened }"
   (click)="sidenav.opened ? sidenav.close() : sidenav.open();">
@@ -29,6 +29,10 @@
     <div #overviewMap class="overview-map" style="flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;"></div>
     <button md-button class="list-button main">
       <md-icon>file_download</md-icon>DESCARGAR MAPA
+    </button>
+
+    <button md-button class="list-button main" (click)="openWMSDialog()">
+      <md-icon>map</md-icon>AÑADIR WMS
     </button>
 
   </md-sidenav>

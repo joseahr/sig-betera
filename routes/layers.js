@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var db_1 = require("../core/db");
+var capabilitiesParser = require("../core/capabilities-parser");
 exports.router = express.Router();
 exports.router.route('/features/byGeom')
     .post(function (req, res) {
@@ -17,18 +18,18 @@ exports.router.route('/features/byGeom')
     var _a;
 });
 exports.router
-    .post('/wms/getCapabilities', function (req, res) {
-    /*let serviceUrl = req.body.service_url;
+    .post('/wms/capabilities', function (req, res) {
+    var serviceUrl = req.body.service_url;
     console.log(serviceUrl, req.body);
-    if(!serviceUrl) return res.status(500).json('Introduce una url');
-    capabilitiesParser.parse(serviceUrl)
-    .then(layers =>{
-        if(!layers || !layers.length) return res.status(500).json('No es un capabilities válido');
+    if (!serviceUrl)
+        return res.status(500).json('Introduce una url');
+    capabilitiesParser.parser(serviceUrl)
+        .then(function (layers) {
+        if (!layers || !layers.length)
+            return res.status(500).json('No es un capabilities válido');
         res.status(200).json(layers);
     })
-    .catch(err => res.status(500).json('eeer' + err));
-    */
-    res.status(200).send('Implementando');
+        .catch(function (err) { return res.status(500).json('eeer' + err); });
 });
 exports.router
     .route('/:id_layer')

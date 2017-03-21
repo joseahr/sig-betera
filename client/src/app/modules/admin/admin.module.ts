@@ -5,6 +5,7 @@ import { MaterialModule } from '@angular/material';
 import { DataTablesModule } from 'angular-datatables';
 import { 
     AdminComponent,
+    AdminHomeComponent,
     AdminUsersComponent,
     AdminMapsComponent,
     AdminLayersComponent,
@@ -12,15 +13,18 @@ import {
     AdminUserDetailsComponent
 } from './components';
 import { FilterListPipe } from './pipes';
+
 const adminRoutes : Route[] =  [{
     path : '',
     component : AdminComponent,
     children : [
-        { path : 'users' , component : AdminUsersComponent },
+        { path : 'home'      , component : AdminHomeComponent        },
+        { path : 'users'     , component : AdminUsersComponent       },
         { path : 'users/:id' , component : AdminUserDetailsComponent },
-        { path : 'maps'  , component : AdminMapsComponent },
-        { path : 'layers', component : AdminLayersComponent },
-        { path : 'mail'  , component : AdminMailComponent }
+        { path : 'maps'      , component : AdminMapsComponent        },
+        { path : 'layers'    , component : AdminLayersComponent      },
+        { path : 'mail'      , component : AdminMailComponent        },
+        { path : '**'        , redirectTo : 'home'                   }
     ]
 }]
 
@@ -32,7 +36,8 @@ const adminRoutes : Route[] =  [{
         AdminLayersComponent,
         AdminMailComponent,
         AdminUserDetailsComponent,
-        FilterListPipe
+        FilterListPipe,
+        AdminHomeComponent
     ],
     providers : [
     ],

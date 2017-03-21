@@ -26,13 +26,10 @@ export class AppComponent {
       this.authService.getUser().subscribe(
         (user)=> { 
           this.ngZone.run( ()=> {
-            console.log('useerrrr', user);
             if(!user.error){
               this.authUser = user; 
-              localStorage.setItem('authUser', JSON.stringify(user));
             } else {
               this.authUser = null;
-              localStorage.removeItem('authUser');  
             }
           });
         }

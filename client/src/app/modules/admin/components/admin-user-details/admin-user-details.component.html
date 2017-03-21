@@ -1,7 +1,7 @@
 <button md-fab (click)="goBack()" style="position : fixed; z-index: 1; right: 0.5em; bottom: 0.5em;">
   <md-icon>arrow_back</md-icon>
 </button>
-<md-card style="margin : 8px; margin-top : 15px;">
+<md-card style="margin : 8px; margin-top : 15px;" [@routerTransition]="">
   <img src="{{ userDetail?.gravatar }}" alt="" class="user-avatar">
   <!--<div [style.background]="'url(' + userDetail.gravatar + ')'" class="user-avatar"></div>-->
   <md-card-header>

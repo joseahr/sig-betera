@@ -10,7 +10,7 @@ LEFT JOIN LATERAL (
     ) ll
 ) lay ON TRUE
 LEFT JOIN LATERAL (
-    SELECT array_agg(bbll) as baselayers
+    SELECT json_agg(bbll) as baselayers
     FROM (
         SELECT ul.*, bl.*, 'base' as type
         FROM Map_Base_Layers ul

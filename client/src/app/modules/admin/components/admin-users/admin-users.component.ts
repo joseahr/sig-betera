@@ -44,22 +44,12 @@ export class AdminUsersComponent implements OnInit {
           <md-icon class="material-icons mat-icon">add</md-icon>
         </button>`
       },
-      {
-        title: 'ID',
-        data: 'id'
-      }, {
-        title: 'Nombre',
-        data: 'name'
-      }, {
-        title: 'Email',
-        data: 'email'
-      }, {
-        title: 'Rol',
-        data: 'rol'     
-      }, {
-        title: 'Válido',
-        data: 'valid'     
-      }]
+      { title: 'ID', data: 'id'}, 
+      { title: 'Nombre', data: 'name' }, 
+      { title: 'Email', data: 'email' },
+      { title: 'Rol', data: 'rol' }, 
+      { title: 'Válido', data: 'valid' }
+      ]
     };
   }
 

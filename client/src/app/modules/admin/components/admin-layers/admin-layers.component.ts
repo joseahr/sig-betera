@@ -10,7 +10,27 @@ import { routerTransition } from '../../../../router.transitions';
 })
 export class AdminLayersComponent implements OnInit {
 
-  constructor() { }
+  dtOptionsLayers;
+  dtOptionsBase;
+
+  constructor() {
+    this.dtOptionsLayers = {
+      ajax: 'api/admin/layers',
+      columns: [
+        { title: 'ID', data: 'id'}, 
+        { title: 'Nombre', data: 'name' }, 
+        { title: 'OID', data: 'oid' },
+      ]
+    };
+    this.dtOptionsBase = {
+      ajax: 'api/admin/baselayers',
+      columns: [
+        { title: 'ID', data: 'id'}, 
+        { title: 'Nombre', data: 'name' }, 
+        { title: 'URL', data: 'service_url' },
+      ]
+    };
+  }
 
   ngOnInit() {
   }

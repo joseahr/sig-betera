@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, NgZone, forwardRef } from '@angular/core';
-import { MdSidenav } from '@angular/material';
+import { MdSidenav, MdDialog } from '@angular/material';
 import { ProjectionService, Profile3DService, UserMapsService } from '../../services';
 import { routerTransition } from '../../../../router.transitions';
-import { ProfileComponent, LayerSwitcherComponent } from '../';
+import { ProfileComponent, LayerSwitcherComponent, AddWmsComponent } from '../';
 import * as ol from 'openlayers';
 
 @Component({
@@ -28,6 +28,7 @@ export class MapComponent implements OnInit {
 
   constructor(
     private zone : NgZone,
+    private dialog : MdDialog,
     private el : ElementRef,
     private userMapsService : UserMapsService,
     private projService : ProjectionService, 
@@ -220,4 +221,12 @@ export class MapComponent implements OnInit {
     tile.set('type', params.geomColumnType);
     group.getLayers().extend([tile]);
   }
+
+  openWMSDialog(){
+    let dialog = this.dialog.open(AddWmsComponent);
+    dialog.afterClosed().subscribe(
+      (wmsGroup)=>{}
+    );
+  }
+
 }

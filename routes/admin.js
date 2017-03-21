@@ -17,12 +17,12 @@ exports.router.use(function (req, res, next) {
 });
 exports.router.get('/layers', function (req, res) {
     db_1.db.layers.getAllLayers()
-        .then(function (layers) { return res.status(200).json(layers); })
+        .then(function (layers) { return res.status(200).json({ data: layers }); })
         .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/baselayers', function (req, res) {
     db_1.db.layers.getAllBaseLayers()
-        .then(function (baselayers) { return res.status(200).json(baselayers); })
+        .then(function (baselayers) { return res.status(200).json({ data: baselayers }); })
         .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/users', function (req, res) {
@@ -38,12 +38,12 @@ exports.router.get('/users/:id', function (req, res) {
 });
 exports.router.get('/maps', function (req, res) {
     db_1.db.maps.getAllMaps()
-        .then(function (maps) { return res.status(200).json(maps); })
+        .then(function (maps) { return res.status(200).json({ data: maps }); })
         .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/default-maps', function (req, res) {
     db_1.db.maps.getDefaultMaps()
-        .then(function (dmaps) { return res.status(200).json(dmaps); })
+        .then(function (dmaps) { return res.status(200).json({ data: dmaps }); })
         .catch(function (err) { return res.status(500).json(err); });
 });
 exports.router.get('/groups', function (req, res) {

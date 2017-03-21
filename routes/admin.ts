@@ -20,13 +20,13 @@ router.use( (req, res, next)=>{
 
 router.get('/layers', (req, res)=>{
     db.layers.getAllLayers()
-    .then(layers => res.status(200).json(layers))
+    .then(layers => res.status(200).json({ data : layers }))
     .catch( err => res.status(500).json(err));
 });
 
 router.get('/baselayers', (req, res)=>{
     db.layers.getAllBaseLayers()
-    .then( baselayers => res.status(200).json(baselayers))
+    .then( baselayers => res.status(200).json({ data : baselayers }))
     .catch( err => res.status(500).json(err));
 });
 
@@ -45,13 +45,13 @@ router.get('/users/:id', (req, res)=>{
 
 router.get('/maps', (req, res)=>{
     db.maps.getAllMaps()
-    .then( maps => res.status(200).json(maps) )
+    .then( maps => res.status(200).json({ data : maps }) )
     .catch( err => res.status(500).json(err));
 });
 
 router.get('/default-maps', (req, res)=>{
     db.maps.getDefaultMaps()
-    .then( dmaps => res.status(200).json(dmaps) )
+    .then( dmaps => res.status(200).json({ data : dmaps }) )
     .catch( err => res.status(500).json(err));
 });
 
