@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { routerTransition } from '../../../../router.transitions';
 
 @Component({
@@ -13,7 +14,7 @@ export class AdminLayersComponent implements OnInit {
   dtOptionsLayers;
   dtOptionsBase;
 
-  constructor() {
+  constructor(private router : Router, private route : ActivatedRoute) {
     this.dtOptionsLayers = {
       scrollX : true,
       scrollY : '50vh',
@@ -39,6 +40,14 @@ export class AdminLayersComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  goToCreateLayerPage(){
+    this.router.navigate(['./new', 'layer'], { relativeTo : this.route })
+  }
+
+  goToCreateBaseLayerPage(){
+    this.router.navigate(['./new', 'baselayer'], { relativeTo : this.route })
   }
 
 }

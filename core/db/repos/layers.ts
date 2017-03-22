@@ -1,6 +1,7 @@
 import { IDatabase, IMain } from 'pg-promise';
 import sqlProvider = require('../sql');
-import { exec } from 'child_process'
+import { exec } from 'child_process';
+import { dbConfig } from '../../config';
 
 const spawn = require('bluebird').promisify(exec);
 
@@ -53,8 +54,18 @@ export class Repository {
 
     importSHP( shpPath : string, tableName : string ){
         //require('fs').readFile(`${shpPath}`, (err, file)=>console.log(err, file, 'guaa'));
-        console.log(`export PGPASSWORD=postgres && shp2pgsql -I -W "LATIN1" ${shpPath} "capas"."${tableName}" | psql -d betera-test -U postgres`);
-        return spawn(`export PGPASSWORD=postgres && shp2pgsql -I -s 25830 -W "LATIN1" ${shpPath} "capas"."${tableName}" | psql -d betera-test -U postgres`, { shell : true})
+        let command = `shp2pgsql -I -s 25830 -W "LATIN1" ${shpPath} "capas"."${tableName}" | psql -d ${dbConfig.database} -U postgres`;
+        console.log(command);
+        /*let proceso = exec(command, { env : { 'PGPASSWORD' : dbConfig.password} })
+        proceso.stdout.on('data', (data)=>{
+            console.log('stdout', data);
+        });
+        proceso.stderr.on('data', (data)=>{
+            console.log('stderr', data);
+        });
+        return Promise.resolve(null);*/
+        return spawn(command, { env : { 'PGPASSWORD' : dbConfig.password} })
+            
     }
 
     createTable(){

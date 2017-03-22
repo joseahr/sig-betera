@@ -1,4 +1,4 @@
-export const TEMP_DIR_SHP = './public/uploads/shapefiles';
+export const TEMP_DIR_SHP = './uploads/shapefiles';
 
 import * as multer from 'multer';
 import * as path from 'path';

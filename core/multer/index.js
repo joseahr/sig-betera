@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TEMP_DIR_SHP = './public/uploads/shapefiles';
+exports.TEMP_DIR_SHP = './uploads/shapefiles';
 var multer = require("multer");
 var bluebird = require("bluebird");
 var fs = require("fs");

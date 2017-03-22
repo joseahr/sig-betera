@@ -10,8 +10,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_datatables__ = __webpack_require__(780);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components__ = __webpack_require__(820);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pipes__ = __webpack_require__(822);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pipes__ = __webpack_require__(824);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components__ = __webpack_require__(822);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminModule", function() { return AdminModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -31,14 +31,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var adminRoutes = [{
         path: '',
-        component: __WEBPACK_IMPORTED_MODULE_5__components__["a" /* AdminComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_6__components__["a" /* AdminComponent */],
         children: [
-            { path: 'home', component: __WEBPACK_IMPORTED_MODULE_5__components__["b" /* AdminHomeComponent */] },
-            { path: 'users', component: __WEBPACK_IMPORTED_MODULE_5__components__["c" /* AdminUsersComponent */] },
-            { path: 'users/:id', component: __WEBPACK_IMPORTED_MODULE_5__components__["d" /* AdminUserDetailsComponent */] },
-            { path: 'maps', component: __WEBPACK_IMPORTED_MODULE_5__components__["e" /* AdminMapsComponent */] },
-            { path: 'layers', component: __WEBPACK_IMPORTED_MODULE_5__components__["f" /* AdminLayersComponent */] },
-            { path: 'mail', component: __WEBPACK_IMPORTED_MODULE_5__components__["g" /* AdminMailComponent */] },
+            { path: 'home', component: __WEBPACK_IMPORTED_MODULE_6__components__["b" /* AdminHomeComponent */] },
+            { path: 'users', component: __WEBPACK_IMPORTED_MODULE_6__components__["c" /* AdminUsersComponent */] },
+            { path: 'users/:id', component: __WEBPACK_IMPORTED_MODULE_6__components__["d" /* AdminUserDetailsComponent */] },
+            { path: 'maps', component: __WEBPACK_IMPORTED_MODULE_6__components__["e" /* AdminMapsComponent */] },
+            { path: 'layers', component: __WEBPACK_IMPORTED_MODULE_6__components__["f" /* AdminLayersComponent */] },
+            { path: 'layers/new/layer', component: __WEBPACK_IMPORTED_MODULE_6__components__["g" /* AdminLayersNewLayerComponent */] },
+            { path: 'layers/new/baselayer', component: __WEBPACK_IMPORTED_MODULE_6__components__["h" /* AdminLayersNewBaselayerComponent */] },
+            { path: 'mail', component: __WEBPACK_IMPORTED_MODULE_6__components__["i" /* AdminMailComponent */] },
             { path: '**', redirectTo: 'home' }
         ]
     }];
@@ -48,14 +50,16 @@ var AdminModule = (function () {
     AdminModule = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_5__components__["a" /* AdminComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__components__["c" /* AdminUsersComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__components__["e" /* AdminMapsComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__components__["f" /* AdminLayersComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__components__["g" /* AdminMailComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__components__["d" /* AdminUserDetailsComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__pipes__["a" /* FilterListPipe */],
-                __WEBPACK_IMPORTED_MODULE_5__components__["b" /* AdminHomeComponent */]
+                __WEBPACK_IMPORTED_MODULE_6__components__["a" /* AdminComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__components__["c" /* AdminUsersComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__components__["e" /* AdminMapsComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__components__["f" /* AdminLayersComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__components__["i" /* AdminMailComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__components__["d" /* AdminUserDetailsComponent */],
+                __WEBPACK_IMPORTED_MODULE_5__pipes__["a" /* FilterListPipe */],
+                __WEBPACK_IMPORTED_MODULE_6__components__["b" /* AdminHomeComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__components__["g" /* AdminLayersNewLayerComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__components__["h" /* AdminLayersNewBaselayerComponent */]
             ],
             providers: [],
             imports: [
@@ -73,11 +77,11 @@ var AdminModule = (function () {
 
 /***/ }),
 
-/***/ 776:
+/***/ 765:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__admin_service__ = __webpack_require__(823);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__admin_service__ = __webpack_require__(825);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__admin_service__["a"]; });
 
 //# sourceMappingURL=index.js.map
@@ -90,7 +94,7 @@ var AdminModule = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_angular_datatables_directive__ = __webpack_require__(781);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__src_angular_datatables_directive__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_angular_datatables_module__ = __webpack_require__(830);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_angular_datatables_module__ = __webpack_require__(832);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__src_angular_datatables_module__["a"]; });
 /**
  * @license
@@ -116,7 +120,7 @@ var AdminModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery__ = __webpack_require__(786);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net__ = __webpack_require__(844);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net__ = __webpack_require__(846);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_datatables_net__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DataTableDirective; });
 /**
@@ -10412,8 +10416,8 @@ var AdminHomeComponent = (function () {
     AdminHomeComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin-home',
-            template: __webpack_require__(902),
-            styles: [__webpack_require__(847)]
+            template: __webpack_require__(906),
+            styles: [__webpack_require__(849)]
         }), 
         __metadata('design:paramtypes', [])
     ], AdminHomeComponent);
@@ -10428,7 +10432,110 @@ var AdminHomeComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminLayersNewBaselayerComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var AdminLayersNewBaselayerComponent = (function () {
+    function AdminLayersNewBaselayerComponent() {
+    }
+    AdminLayersNewBaselayerComponent.prototype.ngOnInit = function () {
+    };
+    AdminLayersNewBaselayerComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-admin-layers-new-baselayer',
+            template: __webpack_require__(907),
+            styles: [__webpack_require__(850)]
+        }), 
+        __metadata('design:paramtypes', [])
+    ], AdminLayersNewBaselayerComponent);
+    return AdminLayersNewBaselayerComponent;
+}());
+//# sourceMappingURL=admin-layers-new-baselayer.component.js.map
+
+/***/ }),
+
+/***/ 815:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_transitions__ = __webpack_require__(457);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(765);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminLayersNewLayerComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AdminLayersNewLayerComponent = (function () {
+    function AdminLayersNewLayerComponent(adminService) {
+        this.adminService = adminService;
+        this.files = [];
+        this.error = null;
+    }
+    AdminLayersNewLayerComponent.prototype.ngOnInit = function () { };
+    AdminLayersNewLayerComponent.prototype.onChange = function (event) {
+        this.error = null;
+        this.files = event.target.files;
+    };
+    AdminLayersNewLayerComponent.prototype.uploadSHP = function () {
+        var _this = this;
+        var formData = new FormData();
+        var fileCount = this.files.length;
+        if (fileCount == 0) {
+            return;
+        }
+        for (var i = 0; i < fileCount; i++) {
+            formData.append('shp[]', this.files.item(i));
+        }
+        this.adminService.postLayer(formData).subscribe(function (data) {
+            console.log('Sa subio');
+            _this.files = [];
+        }, function (error) {
+            console.log(error.json(), 'jsooon');
+            _this.error = error.json();
+        });
+    };
+    AdminLayersNewLayerComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-admin-layers-new-layer',
+            template: __webpack_require__(908),
+            styles: [__webpack_require__(851)],
+            providers: [__WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */]],
+            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__router_transitions__["a" /* routerTransition */])()],
+            host: { '[@routerTransition]': '' }
+        }), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */]) === 'function' && _a) || Object])
+    ], AdminLayersNewLayerComponent);
+    return AdminLayersNewLayerComponent;
+    var _a;
+}());
+//# sourceMappingURL=admin-layers-new-layer.component.js.map
+
+/***/ }),
+
+/***/ 816:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_transitions__ = __webpack_require__(457);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminLayersComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10441,8 +10548,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var AdminLayersComponent = (function () {
-    function AdminLayersComponent() {
+    function AdminLayersComponent(router, route) {
+        this.router = router;
+        this.route = route;
         this.dtOptionsLayers = {
             scrollX: true,
             scrollY: '50vh',
@@ -10468,23 +10578,30 @@ var AdminLayersComponent = (function () {
     }
     AdminLayersComponent.prototype.ngOnInit = function () {
     };
+    AdminLayersComponent.prototype.goToCreateLayerPage = function () {
+        this.router.navigate(['./new', 'layer'], { relativeTo: this.route });
+    };
+    AdminLayersComponent.prototype.goToCreateBaseLayerPage = function () {
+        this.router.navigate(['./new', 'baselayer'], { relativeTo: this.route });
+    };
     AdminLayersComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin-layers',
-            template: __webpack_require__(903),
-            styles: [__webpack_require__(848)],
-            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__router_transitions__["a" /* routerTransition */])()],
+            template: __webpack_require__(909),
+            styles: [__webpack_require__(852)],
+            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _b) || Object])
     ], AdminLayersComponent);
     return AdminLayersComponent;
+    var _a, _b;
 }());
 //# sourceMappingURL=admin-layers.component.js.map
 
 /***/ }),
 
-/***/ 815:
+/***/ 817:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10510,8 +10627,8 @@ var AdminMailComponent = (function () {
     AdminMailComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin-mail',
-            template: __webpack_require__(904),
-            styles: [__webpack_require__(849)],
+            template: __webpack_require__(910),
+            styles: [__webpack_require__(853)],
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
@@ -10523,7 +10640,7 @@ var AdminMailComponent = (function () {
 
 /***/ }),
 
-/***/ 816:
+/***/ 818:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10571,8 +10688,8 @@ var AdminMapsComponent = (function () {
     AdminMapsComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin-maps',
-            template: __webpack_require__(905),
-            styles: [__webpack_require__(850)],
+            template: __webpack_require__(911),
+            styles: [__webpack_require__(854)],
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
@@ -10584,7 +10701,7 @@ var AdminMapsComponent = (function () {
 
 /***/ }),
 
-/***/ 817:
+/***/ 819:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10592,7 +10709,7 @@ var AdminMapsComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router_transitions__ = __webpack_require__(457);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services__ = __webpack_require__(776);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services__ = __webpack_require__(765);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminUserDetailsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10632,13 +10749,13 @@ var AdminUserDetailsComponent = (function () {
     AdminUserDetailsComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin-user-details',
-            template: __webpack_require__(906),
-            styles: [__webpack_require__(851)],
+            template: __webpack_require__(912),
+            styles: [__webpack_require__(855)],
             providers: [__WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */]],
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["b" /* Location */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["b" /* Location */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* Location */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* Location */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */]) === 'function' && _c) || Object])
     ], AdminUserDetailsComponent);
     return AdminUserDetailsComponent;
     var _a, _b, _c;
@@ -10647,13 +10764,13 @@ var AdminUserDetailsComponent = (function () {
 
 /***/ }),
 
-/***/ 818:
+/***/ 820:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_transitions__ = __webpack_require__(457);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(776);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(765);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular_datatables__ = __webpack_require__(780);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(271);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminUsersComponent; });
@@ -10717,8 +10834,8 @@ var AdminUsersComponent = (function () {
     AdminUsersComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin-users',
-            template: __webpack_require__(907),
-            styles: [__webpack_require__(852)],
+            template: __webpack_require__(913),
+            styles: [__webpack_require__(856)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */]],
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
@@ -10732,7 +10849,7 @@ var AdminUsersComponent = (function () {
 
 /***/ }),
 
-/***/ 819:
+/***/ 821:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10751,9 +10868,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var AdminComponent = (function () {
-    function AdminComponent(zone, elementRef) {
-        this.zone = zone;
-        this.elementRef = elementRef;
+    function AdminComponent() {
         this.links = [
             { path: 'home', label: 'Home' },
             { path: 'users', label: 'Usuarios' },
@@ -10765,64 +10880,49 @@ var AdminComponent = (function () {
     AdminComponent.prototype.ngOnInit = function () {
     };
     AdminComponent.prototype.ngAfterViewInit = function () {
-        this.toolbar = this.elementRef.nativeElement.childNodes[0];
+        /*let toolbar = <HTMLElement>document.querySelector('md-toolbar');
+        toolbar.style.boxShadow = 'none';*/
     };
-    AdminComponent.prototype.setToolbarFixed = function (event) {
-        var _this = this;
-        this.zone.runOutsideAngular(function () {
-            if (window.scrollY > 0) {
-                if (_this.toolbar.style.position != 'fixed') {
-                    _this.toolbar.style.position = 'fixed';
-                }
-            }
-            else {
-                if (_this.toolbar.style.position != 'relative') {
-                    _this.toolbar.style.position = 'relative';
-                }
-            }
-        });
-    };
-    __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])('window:scroll', ['$event']), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', [Object]), 
-        __metadata('design:returntype', void 0)
-    ], AdminComponent.prototype, "setToolbarFixed", null);
     AdminComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin',
-            template: __webpack_require__(908),
-            styles: [__webpack_require__(853)],
+            template: __webpack_require__(914),
+            styles: [__webpack_require__(857)],
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [])
     ], AdminComponent);
     return AdminComponent;
-    var _a, _b;
 }());
 //# sourceMappingURL=admin.component.js.map
 
 /***/ }),
 
-/***/ 820:
+/***/ 822:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__admin_home_admin_home_component__ = __webpack_require__(813);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__admin_home_admin_home_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__admin_admin_component__ = __webpack_require__(819);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__admin_admin_component__ = __webpack_require__(821);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__admin_admin_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_layers_admin_layers_component__ = __webpack_require__(814);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_layers_admin_layers_component__ = __webpack_require__(816);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_2__admin_layers_admin_layers_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__admin_mail_admin_mail_component__ = __webpack_require__(815);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_3__admin_mail_admin_mail_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_maps_admin_maps_component__ = __webpack_require__(816);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__admin_mail_admin_mail_component__ = __webpack_require__(817);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_3__admin_mail_admin_mail_component__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_maps_admin_maps_component__ = __webpack_require__(818);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_4__admin_maps_admin_maps_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__admin_users_admin_users_component__ = __webpack_require__(818);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__admin_users_admin_users_component__ = __webpack_require__(820);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_5__admin_users_admin_users_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_user_details_admin_user_details_component__ = __webpack_require__(817);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_user_details_admin_user_details_component__ = __webpack_require__(819);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_6__admin_user_details_admin_user_details_component__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__admin_layers_new_layer_admin_layers_new_layer_component__ = __webpack_require__(815);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_7__admin_layers_new_layer_admin_layers_new_layer_component__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__admin_layers_new_baselayer_admin_layers_new_baselayer_component__ = __webpack_require__(814);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_8__admin_layers_new_baselayer_admin_layers_new_baselayer_component__["a"]; });
+
+
 
 
 
@@ -10834,7 +10934,7 @@ var AdminComponent = (function () {
 
 /***/ }),
 
-/***/ 821:
+/***/ 823:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10869,18 +10969,18 @@ var FilterListPipe = (function () {
 
 /***/ }),
 
-/***/ 822:
+/***/ 824:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__filter_list_pipe__ = __webpack_require__(821);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__filter_list_pipe__ = __webpack_require__(823);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__filter_list_pipe__["a"]; });
 
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ 823:
+/***/ 825:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10911,6 +11011,9 @@ var AdminService = (function () {
     AdminService.prototype.getAllGroups = function () {
         return this.http.get('/api/admin/groups');
     };
+    AdminService.prototype.postLayer = function (formData) {
+        return this.http.post('/api/admin/layers', formData);
+    };
     AdminService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === 'function' && _a) || Object])
@@ -10922,7 +11025,7 @@ var AdminService = (function () {
 
 /***/ }),
 
-/***/ 830:
+/***/ 832:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10962,7 +11065,7 @@ var DataTablesModule = (function () {
 
 /***/ }),
 
-/***/ 844:
+/***/ 846:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.13
@@ -26276,42 +26379,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 
 /***/ }),
 
-/***/ 847:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(18)();
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ 848:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(18)();
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
 /***/ 849:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26356,7 +26423,7 @@ exports = module.exports = __webpack_require__(18)();
 
 
 // module
-exports.push([module.i, ".user-avatar {\r\n    float: left;\r\n    box-sizing: border-box;\r\n    height: 40px;\r\n    width: 40px;\r\n    border-radius: 24px;\r\n    background-size: cover !important;\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    -webkit-box-orient: horizontal;\r\n    -webkit-box-direction: normal;\r\n        -ms-flex-direction: row;\r\n            flex-direction: row;\r\n    margin: -8px 0 16px;\r\n}\r\n\r\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -26392,7 +26459,7 @@ exports = module.exports = __webpack_require__(18)();
 
 
 // module
-exports.push([module.i, ".mat-button {\r\n    margin : 0px auto;\r\n}", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -26402,52 +26469,138 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 902:
-/***/ (function(module, exports) {
+/***/ 854:
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<div>\n  kdjlekjled\n</div>\n"
+exports = module.exports = __webpack_require__(18)();
+// imports
 
-/***/ }),
 
-/***/ 903:
-/***/ (function(module, exports) {
+// module
+exports.push([module.i, "", ""]);
 
-module.exports = "<div [@routerTransition]=\"\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>PostGIS</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsLayers\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>Otros servidores</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsBase\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+// exports
 
-/***/ }),
 
-/***/ 904:
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  admin-mail works!\n</p>\n"
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 905:
-/***/ (function(module, exports) {
+/***/ 855:
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<div [@routerTransition]=\"\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsMaps\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Mapas default</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsDefaultMaps\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+exports = module.exports = __webpack_require__(18)();
+// imports
+
+
+// module
+exports.push([module.i, ".user-avatar {\r\n    float: left;\r\n    box-sizing: border-box;\r\n    height: 40px;\r\n    width: 40px;\r\n    border-radius: 24px;\r\n    background-size: cover !important;\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    -webkit-box-orient: horizontal;\r\n    -webkit-box-direction: normal;\r\n        -ms-flex-direction: row;\r\n            flex-direction: row;\r\n    margin: -8px 0 16px;\r\n}\r\n\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ 856:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ 857:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)();
+// imports
+
+
+// module
+exports.push([module.i, ".mat-button {\r\n    margin : 0px auto;\r\n}\r\n\r\n.navbar-fixed {\r\n    position: fixed;\r\n    z-index: 2;\r\n    background: rgb(255, 255, 255) none repeat scroll 0% 0%;\r\n    width: 100%;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
 
 /***/ }),
 
 /***/ 906:
 /***/ (function(module, exports) {
 
-module.exports = "<button md-fab (click)=\"goBack()\" style=\"position : fixed; z-index: 1; right: 0.5em; bottom: 0.5em;\">\n  <md-icon>arrow_back</md-icon>\n</button>\n<md-card style=\"margin : 8px; margin-top : 15px;\" [@routerTransition]=\"\">\n  <img src=\"{{ userDetail?.gravatar }}\" alt=\"\" class=\"user-avatar\">\n  <!--<div [style.background]=\"'url(' + userDetail.gravatar + ')'\" class=\"user-avatar\"></div>-->\n  <md-card-header>\n    <md-card-title>{{userDetail?.name}}</md-card-title>\n    <md-card-subtitle>{{userDetail?.nombre}} {{userDetail?.apellidos}}</md-card-subtitle>\n  </md-card-header>\n  <div md-card-image\n    style=\"height : 100px; background-position-y : 350px; background: url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg'); background-size: cover;\"\n  >\n  </div>\n  <md-card-content>\n    <md-tab-group>\n      <md-tab label=\"Grupos\">\n        <md-list>\n          <h3 md-subheader>Grupos del usuario {{userDetail?.name}}</h3>\n          <md-list-item *ngFor=\"let grupo of userDetail?.grupos\">\n              <md-icon md-list-avatar>group</md-icon>\n              <h4 md-line>{{grupo}}</h4>\n          </md-list-item>\n        </md-list>\n      </md-tab>\n      <md-tab label=\"Mapas\">Content 2</md-tab>\n      <md-tab label=\"Permisos\">Content 3</md-tab>\n    </md-tab-group>\n  </md-card-content>\n  <md-card-actions>\n    <md-select placeholder=\"Grupos\" (change)=\"changeGroup($event)\">\n      <md-option *ngFor=\"let group of allGroups | filterList : userDetail?.grupos | async\" [value]=\"group\">{{ group }}</md-option>\n    </md-select>\n  </md-card-actions>\n</md-card>\n"
+module.exports = "<div>\n  kdjlekjled\n</div>\n"
 
 /***/ }),
 
 /***/ 907:
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]=\"\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptions\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<p>\n  admin-layers-new-baselayer works!\n</p>\n"
 
 /***/ }),
 
 /***/ 908:
 /***/ (function(module, exports) {
 
-module.exports = "<nav md-tab-nav-bar #navbarAdmin>\n  <a md-tab-link\n     *ngFor=\"let link of links\"\n     [routerLink]=\"link.path\"\n     routerLinkActive #rla=\"routerLinkActive\"\n     [active]=\"rla.isActive\">\n    {{link.label}}\n  </a>\n</nav>\n<router-outlet></router-outlet>\n\n<!--\n<md-toolbar #toolbarMenu color=\"primary\" style=\"text-align: center;\">\n    <button md-button [routerLink]=\"['/admin']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Inicio\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'users']\" routerLinkActive=\"active-link\">\n        Usuarios\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'maps']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mapas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'layers']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Capas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'mail']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mail\n    </button>\n</md-toolbar>\n<router-outlet></router-outlet>\n-->"
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Nueva Capa</md-card-title>\n      <md-card-subtitle>Carga una capa en formato SHP</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <md-input-container style=\"width : 100%\">\n        <input mdInput placeholder=\"Nombre de la capa (Opcional)\" value=\"\">\n      </md-input-container>\n      <input id=\"input-file-id\" multiple type=\"file\" style=\"display: none;\" (change)=\"onChange($event)\" name=\"shp[]\" />\n      <label for=\"input-file-id\" md-button class=\"mat-button\" style=\"border: 2px solid #000; margin-top: 16px; width: 100%; padding : 10px;\">\n        Selecciona los archivos SHP, DBF, SHX\n      </label>\n      <div *ngIf=\"error\" class=\"error-msg\">{{error}}</div>\n      <md-list *ngIf=\"files.length\">\n        <h3 md-subheader>Archivos a subir</h3>\n        <md-list-item *ngFor=\"let file of files\">\n          <md-icon md-list-avatar>attachment</md-icon>\n          <h4 md-line>{{file.name}}</h4>\n        </md-list-item>\n      </md-list>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"uploadSHP()\">ENVIAR</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+
+/***/ }),
+
+/***/ 909:
+/***/ (function(module, exports) {
+
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>PostGIS</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsLayers\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateLayerPage()\">AÑADIR NUEVA CAPA (SHP)</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>Otros servidores</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsBase\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateBaseLayerPage()\">AÑADIR NUEVA CAPA (WMS)</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+
+/***/ }),
+
+/***/ 910:
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  admin-mail works!\n</p>\n"
+
+/***/ }),
+
+/***/ 911:
+/***/ (function(module, exports) {
+
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsMaps\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Mapas default</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsDefaultMaps\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+
+/***/ }),
+
+/***/ 912:
+/***/ (function(module, exports) {
+
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <button md-fab (click)=\"goBack()\" style=\"position : fixed; z-index: 1; right: 0.5em; bottom: 0.5em;\">\n    <md-icon>arrow_back</md-icon>\n  </button>\n  <md-card style=\"margin : 8px; margin-top : 15px;\" [@routerTransition]=\"\">\n    <!--<div [style.background]=\"'url(' + userDetail.gravatar + ')'\" class=\"user-avatar\"></div>-->\n    <md-card-header>\n      <div md-card-avatar><img src=\"{{ userDetail?.gravatar }}\" alt=\"\" class=\"user-avatar\"></div>\n      <md-card-title>{{userDetail?.name}}</md-card-title>\n      <md-card-subtitle>{{userDetail?.nombre}} {{userDetail?.apellidos}}</md-card-subtitle>\n    </md-card-header>\n    <div md-card-image\n      style=\"height : 100px; background-position-y : 350px; background: url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg'); background-size: cover;\"\n    >\n    </div>\n    <md-card-content>\n      <md-tab-group>\n        <md-tab label=\"Grupos\">\n          <md-list>\n            <h3 md-subheader>Grupos del usuario {{userDetail?.name}}</h3>\n            <md-list-item *ngFor=\"let grupo of userDetail?.grupos\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>{{grupo}}</h4>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n        <md-tab label=\"Mapas\">Content 2</md-tab>\n        <md-tab label=\"Permisos\">Content 3</md-tab>\n      </md-tab-group>\n    </md-card-content>\n    <md-card-actions>\n      <md-select placeholder=\"Grupos\" (change)=\"changeGroup($event)\">\n        <md-option *ngFor=\"let group of allGroups | filterList : userDetail?.grupos | async\" [value]=\"group\">{{ group }}</md-option>\n      </md-select>\n    </md-card-actions>\n  </md-card>\n</div>"
+
+/***/ }),
+
+/***/ 913:
+/***/ (function(module, exports) {
+
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptions\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+
+/***/ }),
+
+/***/ 914:
+/***/ (function(module, exports) {
+
+module.exports = "<nav md-tab-nav-bar #navbarAdmin class=\"navbar-fixed\">\n  <a md-tab-link\n     *ngFor=\"let link of links\"\n     [routerLink]=\"link.path\"\n     routerLinkActive #rla=\"routerLinkActive\"\n     [active]=\"rla.isActive\">\n    {{link.label}}\n  </a>\n</nav>\n<router-outlet></router-outlet>\n\n<!--\n<md-toolbar #toolbarMenu color=\"primary\" style=\"text-align: center;\">\n    <button md-button [routerLink]=\"['/admin']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Inicio\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'users']\" routerLinkActive=\"active-link\">\n        Usuarios\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'maps']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mapas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'layers']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Capas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'mail']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mail\n    </button>\n</md-toolbar>\n<router-outlet></router-outlet>\n-->"
 
 /***/ })
 

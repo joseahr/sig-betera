@@ -486,7 +486,7 @@ exports = module.exports = __webpack_require__(18)();
 exports.i(__webpack_require__(698), "");
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\nhtml, body {\n    margin : 0px;\n    width : 100%;\n    max-height : 100%;\n    overflow-x : hidden;\n}\n\n.overview-map > .ol-viewport {\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\n}\n\n.active-link {\n    background: #fff;\n    color : #000 !important;\n}\n\n\nchart {\n    width: 100% !important;\n    display : block;\n    height: 200px;\n}\n\n.ol-rotate {\n    top: 3em !important;\n}\n\n.card-margin {\n    margin : 15px 10px 5px 10px;\n}", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\nhtml, body {\n    margin : 0px;\n    width : 100%;\n    max-height : 100%;\n    overflow-x : hidden;\n}\n\n.overview-map > .ol-viewport {\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\n}\n\n.active-link {\n    background: #fff;\n    color : #000 !important;\n}\n\n\nchart {\n    width: 100% !important;\n    display : block;\n    height: 200px;\n}\n\n.ol-rotate {\n    top: 3em !important;\n}\n\n.card-margin {\n    margin : 15px 10px 5px 10px;\n}\n\nmd-toolbar {\n    position: fixed !important;\n}\n\n.admin-page-margin {\n    margin-top : 70px;\n}\n\ntable.dataTable td {\n    text-align: center;\n}\n\n.error-msg {\n    border-left: 3px solid #ff0000;\n    padding: 10px;\n    margin-top: 5px;\n    background: rgba(255, 0, 0, 0.15);\n}", ""]);
 
 // exports
 

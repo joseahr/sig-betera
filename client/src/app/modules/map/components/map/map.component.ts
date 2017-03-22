@@ -50,6 +50,8 @@ export class MapComponent implements OnInit {
     this.el.nativeElement.parentNode.parentNode.childNodes[0].style.position = 'relative';
     setTimeout(function () { window.scrollTo(0, 1); }, 1000);
     document.body.style.overflow = 'hidden';
+    /*let toolbar = <HTMLElement>document.querySelector('md-toolbar');
+    toolbar.style.boxShadow = '0 4px 6px 0 rgba(0,0,0,.3);';*/
     //this.createMap();
   }
 

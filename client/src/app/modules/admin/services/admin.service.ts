@@ -18,4 +18,8 @@ export class AdminService {
         return this.http.get('/api/admin/groups');
     }
 
+    postLayer(formData){
+        return this.http.post('/api/admin/layers', formData);
+    }
+
 }

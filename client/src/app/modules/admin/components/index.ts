@@ -5,3 +5,5 @@ export * from './admin-mail/admin-mail.component';
 export * from './admin-maps/admin-maps.component';
 export * from './admin-users/admin-users.component';
 export * from './admin-user-details/admin-user-details.component';
+export * from './admin-layers-new-layer/admin-layers-new-layer.component';
+export * from './admin-layers-new-baselayer/admin-layers-new-baselayer.component';

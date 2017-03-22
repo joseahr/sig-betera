@@ -1,0 +1,29 @@
+<div [@routerTransition]="" class="admin-page-margin">
+  <md-card class="card-margin">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Nueva Capa</md-card-title>
+      <md-card-subtitle>Carga una capa en formato SHP</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <input id="input-file-id" multiple type="file" style="display: none;" (change)="onChange($event)" name="shp[]" />
+      <label for="input-file-id" md-button class="mat-button" style="border: 2px solid #000; margin-top: 16px; width: 100%; padding : 10px;">
+        Selecciona los archivos SHP, DBF, SHX
+      </label>
+      <md-input-container style="width : 100%">
+        <input mdInput placeholder="Nombre de la capa (Opcional)" value="">
+      </md-input-container>
+      <div *ngIf="error" class="error-msg">{{error}}</div>
+      <md-list *ngIf="files.length">
+        <h3 md-subheader>Archivos a subir</h3>
+        <md-list-item *ngFor="let file of files">
+          <md-icon md-list-avatar>attachment</md-icon>
+          <h4 md-line>{{file.name}}</h4>
+        </md-list-item>
+      </md-list>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button (click)="uploadSHP()">ENVIAR</button>
+    </md-card-actions>
+  </md-card>
+</div>

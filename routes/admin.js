@@ -6,7 +6,7 @@ var mailer = require("../core/mailer");
 var capabilitiesParser = require("../core/capabilities-parser");
 var path = require("path");
 var Multer = require("../core/multer");
-var multer = Multer.createMulter(Multer.TEMP_DIR_SHP, Multer.fileNameSHP, 50 * 1024 * 1024).array('shps[]', 3); // .shp .dbf .shx;
+var multer = Multer.createMulter(Multer.TEMP_DIR_SHP, Multer.fileNameSHP, 50 * 1024 * 1024).array('shp[]', 3); // .shp .dbf .shx;
 exports.router = express.Router();
 exports.router.use(function (req, res, next) {
     if (!req.isAuthenticated())
@@ -270,19 +270,19 @@ exports.router.route('/maps/order')
 });
 exports.router.route('/layers')
     .post(function (req, res) {
-    console.log(req.query.layerName);
     multer(req, res, function (error) {
         if (error)
             return res.status(500).json('No se pudo subir el archivo SHP : ' + error);
-        console.log(req.files);
-        var reqFiles = req.files;
-        var filesExt = req.files.map(function (f) { return path.extname(f.originalname); });
-        if (!['.shp', '.shx', '.dbf'].every(function (ext) { return filesExt.find(function (fext) { return fext === ext; }); })) {
+        //console.log(req.files);
+        var filesExt = req.files;
+        filesExt = filesExt.map(function (f) { return path.extname(f.originalname).toLocaleLowerCase(); });
+        console.log(filesExt, 'fffff');
+        if (!['.shp', '.shx', '.dbf'].every(function (ext) { return filesExt.includes(ext); })) {
             return Multer.removeFiles.apply(Multer, req.files.map(function (f) { return f.path; })).then(function () { return res.status(500).json('Debe añadir al menos los archivos .shp .shx .dbf'); })
                 .catch(function (err) { return res.status(500).json(err); });
         }
         var shpPath = path.join('./', path.dirname(req.files[0].path), path.basename(req.files[0].path, path.extname(req.files[0].path)) + '.shp');
-        var tableName = req.query.layerName || path.basename(req.files[0].path, path.extname(req.files[0].path));
+        var tableName = (req.query.layerName || path.basename(req.files[0].path, path.extname(req.files[0].path))).toLowerCase();
         console.log(shpPath, tableName);
         db_1.db.layers.exist(tableName)
             .then(function (exist) {
@@ -291,7 +291,6 @@ exports.router.route('/layers')
                 return res.status(500).json("La tabla " + tableName + " ya existe");
             }
             db_1.db.layers.importSHP(shpPath, tableName)
-                .then(function () { return db_1.db.one("SELECT * FROM Layers WHERE name = '${tableName#}'", { tableName: tableName }); })
                 .then(function (table) { return res.status(200).json(table); })
                 .catch(function (err) { return res.status(500).json(err); })
                 .finally(function () { return Multer.removeFiles.apply(Multer, req.files.map(function (f) { return f.path; })); });

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var sqlProvider = require("../sql");
 var child_process_1 = require("child_process");
+var config_1 = require("../../config");
 var spawn = require('bluebird').promisify(child_process_1.exec);
 var sql = sqlProvider.layers;
 /*
@@ -40,8 +41,17 @@ var Repository = (function () {
     };
     Repository.prototype.importSHP = function (shpPath, tableName) {
         //require('fs').readFile(`${shpPath}`, (err, file)=>console.log(err, file, 'guaa'));
-        console.log("export PGPASSWORD=postgres && shp2pgsql -I -W \"LATIN1\" " + shpPath + " \"capas\".\"" + tableName + "\" | psql -d betera-test -U postgres");
-        return spawn("export PGPASSWORD=postgres && shp2pgsql -I -s 25830 -W \"LATIN1\" " + shpPath + " \"capas\".\"" + tableName + "\" | psql -d betera-test -U postgres", { shell: true });
+        var command = "shp2pgsql -I -s 25830 -W \"LATIN1\" " + shpPath + " \"capas\".\"" + tableName + "\" | psql -d " + config_1.dbConfig.database + " -U postgres";
+        console.log(command);
+        /*let proceso = exec(command, { env : { 'PGPASSWORD' : dbConfig.password} })
+        proceso.stdout.on('data', (data)=>{
+            console.log('stdout', data);
+        });
+        proceso.stderr.on('data', (data)=>{
+            console.log('stderr', data);
+        });
+        return Promise.resolve(null);*/
+        return spawn(command, { env: { 'PGPASSWORD': config_1.dbConfig.password } });
     };
     Repository.prototype.createTable = function () {
         return this.db.none(sql.create);

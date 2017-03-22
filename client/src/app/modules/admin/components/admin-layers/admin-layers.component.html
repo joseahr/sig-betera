@@ -1,4 +1,4 @@
-<div [@routerTransition]="">
+<div [@routerTransition]="" class="admin-page-margin">
   <md-card class="card-margin">
     <md-card-header>
       <div md-card-avatar></div>
@@ -9,8 +9,7 @@
       <table datatable [dtOptions]="dtOptionsLayers" class="row-border hover" width="100%"></table>
     </md-card-content>
     <md-card-actions>
-      <button md-button>LIKE</button>
-      <button md-button>SHARE</button>
+      <button md-button (click)="goToCreateLayerPage()">AÑADIR NUEVA CAPA (SHP)</button>
     </md-card-actions>
   </md-card>
 
@@ -24,8 +23,7 @@
       <table datatable [dtOptions]="dtOptionsBase" class="row-border hover" width="100%"></table>
     </md-card-content>
     <md-card-actions>
-      <button md-button>LIKE</button>
-      <button md-button>SHARE</button>
+      <button md-button (click)="goToCreateBaseLayerPage()">AÑADIR NUEVA CAPA (WMS)</button>
     </md-card-actions>
   </md-card>
 </div>

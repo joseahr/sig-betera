@@ -6,7 +6,7 @@ import * as capabilitiesParser from '../core/capabilities-parser';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as Multer from '../core/multer';
-const multer = Multer.createMulter(Multer.TEMP_DIR_SHP, Multer.fileNameSHP, 50*1024*1024).array('shps[]', 3) // .shp .dbf .shx;
+const multer = Multer.createMulter(Multer.TEMP_DIR_SHP, Multer.fileNameSHP, 50*1024*1024).array('shp[]', 3) // .shp .dbf .shx;
 
 export let router = express.Router();
 
@@ -324,14 +324,13 @@ router.route('/maps/order')
 
 router.route('/layers')
 .post( (req, res)=>{
-    console.log(req.query.layerName);
     multer(req, res, error =>{
         if(error) return res.status(500).json('No se pudo subir el archivo SHP : ' + error);
-        console.log(req.files);
-        let reqFiles = req.files;
-        let filesExt = req.files.map( f => path.extname(f.originalname) );
-
-        if( !['.shp', '.shx', '.dbf'].every( ext => filesExt.find( fext => fext === ext) ) ){
+        //console.log(req.files);
+        let filesExt : any = req.files;
+        filesExt = filesExt.map( (f : any) => path.extname(f.originalname).toLocaleLowerCase() );
+        console.log(filesExt, 'fffff');
+        if( !['.shp', '.shx', '.dbf'].every( ext => filesExt.includes(ext) ) ){
             return Multer.removeFiles(...req.files.map( f => f.path ) )
             .then( ()=> res.status(500).json('Debe añadir al menos los archivos .shp .shx .dbf') )
             .catch( ( err : any ) => res.status(500).json(err) )
@@ -343,7 +342,7 @@ router.route('/layers')
             , path.basename( req.files[0].path, path.extname(req.files[0].path) ) + '.shp'
         );
 
-        let tableName =req.query.layerName || path.basename( req.files[0].path, path.extname(req.files[0].path) );
+        let tableName : string = (req.query.layerName || path.basename( req.files[0].path, path.extname(req.files[0].path) )).toLowerCase();
 
         console.log(shpPath, tableName);
         db.layers.exist(tableName)
@@ -354,7 +353,7 @@ router.route('/layers')
             }
 
             db.layers.importSHP(shpPath, tableName)
-            .then( ()=> db.one("SELECT * FROM Layers WHERE name = '${tableName#}'", { tableName }) )
+            //.then( ()=> db.one("SELECT * FROM Layers WHERE name ILIKE '${tableName#}'", { tableName }) )
             .then( ( table : any ) => res.status(200).json(table))
             .catch( ( err : any ) => res.status(500).json(err))
             .finally( ()=> Multer.removeFiles(...req.files.map( f => f.path ) ) );
@@ -367,7 +366,7 @@ router.route('/layers')
     console.log(req.body.tableName);
     db.none('DROP TABLE IF EXISTS "capas".${tableName~} CASCADE', { tableName })
     .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json(err) );  
+    .catch( ( err : any ) => res.status(500).json(err) ); 
 });
 
 router.route('/baselayers')

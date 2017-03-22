@@ -102,33 +102,12 @@ var HomeComponent = (function () {
             this.cols = 2;
         }
     };
-    HomeComponent.prototype.setToolbarFixed = function (event) {
-        var _this = this;
-        this.ngZone.runOutsideAngular(function () {
-            if (window.scrollY > 50) {
-                if (_this.toolbar.style.position != 'fixed') {
-                    _this.toolbar.style.position = 'fixed';
-                }
-            }
-            else {
-                if (_this.toolbar.style.position != 'relative') {
-                    _this.toolbar.style.position = 'relative';
-                }
-            }
-        });
-    };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])('window:resize', ['$event']), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
     ], HomeComponent.prototype, "setCols", null);
-    __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])('window:scroll', ['$event']), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', [Object]), 
-        __metadata('design:returntype', void 0)
-    ], HomeComponent.prototype, "setToolbarFixed", null);
     HomeComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-home',
