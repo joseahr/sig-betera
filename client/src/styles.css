@@ -27,3 +27,7 @@ chart {
 .ol-rotate {
     top: 3em !important;
 }
+
+.card-margin {
+    margin : 15px 10px 5px 10px;
+}

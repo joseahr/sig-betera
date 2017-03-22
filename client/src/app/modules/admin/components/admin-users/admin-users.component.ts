@@ -36,6 +36,9 @@ export class AdminUsersComponent implements OnInit {
       }
     )*/
     this.dtOptions = {
+      scrollX : true,
+      scrollY : '60vh',
+      scrollCollapse: true,
       ajax: 'api/admin/users',
       columns: [{
         title : 'Editar',

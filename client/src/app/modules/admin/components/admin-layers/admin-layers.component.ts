@@ -15,6 +15,9 @@ export class AdminLayersComponent implements OnInit {
 
   constructor() {
     this.dtOptionsLayers = {
+      scrollX : true,
+      scrollY : '50vh',
+      scrollCollapse: true,
       ajax: 'api/admin/layers',
       columns: [
         { title: 'ID', data: 'id'}, 
@@ -23,6 +26,9 @@ export class AdminLayersComponent implements OnInit {
       ]
     };
     this.dtOptionsBase = {
+      scrollX : true,
+      scrollY : '50vh',
+      scrollCollapse: true,
       ajax: 'api/admin/baselayers',
       columns: [
         { title: 'ID', data: 'id'}, 

@@ -39,17 +39,14 @@ export class HomeComponent {
   @HostListener('window:scroll', ['$event'])
   setToolbarFixed(event){
     this.ngZone.runOutsideAngular(()=>{
-      if(window.scrollY > 30){
+      if(window.scrollY > 50){
         if(this.toolbar.style.position != 'fixed'){
           this.toolbar.style.position = 'fixed';
         }
-        return;
-      }
-  
-      if(this.toolbar.getBoundingClientRect().top < 50){
-        //console.log(window.scrollY);
-        if(this.toolbar.style.position != 'relative')
+      } else {
+        if(this.toolbar.style.position != 'relative'){
           this.toolbar.style.position = 'relative';
+        } 
       }
     });
   }

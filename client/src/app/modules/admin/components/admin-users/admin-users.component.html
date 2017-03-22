@@ -1,4 +1,16 @@
-<div style="overflow-x: scroll;" [@routerTransition]="">
-  <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+<div [@routerTransition]="">
+  <md-card class="card-margin">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Mapas</md-card-title>
+      <md-card-subtitle>Todos los mapas</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <table datatable [dtOptions]="dtOptions" class="row-border hover" width="100%"></table>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button>LIKE</button>
+      <button md-button>SHARE</button>
+    </md-card-actions>
+  </md-card>
 </div>
-

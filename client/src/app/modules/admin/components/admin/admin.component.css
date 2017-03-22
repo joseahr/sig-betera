@@ -1,3 +1,11 @@
 .mat-button {
     margin : 0px auto;
 }
+
+.navbar-fixed {
+    position: relative;
+    top: 64px;
+    z-index: 1;
+    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    width: 100%;
+}

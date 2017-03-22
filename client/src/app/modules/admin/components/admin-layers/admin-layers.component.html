@@ -1,6 +1,31 @@
-<div style="overflow-x: scroll;" [@routerTransition]="">
-  <table datatable [dtOptions]="dtOptionsLayers" class="row-border hover"></table>
-</div>
-<div style="overflow-x: scroll;" [@routerTransition]="">
-  <table datatable [dtOptions]="dtOptionsBase" class="row-border hover"></table>
+<div [@routerTransition]="">
+  <md-card class="card-margin">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Capas</md-card-title>
+      <md-card-subtitle>PostGIS</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <table datatable [dtOptions]="dtOptionsLayers" class="row-border hover" width="100%"></table>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button>LIKE</button>
+      <button md-button>SHARE</button>
+    </md-card-actions>
+  </md-card>
+
+  <md-card class="card-margin">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Capas</md-card-title>
+      <md-card-subtitle>Otros servidores</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <table datatable [dtOptions]="dtOptionsBase" class="row-border hover" width="100%"></table>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button>LIKE</button>
+      <button md-button>SHARE</button>
+    </md-card-actions>
+  </md-card>
 </div>

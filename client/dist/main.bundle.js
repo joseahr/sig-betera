@@ -105,16 +105,15 @@ var HomeComponent = (function () {
     HomeComponent.prototype.setToolbarFixed = function (event) {
         var _this = this;
         this.ngZone.runOutsideAngular(function () {
-            if (window.scrollY > 30) {
+            if (window.scrollY > 50) {
                 if (_this.toolbar.style.position != 'fixed') {
                     _this.toolbar.style.position = 'fixed';
                 }
-                return;
             }
-            if (_this.toolbar.getBoundingClientRect().top < 50) {
-                //console.log(window.scrollY);
-                if (_this.toolbar.style.position != 'relative')
+            else {
+                if (_this.toolbar.style.position != 'relative') {
                     _this.toolbar.style.position = 'relative';
+                }
             }
         });
     };
@@ -855,7 +854,7 @@ module.exports = "\n<!-- { name, password, repassword, nombre, apellidos, email 
 
 /***/ }),
 
-/***/ 742:
+/***/ 743:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(448);
@@ -863,5 +862,5 @@ module.exports = __webpack_require__(448);
 
 /***/ })
 
-},[742]);
+},[743]);
 //# sourceMappingURL=main.bundle.js.map

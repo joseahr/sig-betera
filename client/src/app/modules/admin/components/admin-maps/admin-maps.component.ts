@@ -15,15 +15,21 @@ export class AdminMapsComponent implements OnInit {
 
   constructor() {
     this.dtOptionsMaps = {
-      ajax: 'api/admin/maps',
-      columns: [
-        { title: 'ID', data: 'id'}, 
-        { title: 'Nombre', data: 'name' }, 
-        { title: 'Capas', data: 'layers' },
-        { title: 'Capas Base', data: 'baselayers' }
-      ]
+      scrollX : true,
+      scrollY : '50vh',
+      scrollCollapse: true,
+      ajax  : 'api/admin/maps',
+      columns : [{ title: 'ID', data: 'id'}, { title: 'Nombre', data: 'name' }, { title: 'Capas', data: 'layers' }, { title: 'Capas Base', data: 'baselayers' }],
+      columnDefs : [{
+        render : function ( data, type, row ) {
+          return (data || []).length;
+        },targets : [2, 3]
+      }]
     };
     this.dtOptionsDefaultMaps = {
+      scrollX : true,
+      scrollY : '50vh',
+      scrollCollapse: true,
       ajax: 'api/admin/default-maps',
       columns: [
         { title: 'ID', data: 'id'}, 

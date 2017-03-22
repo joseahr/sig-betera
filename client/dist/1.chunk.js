@@ -10444,6 +10444,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var AdminLayersComponent = (function () {
     function AdminLayersComponent() {
         this.dtOptionsLayers = {
+            scrollX: true,
+            scrollY: '50vh',
+            scrollCollapse: true,
             ajax: 'api/admin/layers',
             columns: [
                 { title: 'ID', data: 'id' },
@@ -10452,6 +10455,9 @@ var AdminLayersComponent = (function () {
             ]
         };
         this.dtOptionsBase = {
+            scrollX: true,
+            scrollY: '50vh',
+            scrollCollapse: true,
             ajax: 'api/admin/baselayers',
             columns: [
                 { title: 'ID', data: 'id' },
@@ -10538,15 +10544,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var AdminMapsComponent = (function () {
     function AdminMapsComponent() {
         this.dtOptionsMaps = {
+            scrollX: true,
+            scrollY: '50vh',
+            scrollCollapse: true,
             ajax: 'api/admin/maps',
-            columns: [
-                { title: 'ID', data: 'id' },
-                { title: 'Nombre', data: 'name' },
-                { title: 'Capas', data: 'layers' },
-                { title: 'Capas Base', data: 'baselayers' }
-            ]
+            columns: [{ title: 'ID', data: 'id' }, { title: 'Nombre', data: 'name' }, { title: 'Capas', data: 'layers' }, { title: 'Capas Base', data: 'baselayers' }],
+            columnDefs: [{
+                    render: function (data, type, row) {
+                        return (data || []).length;
+                    }, targets: [2, 3]
+                }]
         };
         this.dtOptionsDefaultMaps = {
+            scrollX: true,
+            scrollY: '50vh',
+            scrollCollapse: true,
             ajax: 'api/admin/default-maps',
             columns: [
                 { title: 'ID', data: 'id' },
@@ -10670,6 +10682,9 @@ var AdminUsersComponent = (function () {
           }
         )*/
         this.dtOptions = {
+            scrollX: true,
+            scrollY: '60vh',
+            scrollCollapse: true,
             ajax: 'api/admin/users',
             columns: [{
                     title: 'Editar',
@@ -10736,7 +10751,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var AdminComponent = (function () {
-    function AdminComponent() {
+    function AdminComponent(zone, elementRef) {
+        this.zone = zone;
+        this.elementRef = elementRef;
         this.links = [
             { path: 'home', label: 'Home' },
             { path: 'users', label: 'Usuarios' },
@@ -10747,6 +10764,30 @@ var AdminComponent = (function () {
     }
     AdminComponent.prototype.ngOnInit = function () {
     };
+    AdminComponent.prototype.ngAfterViewInit = function () {
+        this.toolbar = this.elementRef.nativeElement.childNodes[0];
+    };
+    AdminComponent.prototype.setToolbarFixed = function (event) {
+        var _this = this;
+        this.zone.runOutsideAngular(function () {
+            if (window.scrollY > 0) {
+                if (_this.toolbar.style.position != 'fixed') {
+                    _this.toolbar.style.position = 'fixed';
+                }
+            }
+            else {
+                if (_this.toolbar.style.position != 'relative') {
+                    _this.toolbar.style.position = 'relative';
+                }
+            }
+        });
+    };
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])('window:scroll', ['$event']), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', [Object]), 
+        __metadata('design:returntype', void 0)
+    ], AdminComponent.prototype, "setToolbarFixed", null);
     AdminComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin',
@@ -10755,9 +10796,10 @@ var AdminComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _b) || Object])
     ], AdminComponent);
     return AdminComponent;
+    var _a, _b;
 }());
 //# sourceMappingURL=admin.component.js.map
 
@@ -26370,7 +26412,7 @@ module.exports = "<div>\n  kdjlekjled\n</div>\n"
 /***/ 903:
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"overflow-x: scroll;\" [@routerTransition]=\"\">\n  <table datatable [dtOptions]=\"dtOptionsLayers\" class=\"row-border hover\"></table>\n</div>\n<div style=\"overflow-x: scroll;\" [@routerTransition]=\"\">\n  <table datatable [dtOptions]=\"dtOptionsBase\" class=\"row-border hover\"></table>\n</div>"
+module.exports = "<div [@routerTransition]=\"\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>PostGIS</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsLayers\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>Otros servidores</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsBase\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 
@@ -26384,7 +26426,7 @@ module.exports = "<p>\n  admin-mail works!\n</p>\n"
 /***/ 905:
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"overflow-x: scroll;\" [@routerTransition]=\"\">\n  <table datatable [dtOptions]=\"dtOptionsMaps\" class=\"row-border hover\"></table>\n</div>\n<div style=\"overflow-x: scroll;\" [@routerTransition]=\"\">\n  <table datatable [dtOptions]=\"dtOptionsDefaultMaps\" class=\"row-border hover\"></table>\n</div>"
+module.exports = "<div [@routerTransition]=\"\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsMaps\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Mapas default</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsDefaultMaps\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 
@@ -26398,14 +26440,14 @@ module.exports = "<button md-fab (click)=\"goBack()\" style=\"position : fixed; 
 /***/ 907:
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"overflow-x: scroll;\" [@routerTransition]=\"\">\n  <table datatable [dtOptions]=\"dtOptions\" class=\"row-border hover\"></table>\n</div>\n\n"
+module.exports = "<div [@routerTransition]=\"\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptions\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 
 /***/ 908:
 /***/ (function(module, exports) {
 
-module.exports = "<nav md-tab-nav-bar>\n  <a md-tab-link\n     *ngFor=\"let link of links\"\n     [routerLink]=\"link.path\"\n     routerLinkActive #rla=\"routerLinkActive\"\n     [active]=\"rla.isActive\">\n    {{link.label}}\n  </a>\n</nav>\n<router-outlet></router-outlet>\n\n<!--\n<md-toolbar #toolbarMenu color=\"primary\" style=\"text-align: center;\">\n    <button md-button [routerLink]=\"['/admin']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Inicio\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'users']\" routerLinkActive=\"active-link\">\n        Usuarios\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'maps']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mapas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'layers']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Capas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'mail']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mail\n    </button>\n</md-toolbar>\n<router-outlet></router-outlet>\n-->"
+module.exports = "<nav md-tab-nav-bar #navbarAdmin>\n  <a md-tab-link\n     *ngFor=\"let link of links\"\n     [routerLink]=\"link.path\"\n     routerLinkActive #rla=\"routerLinkActive\"\n     [active]=\"rla.isActive\">\n    {{link.label}}\n  </a>\n</nav>\n<router-outlet></router-outlet>\n\n<!--\n<md-toolbar #toolbarMenu color=\"primary\" style=\"text-align: center;\">\n    <button md-button [routerLink]=\"['/admin']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Inicio\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'users']\" routerLinkActive=\"active-link\">\n        Usuarios\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'maps']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mapas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'layers']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Capas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'mail']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mail\n    </button>\n</md-toolbar>\n<router-outlet></router-outlet>\n-->"
 
 /***/ })
 
