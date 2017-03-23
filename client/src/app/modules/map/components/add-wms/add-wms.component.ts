@@ -10,17 +10,32 @@ import { WMSCapabilitiesService } from '../../services';
 export class AddWmsComponent implements OnInit {
 
   serviceUrl;
+  capas : any[];
+  capasSeleccionadas : any[] = [];
 
   constructor(private capabilitiesService : WMSCapabilitiesService) { }
 
   ngOnInit() {
   }
 
+  onChangeCheckbox(event, name){
+    let { checked } = event;
+    if(!checked){
+      this.capasSeleccionadas = 
+        this.capasSeleccionadas.filter( c => c.Name !== name );
+    } else {
+      let capa = this.capas.find( c => c.Name === name );
+      this.capasSeleccionadas.push(capa);
+    }
+  }
+
   getCapabilities(){
     if(!this.serviceUrl){}
 
     this.capabilitiesService.getCapabilities(this.serviceUrl).subscribe(
-      (layers)=>{ console.log(layers.json() )}
+      (layers)=>{
+        this.capas = layers.json();
+      }
     );
   }
 

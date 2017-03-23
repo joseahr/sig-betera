@@ -1,5 +1,22 @@
-<h4>Añade un servicio WMS</h4>
-<md-input-container>
-  <input mdInput [(ngModel)]="serviceUrl" placeholder="url del servidor o capabilities"  value="">
-</md-input-container>
-<button md-button (click)="getCapabilities()">OBTENER CAPAS</button>
+<md-card style="margin : -15px;">
+  <!--<div [style.background]="'url(' + userDetail.gravatar + ')'" class="user-avatar"></div>-->
+  <md-card-header>
+    <md-card-title>Nuevo grupo de Capas WMS</md-card-title>
+    <md-card-subtitle>Añade capas de un servicio WMS</md-card-subtitle>
+  </md-card-header>
+  <md-card-content>
+    <md-input-container style="width : 100%;">
+      <input mdInput [(ngModel)]="serviceUrl" placeholder="url del servidor o capabilities"  value="">
+    </md-input-container>
+    <button md-button (click)="getCapabilities()" style="width : 100%;">OBTENER CAPAS</button>
+    <md-list *ngIf="capas" style="height : 150px; overflow-y: hidden;">
+      <h3 md-subheader>Capas del servicio</h3>
+      <md-list-item *ngFor="let capa of capas">
+        <md-checkbox (change)="onChangeCheckbox($event, capa.Name)" class="example-margin">{{capa.Name}}</md-checkbox>
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button *ngIf="capasSeleccionadas.length">AÑADIR CAPAS</button>
+  </md-card-actions>
+</md-card>

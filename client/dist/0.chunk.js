@@ -2169,12 +2169,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var AddWmsComponent = (function () {
     function AddWmsComponent(capabilitiesService) {
         this.capabilitiesService = capabilitiesService;
+        this.capasSeleccionadas = [];
     }
     AddWmsComponent.prototype.ngOnInit = function () {
     };
+    AddWmsComponent.prototype.onChangeCheckbox = function (event, name) {
+        var checked = event.checked;
+        console.log(event);
+        if (!checked) {
+            this.capasSeleccionadas =
+                this.capasSeleccionadas.filter(function (c) { return c.Name !== name; });
+        }
+        else {
+            var capa = this.capas.find(function (c) { return c.Name === name; });
+            this.capasSeleccionadas.push(capa);
+        }
+    };
     AddWmsComponent.prototype.getCapabilities = function () {
+        var _this = this;
         if (!this.serviceUrl) { }
-        this.capabilitiesService.getCapabilities(this.serviceUrl).subscribe(function (layers) { console.log(layers.json()); });
+        this.capabilitiesService.getCapabilities(this.serviceUrl).subscribe(function (layers) {
+            _this.capas = layers.json();
+        });
     };
     AddWmsComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -11929,7 +11945,7 @@ exports.names = ["Van_der_Grinten_I", "VanDerGrinten", "vandg"];
 /* 996 */
 /***/ (function(module, exports) {
 
-module.exports = "<h4>Añade un servicio WMS</h4>\n<md-input-container>\n  <input mdInput [(ngModel)]=\"serviceUrl\" placeholder=\"url del servidor o capabilities\"  value=\"\">\n</md-input-container>\n<button md-button (click)=\"getCapabilities()\">OBTENER CAPAS</button>"
+module.exports = "<md-card style=\"margin : -15px;\">\n  <!--<div [style.background]=\"'url(' + userDetail.gravatar + ')'\" class=\"user-avatar\"></div>-->\n  <md-card-header>\n    <md-card-title>Nuevo grupo de Capas WMS</md-card-title>\n    <md-card-subtitle>Añade capas de un servicio WMS</md-card-subtitle>\n  </md-card-header>\n  <md-card-content>\n    <md-input-container style=\"width : 100%;\">\n      <input mdInput [(ngModel)]=\"serviceUrl\" placeholder=\"url del servidor o capabilities\"  value=\"\">\n    </md-input-container>\n    <button md-button (click)=\"getCapabilities()\" style=\"width : 100%;\">OBTENER CAPAS</button>\n    <md-list *ngIf=\"capas\">\n      <h3 md-subheader>Capas del servicio</h3>\n      <md-list-item *ngFor=\"let capa of capas\">\n        <md-checkbox (change)=\"onChangeCheckbox($event, capa.Name)\" class=\"example-margin\">{{capa.Name}}</md-checkbox>\n      </md-list-item>\n    </md-list>\n  </md-card-content>\n  <md-card-actions>\n    <button md-button *ngIf=\"capasSeleccionadas.length\">AÑADIR CAPAS</button>\n  </md-card-actions>\n</md-card>"
 
 /***/ }),
 /* 997 */
