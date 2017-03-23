@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
+import { BytesPipe } from 'angular-pipes/src/math/bytes.pipe';
 
 @Component({
   selector: 'app-admin-layers-new-layer',
   templateUrl: './admin-layers-new-layer.component.html',
   styleUrls: ['./admin-layers-new-layer.component.css'],
-  providers : [ AdminService ],
+  providers : [ AdminService, BytesPipe ],
   animations: [routerTransition()],
   host : { '[@routerTransition]': '' }
 })
 export class AdminLayersNewLayerComponent implements OnInit {
   
+  @ViewChild('dropZone') dropzone : ElementRef;
   files : any = [];
   error : any = null;
 
@@ -19,9 +21,35 @@ export class AdminLayersNewLayerComponent implements OnInit {
 
   ngOnInit() {}
 
+  ngAfterViewInit(){
+    this.dropzone.nativeElement.addEventListener('drop', this.handleFileSelect.bind(this), false);
+    this.dropzone.nativeElement.addEventListener('dragover', this.handleDragOver.bind(this), false);
+    this.dropzone.nativeElement.addEventListener('dragleave', this.handleDragLeave.bind(this), false);
+  }
+
   onChange(event){
     this.error = null;
     this.files = event.target.files;
+  }
+
+  handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    this.dropzone.nativeElement.style.opacity = '1';
+    this.files = evt.dataTransfer.files; // FileList object.
+  }
+
+  handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+    this.dropzone.nativeElement.style.opacity = '0.3';
+  }
+
+  handleDragLeave(evt){
+    evt.stopPropagation();
+    evt.preventDefault();
+    this.dropzone.nativeElement.style.opacity = '1';
   }
 
   uploadSHP(){

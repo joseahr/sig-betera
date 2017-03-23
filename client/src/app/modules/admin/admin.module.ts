@@ -4,6 +4,7 @@ import { RouterModule, Route } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 import { DataTablesModule } from 'angular-datatables';
 import { FilterListPipe } from './pipes';
+import { NgMathPipesModule } from 'angular-pipes';
 
 import { 
     AdminComponent,
@@ -52,6 +53,7 @@ const adminRoutes : Route[] =  [{
     imports : [
         CommonModule,
         DataTablesModule,
+        NgMathPipesModule,
         MaterialModule.forRoot(),
         RouterModule.forChild(adminRoutes)
     ]
