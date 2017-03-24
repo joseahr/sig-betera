@@ -182,7 +182,7 @@ export class MapComponent implements OnInit {
           source : new ol.source.TileWMS({
               url : opts.service_url,
               gutter : opts.gutter <= 0 ? 0 : 250,
-              projection : opts.projection || 'EPSG:4326',
+              projection : opts.projection || 'EPSG:25830',
               crossOrigin: opts.crossOrigin || 'anonymous', // Configurar Geoserver para orígenes remotos primero
               //crossOrigin : 'anonymous',
               params: {
@@ -227,7 +227,15 @@ export class MapComponent implements OnInit {
   openWMSDialog(){
     let dialog = this.dialog.open(AddWmsComponent);
     dialog.afterClosed().subscribe(
-      (wmsGroup)=>{}
+      (wmsGroup)=>{
+        if(!wmsGroup) return;
+        let group = new ol.layer.Group();
+        group.set('name', wmsGroup.serviceURL);
+        let layers = wmsGroup.layers
+          .map( l => this.getTile({ service_url : wmsGroup.serviceURL,  layers : l.Name, name : l.Name }) );
+        group.getLayers().extend(layers);
+        this.map.addLayer(group);
+      }
     );
   }
 

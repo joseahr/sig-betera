@@ -18,8 +18,14 @@ export class AdminService {
         return this.http.get('/api/admin/groups');
     }
 
-    postLayer(formData){
-        return this.http.post('/api/admin/layers', formData);
+    postLayer(formData, layerName?){
+        let apiEndPoint = '/api/admin/layers';
+        if(layerName) apiEndPoint += `?layerName=${layerName}`;
+        return this.http.post(apiEndPoint, formData);
+    }
+
+    postBaseLayer(service_url : string, layers : string[]){
+        return this.http.post('/api/admin/baselayers', { service_url, layers });
     }
 
 }

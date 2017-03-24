@@ -376,7 +376,7 @@ router.route('/baselayers')
     if(!service_url) return res.status(500).json('Debe introducir una url del servicio');
     if (!layers || !layers.length) return res.status(500).json('Debe seleccionar al menos una capa');
 
-    capabilitiesParser.parse(service_url)
+    capabilitiesParser.parser(service_url)
     .then( ( layersCap : any ) =>{
         if (!layersCap || !layersCap.length) return res.status(500).json('No es un capabilities válido');
         let layerCapNames = layersCap.map( l => l['Name'] );

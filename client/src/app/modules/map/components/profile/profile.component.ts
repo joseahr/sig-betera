@@ -128,17 +128,15 @@ export class ProfileComponent implements OnInit {
     let dist = 0;
     let points = this.profileGeom.getCoordinates();
 
-    for(let i = 0; i< points.length - 1; i++){
+    for(let i = 0; i < points.length - 1; i++){
       //console.log('pooooint', points[i])
       this.dataChartArray.push([dist, points[i][2]]);
-      if(points[i + 1]){
-        var p = ol.proj.transform(points[i], this.map.getView().getProjection(), 'EPSG:4326');
-        var next = ol.proj.transform(points[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
-        var subLineStringGeom = new ol.geom.LineString([ p, next ]);
-        dist += wgs84Sphere.haversineDistance(p, next);
-      }
+      let p = ol.proj.transform(points[i], this.map.getView().getProjection(), 'EPSG:4326');
+      let next = ol.proj.transform(points[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
+      let subLineStringGeom = new ol.geom.LineString([ p, next ]);
+      dist += wgs84Sphere.haversineDistance(p, next);
     }
-    console.log(this.dataChartArray);
+    //console.log(this.dataChartArray);
     if(this.chart){
       if(this.chart.series[0]) this.chart.series[0].remove();
       this.chart.addSeries(
@@ -176,16 +174,15 @@ export class ProfileComponent implements OnInit {
     let wgs84Sphere = new ol.Sphere(6378137);
     let coords = this.profileGeom.getCoordinates();
     let distance_ = 0;
-    for(let i = 0; i < coords.length; i++){
-        if(coords[i + 1]){
-          var p = ol.proj.transform(coords[i], this.map.getView().getProjection(), 'EPSG:4326');
-          var next = ol.proj.transform(coords[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
-          var subLineStringGeom = new ol.geom.LineString([ p, next ]);
-          distance_ += wgs84Sphere.haversineDistance(p, next);
-          if(distance_ > distance){
-            return coords[i];
-          }
-        }
+    distance -= 1e-5;
+    for(let i = 0; i < coords.length - 1; i++){
+      let p = ol.proj.transform(coords[i], this.map.getView().getProjection(), 'EPSG:4326');
+      let next = ol.proj.transform(coords[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
+      let subLineStringGeom = new ol.geom.LineString([ p, next ]);
+      distance_ += wgs84Sphere.haversineDistance(p, next);
+      if(distance_ > distance){
+        return coords[i];
+      }
     }
   }
 

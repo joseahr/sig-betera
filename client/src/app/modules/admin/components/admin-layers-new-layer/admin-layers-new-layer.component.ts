@@ -15,6 +15,7 @@ export class AdminLayersNewLayerComponent implements OnInit {
   
   @ViewChild('dropZone') dropzone : ElementRef;
   files : any = [];
+  layerName : string = '';
   error : any = null;
 
   constructor(private adminService : AdminService) { }
@@ -53,6 +54,8 @@ export class AdminLayersNewLayerComponent implements OnInit {
   }
 
   uploadSHP(){
+    this.error = null;
+    let layerName = this.layerName;
     let formData = new FormData();
     let fileCount = this.files.length;
     if(fileCount == 0){
@@ -63,10 +66,11 @@ export class AdminLayersNewLayerComponent implements OnInit {
         formData.append('shp[]', this.files.item(i));
     }
 
-    this.adminService.postLayer(formData).subscribe(
+    this.adminService.postLayer(formData, layerName).subscribe(
       (data)=>{
         console.log('Sa subio');
         this.files = [];
+        this.layerName = '';
       }, 
       (error)=>{
         console.log(error.json(), 'jsooon');

@@ -11,7 +11,7 @@
         Selecciona los archivos SHP, DBF, SHX
       </label>
       <md-input-container style="width : 100%">
-        <input mdInput placeholder="Nombre de la capa (Opcional)" value="">
+        <input mdInput [(ngModel)]="layerName" placeholder="Nombre de la capa (Opcional)" value="">
       </md-input-container>
       <div *ngIf="error" class="error-msg">{{error}}</div>
       <md-list *ngIf="files.length">
