@@ -32,15 +32,17 @@
     </md-card-header>
     <md-card-content>
       <h4>Orden de las capas</h4>
-      <md-list *ngIf="map?.orden" [dragula]='"order"' [(dragulaModel)]="map.orden">
-        <md-list-item *ngFor="let capa of map?.orden; let i = index;" style="background : #f7f7f7; margin : 3px;">
-          <md-icon [style.color]="getColor(capa)" style="cursor: pointer;" md-list-avatar class="handle">layers</md-icon>
-          <h4 md-line>#{{i}} {{capa.name}}</h4>
-          <p md-line>ID Capa : {{capa.id_layer}}</p>
-          <button md-mini-fab *ngIf="capa.layer_type == 'layer'" (click)="deleteLayerFromMap(capa.id_layer)"><md-icon>remove_circle</md-icon></button>
-          <button md-mini-fab *ngIf="capa.layer_type == 'base'" (click)="deleteBaseLayerFromMap(capa.id_layer)"><md-icon>remove_circle</md-icon></button>
-        </md-list-item>
-      </md-list>
+      <div *ngIf="map?.orden" [dragula]='"order"' [(dragulaModel)]="map.orden">
+        <md-card *ngFor="let capa of map?.orden; let i = index;" style="background : #f7f7f7; margin : 3px;">
+          <md-card-header>
+            <md-icon md-card-avatar [style.color]="getColor(capa)" style="cursor: pointer;" md-list-avatar class="handle">layers</md-icon>
+            <md-card-title>#{{i}} {{capa.name}}</md-card-title>
+            <md-card-subtitle>ID Capa : {{capa.id_layer}}</md-card-subtitle>
+            <button md-mini-fab *ngIf="capa.layer_type == 'layer'" (click)="deleteLayerFromMap(capa.id_layer)" style="position : absolute; right: 1em;"><md-icon>remove_circle</md-icon></button>
+            <button md-mini-fab *ngIf="capa.layer_type == 'base'" (click)="deleteBaseLayerFromMap(capa.id_layer)" style="position : absolute; right: 1em;"><md-icon>remove_circle</md-icon></button>
+          </md-card-header>
+        </md-card>
+      </div>
     </md-card-content>
     <md-card-actions>
       <button [disabled]="!hasChangedOrder" md-button (click)="saveOrder()">GUARDAR ORDEN</button>

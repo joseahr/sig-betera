@@ -37355,11 +37355,16 @@ var AdminUserDetailsComponent = (function () {
         this.location = location;
         this.adminService = adminService;
         var params = this.route.snapshot.params;
-        this.allNotUserGroups = __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].forkJoin(this.adminService.getUserDetail(params.id).map(function (res) { return res.json(); }), this.adminService.getAllGroups().map(function (res) { return res.json(); })).map(function (groups) {
-            var userDetail = _this.userDetail = groups[0];
+        __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].forkJoin(this.adminService.getUserDetail(params.id).map(function (res) { return res.json(); }), this.adminService.getAllGroups().map(function (res) { return res.json(); })).map(function (data) {
+            var userDetail = data[0];
+            userDetail.not_assigned_maps = userDetail.not_assigned_maps || [];
+            userDetail.maps = userDetail.maps || [];
             var userGroups = userDetail.grupos || [];
-            var allGroups = groups[1] || [];
-            return allGroups.filter(function (g) { return !userGroups.includes(g); });
+            var allGroups = data[1] || [];
+            return [userDetail, allGroups.filter(function (g) { return !userGroups.includes(g); })];
+        }).subscribe(function (data) {
+            _this.userDetail = data[0];
+            _this.allNotUserGroups = data[1];
         });
     }
     AdminUserDetailsComponent.prototype.ngOnInit = function () {
@@ -37367,8 +37372,66 @@ var AdminUserDetailsComponent = (function () {
     AdminUserDetailsComponent.prototype.goBack = function () {
         this.location.back();
     };
-    AdminUserDetailsComponent.prototype.changeGroup = function (event) {
-        console.log(event);
+    AdminUserDetailsComponent.prototype.addGroup = function () {
+        var _this = this;
+        var params = this.route.snapshot.params;
+        this.adminService.addUserGroup(params.id, this.selectedGroupToAdd).subscribe(function () {
+            _this.allNotUserGroups = _this.allNotUserGroups.filter(function (g) { return g != _this.selectedGroupToAdd; });
+            _this.userDetail.grupos.push(_this.selectedGroupToAdd);
+            _this.selectedGroupToAdd = null;
+        });
+    };
+    AdminUserDetailsComponent.prototype.deleteGroup = function (groupName) {
+        var _this = this;
+        var params = this.route.snapshot.params;
+        this.adminService.deleteUserGroup(params.id, groupName).subscribe(function () {
+            _this.allNotUserGroups.push(groupName);
+            _this.userDetail.grupos = _this.userDetail.grupos.filter(function (g) { return g != groupName; });
+        });
+    };
+    AdminUserDetailsComponent.prototype.addUserMap = function () {
+        var _this = this;
+        var params = this.route.snapshot.params;
+        this.adminService.addUserMap(params.id, this.selectedMapToAdd).subscribe(function () {
+            var map = _this.userDetail.not_assigned_maps.find(function (m) { return m.id == _this.selectedMapToAdd; });
+            //console.log(map, 'map');
+            _this.userDetail.maps.push(map);
+            _this.userDetail.not_assigned_maps = _this.userDetail.not_assigned_maps.filter(function (m) { return m.id != _this.selectedMapToAdd; });
+            //console.log(map, 'map');
+            _this.selectedMapToAdd = null;
+        });
+    };
+    AdminUserDetailsComponent.prototype.deleteUserMap = function (map) {
+        var _this = this;
+        //console.log(map);
+        var params = this.route.snapshot.params;
+        this.adminService.deleteUserMap(params.id, map.id).subscribe(function () {
+            _this.userDetail.not_assigned_maps.push(map);
+            _this.userDetail.maps = _this.userDetail.maps.filter(function (m) { return m.id != map.id; });
+        });
+    };
+    AdminUserDetailsComponent.prototype.changeRolOfLayer = function (event, layer) {
+        console.log(event, layer);
+        var params = this.route.snapshot.params;
+        var id_user = params.id;
+        var oldValue = layer.rol;
+        var newValue = event.value;
+        var query = null;
+        if (oldValue == 'r') {
+            /* Ejecutamos un insert PUT */
+            query = this.adminService.insertUserRol(id_user, layer.id_layer, newValue);
+        }
+        else if (newValue == 'r') {
+            /* Ejecutamos un delete */
+            query = this.adminService.deleteUserRol(id_user, layer.id_layer);
+        }
+        else {
+            /* Ejecutamos un Update */
+            query = this.adminService.updateUserRol(id_user, layer.id_layer, newValue);
+        }
+        query.subscribe(function () {
+            console.log('Actualizado correctamente');
+        });
     };
     AdminUserDetailsComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -37662,6 +37725,27 @@ var AdminService = (function () {
     };
     AdminService.prototype.deleteMapBaseLayer = function (id_map, id_layer) {
         return this.http.delete('/api/admin/maps/baselayers', { body: { id_map: id_map, id_layer: id_layer } });
+    };
+    AdminService.prototype.addUserGroup = function (id_user, group) {
+        return this.http.post('/api/admin/user/group', { id_user: id_user, group: group });
+    };
+    AdminService.prototype.deleteUserGroup = function (id_user, group) {
+        return this.http.delete('/api/admin/user/group', { body: { id_user: id_user, group: group } });
+    };
+    AdminService.prototype.addUserMap = function (id_user, id_map) {
+        return this.http.post('/api/admin/user/map', { id_user: id_user, id_map: id_map });
+    };
+    AdminService.prototype.deleteUserMap = function (id_user, id_map) {
+        return this.http.delete('/api/admin/user/map', { body: { id_user: id_user, id_map: id_map } });
+    };
+    AdminService.prototype.insertUserRol = function (id_user, id_layer, rol) {
+        return this.http.post('/api/admin/user/rol', { id_user: id_user, id_layer: id_layer, rol: rol });
+    };
+    AdminService.prototype.updateUserRol = function (id_user, id_layer, rol) {
+        return this.http.put('/api/admin/user/rol', { id_user: id_user, id_layer: id_layer, rol: rol });
+    };
+    AdminService.prototype.deleteUserRol = function (id_user, id_layer) {
+        return this.http.delete('/api/admin/user/rol', { body: { id_user: id_user, id_layer: id_layer } });
     };
     AdminService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
@@ -53353,7 +53437,7 @@ module.exports = "<p>\n  admin-mail works!\n</p>\n"
 /* 1234 */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Añadir Capas</md-card-title>\n      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <h4>Añadir Capa</h4>\n      <md-select placeholder=\"Capa PostGIS\" [(ngModel)]=\"selectedLayerToAdd\" style=\"width : 100%;\">\n        <md-option *ngFor=\"let layer of AllLayersNotInMap\" [value]=\"layer.id\">\n          {{layer.name}}\n        </md-option>\n      </md-select>\n      <h4>Añadir Capa Base</h4>\n      <md-select placeholder=\"Capas Base\" [(ngModel)]=\"selectedBaseLayerToAdd\" style=\"width : 100%;\">\n        <md-option *ngFor=\"let layer of AllBaseLayersNotInMap\" [value]=\"layer.id\">\n          {{layer.name}}\n        </md-option>\n      </md-select>\n    </md-card-content>\n    <md-card-actions>\n      <button [disabled]=\"!selectedLayerToAdd\" md-button (click)=\"addSelectedLayer()\">AÑADIR CAPA SELECCIONADA</button>\n      <button [disabled]=\"!selectedBaseLayerToAdd\" md-button (click)=\"addSelectedBaseLayer()\">AÑADIR CAPA BASE SELECCIONADA</button>\n    </md-card-actions>\n  </md-card>\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Alterar orden</md-card-title>\n      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <h4>Orden de las capas</h4>\n      <md-list *ngIf=\"map?.orden\" [dragula]='\"order\"' [(dragulaModel)]=\"map.orden\">\n        <md-list-item *ngFor=\"let capa of map?.orden; let i = index;\" style=\"background : #f7f7f7; margin : 3px;\">\n          <md-icon [style.color]=\"getColor(capa)\" style=\"cursor: pointer;\" md-list-avatar class=\"handle\">layers</md-icon>\n          <h4 md-line>#{{i}} {{capa.name}}</h4>\n          <p md-line>ID Capa : {{capa.id_layer}}</p>\n          <button md-mini-fab *ngIf=\"capa.layer_type == 'layer'\" (click)=\"deleteLayerFromMap(capa.id_layer)\"><md-icon>remove_circle</md-icon></button>\n          <button md-mini-fab *ngIf=\"capa.layer_type == 'base'\" (click)=\"deleteBaseLayerFromMap(capa.id_layer)\"><md-icon>remove_circle</md-icon></button>\n        </md-list-item>\n      </md-list>\n    </md-card-content>\n    <md-card-actions>\n      <button [disabled]=\"!hasChangedOrder\" md-button (click)=\"saveOrder()\">GUARDAR ORDEN</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Añadir Capas</md-card-title>\n      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <h4>Añadir Capa</h4>\n      <md-select placeholder=\"Capa PostGIS\" [(ngModel)]=\"selectedLayerToAdd\" style=\"width : 100%;\">\n        <md-option *ngFor=\"let layer of AllLayersNotInMap\" [value]=\"layer.id\">\n          {{layer.name}}\n        </md-option>\n      </md-select>\n      <h4>Añadir Capa Base</h4>\n      <md-select placeholder=\"Capas Base\" [(ngModel)]=\"selectedBaseLayerToAdd\" style=\"width : 100%;\">\n        <md-option *ngFor=\"let layer of AllBaseLayersNotInMap\" [value]=\"layer.id\">\n          {{layer.name}}\n        </md-option>\n      </md-select>\n    </md-card-content>\n    <md-card-actions>\n      <button [disabled]=\"!selectedLayerToAdd\" md-button (click)=\"addSelectedLayer()\">AÑADIR CAPA SELECCIONADA</button>\n      <button [disabled]=\"!selectedBaseLayerToAdd\" md-button (click)=\"addSelectedBaseLayer()\">AÑADIR CAPA BASE SELECCIONADA</button>\n    </md-card-actions>\n  </md-card>\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Alterar orden</md-card-title>\n      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <h4>Orden de las capas</h4>\n      <div *ngIf=\"map?.orden\" [dragula]='\"order\"' [(dragulaModel)]=\"map.orden\">\n        <md-card *ngFor=\"let capa of map?.orden; let i = index;\" style=\"background : #f7f7f7; margin : 3px;\">\n          <md-card-header>\n            <md-icon md-card-avatar [style.color]=\"getColor(capa)\" style=\"cursor: pointer;\" md-list-avatar class=\"handle\">layers</md-icon>\n            <md-card-title>#{{i}} {{capa.name}}</md-card-title>\n            <md-card-subtitle>ID Capa : {{capa.id_layer}}</md-card-subtitle>\n            <button md-mini-fab *ngIf=\"capa.layer_type == 'layer'\" (click)=\"deleteLayerFromMap(capa.id_layer)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n            <button md-mini-fab *ngIf=\"capa.layer_type == 'base'\" (click)=\"deleteBaseLayerFromMap(capa.id_layer)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n          </md-card-header>\n        </md-card>\n      </div>\n    </md-card-content>\n    <md-card-actions>\n      <button [disabled]=\"!hasChangedOrder\" md-button (click)=\"saveOrder()\">GUARDAR ORDEN</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 /* 1235 */
@@ -53377,7 +53461,7 @@ module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  
 /* 1238 */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <button md-fab (click)=\"goBack()\" style=\"position : fixed; z-index: 1; right: 0.5em; bottom: 0.5em;\">\n    <md-icon>arrow_back</md-icon>\n  </button>\n  <md-card style=\"margin : 8px; margin-top : 15px;\">\n    <!--<div [style.background]=\"'url(' + userDetail.gravatar + ')'\" class=\"user-avatar\"></div>-->\n    <md-card-header>\n      <div md-card-avatar><img src=\"{{ userDetail?.gravatar }}\" alt=\"\" class=\"user-avatar\"></div>\n      <md-card-title>{{userDetail?.name}}</md-card-title>\n      <md-card-subtitle>{{userDetail?.nombre}} {{userDetail?.apellidos}}</md-card-subtitle>\n    </md-card-header>\n    <div md-card-image\n      style=\"height : 100px; background-position-y : 350px; background: url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg'); background-size: cover;\"\n    >\n    </div>\n    <md-card-content>\n      <md-tab-group>\n        <md-tab label=\"Grupos\">\n          <md-list>\n            <h3 md-subheader>Grupos del usuario {{userDetail?.name}}</h3>\n            <md-list-item *ngFor=\"let grupo of userDetail?.grupos\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>{{grupo}}</h4>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n        <md-tab label=\"Mapas\">Content 2</md-tab>\n        <md-tab label=\"Permisos\">Content 3</md-tab>\n      </md-tab-group>\n    </md-card-content>\n    <md-card-actions>\n      <md-select placeholder=\"Grupos\" (change)=\"changeGroup($event)\">\n        <md-option *ngFor=\"let group of allNotUserGroups | async\" [value]=\"group\">{{ group }}</md-option>\n      </md-select>\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <button md-mini-fab (click)=\"goBack()\" style=\"position : fixed; z-index: 2; left: 0.5em; bottom: 0.5em;\">\n    <md-icon>arrow_back</md-icon>\n  </button>\n  <md-card style=\"margin : 8px; margin-top : 15px;\">\n    <!--<div [style.background]=\"'url(' + userDetail.gravatar + ')'\" class=\"user-avatar\"></div>-->\n    <md-card-header>\n      <div md-card-avatar><img src=\"{{ userDetail?.gravatar }}\" alt=\"\" class=\"user-avatar\"></div>\n      <md-card-title>{{userDetail?.name}}</md-card-title>\n      <md-card-subtitle>{{userDetail?.nombre}} {{userDetail?.apellidos}}</md-card-subtitle>\n    </md-card-header>\n    <div md-card-image\n      style=\"height : 100px; background-position-y : 350px; background: url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg'); background-size: cover;\"\n    >\n    </div>\n    <md-card-content>\n      <md-tab-group>\n        <md-tab label=\"Grupos\">\n          <md-list>\n            <h3 md-subheader>Gestionar grupos del usuario {{userDetail?.name}}</h3>\n            <md-select placeholder=\"Añadir grupo al usuario\" [(ngModel)]=\"selectedGroupToAdd\" style=\"margin : 20px 0px 20px 0px; width : 100%;\">\n              <md-option *ngFor=\"let group of allNotUserGroups\" [value]=\"group\">{{ group }}</md-option>\n            </md-select>\n            <button md-button [disabled]=\"!selectedGroupToAdd\" (click)=\"addGroup()\" style=\"margin : 0 auto;\">AÑADIR GRUPO</button>\n            <md-list-item *ngFor=\"let grupo of userDetail?.grupos\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>{{grupo}}</h4>\n                <button md-mini-fab (click)=\"deleteGroup(grupo)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n        <md-tab label=\"Mapas\">\n          <md-list>\n            <h3 md-subheader>Gestionar mapas del usuario {{userDetail?.name}}</h3>\n            <md-select placeholder=\"Añadir mapa al usuario\" [(ngModel)]=\"selectedMapToAdd\" style=\"margin : 20px 0px 20px 0px; width : 100%;\">\n              <md-option *ngFor=\"let map of userDetail?.not_assigned_maps\" [value]=\"map.id\">{{ map.name }}</md-option>\n            </md-select>\n            <button md-button [disabled]=\"!selectedMapToAdd\" (click)=\"addUserMap()\" style=\"margin : 0 auto;\">AÑADIR MAPA</button>\n            <md-list-item *ngFor=\"let map of userDetail?.maps\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>{{map.name}}</h4>\n                <button md-mini-fab (click)=\"deleteUserMap(map)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n        <md-tab label=\"Permisos\">\n          <md-list>\n            <h3 md-subheader>Gestionar permisos del usuario {{userDetail?.name}}</h3>\n            <md-list-item *ngFor=\"let layer of userDetail?.layers_rol;\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>#{{layer.id_layer}} {{layer.name}}</h4>\n                <div md-line>\n                  <md-select (change)=\"changeRolOfLayer($event, layer)\" [ngModel]=\"layer.rol\" placeholder=\"Permiso sobre la capa {{layer.name}}\" style=\"margin : 20px 0px 20px 0px; width : 100%;\">\n                    <md-option *ngFor=\"let rol of ['r', 'e', 'd']\" [value]=\"rol\">{{ rol }}</md-option>\n                  </md-select>\n                </div>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n      </md-tab-group>\n    </md-card-content>\n    <md-card-actions>\n\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 /* 1239 */

@@ -100,4 +100,32 @@ export class AdminService {
         return this.http.delete('/api/admin/maps/baselayers', { body : { id_map, id_layer } });
     }
 
+    addUserGroup(id_user, group){
+        return this.http.post('/api/admin/user/group', { id_user, group });
+    }
+
+    deleteUserGroup(id_user, group){
+        return this.http.delete('/api/admin/user/group', { body : { id_user, group } });
+    }
+
+    addUserMap(id_user, id_map){
+        return this.http.post('/api/admin/user/map', { id_user, id_map });
+    }
+
+    deleteUserMap(id_user, id_map){
+        return this.http.delete('/api/admin/user/map', { body : { id_user, id_map } });
+    }
+    
+    insertUserRol(id_user, id_layer, rol){
+        return this.http.post('/api/admin/user/rol', { id_user, id_layer, rol });
+    }
+
+    updateUserRol(id_user, id_layer, rol){
+        return this.http.put('/api/admin/user/rol', { id_user, id_layer, rol });
+    }
+
+    deleteUserRol(id_user, id_layer){
+        return this.http.delete('/api/admin/user/rol', { body : { id_user, id_layer } });
+    }
+
 }

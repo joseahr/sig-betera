@@ -87,15 +87,15 @@ exports.router.route('/user/map')
  * AÑADIR / ELIMINAR / ACTUALIZAR
  *  ROL DE UN USUARIO SOBRE UNA CAPA
  **************************/
-exports.router.route('/group/rol')
+exports.router.route('/user/rol')
     .post(function (req, res) {
     // performance-optimized, reusable set of columns:
-    var _a = req.body, id_group = _a.id_group, id_layer = _a.id_layer, rol = _a.rol;
-    if (!id_group || !id_layer || !rol)
+    var _a = req.body, id_user = _a.id_user, id_layer = _a.id_layer, rol = _a.rol;
+    if (!id_user || !id_layer || !rol)
         return res.status(404).json('Error : Faltan parámetros');
-    var cs = new db_1.pgp.helpers.ColumnSet(['id_group', 'id_layer', { name: 'rol', cast: 'public.roles_enum' }], { table: 'roles' });
+    var cs = new db_1.pgp.helpers.ColumnSet(['id_user', 'id_layer', { name: 'rol', cast: 'public.roles_enum' }], { table: 'roles' });
     // input values:
-    var values = [{ id_group: id_group, id_layer: id_layer, rol: rol }];
+    var values = [{ id_user: id_user, id_layer: id_layer, rol: rol }];
     // generating a multi-row insert query:
     var query = db_1.pgp.helpers.insert(values, cs);
     db_1.db.query(query)
@@ -104,8 +104,8 @@ exports.router.route('/group/rol')
 })
     .put(function (req, res) {
     // performance-optimized, reusable set of columns:
-    var _a = req.body, id_group = _a.id_group, id_layer = _a.id_layer, rol = _a.rol;
-    if (!id_group || !id_layer || !rol)
+    var _a = req.body, id_user = _a.id_user, id_layer = _a.id_layer, rol = _a.rol;
+    if (!id_user || !id_layer || !rol)
         return res.status(404).json('Error : Faltan parámetros');
     var cs = new db_1.pgp.helpers.ColumnSet([{ name: 'rol', cast: 'public.roles_enum' }]);
     //console.log({ id_layer : +id_layer, id_user : +id_user, rol });
@@ -113,15 +113,15 @@ exports.router.route('/group/rol')
     var values = [{ rol: rol }];
     // generating a multi-row insert query:
     var query = db_1.pgp.helpers.update(values, cs, 'roles', { tableAlias: 'r' }) +
-        ' WHERE r.id_layer = ${id_layer} AND r.id_group = ${id_group}';
-    db_1.db.query(query, { id_layer: id_layer, id_group: id_group })
+        ' WHERE r.id_layer = ${id_layer} AND r.id_user = ${id_user}';
+    db_1.db.query(query, { id_layer: id_layer, id_user: id_user })
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error' + err); });
 })
     .delete(function (req, res) {
-    var _a = req.body, id_group = _a.id_group, id_layer = _a.id_layer;
-    db_1.db.query('DELETE FROM roles WHERE id_user = ${id_group} AND id_layer = ${id_layer}', {
-        id_group: id_group, id_layer: id_layer
+    var _a = req.body, id_user = _a.id_user, id_layer = _a.id_layer;
+    db_1.db.query('DELETE FROM roles WHERE id_user = ${id_user} AND id_layer = ${id_layer}', {
+        id_user: id_user, id_layer: id_layer
     })
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error'); });
@@ -132,20 +132,20 @@ exports.router.route('/group/rol')
  **************************/
 exports.router.route('/user/group')
     .post(function (req, res) {
-    var _a = req.body, id_user = _a.id_user, id_group = _a.id_group;
-    if (!id_user || !id_group)
+    var _a = req.body, id_user = _a.id_user, group = _a.group;
+    if (!id_user || !group)
         return res.status(404).json('Error : Faltan parámetros');
-    var cs = new db_1.pgp.helpers.ColumnSet(['id_user', 'id_group'], { table: 'user_groups' });
-    var values = [{ id_user: id_user, id_group: id_group }];
+    var cs = new db_1.pgp.helpers.ColumnSet(['id_user', 'group'], { table: 'user_groups' });
+    var values = [{ id_user: id_user, group: group }];
     var query = db_1.pgp.helpers.insert(values, cs);
     db_1.db.query(query)
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error' + err); });
 })
     .delete(function (req, res) {
-    var _a = req.body, id_user = _a.id_user, id_group = _a.id_group;
-    db_1.db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "id_group" = ${id_group}', {
-        id_user: id_user, id_group: id_group
+    var _a = req.body, id_user = _a.id_user, group = _a.group;
+    db_1.db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "group" = ${group}', {
+        id_user: id_user, group: group
     })
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error' + err); });

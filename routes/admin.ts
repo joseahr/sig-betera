@@ -103,14 +103,14 @@ router.route('/user/map')
  * AÑADIR / ELIMINAR / ACTUALIZAR
  *  ROL DE UN USUARIO SOBRE UNA CAPA
  **************************/
-router.route('/group/rol')
+router.route('/user/rol')
 .post( (req, res)=>{
      // performance-optimized, reusable set of columns:
-    let { id_group, id_layer, rol } = req.body;
-    if(!id_group || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
-    let cs = new pgp.helpers.ColumnSet(['id_group', 'id_layer', { name : 'rol', cast : 'public.roles_enum'}], {table: 'roles'});
+    let { id_user, id_layer, rol } = req.body;
+    if(!id_user || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
+    let cs = new pgp.helpers.ColumnSet(['id_user', 'id_layer', { name : 'rol', cast : 'public.roles_enum'}], {table: 'roles'});
     // input values:
-    let values = [{id_group, id_layer, rol}];
+    let values = [{id_user, id_layer, rol}];
 
     // generating a multi-row insert query:
     let query = pgp.helpers.insert(values, cs);
@@ -121,8 +121,8 @@ router.route('/group/rol')
 })
 .put( (req, res)=>{
     // performance-optimized, reusable set of columns:
-    let { id_group, id_layer, rol } = req.body;
-    if(!id_group || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
+    let { id_user, id_layer, rol } = req.body;
+    if(!id_user || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
     let cs = new pgp.helpers.ColumnSet([{ name : 'rol', cast : 'public.roles_enum' }]);
     //console.log({ id_layer : +id_layer, id_user : +id_user, rol });
     // input values:
@@ -130,16 +130,16 @@ router.route('/group/rol')
 
     // generating a multi-row insert query:
     let query = pgp.helpers.update(values, cs, 'roles', { tableAlias : 'r' }) + 
-        ' WHERE r.id_layer = ${id_layer} AND r.id_group = ${id_group}';
+        ' WHERE r.id_layer = ${id_layer} AND r.id_user = ${id_user}';
     
-    db.query(query, { id_layer, id_group })
+    db.query(query, { id_layer, id_user })
     .then( ()=> res.status(200).json('OK') )
     .catch( ( err : any ) => res.status(500).json('Error' + err) );
 })
 .delete( (req, res)=>{
-    let { id_group, id_layer } = req.body;
-    db.query('DELETE FROM roles WHERE id_user = ${id_group} AND id_layer = ${id_layer}', { 
-        id_group, id_layer
+    let { id_user, id_layer } = req.body;
+    db.query('DELETE FROM roles WHERE id_user = ${id_user} AND id_layer = ${id_layer}', { 
+        id_user, id_layer
     })
     .then( ()=> res.status(200).json('OK') )
     .catch( ( err : any ) => res.status(500).json('Error') );
@@ -151,11 +151,11 @@ router.route('/group/rol')
  **************************/
 router.route('/user/group')
 .post( (req, res)=>{
-    let { id_user, id_group } = req.body;
-    if(!id_user || !id_group) return res.status(404).json('Error : Faltan parámetros');
+    let { id_user, group } = req.body;
+    if(!id_user || !group) return res.status(404).json('Error : Faltan parámetros');
 
-    let cs = new pgp.helpers.ColumnSet(['id_user', 'id_group'], {table: 'user_groups'});
-    let values = [{id_user, id_group}];
+    let cs = new pgp.helpers.ColumnSet(['id_user', 'group'], {table: 'user_groups'});
+    let values = [{id_user, group}];
     let query = pgp.helpers.insert(values, cs);
     
     db.query(query)
@@ -163,9 +163,9 @@ router.route('/user/group')
     .catch( ( err : any ) => res.status(500).json('Error' + err) );   
 })
 .delete( (req, res)=>{
-    let { id_user, id_group } = req.body;
-    db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "id_group" = ${id_group}', { 
-        id_user, id_group 
+    let { id_user, group } = req.body;
+    db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "group" = ${group}', { 
+        id_user, group 
     })
     .then( ()=> res.status(200).json('OK') )
     .catch( ( err : any ) => res.status(500).json('Error' + err) );

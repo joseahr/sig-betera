@@ -17,6 +17,8 @@ export class AdminUserDetailsComponent implements OnInit {
 
   userDetail;
   allNotUserGroups;
+  selectedGroupToAdd;
+  selectedMapToAdd;
 
   constructor(
     private route : ActivatedRoute, 
@@ -25,15 +27,22 @@ export class AdminUserDetailsComponent implements OnInit {
   ) {
     let params : any = this.route.snapshot.params;
 
-    this.allNotUserGroups = Observable.forkJoin(
+    Observable.forkJoin(
       this.adminService.getUserDetail(params.id).map(res => res.json() ),
       this.adminService.getAllGroups().map( res => res.json() )
-    ).map( groups => {
-      let userDetail = this.userDetail = groups[0];
+    ).map( data => {
+      let userDetail = data[0];
+      userDetail.not_assigned_maps = userDetail.not_assigned_maps || [];
+      userDetail.maps = userDetail.maps || [];
       let userGroups = userDetail.grupos || [];
-      let allGroups  = groups[1] || [];
-      return allGroups.filter( g => !userGroups.includes(g) );
-    });
+      let allGroups  = data[1] || [];
+      return [userDetail, allGroups.filter( g => !userGroups.includes(g) )];
+    }).subscribe(
+      (data)=>{
+        this.userDetail = data[0];
+        this.allNotUserGroups = data[1];
+      }
+    );
 
   }
 
@@ -44,8 +53,76 @@ export class AdminUserDetailsComponent implements OnInit {
     this.location.back();
   }
 
-  changeGroup(event){
-    console.log(event);
+  addGroup(){
+    let params : any = this.route.snapshot.params;
+    this.adminService.addUserGroup(params.id, this.selectedGroupToAdd).subscribe(
+      ()=>{
+        this.allNotUserGroups = this.allNotUserGroups.filter( g => g != this.selectedGroupToAdd);
+        this.userDetail.grupos.push(this.selectedGroupToAdd);
+        this.selectedGroupToAdd = null;
+      }
+    )
+  }
+
+  deleteGroup(groupName){
+    let params : any = this.route.snapshot.params;
+    this.adminService.deleteUserGroup(params.id, groupName).subscribe(
+      ()=>{
+        this.allNotUserGroups.push(groupName);
+        this.userDetail.grupos = this.userDetail.grupos.filter( g => g != groupName );
+      }
+    )
+  }
+
+  addUserMap(){
+    let params : any = this.route.snapshot.params;
+    this.adminService.addUserMap(params.id, this.selectedMapToAdd).subscribe(
+      ()=>{
+        let map = this.userDetail.not_assigned_maps.find( m => m.id == this.selectedMapToAdd );
+        //console.log(map, 'map');
+        this.userDetail.maps.push(map);
+        this.userDetail.not_assigned_maps = this.userDetail.not_assigned_maps.filter( m => m.id != this.selectedMapToAdd );
+        //console.log(map, 'map');
+        this.selectedMapToAdd = null;
+      }
+    )
+  }
+
+  deleteUserMap(map){
+    //console.log(map);
+    let params : any = this.route.snapshot.params;
+    this.adminService.deleteUserMap(params.id, map.id).subscribe(
+      ()=>{
+        this.userDetail.not_assigned_maps.push(map);
+        this.userDetail.maps = this.userDetail.maps.filter( m => m.id != map.id );
+      }
+    )
+  }
+
+  changeRolOfLayer(event, layer){
+    console.log(event, layer);
+    let params : any = this.route.snapshot.params;
+    let id_user  = params.id;
+    let oldValue = layer.rol;
+    let newValue = event.value;
+    let query : Observable<any> = null;
+    if(oldValue == 'r'){
+      /* Ejecutamos un insert PUT */
+      query = this.adminService.insertUserRol(id_user, layer.id_layer, newValue);
+    } else if(newValue == 'r'){
+      /* Ejecutamos un delete */
+      query = this.adminService.deleteUserRol(id_user, layer.id_layer);
+    } else {
+      /* Ejecutamos un Update */
+      query = this.adminService.updateUserRol(id_user, layer.id_layer, newValue);
+    }
+  
+    query.subscribe(
+      ()=>{
+        console.log('Actualizado correctamente');
+      }
+    );
+  
   }
 
 }

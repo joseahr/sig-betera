@@ -2,7 +2,7 @@ SELECT u.id, u.name, u.email, u.rol, u.nombre, u.apellidos, u.gravatar, groups.*
 -- Seleccionamos id, nombre, email, rol de la tabla usuarios
 FROM Users u
 LEFT JOIN LATERAL (
-	SELECT u.id IN (
+	SELECT u.id NOT IN (
 		SELECT id from users_not_valid_yet
 	) AS valid
 ) valid_ ON TRUE
@@ -16,7 +16,7 @@ LEFT JOIN LATERAL (
 LEFT JOIN LATERAL (
 	SELECT json_agg(rr)::json AS layers_rol
 	FROM (
-		SELECT DISTINCT ml.id_layer, r.rol, l.name
+		SELECT DISTINCT ml.id_layer, COALESCE(r.rol::text, 'r') AS rol, l.name
 		FROM user_maps um
 		INNER JOIN map_layers ml ON ml.id_map = um.id_map
 		LEFT JOIN roles r ON r.id_layer = ml.id_layer AND r.id_user = u.id
@@ -42,7 +42,7 @@ LEFT JOIN LATERAL (
 	FROM (
 		-- Seleccionamos el id del mapa y el nombre de la tabla
 		-- user_maps de los mapas del usuario
-		SELECT um.id_map, m.name, ly.*, bly.*
+		SELECT um.id_map AS id, m.name, ly.*, bly.*
 		FROM user_maps um
 		-- Hacemos un lateral para poder referenciar la tabla user_maps
 		-- dentro de el LEFT JOIN
