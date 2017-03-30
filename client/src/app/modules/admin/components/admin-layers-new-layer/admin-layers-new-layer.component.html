@@ -19,12 +19,12 @@
         <md-list-item *ngFor="let file of files">
           <md-icon md-list-avatar>attachment</md-icon>
           <h4 md-line>{{file.name}}</h4>
-          <p md-line> {{file?.size | bytes}} {{file?.lastModifiedDate | date}} </p>
+          <p md-line> {{file?.size | bytes}} {{file?.lastModified | date}} </p>
         </md-list-item>
       </md-list>
     </md-card-content>
     <md-card-actions>
-      <button md-button (click)="uploadSHP()">ENVIAR</button>
+      <button [disabled]="files?.length != 3" md-button (click)="uploadSHP()">ENVIAR</button>
     </md-card-actions>
   </md-card>
 </div>

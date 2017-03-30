@@ -19,7 +19,6 @@ export class AdminUsersComponent implements OnInit {
 
   users;
   dtOptions;
-  
   dtInstance;
 
   @ViewChild(DataTableDirective)
@@ -44,7 +43,7 @@ export class AdminUsersComponent implements OnInit {
         title : 'Editar',
         defaultContent : `
         <button md-button class="mat-button edit-user">
-          <md-icon class="material-icons mat-icon">add</md-icon>
+          <md-icon class="material-icons mat-icon">mode_edit</md-icon>
         </button>`
       },
       { title: 'ID', data: 'id'}, 

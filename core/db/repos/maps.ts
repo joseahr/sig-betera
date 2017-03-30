@@ -57,6 +57,9 @@ export class Repository {
         return this.db.any(sql.getDefaultMaps);
     }
 
+    getMapById(id : number){
+        return this.db.any(sql.byId, { id });
+    }
 
     getAllMaps(){
         return this.db.any(sql.getAllMaps);

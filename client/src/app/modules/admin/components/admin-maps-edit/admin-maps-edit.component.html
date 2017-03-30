@@ -1,0 +1,49 @@
+<div [@routerTransition]="" class="admin-page-margin">
+  <md-card class="card-margin">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Añadir Capas</md-card-title>
+      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <h4>Añadir Capa</h4>
+      <md-select placeholder="Capa PostGIS" [(ngModel)]="selectedLayerToAdd" style="width : 100%;">
+        <md-option *ngFor="let layer of AllLayersNotInMap" [value]="layer.id">
+          {{layer.name}}
+        </md-option>
+      </md-select>
+      <h4>Añadir Capa Base</h4>
+      <md-select placeholder="Capas Base" [(ngModel)]="selectedBaseLayerToAdd" style="width : 100%;">
+        <md-option *ngFor="let layer of AllBaseLayersNotInMap" [value]="layer.id">
+          {{layer.name}}
+        </md-option>
+      </md-select>
+    </md-card-content>
+    <md-card-actions>
+      <button [disabled]="!selectedLayerToAdd" md-button (click)="addSelectedLayer()">AÑADIR CAPA SELECCIONADA</button>
+      <button [disabled]="!selectedBaseLayerToAdd" md-button (click)="addSelectedBaseLayer()">AÑADIR CAPA BASE SELECCIONADA</button>
+    </md-card-actions>
+  </md-card>
+  <md-card class="card-margin">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Alterar orden</md-card-title>
+      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <h4>Orden de las capas</h4>
+      <md-list *ngIf="map?.orden" [dragula]='"order"' [(dragulaModel)]="map.orden">
+        <md-list-item *ngFor="let capa of map?.orden; let i = index;" style="background : #f7f7f7; margin : 3px;">
+          <md-icon [style.color]="getColor(capa)" style="cursor: pointer;" md-list-avatar class="handle">layers</md-icon>
+          <h4 md-line>#{{i}} {{capa.name}}</h4>
+          <p md-line>ID Capa : {{capa.id_layer}}</p>
+          <button md-mini-fab *ngIf="capa.layer_type == 'layer'" (click)="deleteLayerFromMap(capa.id_layer)"><md-icon>remove_circle</md-icon></button>
+          <button md-mini-fab *ngIf="capa.layer_type == 'base'" (click)="deleteBaseLayerFromMap(capa.id_layer)"><md-icon>remove_circle</md-icon></button>
+        </md-list-item>
+      </md-list>
+    </md-card-content>
+    <md-card-actions>
+      <button [disabled]="!hasChangedOrder" md-button (click)="saveOrder()">GUARDAR ORDEN</button>
+    </md-card-actions>
+  </md-card>
+</div>

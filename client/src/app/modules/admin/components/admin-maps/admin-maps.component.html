@@ -9,8 +9,7 @@
       <table datatable [dtOptions]="dtOptionsMaps" class="row-border hover" width="100%"></table>
     </md-card-content>
     <md-card-actions>
-      <button md-button>LIKE</button>
-      <button md-button>SHARE</button>
+      <button md-button (click)="goToCreateMap()">CREAR UN MAPA</button>
     </md-card-actions>
   </md-card>
 
@@ -24,8 +23,7 @@
       <table datatable [dtOptions]="dtOptionsDefaultMaps" class="row-border hover" width="100%"></table>
     </md-card-content>
     <md-card-actions>
-      <button md-button>LIKE</button>
-      <button md-button>SHARE</button>
+      <button md-button (click)="goToCreateDefaultMap()">DECLARAR UN MAPA POR DEFECTO</button>
     </md-card-actions>
   </md-card>
 </div>

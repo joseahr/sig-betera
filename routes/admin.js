@@ -36,6 +36,13 @@ exports.router.get('/users/:id', function (req, res) {
         .then(function (user) { return res.status(200).json(user); })
         .catch(function (err) { return res.status(500).json(err); });
 });
+exports.router.get('/map/:id', function (req, res) {
+    var id = req.params.id;
+    console.log(id);
+    db_1.db.maps.getMapById(id)
+        .then(function (map) { return res.status(200).json(map ? map[0] : undefined); })
+        .catch(function (err) { return res.status(500).json(err); });
+});
 exports.router.get('/maps', function (req, res) {
     db_1.db.maps.getAllMaps()
         .then(function (maps) { return res.status(200).json({ data: maps }); })
@@ -80,15 +87,15 @@ exports.router.route('/user/map')
  * AÑADIR / ELIMINAR / ACTUALIZAR
  *  ROL DE UN USUARIO SOBRE UNA CAPA
  **************************/
-exports.router.route('/user/rol')
+exports.router.route('/group/rol')
     .post(function (req, res) {
     // performance-optimized, reusable set of columns:
-    var cs = new db_1.pgp.helpers.ColumnSet(['id_user', 'id_layer', { name: 'rol', cast: 'public.roles_enum' }], { table: 'roles' });
-    var _a = req.body, id_user = _a.id_user, id_layer = _a.id_layer, rol = _a.rol;
-    if (!id_user || !id_layer || !rol)
+    var _a = req.body, id_group = _a.id_group, id_layer = _a.id_layer, rol = _a.rol;
+    if (!id_group || !id_layer || !rol)
         return res.status(404).json('Error : Faltan parámetros');
+    var cs = new db_1.pgp.helpers.ColumnSet(['id_group', 'id_layer', { name: 'rol', cast: 'public.roles_enum' }], { table: 'roles' });
     // input values:
-    var values = [{ id_user: +id_user, id_layer: +id_layer, rol: rol }];
+    var values = [{ id_group: id_group, id_layer: id_layer, rol: rol }];
     // generating a multi-row insert query:
     var query = db_1.pgp.helpers.insert(values, cs);
     db_1.db.query(query)
@@ -97,23 +104,24 @@ exports.router.route('/user/rol')
 })
     .put(function (req, res) {
     // performance-optimized, reusable set of columns:
-    var _a = req.body, id_user = _a.id_user, id_layer = _a.id_layer, rol = _a.rol;
-    if (!id_user || !id_layer || !rol)
+    var _a = req.body, id_group = _a.id_group, id_layer = _a.id_layer, rol = _a.rol;
+    if (!id_group || !id_layer || !rol)
         return res.status(404).json('Error : Faltan parámetros');
     var cs = new db_1.pgp.helpers.ColumnSet([{ name: 'rol', cast: 'public.roles_enum' }]);
     //console.log({ id_layer : +id_layer, id_user : +id_user, rol });
     // input values:
     var values = [{ rol: rol }];
     // generating a multi-row insert query:
-    var query = db_1.pgp.helpers.update(values, cs, 'roles', { tableAlias: 'r' }) + ' WHERE r.id_layer = ${id_layer} AND r.id_user = ${id_user}';
-    db_1.db.query(query, { id_layer: db_1.pgp.as.value(+id_layer), id_user: db_1.pgp.as.value(+id_user) })
+    var query = db_1.pgp.helpers.update(values, cs, 'roles', { tableAlias: 'r' }) +
+        ' WHERE r.id_layer = ${id_layer} AND r.id_group = ${id_group}';
+    db_1.db.query(query, { id_layer: id_layer, id_group: id_group })
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error' + err); });
 })
     .delete(function (req, res) {
-    db_1.db.query('DELETE FROM roles WHERE id_user = ${id_user} AND id_layer = ${id_layer}', {
-        id_user: db_1.pgp.as.value(req.body.id_user),
-        id_layer: db_1.pgp.as.value(req.body.id_layer)
+    var _a = req.body, id_group = _a.id_group, id_layer = _a.id_layer;
+    db_1.db.query('DELETE FROM roles WHERE id_user = ${id_group} AND id_layer = ${id_layer}', {
+        id_group: id_group, id_layer: id_layer
     })
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error'); });
@@ -124,21 +132,21 @@ exports.router.route('/user/rol')
  **************************/
 exports.router.route('/user/group')
     .post(function (req, res) {
-    // performance-optimized, reusable set of columns:
-    var cs = new db_1.pgp.helpers.ColumnSet(['id_user', 'group'], { table: 'user_groups' });
-    var _a = req.body, id_user = _a.id_user, group = _a.group;
-    if (!id_user || !group)
+    var _a = req.body, id_user = _a.id_user, id_group = _a.id_group;
+    if (!id_user || !id_group)
         return res.status(404).json('Error : Faltan parámetros');
-    // input values:
-    var values = [{ id_user: +id_user, group: group }];
-    // generating a multi-row insert query:
+    var cs = new db_1.pgp.helpers.ColumnSet(['id_user', 'id_group'], { table: 'user_groups' });
+    var values = [{ id_user: id_user, id_group: id_group }];
     var query = db_1.pgp.helpers.insert(values, cs);
     db_1.db.query(query)
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error' + err); });
 })
     .delete(function (req, res) {
-    db_1.db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "group" = ${group}', { id_user: db_1.pgp.as.value(+req.body.id_user), group: db_1.pgp.as.value(req.body.group) })
+    var _a = req.body, id_user = _a.id_user, id_group = _a.id_group;
+    db_1.db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "id_group" = ${id_group}', {
+        id_user: id_user, id_group: id_group
+    })
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error' + err); });
 });
@@ -150,31 +158,28 @@ exports.router.route('/groups')
     .post(function (req, res) {
     // performance-optimized, reusable set of columns:
     var cs = new db_1.pgp.helpers.ColumnSet(['name'], { table: 'groups' });
-    // input values:
-    //console.log(req.body);
+    var name = req.body.name;
     var values = [req.body];
-    // generating a multi-row insert query:
     var query = db_1.pgp.helpers.insert(values, cs);
     db_1.db.query(query)
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error'); });
 })
     .put(function (req, res) {
-    var _a = req.body, name = _a.name, new_name = _a.new_name;
-    if (!name || !new_name)
+    var _a = req.body, id = _a.id, new_name = _a.new_name;
+    if (!id || !new_name)
         return res.status(404).json('Error : Faltan parámetros');
     // performance-optimized, reusable set of columns:
     var cs = new db_1.pgp.helpers.ColumnSet(['name']);
-    // input values:
     var values = [{ name: new_name }];
-    // generating a multi-row insert query:
-    var query = db_1.pgp.helpers.update(values, cs, 'groups', { tableAlias: 'g' }) + ' WHERE g.name = ${name}';
-    db_1.db.query(query, { name: db_1.pgp.as.value(name) })
+    var query = db_1.pgp.helpers.update(values, cs, 'groups', { tableAlias: 'g' }) + ' WHERE g.id = ${id}';
+    db_1.db.query(query, { id: id })
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error' + err); });
 })
     .delete(function (req, res) {
-    db_1.db.query('DELETE FROM groups WHERE name = ${group}', { group: db_1.pgp.as.value(req.body.name) })
+    var id = req.body.id;
+    db_1.db.query('DELETE FROM groups WHERE id = ${id}', { id: id })
         .then(function () { return res.status(200).json('OK'); })
         .catch(function (err) { return res.status(500).json('Error'); });
 });
@@ -252,17 +257,15 @@ exports.router.route('/maps/baselayers')
 });
 exports.router.route('/maps/order')
     .post(function (req, res) {
-    db_1.db.query('DELETE FROM map_layers_order WHERE id_map = ${id_map}', { id_map: db_1.pgp.as.value(req.body.id_map) })
+    var _a = req.body, order = _a.order, id_map = _a.id_map;
+    db_1.db.query('DELETE FROM map_layers_order WHERE id_map = ${id_map}', { id_map: id_map })
         .then(function () {
-        // Orden eliminado
-        // performance-optimized, reusable set of columns:
         var cs = new db_1.pgp.helpers.ColumnSet(['id_map', 'id_layer', 'layer_type', 'position'], { table: 'map_layers_order' });
         // input values:
         //console.log(req.body);
-        var values = JSON.parse(req.body.order);
-        console.log('valuees', values);
+        console.log('valuees', order);
         // generating a multi-row insert query:
-        var query = db_1.pgp.helpers.insert(values, cs);
+        var query = db_1.pgp.helpers.insert(order, cs);
         db_1.db.query(query)
             .then(function (result) { return res.status(200).json(result); });
     })
@@ -276,14 +279,14 @@ exports.router.route('/layers')
         //console.log(req.files);
         var filesExt = req.files;
         filesExt = filesExt.map(function (f) { return path.extname(f.originalname).toLocaleLowerCase(); });
-        console.log(filesExt, 'fffff');
+        //console.log(filesExt, 'fffff');
         if (!['.shp', '.shx', '.dbf'].every(function (ext) { return filesExt.includes(ext); })) {
             return Multer.removeFiles.apply(Multer, req.files.map(function (f) { return f.path; })).then(function () { return res.status(500).json('Debe añadir al menos los archivos .shp .shx .dbf'); })
                 .catch(function (err) { return res.status(500).json(err); });
         }
         var shpPath = path.join('./', path.dirname(req.files[0].path), path.basename(req.files[0].path, path.extname(req.files[0].path)) + '.shp');
         var tableName = (req.query.layerName || path.basename(req.files[0].path, path.extname(req.files[0].path))).toLowerCase();
-        console.log(shpPath, tableName);
+        //console.log(shpPath, tableName);
         db_1.db.layers.exist(tableName)
             .then(function (exist) {
             if (exist) {
@@ -308,7 +311,7 @@ exports.router.route('/layers')
 exports.router.route('/baselayers')
     .post(function (req, res) {
     var _a = req.body, service_url = _a.service_url, layers = _a.layers;
-    console.log(req.body);
+    //console.log(req.body);
     if (!service_url)
         return res.status(500).json('Debe introducir una url del servicio');
     if (!layers || !layers.length)

@@ -7,3 +7,7 @@ export * from './admin-users/admin-users.component';
 export * from './admin-user-details/admin-user-details.component';
 export * from './admin-layers-new-layer/admin-layers-new-layer.component';
 export * from './admin-layers-new-baselayer/admin-layers-new-baselayer.component';
+export * from './admin-maps-new-map/admin-maps-new-map.component';
+export * from './admin-maps-new-default-map/admin-maps-new-default-map.component';
+export * from './admin-groups/admin-groups.component';
+export * from './admin-maps-edit/admin-maps-edit.component';

@@ -1,0 +1,17 @@
+<div [@routerTransition]="" class="admin-page-margin">
+  <md-card class="card-margin">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Mapas</md-card-title>
+      <md-card-subtitle>Crear un nuevo mapa</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <md-input-container style="width : 100%;">
+        <input mdInput placeholder="Nombre del mapa" value="" [(ngModel)]="mapName" >
+      </md-input-container>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button [disabled]="mapName.length < 3" (click)="createMap()">CREAR MAPA</button>
+    </md-card-actions>
+  </md-card>
+</div>

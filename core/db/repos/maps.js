@@ -43,6 +43,9 @@ var Repository = (function () {
     Repository.prototype.getDefaultMaps = function () {
         return this.db.any(sql.getDefaultMaps);
     };
+    Repository.prototype.getMapById = function (id) {
+        return this.db.any(sql.byId, { id: id });
+    };
     Repository.prototype.getAllMaps = function () {
         return this.db.any(sql.getAllMaps);
     };

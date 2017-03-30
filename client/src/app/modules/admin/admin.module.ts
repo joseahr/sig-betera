@@ -3,22 +3,25 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Route } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { DragulaModule } from 'ng2-dragula';
 import { DataTablesModule } from 'angular-datatables';
-import { FilterListPipe } from './pipes';
 import { NgMathPipesModule } from 'angular-pipes';
 
 import { 
     AdminComponent,
     AdminHomeComponent,
     AdminUsersComponent,
+    AdminUserDetailsComponent,
+    AdminGroupsComponent,
     AdminMapsComponent,
+    AdminMapsEditComponent,
+    AdminMapsNewMapComponent,
+    AdminMapsNewDefaultMapComponent,
     AdminLayersComponent,
     AdminLayersNewLayerComponent,
     AdminLayersNewBaselayerComponent,
     AdminMailComponent,
-    AdminUserDetailsComponent
 } from './components';
-
 
 const adminRoutes : Route[] =  [{
     path : '',
@@ -27,6 +30,10 @@ const adminRoutes : Route[] =  [{
         { path : 'home'      , component : AdminHomeComponent        },
         { path : 'users'     , component : AdminUsersComponent       },
         { path : 'users/:id' , component : AdminUserDetailsComponent },
+        { path : 'maps/new/map'     , component : AdminMapsNewMapComponent        },
+        { path : 'maps/edit/:id'    , component : AdminMapsEditComponent          },
+        { path : 'maps/new/default' , component : AdminMapsNewDefaultMapComponent },
+        { path : 'maps'      , component : AdminMapsComponent        },
         { path : 'maps'      , component : AdminMapsComponent        },
         { path : 'layers'    , component : AdminLayersComponent      },
         { path : 'layers/new/layer'     , component : AdminLayersNewLayerComponent     },
@@ -44,10 +51,12 @@ const adminRoutes : Route[] =  [{
         AdminLayersComponent,
         AdminMailComponent,
         AdminUserDetailsComponent,
-        FilterListPipe,
         AdminHomeComponent,
         AdminLayersNewLayerComponent,
-        AdminLayersNewBaselayerComponent
+        AdminLayersNewBaselayerComponent,
+        AdminMapsNewMapComponent,
+        AdminMapsNewDefaultMapComponent,
+        AdminMapsEditComponent
     ],
     providers : [
     ],
@@ -56,6 +65,7 @@ const adminRoutes : Route[] =  [{
         DataTablesModule,
         NgMathPipesModule,
         FormsModule,
+        DragulaModule,
         MaterialModule.forRoot(),
         RouterModule.forChild(adminRoutes)
     ]

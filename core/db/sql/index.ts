@@ -59,7 +59,8 @@ export = {
         hasMap : sql('maps/has-map.sql'),
         getMaps : sql('maps/user-maps.sql'),
         getDefaultMaps : sql('maps/get-default-maps.sql'),
-        getAllMaps : sql('maps/get-all-maps.sql')
+        getAllMaps : sql('maps/get-all-maps.sql'),
+        byId : sql('maps/by-id.sql')
     },
     admin : {
         getUsers : sql('admin/users-admin.sql'),

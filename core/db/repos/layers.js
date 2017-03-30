@@ -43,6 +43,7 @@ var Repository = (function () {
         //require('fs').readFile(`${shpPath}`, (err, file)=>console.log(err, file, 'guaa'));
         var command = "shp2pgsql -I -s 25830 -W \"LATIN1\" " + shpPath + " \"capas\".\"" + tableName + "\" | psql -d " + config_1.dbConfig.database + " -U postgres";
         console.log(command);
+        return spawn(command, { env: { 'PGPASSWORD': config_1.dbConfig.password } });
         /*let proceso = exec(command, { env : { 'PGPASSWORD' : dbConfig.password} })
         proceso.stdout.on('data', (data)=>{
             console.log('stdout', data);
@@ -51,7 +52,6 @@ var Repository = (function () {
             console.log('stderr', data);
         });
         return Promise.resolve(null);*/
-        return spawn(command, { env: { 'PGPASSWORD': config_1.dbConfig.password } });
     };
     Repository.prototype.createTable = function () {
         return this.db.none(sql.create);

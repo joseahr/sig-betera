@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
 
@@ -15,19 +16,25 @@ import { AdminService } from '../../services';
 export class AdminUserDetailsComponent implements OnInit {
 
   userDetail;
-  allGroups;
+  allNotUserGroups;
 
   constructor(
     private route : ActivatedRoute, 
     private location : Location,
     private adminService : AdminService
   ) {
-    //console.log(this.route.snapshot.params, 'snapshot');
     let params : any = this.route.snapshot.params;
-    this.adminService.getUserDetail(params.id)
-      .map(res => res.json())
-      .subscribe( uDetail => { this.userDetail = uDetail });
-    this.allGroups = this.adminService.getAllGroups().map(res => res.json());
+
+    this.allNotUserGroups = Observable.forkJoin(
+      this.adminService.getUserDetail(params.id).map(res => res.json() ),
+      this.adminService.getAllGroups().map( res => res.json() )
+    ).map( groups => {
+      let userDetail = this.userDetail = groups[0];
+      let userGroups = userDetail.grupos || [];
+      let allGroups  = groups[1] || [];
+      return allGroups.filter( g => !userGroups.includes(g) );
+    });
+
   }
 
   ngOnInit() {

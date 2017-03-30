@@ -43,6 +43,14 @@ router.get('/users/:id', (req, res)=>{
     .catch( err => res.status(500).json(err));
 });
 
+router.get('/map/:id', (req, res)=>{
+    let { id } = req.params;
+    console.log(id);
+    db.maps.getMapById(id)
+    .then( map => res.status(200).json( map ? map[0] : undefined ) )
+    .catch( err => res.status(500).json(err));
+});
+
 router.get('/maps', (req, res)=>{
     db.maps.getAllMaps()
     .then( maps => res.status(200).json({ data : maps }) )
@@ -95,14 +103,14 @@ router.route('/user/map')
  * AÑADIR / ELIMINAR / ACTUALIZAR
  *  ROL DE UN USUARIO SOBRE UNA CAPA
  **************************/
-router.route('/user/rol')
+router.route('/group/rol')
 .post( (req, res)=>{
      // performance-optimized, reusable set of columns:
-    let cs = new pgp.helpers.ColumnSet(['id_user', 'id_layer', { name : 'rol', cast : 'public.roles_enum'}], {table: 'roles'});
-    let { id_user, id_layer, rol } = req.body;
-    if(!id_user || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
+    let { id_group, id_layer, rol } = req.body;
+    if(!id_group || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
+    let cs = new pgp.helpers.ColumnSet(['id_group', 'id_layer', { name : 'rol', cast : 'public.roles_enum'}], {table: 'roles'});
     // input values:
-    let values = [{id_user: +id_user, id_layer: +id_layer, rol}];
+    let values = [{id_group, id_layer, rol}];
 
     // generating a multi-row insert query:
     let query = pgp.helpers.insert(values, cs);
@@ -113,24 +121,25 @@ router.route('/user/rol')
 })
 .put( (req, res)=>{
     // performance-optimized, reusable set of columns:
-    let { id_user, id_layer, rol } = req.body;
-    if(!id_user || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
+    let { id_group, id_layer, rol } = req.body;
+    if(!id_group || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
     let cs = new pgp.helpers.ColumnSet([{ name : 'rol', cast : 'public.roles_enum' }]);
     //console.log({ id_layer : +id_layer, id_user : +id_user, rol });
     // input values:
     let values = [{ rol }];
 
     // generating a multi-row insert query:
-    let query = pgp.helpers.update(values, cs, 'roles', { tableAlias : 'r' }) + ' WHERE r.id_layer = ${id_layer} AND r.id_user = ${id_user}' ;
+    let query = pgp.helpers.update(values, cs, 'roles', { tableAlias : 'r' }) + 
+        ' WHERE r.id_layer = ${id_layer} AND r.id_group = ${id_group}';
     
-    db.query(query, { id_layer : pgp.as.value(+id_layer), id_user : pgp.as.value(+id_user) })
+    db.query(query, { id_layer, id_group })
     .then( ()=> res.status(200).json('OK') )
     .catch( ( err : any ) => res.status(500).json('Error' + err) );
 })
 .delete( (req, res)=>{
-    db.query('DELETE FROM roles WHERE id_user = ${id_user} AND id_layer = ${id_layer}', { 
-        id_user : pgp.as.value(req.body.id_user),
-        id_layer : pgp.as.value(req.body.id_layer) 
+    let { id_group, id_layer } = req.body;
+    db.query('DELETE FROM roles WHERE id_user = ${id_group} AND id_layer = ${id_layer}', { 
+        id_group, id_layer
     })
     .then( ()=> res.status(200).json('OK') )
     .catch( ( err : any ) => res.status(500).json('Error') );
@@ -142,14 +151,11 @@ router.route('/user/rol')
  **************************/
 router.route('/user/group')
 .post( (req, res)=>{
-     // performance-optimized, reusable set of columns:
-    let cs = new pgp.helpers.ColumnSet(['id_user', 'group'], {table: 'user_groups'});
-    let { id_user, group } = req.body;
-    if(!id_user || !group) return res.status(404).json('Error : Faltan parámetros');
-    // input values:
-    let values = [{id_user: +id_user, group}];
+    let { id_user, id_group } = req.body;
+    if(!id_user || !id_group) return res.status(404).json('Error : Faltan parámetros');
 
-    // generating a multi-row insert query:
+    let cs = new pgp.helpers.ColumnSet(['id_user', 'id_group'], {table: 'user_groups'});
+    let values = [{id_user, id_group}];
     let query = pgp.helpers.insert(values, cs);
     
     db.query(query)
@@ -157,9 +163,10 @@ router.route('/user/group')
     .catch( ( err : any ) => res.status(500).json('Error' + err) );   
 })
 .delete( (req, res)=>{
-    db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "group" = ${group}', 
-        { id_user : pgp.as.value(+req.body.id_user), group : pgp.as.value(req.body.group) }
-    )
+    let { id_user, id_group } = req.body;
+    db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "id_group" = ${id_group}', { 
+        id_user, id_group 
+    })
     .then( ()=> res.status(200).json('OK') )
     .catch( ( err : any ) => res.status(500).json('Error' + err) );
 });
@@ -172,12 +179,9 @@ router.route('/groups')
 .post( (req, res)=>{
     // performance-optimized, reusable set of columns:
     let cs = new pgp.helpers.ColumnSet(['name'], {table: 'groups'});
-
-    // input values:
-    //console.log(req.body);
+    let name = req.body.name;
     let values = [req.body];
 
-    // generating a multi-row insert query:
     let query = pgp.helpers.insert(values, cs);
 
     db.query(query)
@@ -185,29 +189,23 @@ router.route('/groups')
     .catch( ( err : any ) => res.status(500).json('Error') );  
 })
 .put( (req, res)=>{
-    let { name, new_name } = req.body;
-    if(!name || !new_name) return res.status(404).json('Error : Faltan parámetros');
+    let { id, new_name } = req.body;
+    if(!id || !new_name) return res.status(404).json('Error : Faltan parámetros');
     // performance-optimized, reusable set of columns:
     let cs = new pgp.helpers.ColumnSet(['name']);
-
-    // input values:
     let values = [{ name : new_name }];
-
-    // generating a multi-row insert query:
-    let query = pgp.helpers.update(values, cs, 'groups', { tableAlias : 'g'}) + ' WHERE g.name = ${name}';
+    let query = pgp.helpers.update(values, cs, 'groups', { tableAlias : 'g'}) + ' WHERE g.id = ${id}';
     
-    db.query(query, { name : pgp.as.value(name) })
+    db.query(query, { id })
     .then( ()=> res.status(200).json('OK') )
     .catch( ( err : any ) => res.status(500).json('Error' + err) );
 })
 .delete( (req, res)=>{
-    db.query('DELETE FROM groups WHERE name = ${group}', { group : pgp.as.value(req.body.name) })
+    let { id } = req.body;
+    db.query('DELETE FROM groups WHERE id = ${id}', { id })
     .then( ()=> res.status(200).json('OK') )
     .catch( ( err : any ) => res.status(500).json('Error') );
 });
-
-
-
 
 router.route('/maps')
 .post( (req, res)=>{
@@ -302,18 +300,16 @@ router.route('/maps/baselayers')
 
 router.route('/maps/order')
 .post( (req, res)=>{
-    db.query('DELETE FROM map_layers_order WHERE id_map = ${id_map}', { id_map : pgp.as.value(req.body.id_map) })
+    let { order, id_map } = req.body;
+    db.query('DELETE FROM map_layers_order WHERE id_map = ${id_map}', { id_map })
     .then( ()=>{
-        // Orden eliminado
-        // performance-optimized, reusable set of columns:
         let cs = new pgp.helpers.ColumnSet(['id_map', 'id_layer', 'layer_type', 'position'], {table: 'map_layers_order'});
 
         // input values:
         //console.log(req.body);
-        let values = JSON.parse(req.body.order);
-        console.log('valuees', values);
+        console.log('valuees', order);
         // generating a multi-row insert query:
-        let query = pgp.helpers.insert(values, cs);
+        let query = pgp.helpers.insert(order, cs);
 
         db.query(query)
         .then( ( result : any ) => res.status(200).json(result) )
@@ -329,7 +325,7 @@ router.route('/layers')
         //console.log(req.files);
         let filesExt : any = req.files;
         filesExt = filesExt.map( (f : any) => path.extname(f.originalname).toLocaleLowerCase() );
-        console.log(filesExt, 'fffff');
+        //console.log(filesExt, 'fffff');
         if( !['.shp', '.shx', '.dbf'].every( ext => filesExt.includes(ext) ) ){
             return Multer.removeFiles(...req.files.map( f => f.path ) )
             .then( ()=> res.status(500).json('Debe añadir al menos los archivos .shp .shx .dbf') )
@@ -344,7 +340,7 @@ router.route('/layers')
 
         let tableName : string = (req.query.layerName || path.basename( req.files[0].path, path.extname(req.files[0].path) )).toLowerCase();
 
-        console.log(shpPath, tableName);
+        //console.log(shpPath, tableName);
         db.layers.exist(tableName)
         .then( ( exist : Boolean ) =>{
             if(exist) {
@@ -372,7 +368,7 @@ router.route('/layers')
 router.route('/baselayers')
 .post( (req, res)=>{
     let { service_url, layers } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     if(!service_url) return res.status(500).json('Debe introducir una url del servicio');
     if (!layers || !layers.length) return res.status(500).json('Debe seleccionar al menos una capa');
 
@@ -395,7 +391,6 @@ router.route('/baselayers')
     .then( ()=> res.status(200).json('OK') )
     .catch( ( err : any ) => res.status(500).json(err) );  
 });
-
 
 
 router.route('/mail/send')

@@ -13,10 +13,11 @@ export class AdminComponent implements OnInit {
   toolbar;
 
   links = [
-    { path : 'home'   , label : 'Home'     }, 
+    { path : 'home'   , label : 'Home'     },
     { path : 'users'  , label : 'Usuarios' }, 
     { path : 'maps'   , label : 'Mapas'    }, 
-    { path : 'layers' , label : 'Capas'    }, 
+    { path : 'layers' , label : 'Capas'    },
+    { path : 'groups' , label : 'Grupos'   },  
     { path : 'mail'   , label : 'Mail'     }
   ];
 

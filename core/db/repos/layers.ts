@@ -56,6 +56,7 @@ export class Repository {
         //require('fs').readFile(`${shpPath}`, (err, file)=>console.log(err, file, 'guaa'));
         let command = `shp2pgsql -I -s 25830 -W "LATIN1" ${shpPath} "capas"."${tableName}" | psql -d ${dbConfig.database} -U postgres`;
         console.log(command);
+        return spawn(command, { env : { 'PGPASSWORD' : dbConfig.password} });
         /*let proceso = exec(command, { env : { 'PGPASSWORD' : dbConfig.password} })
         proceso.stdout.on('data', (data)=>{
             console.log('stdout', data);
@@ -64,8 +65,6 @@ export class Repository {
             console.log('stderr', data);
         });
         return Promise.resolve(null);*/
-        return spawn(command, { env : { 'PGPASSWORD' : dbConfig.password} })
-            
     }
 
     createTable(){

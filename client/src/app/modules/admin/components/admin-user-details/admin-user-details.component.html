@@ -30,7 +30,7 @@
     </md-card-content>
     <md-card-actions>
       <md-select placeholder="Grupos" (change)="changeGroup($event)">
-        <md-option *ngFor="let group of allGroups | filterList : userDetail?.grupos | async" [value]="group">{{ group }}</md-option>
+        <md-option *ngFor="let group of allNotUserGroups | async" [value]="group">{{ group }}</md-option>
       </md-select>
     </md-card-actions>
   </md-card>
