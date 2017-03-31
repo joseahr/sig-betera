@@ -44,6 +44,10 @@ export class AdminService {
         return this.http.post(apiEndPoint, formData);
     }
 
+    updateLayerName(old_name : string, new_name : string){
+        return this.http.put('/api/admin/layers', { old_name, new_name });
+    }
+
     deleteLayer(tableName : string){
         return this.http.delete('/api/admin/layers', {
             body : { tableName }
@@ -133,7 +137,7 @@ export class AdminService {
     }
 
     updateGroup(id : number, new_name : string){
-        return this.http.post('/api/admin/groups', { id, new_name });
+        return this.http.put('/api/admin/groups', { id, new_name });
     }
 
     deleteGroup(id : number){

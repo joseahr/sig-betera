@@ -133,11 +133,11 @@ exports.router.route('/maps/layers')
 exports.router.route('/maps/baselayers')
     .post(function (req, res) {
     var _a = req.body, id_map = _a.id_map, id_layer = _a.id_layer;
-    handle(db_1.db.admin.addMapBaselayer(id_layer, id_layer), res);
+    handle(db_1.db.admin.addMapBaselayer(id_map, id_layer), res);
 })
     .delete(function (req, res) {
     var _a = req.body, id_map = _a.id_map, id_layer = _a.id_layer;
-    handle(db_1.db.admin.deleteMapBaselayer(id_layer, id_layer), res);
+    handle(db_1.db.admin.deleteMapBaselayer(id_map, id_layer), res);
 });
 exports.router.route('/maps/order')
     .post(function (req, res) {
@@ -148,6 +148,10 @@ exports.router.route('/layers')
     .get(function (req, res) {
     handleWithData(db_1.db.layers.getAllLayers(), res);
 })
+    .put(function (req, res) {
+    var _a = req.body, old_name = _a.old_name, new_name = _a.new_name;
+    handle(db_1.db.admin.updateLayerName(old_name, new_name), res);
+})
     .post(function (req, res) {
     multer(req, res, function (error) {
         if (error)
@@ -157,7 +161,7 @@ exports.router.route('/layers')
         filesExt = filesExt.map(function (f) { return path.extname(f.originalname).toLocaleLowerCase(); });
         //console.log(filesExt, 'fffff');
         if (!['.shp', '.shx', '.dbf'].every(function (ext) { return filesExt.includes(ext); })) {
-            return Multer.removeFiles.apply(Multer, req.files.map(function (f) { return f.path; })).then(function () { return res.status(500).json('Debe añadir al menos los archivos .shp .shx .dbf'); })
+            return Multer.removeFiles.apply(Multer, req.files.map(function (f) { return f.path; })).then(function () { return res.status(500).json({ msg: 'Debe añadir al menos los archivos .shp .shx .dbf' }); })
                 .catch(function (err) { return res.status(500).json(err); });
         }
         var shpPath = path.join('./', path.dirname(req.files[0].path), path.basename(req.files[0].path, path.extname(req.files[0].path)) + '.shp');
@@ -167,7 +171,7 @@ exports.router.route('/layers')
             .then(function (exist) {
             if (exist) {
                 Multer.removeFiles.apply(Multer, req.files.map(function (f) { return f.path; }));
-                return res.status(500).json("La tabla " + tableName + " ya existe");
+                return res.status(500).json({ msg: "La tabla " + tableName + " ya existe" });
             }
             db_1.db.layers.importSHP(shpPath, tableName)
                 .then(function (table) { return res.status(200).json(table); })

@@ -30,6 +30,7 @@ pgMonitor.setLog(function (msg, info) {
             logText = os.EOL + logText; // add another line break in front;
         }
         //fs.appendFileSync(logFile, logText); // add error handling as required;
+        console.log(logText);
     }
     // We absolutely must not let the monitor write anything into the console
     // while in a PROD environment, and not just because nobody will be able

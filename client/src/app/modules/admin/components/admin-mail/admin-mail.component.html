@@ -1,3 +1,25 @@
-<p>
-  admin-mail works!
-</p>
+<div [@routerTransition]="" class="admin-page-margin">
+  <md-card style="margin : 8px;">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Email</md-card-title>
+      <md-card-subtitle>Contenido del email</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <ckeditor
+        [(ngModel)]="emailContent"
+        [config]="{ uiColor: '#f7f7f7', toolbar: 'Full' }"
+        debounce="500">
+      </ckeditor>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button (click)="sendMail()">ENVIAR</button>
+    </md-card-actions>
+  </md-card>
+</div>
+<!--   
+  (change)="onChange($event)"
+  (ready)="onReady($event)"
+  (focus)="onFocus($event)"
+  (blur)="onBlur($event)" 
+-->

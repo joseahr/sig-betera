@@ -9,11 +9,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__ = __webpack_require__(781);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__ = __webpack_require__(782);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_dragula___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_dragula__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angular_datatables__ = __webpack_require__(805);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angular_datatables__ = __webpack_require__(779);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angular_pipes__ = __webpack_require__(1202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components__ = __webpack_require__(1197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor__ = __webpack_require__(1255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components__ = __webpack_require__(1197);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminModule", function() { return AdminModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -33,22 +35,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var adminRoutes = [{
         path: '',
-        component: __WEBPACK_IMPORTED_MODULE_8__components__["a" /* AdminComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_9__components__["a" /* AdminComponent */],
         children: [
-            { path: 'home', component: __WEBPACK_IMPORTED_MODULE_8__components__["b" /* AdminHomeComponent */] },
-            { path: 'users', component: __WEBPACK_IMPORTED_MODULE_8__components__["c" /* AdminUsersComponent */] },
-            { path: 'users/:id', component: __WEBPACK_IMPORTED_MODULE_8__components__["d" /* AdminUserDetailsComponent */] },
-            { path: 'maps/new/map', component: __WEBPACK_IMPORTED_MODULE_8__components__["e" /* AdminMapsNewMapComponent */] },
-            { path: 'maps/edit/:id', component: __WEBPACK_IMPORTED_MODULE_8__components__["f" /* AdminMapsEditComponent */] },
-            { path: 'maps/new/default', component: __WEBPACK_IMPORTED_MODULE_8__components__["g" /* AdminMapsNewDefaultMapComponent */] },
-            { path: 'maps', component: __WEBPACK_IMPORTED_MODULE_8__components__["h" /* AdminMapsComponent */] },
-            { path: 'groups', component: __WEBPACK_IMPORTED_MODULE_8__components__["i" /* AdminGroupsComponent */] },
-            { path: 'layers', component: __WEBPACK_IMPORTED_MODULE_8__components__["j" /* AdminLayersComponent */] },
-            { path: 'layers/new/layer', component: __WEBPACK_IMPORTED_MODULE_8__components__["k" /* AdminLayersNewLayerComponent */] },
-            { path: 'layers/new/baselayer', component: __WEBPACK_IMPORTED_MODULE_8__components__["l" /* AdminLayersNewBaselayerComponent */] },
-            { path: 'mail', component: __WEBPACK_IMPORTED_MODULE_8__components__["m" /* AdminMailComponent */] },
+            { path: 'home', component: __WEBPACK_IMPORTED_MODULE_9__components__["b" /* AdminHomeComponent */] },
+            { path: 'users', component: __WEBPACK_IMPORTED_MODULE_9__components__["c" /* AdminUsersComponent */] },
+            { path: 'users/:id', component: __WEBPACK_IMPORTED_MODULE_9__components__["d" /* AdminUserDetailsComponent */] },
+            { path: 'maps/new/map', component: __WEBPACK_IMPORTED_MODULE_9__components__["e" /* AdminMapsNewMapComponent */] },
+            { path: 'maps/edit/:id', component: __WEBPACK_IMPORTED_MODULE_9__components__["f" /* AdminMapsEditComponent */] },
+            { path: 'maps/new/default', component: __WEBPACK_IMPORTED_MODULE_9__components__["g" /* AdminMapsNewDefaultMapComponent */] },
+            { path: 'maps', component: __WEBPACK_IMPORTED_MODULE_9__components__["h" /* AdminMapsComponent */] },
+            { path: 'groups', component: __WEBPACK_IMPORTED_MODULE_9__components__["i" /* AdminGroupsComponent */] },
+            { path: 'layers', component: __WEBPACK_IMPORTED_MODULE_9__components__["j" /* AdminLayersComponent */] },
+            { path: 'layers/new/layer', component: __WEBPACK_IMPORTED_MODULE_9__components__["k" /* AdminLayersNewLayerComponent */] },
+            { path: 'layers/new/baselayer', component: __WEBPACK_IMPORTED_MODULE_9__components__["l" /* AdminLayersNewBaselayerComponent */] },
+            { path: 'mail', component: __WEBPACK_IMPORTED_MODULE_9__components__["m" /* AdminMailComponent */] },
             { path: '**', redirectTo: 'home' }
         ]
     }];
@@ -58,30 +61,34 @@ var AdminModule = (function () {
     AdminModule = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_8__components__["a" /* AdminComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["c" /* AdminUsersComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["i" /* AdminGroupsComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["h" /* AdminMapsComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["j" /* AdminLayersComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["m" /* AdminMailComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["d" /* AdminUserDetailsComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["b" /* AdminHomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["k" /* AdminLayersNewLayerComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["l" /* AdminLayersNewBaselayerComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["e" /* AdminMapsNewMapComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["g" /* AdminMapsNewDefaultMapComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["f" /* AdminMapsEditComponent */]
+                __WEBPACK_IMPORTED_MODULE_9__components__["a" /* AdminComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["c" /* AdminUsersComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["i" /* AdminGroupsComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["h" /* AdminMapsComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["j" /* AdminLayersComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["m" /* AdminMailComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["d" /* AdminUserDetailsComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["b" /* AdminHomeComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["k" /* AdminLayersNewLayerComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["l" /* AdminLayersNewBaselayerComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["e" /* AdminMapsNewMapComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["g" /* AdminMapsNewDefaultMapComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["f" /* AdminMapsEditComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["n" /* AdminGroupEditComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components__["o" /* AdminLayerEditComponent */]
             ],
             providers: [],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_common__["a" /* CommonModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"],
                 __WEBPACK_IMPORTED_MODULE_6_angular_datatables__["a" /* DataTablesModule */],
                 __WEBPACK_IMPORTED_MODULE_7_angular_pipes__["a" /* NgMathPipesModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["FormsModule"],
                 __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__["DragulaModule"],
+                __WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor__["CKEditorModule"],
                 __WEBPACK_IMPORTED_MODULE_3__angular_material__["a" /* MaterialModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* RouterModule */].forChild(adminRoutes)
-            ]
+            ],
+            entryComponents: [__WEBPACK_IMPORTED_MODULE_9__components__["n" /* AdminGroupEditComponent */], __WEBPACK_IMPORTED_MODULE_9__components__["o" /* AdminLayerEditComponent */]]
         }), 
         __metadata('design:paramtypes', [])
     ], AdminModule);
@@ -1901,7 +1908,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subject_1 = __webpack_require__(9);
-var queue_1 = __webpack_require__(799);
+var queue_1 = __webpack_require__(800);
 var Subscription_1 = __webpack_require__(51);
 var observeOn_1 = __webpack_require__(464);
 var ObjectUnsubscribedError_1 = __webpack_require__(272);
@@ -2604,25 +2611,25 @@ var ArgumentOutOfRangeError_1 = __webpack_require__(763);
 exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError_1.ArgumentOutOfRangeError;
 var ObjectUnsubscribedError_1 = __webpack_require__(272);
 exports.ObjectUnsubscribedError = ObjectUnsubscribedError_1.ObjectUnsubscribedError;
-var TimeoutError_1 = __webpack_require__(802);
+var TimeoutError_1 = __webpack_require__(803);
 exports.TimeoutError = TimeoutError_1.TimeoutError;
 var UnsubscriptionError_1 = __webpack_require__(482);
 exports.UnsubscriptionError = UnsubscriptionError_1.UnsubscriptionError;
-var timeInterval_1 = __webpack_require__(795);
+var timeInterval_1 = __webpack_require__(796);
 exports.TimeInterval = timeInterval_1.TimeInterval;
-var timestamp_1 = __webpack_require__(796);
+var timestamp_1 = __webpack_require__(797);
 exports.Timestamp = timestamp_1.Timestamp;
 var TestScheduler_1 = __webpack_require__(1086);
 exports.TestScheduler = TestScheduler_1.TestScheduler;
-var VirtualTimeScheduler_1 = __webpack_require__(797);
+var VirtualTimeScheduler_1 = __webpack_require__(798);
 exports.VirtualTimeScheduler = VirtualTimeScheduler_1.VirtualTimeScheduler;
-var AjaxObservable_1 = __webpack_require__(789);
+var AjaxObservable_1 = __webpack_require__(790);
 exports.AjaxResponse = AjaxObservable_1.AjaxResponse;
 exports.AjaxError = AjaxObservable_1.AjaxError;
 exports.AjaxTimeoutError = AjaxObservable_1.AjaxTimeoutError;
-var asap_1 = __webpack_require__(798);
+var asap_1 = __webpack_require__(799);
 var async_1 = __webpack_require__(456);
-var queue_1 = __webpack_require__(799);
+var queue_1 = __webpack_require__(800);
 var animationFrame_1 = __webpack_require__(1083);
 var rxSubscriber_1 = __webpack_require__(174);
 var iterator_1 = __webpack_require__(169);
@@ -2690,6 +2697,30 @@ exports.Symbol = Symbol;
 
 /***/ }),
 /* 779 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_angular_datatables_directive__ = __webpack_require__(1099);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__src_angular_datatables_directive__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_angular_datatables_module__ = __webpack_require__(1201);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__src_angular_datatables_module__["a"]; });
+/**
+ * @license
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://raw.githubusercontent.com/l-lin/angular-datatables/master/LICENSE
+ */
+/**
+ * @module
+ * @description
+ * Entry point from which you should import all public library APIs.
+ */
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 780 */
 /***/ (function(module, exports) {
 
 
@@ -3430,7 +3461,7 @@ function getMinNorthing(zoneLetter) {
 
 
 /***/ }),
-/* 780 */
+/* 781 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3503,7 +3534,7 @@ exports.DragulaDirective = DragulaDirective;
 
 
 /***/ }),
-/* 781 */
+/* 782 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3512,13 +3543,13 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 __export(__webpack_require__(767));
-__export(__webpack_require__(780));
+__export(__webpack_require__(781));
 __export(__webpack_require__(768));
 __export(__webpack_require__(819));
 
 
 /***/ }),
-/* 782 */
+/* 783 */
 /***/ (function(module, exports) {
 
 module.exports = function(phi, sphi, cphi, en) {
@@ -3528,7 +3559,7 @@ module.exports = function(phi, sphi, cphi, en) {
 };
 
 /***/ }),
-/* 783 */
+/* 784 */
 /***/ (function(module, exports) {
 
 module.exports = function (array){
@@ -3546,12 +3577,12 @@ module.exports = function (array){
 };
 
 /***/ }),
-/* 784 */
+/* 785 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var globals = __webpack_require__(833);
-var parseProj = __webpack_require__(785);
-var wkt = __webpack_require__(788);
+var parseProj = __webpack_require__(786);
+var wkt = __webpack_require__(789);
 
 function defs(name) {
   /*global console*/
@@ -3607,7 +3638,7 @@ module.exports = defs;
 
 
 /***/ }),
-/* 785 */
+/* 786 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var D2R = 0.01745329251994329577;
@@ -3738,7 +3769,7 @@ module.exports = function(defData) {
 
 
 /***/ }),
-/* 786 */
+/* 787 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var e0fn = __webpack_require__(753);
@@ -3879,7 +3910,7 @@ exports.names = ["Transverse_Mercator", "Transverse Mercator", "tmerc"];
 
 
 /***/ }),
-/* 787 */
+/* 788 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var D2R = 0.01745329251994329577;
@@ -3889,7 +3920,7 @@ var PJD_7PARAM = 2;
 var datum_transform = __webpack_require__(831);
 var adjust_axis = __webpack_require__(821);
 var proj = __webpack_require__(769);
-var toPoint = __webpack_require__(783);
+var toPoint = __webpack_require__(784);
 module.exports = function transform(source, dest, point) {
   var wgs84;
   if (Array.isArray(point)) {
@@ -3956,7 +3987,7 @@ module.exports = function transform(source, dest, point) {
 };
 
 /***/ }),
-/* 788 */
+/* 789 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var D2R = 0.01745329251994329577;
@@ -4175,7 +4206,7 @@ module.exports = function(wkt, self) {
 
 
 /***/ }),
-/* 789 */
+/* 790 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4594,7 +4625,7 @@ exports.AjaxTimeoutError = AjaxTimeoutError;
 //# sourceMappingURL=AjaxObservable.js.map
 
 /***/ }),
-/* 790 */
+/* 791 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4708,7 +4739,7 @@ var DistinctUntilChangedSubscriber = (function (_super) {
 //# sourceMappingURL=distinctUntilChanged.js.map
 
 /***/ }),
-/* 791 */
+/* 792 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4815,7 +4846,7 @@ exports.FindValueSubscriber = FindValueSubscriber;
 //# sourceMappingURL=find.js.map
 
 /***/ }),
-/* 792 */
+/* 793 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4976,7 +5007,7 @@ exports.MergeMapToSubscriber = MergeMapToSubscriber;
 //# sourceMappingURL=mergeMapTo.js.map
 
 /***/ }),
-/* 793 */
+/* 794 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5058,7 +5089,7 @@ var OnErrorResumeNextSubscriber = (function (_super) {
 //# sourceMappingURL=onErrorResumeNext.js.map
 
 /***/ }),
-/* 794 */
+/* 795 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5175,7 +5206,7 @@ exports.RaceSubscriber = RaceSubscriber;
 //# sourceMappingURL=race.js.map
 
 /***/ }),
-/* 795 */
+/* 796 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5240,7 +5271,7 @@ var TimeIntervalSubscriber = (function (_super) {
 //# sourceMappingURL=timeInterval.js.map
 
 /***/ }),
-/* 796 */
+/* 797 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5296,7 +5327,7 @@ var TimestampSubscriber = (function (_super) {
 //# sourceMappingURL=timestamp.js.map
 
 /***/ }),
-/* 797 */
+/* 798 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5408,7 +5439,7 @@ exports.VirtualAction = VirtualAction;
 //# sourceMappingURL=VirtualTimeScheduler.js.map
 
 /***/ }),
-/* 798 */
+/* 799 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5453,7 +5484,7 @@ exports.asap = new AsapScheduler_1.AsapScheduler(AsapAction_1.AsapAction);
 //# sourceMappingURL=asap.js.map
 
 /***/ }),
-/* 799 */
+/* 800 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5525,7 +5556,7 @@ exports.queue = new QueueScheduler_1.QueueScheduler(QueueAction_1.QueueAction);
 //# sourceMappingURL=queue.js.map
 
 /***/ }),
-/* 800 */
+/* 801 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5542,12 +5573,12 @@ exports.SubscriptionLog = SubscriptionLog;
 //# sourceMappingURL=SubscriptionLog.js.map
 
 /***/ }),
-/* 801 */
+/* 802 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var SubscriptionLog_1 = __webpack_require__(800);
+var SubscriptionLog_1 = __webpack_require__(801);
 var SubscriptionLoggable = (function () {
     function SubscriptionLoggable() {
         this.subscriptions = [];
@@ -5567,7 +5598,7 @@ exports.SubscriptionLoggable = SubscriptionLoggable;
 //# sourceMappingURL=SubscriptionLoggable.js.map
 
 /***/ }),
-/* 802 */
+/* 803 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5598,7 +5629,7 @@ exports.TimeoutError = TimeoutError;
 //# sourceMappingURL=TimeoutError.js.map
 
 /***/ }),
-/* 803 */
+/* 804 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5617,7 +5648,7 @@ exports.applyMixins = applyMixins;
 //# sourceMappingURL=applyMixins.js.map
 
 /***/ }),
-/* 804 */
+/* 805 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5626,30 +5657,6 @@ exports.applyMixins = applyMixins;
 function noop() { }
 exports.noop = noop;
 //# sourceMappingURL=noop.js.map
-
-/***/ }),
-/* 805 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_angular_datatables_directive__ = __webpack_require__(1099);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__src_angular_datatables_directive__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_angular_datatables_module__ = __webpack_require__(1201);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__src_angular_datatables_module__["a"]; });
-/**
- * @license
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://raw.githubusercontent.com/l-lin/angular-datatables/master/LICENSE
- */
-/**
- * @module
- * @description
- * Entry point from which you should import all public library APIs.
- */
-
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 /* 806 */
@@ -6935,7 +6942,7 @@ module.exports = {
 "use strict";
 
 var core_1 = __webpack_require__(0);
-var dragula_directive_1 = __webpack_require__(780);
+var dragula_directive_1 = __webpack_require__(781);
 var dragula_provider_1 = __webpack_require__(768);
 var DragulaModule = (function () {
     function DragulaModule() {
@@ -6958,7 +6965,7 @@ exports.DragulaModule = DragulaModule;
 /* 820 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mgrs = __webpack_require__(779);
+var mgrs = __webpack_require__(780);
 
 function Point(x, y, z) {
   if (!(this instanceof Point)) {
@@ -7121,7 +7128,7 @@ module.exports = function(es) {
 /* 824 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pj_mlfn = __webpack_require__(782);
+var pj_mlfn = __webpack_require__(783);
 var EPSLN = 1.0e-10;
 var MAX_ITER = 20;
 module.exports = function(arg, es, en) {
@@ -7478,7 +7485,7 @@ exports.oslo = 10.722916666667; //"10d43'22.5\"E"
 /***/ (function(module, exports, __webpack_require__) {
 
 var proj = __webpack_require__(769);
-var transform = __webpack_require__(787);
+var transform = __webpack_require__(788);
 var wgs84 = proj('WGS84');
 
 function transformer(from, to, coords) {
@@ -8141,7 +8148,7 @@ module.exports = function(defs) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var projs = [
-  __webpack_require__(786),
+  __webpack_require__(787),
   __webpack_require__(860),
   __webpack_require__(859),
   __webpack_require__(858),
@@ -8179,10 +8186,10 @@ proj4.defaultDatum = 'WGS84'; //default datum
 proj4.Proj = __webpack_require__(769);
 proj4.WGS84 = new proj4.Proj('WGS84');
 proj4.Point = __webpack_require__(820);
-proj4.toPoint = __webpack_require__(783);
-proj4.defs = __webpack_require__(784);
-proj4.transform = __webpack_require__(787);
-proj4.mgrs = __webpack_require__(779);
+proj4.toPoint = __webpack_require__(784);
+proj4.defs = __webpack_require__(785);
+proj4.transform = __webpack_require__(788);
+proj4.mgrs = __webpack_require__(780);
 proj4.version = __webpack_require__(818).version;
 __webpack_require__(834)(proj4);
 module.exports = proj4;
@@ -8191,9 +8198,9 @@ module.exports = proj4;
 /* 836 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var defs = __webpack_require__(784);
-var wkt = __webpack_require__(788);
-var projStr = __webpack_require__(785);
+var defs = __webpack_require__(785);
+var wkt = __webpack_require__(789);
+var projStr = __webpack_require__(786);
 function testObj(code){
   return typeof code === 'string';
 }
@@ -10424,7 +10431,7 @@ var adjust_lon = __webpack_require__(749);
 var adjust_lat = __webpack_require__(752);
 var pj_enfn = __webpack_require__(823);
 var MAX_ITER = 20;
-var pj_mlfn = __webpack_require__(782);
+var pj_mlfn = __webpack_require__(783);
 var pj_inv_mlfn = __webpack_require__(824);
 var HALF_PI = Math.PI/2;
 var EPSLN = 1.0e-10;
@@ -10852,7 +10859,7 @@ exports.names = ["Stereographic_North_Pole", "Oblique_Stereographic", "Polar_Ste
 /***/ (function(module, exports, __webpack_require__) {
 
 var D2R = 0.01745329251994329577;
-var tmerc = __webpack_require__(786);
+var tmerc = __webpack_require__(787);
 exports.dependsOn = 'tmerc';
 exports.init = function() {
   if (!this.zone) {
@@ -11168,7 +11175,7 @@ Observable_1.Observable.never = never_1.never;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var onErrorResumeNext_1 = __webpack_require__(793);
+var onErrorResumeNext_1 = __webpack_require__(794);
 Observable_1.Observable.onErrorResumeNext = onErrorResumeNext_1.onErrorResumeNextStatic;
 //# sourceMappingURL=onErrorResumeNext.js.map
 
@@ -11190,7 +11197,7 @@ Observable_1.Observable.pairs = pairs_1.pairs;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var race_1 = __webpack_require__(794);
+var race_1 = __webpack_require__(795);
 Observable_1.Observable.race = race_1.raceStatic;
 //# sourceMappingURL=race.js.map
 
@@ -11476,7 +11483,7 @@ Observable_1.Observable.prototype.distinct = distinct_1.distinct;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var distinctUntilChanged_1 = __webpack_require__(790);
+var distinctUntilChanged_1 = __webpack_require__(791);
 Observable_1.Observable.prototype.distinctUntilChanged = distinctUntilChanged_1.distinctUntilChanged;
 //# sourceMappingURL=distinctUntilChanged.js.map
 
@@ -11553,7 +11560,7 @@ Observable_1.Observable.prototype.expand = expand_1.expand;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var find_1 = __webpack_require__(791);
+var find_1 = __webpack_require__(792);
 Observable_1.Observable.prototype.find = find_1.find;
 //# sourceMappingURL=find.js.map
 
@@ -11698,7 +11705,7 @@ Observable_1.Observable.prototype.flatMap = mergeMap_1.mergeMap;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var mergeMapTo_1 = __webpack_require__(792);
+var mergeMapTo_1 = __webpack_require__(793);
 Observable_1.Observable.prototype.flatMapTo = mergeMapTo_1.mergeMapTo;
 Observable_1.Observable.prototype.mergeMapTo = mergeMapTo_1.mergeMapTo;
 //# sourceMappingURL=mergeMapTo.js.map
@@ -11754,7 +11761,7 @@ Observable_1.Observable.prototype.observeOn = observeOn_1.observeOn;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var onErrorResumeNext_1 = __webpack_require__(793);
+var onErrorResumeNext_1 = __webpack_require__(794);
 Observable_1.Observable.prototype.onErrorResumeNext = onErrorResumeNext_1.onErrorResumeNext;
 //# sourceMappingURL=onErrorResumeNext.js.map
 
@@ -11842,7 +11849,7 @@ Observable_1.Observable.prototype.publishReplay = publishReplay_1.publishReplay;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var race_1 = __webpack_require__(794);
+var race_1 = __webpack_require__(795);
 Observable_1.Observable.prototype.race = race_1.race;
 //# sourceMappingURL=race.js.map
 
@@ -12096,7 +12103,7 @@ Observable_1.Observable.prototype.throttleTime = throttleTime_1.throttleTime;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var timeInterval_1 = __webpack_require__(795);
+var timeInterval_1 = __webpack_require__(796);
 Observable_1.Observable.prototype.timeInterval = timeInterval_1.timeInterval;
 //# sourceMappingURL=timeInterval.js.map
 
@@ -12129,7 +12136,7 @@ Observable_1.Observable.prototype.timeoutWith = timeoutWith_1.timeoutWith;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var timestamp_1 = __webpack_require__(796);
+var timestamp_1 = __webpack_require__(797);
 Observable_1.Observable.prototype.timestamp = timestamp_1.timestamp;
 //# sourceMappingURL=timestamp.js.map
 
@@ -13412,7 +13419,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = __webpack_require__(1);
-var noop_1 = __webpack_require__(804);
+var noop_1 = __webpack_require__(805);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @extends {Ignored}
@@ -13670,7 +13677,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = __webpack_require__(1);
-var asap_1 = __webpack_require__(798);
+var asap_1 = __webpack_require__(799);
 var isNumeric_1 = __webpack_require__(765);
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -14337,7 +14344,7 @@ exports.WebSocketSubject = WebSocketSubject;
 
 "use strict";
 
-var AjaxObservable_1 = __webpack_require__(789);
+var AjaxObservable_1 = __webpack_require__(790);
 exports.ajax = AjaxObservable_1.AjaxObservable.create;
 //# sourceMappingURL=ajax.js.map
 
@@ -15322,7 +15329,7 @@ exports.combineAll = combineAll;
 
 "use strict";
 
-var mergeMapTo_1 = __webpack_require__(792);
+var mergeMapTo_1 = __webpack_require__(793);
 /* tslint:enable:max-line-length */
 /**
  * Projects each source value to the same Observable which is merged multiple
@@ -16391,7 +16398,7 @@ exports.DistinctSubscriber = DistinctSubscriber;
 
 "use strict";
 
-var distinctUntilChanged_1 = __webpack_require__(790);
+var distinctUntilChanged_1 = __webpack_require__(791);
 /* tslint:enable:max-line-length */
 /**
  * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item,
@@ -16969,7 +16976,7 @@ exports.ExpandSubscriber = ExpandSubscriber;
 
 "use strict";
 
-var find_1 = __webpack_require__(791);
+var find_1 = __webpack_require__(792);
 /**
  * Emits only the index of the first value emitted by the source Observable that
  * meets some condition.
@@ -17263,7 +17270,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var noop_1 = __webpack_require__(804);
+var noop_1 = __webpack_require__(805);
 /**
  * Ignores all items emitted by the source Observable and only passes calls of `complete` or `error`.
  *
@@ -20125,7 +20132,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var async_1 = __webpack_require__(456);
 var isDate_1 = __webpack_require__(764);
 var Subscriber_1 = __webpack_require__(15);
-var TimeoutError_1 = __webpack_require__(802);
+var TimeoutError_1 = __webpack_require__(803);
 /**
  * @param {number} due
  * @param {Scheduler} [scheduler]
@@ -21619,8 +21626,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Observable_1 = __webpack_require__(1);
 var Subscription_1 = __webpack_require__(51);
-var SubscriptionLoggable_1 = __webpack_require__(801);
-var applyMixins_1 = __webpack_require__(803);
+var SubscriptionLoggable_1 = __webpack_require__(802);
+var applyMixins_1 = __webpack_require__(804);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
@@ -21671,8 +21678,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Subject_1 = __webpack_require__(9);
 var Subscription_1 = __webpack_require__(51);
-var SubscriptionLoggable_1 = __webpack_require__(801);
-var applyMixins_1 = __webpack_require__(803);
+var SubscriptionLoggable_1 = __webpack_require__(802);
+var applyMixins_1 = __webpack_require__(804);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
@@ -21727,8 +21734,8 @@ var Observable_1 = __webpack_require__(1);
 var Notification_1 = __webpack_require__(459);
 var ColdObservable_1 = __webpack_require__(1084);
 var HotObservable_1 = __webpack_require__(1085);
-var SubscriptionLog_1 = __webpack_require__(800);
-var VirtualTimeScheduler_1 = __webpack_require__(797);
+var SubscriptionLog_1 = __webpack_require__(801);
+var VirtualTimeScheduler_1 = __webpack_require__(798);
 var defaultMaxFrame = 750;
 var TestScheduler = (function (_super) {
     __extends(TestScheduler, _super);
@@ -36481,9 +36488,11 @@ function takeWhile(input, predicate) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_datatables__ = __webpack_require__(805);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_transitions__ = __webpack_require__(457);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(759);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_datatables__ = __webpack_require__(779);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3____ = __webpack_require__(1197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router_transitions__ = __webpack_require__(457);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(759);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminGroupsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -36498,8 +36507,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var AdminGroupsComponent = (function () {
-    function AdminGroupsComponent(adminService) {
+    function AdminGroupsComponent(dialogRef, adminService) {
+        this.dialogRef = dialogRef;
         this.adminService = adminService;
         this.dtOptions = {
             scrollX: true,
@@ -36510,6 +36522,10 @@ var AdminGroupsComponent = (function () {
                 dataSrc: ''
             },
             columns: [
+                {
+                    title: 'Editar',
+                    defaultContent: "\n          <button md-button class=\"mat-button edit-group\">\n            <md-icon style=\"color : #ffbb00\" class=\"material-icons mat-icon\">mode_edit</md-icon>\n          </button>"
+                },
                 {
                     title: 'Eliminar',
                     defaultContent: "\n          <button md-button class=\"mat-button remove-group\">\n            <md-icon style=\"color : #ff0000\" class=\"material-icons mat-icon\">remove_circle_outline</md-icon>\n          </button>"
@@ -36532,6 +36548,11 @@ var AdminGroupsComponent = (function () {
                     dtInstance.ajax.reload();
                 });
             });
+            dtInstance.on('click', '.edit-group', function () {
+                var row_dom = $(this).closest('tr');
+                var row = dtInstance.row(row_dom).data();
+                self.openEditGroupNameDialog(row);
+            });
         });
     };
     AdminGroupsComponent.prototype.createGroup = function () {
@@ -36539,6 +36560,15 @@ var AdminGroupsComponent = (function () {
         this.adminService.createGroup(this.newGroupName).subscribe(function () {
             _this.dtInstance.ajax.reload();
             _this.newGroupName = null;
+        });
+    };
+    AdminGroupsComponent.prototype.openEditGroupNameDialog = function (groupData) {
+        var _this = this;
+        var dialog = this.dialogRef.open(__WEBPACK_IMPORTED_MODULE_3____["n" /* AdminGroupEditComponent */]);
+        dialog.componentInstance.groupData = groupData;
+        dialog.afterClosed().subscribe(function (data) {
+            if (data)
+                _this.dtInstance.ajax.reload();
         });
     };
     __decorate([
@@ -36550,14 +36580,14 @@ var AdminGroupsComponent = (function () {
             selector: 'app-admin-groups',
             template: __webpack_require__(1228),
             styles: [__webpack_require__(1211)],
-            providers: [__WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]],
-            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__router_transitions__["a" /* routerTransition */])()],
+            providers: [__WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]],
+            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdDialog */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]) === 'function' && _c) || Object])
     ], AdminGroupsComponent);
     return AdminGroupsComponent;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 //# sourceMappingURL=admin-groups.component.js.map
 
@@ -36792,9 +36822,10 @@ var AdminLayersNewLayerComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_datatables__ = __webpack_require__(805);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(457);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services__ = __webpack_require__(759);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_datatables__ = __webpack_require__(779);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5____ = __webpack_require__(1197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__router_transitions__ = __webpack_require__(457);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services__ = __webpack_require__(759);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminLayersComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -36812,13 +36843,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AdminLayersComponent = (function () {
-    function AdminLayersComponent(adminService, snackbar, location, router, route) {
+    function AdminLayersComponent(adminService, dialogRef, snackbar, location, router, route) {
         this.adminService = adminService;
+        this.dialogRef = dialogRef;
         this.snackbar = snackbar;
         this.location = location;
         this.router = router;
         this.route = route;
+        this.dtInstances = [];
         this.dtOptionsLayers = {
             scrollX: true,
             scrollY: '50vh',
@@ -36828,6 +36862,10 @@ var AdminLayersComponent = (function () {
                 dataSrc: ''
             },
             columns: [
+                {
+                    title: 'Editar',
+                    defaultContent: "\n          <button md-button class=\"mat-button edit-layer\">\n            <md-icon style=\"color : #ffbb00\" class=\"material-icons mat-icon\">mode_edit</md-icon>\n          </button>"
+                },
                 {
                     title: 'Eliminar',
                     defaultContent: "\n          <button md-button class=\"mat-button remove-layer\">\n            <md-icon style=\"color : #ff0000\" class=\"material-icons mat-icon\">remove_circle_outline</md-icon>\n          </button>"
@@ -36859,9 +36897,11 @@ var AdminLayersComponent = (function () {
     AdminLayersComponent.prototype.ngOnInit = function () {
     };
     AdminLayersComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
         //console.log('dtElements', this.dtElements);
         var self = this;
         this.dtElements._results[0].dtInstance.then(function (dtInstance) {
+            _this.dtInstances.push(dtInstance);
             dtInstance.on('click', '.remove-layer', function () {
                 var row_dom = $(this).closest('tr');
                 var row = dtInstance.row(row_dom).data();
@@ -36873,8 +36913,14 @@ var AdminLayersComponent = (function () {
                     });
                 });
             });
+            dtInstance.on('click', '.edit-layer', function () {
+                var row_dom = $(this).closest('tr');
+                var row = dtInstance.row(row_dom).data();
+                self.openEditLayerNameDialog(row);
+            });
         });
         this.dtElements._results[1].dtInstance.then(function (dtInstance) {
+            _this.dtInstances.push(dtInstance);
             dtInstance.on('click', '.remove-baselayer', function () {
                 var row_dom = $(this).closest('tr');
                 var row = dtInstance.row(row_dom).data();
@@ -36894,6 +36940,15 @@ var AdminLayersComponent = (function () {
     AdminLayersComponent.prototype.goToCreateBaseLayerPage = function () {
         this.router.navigate(['./new', 'baselayer'], { relativeTo: this.route });
     };
+    AdminLayersComponent.prototype.openEditLayerNameDialog = function (layerData) {
+        var _this = this;
+        var dialog = this.dialogRef.open(__WEBPACK_IMPORTED_MODULE_5____["o" /* AdminLayerEditComponent */]);
+        dialog.componentInstance.layerData = layerData;
+        dialog.afterClosed().subscribe(function (data) {
+            if (data)
+                _this.dtInstances[0].ajax.reload();
+        });
+    };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChildren"])(__WEBPACK_IMPORTED_MODULE_4_angular_datatables__["b" /* DataTableDirective */]), 
         __metadata('design:type', Object)
@@ -36903,14 +36958,14 @@ var AdminLayersComponent = (function () {
             selector: 'app-admin-layers',
             template: __webpack_require__(1232),
             styles: [__webpack_require__(1215)],
-            providers: [__WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]],
-            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__router_transitions__["a" /* routerTransition */])()],
+            providers: [__WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */]],
+            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdSnackBar */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* Location */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* Location */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _e) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdDialog */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdSnackBar */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _f) || Object])
     ], AdminLayersComponent);
     return AdminLayersComponent;
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
 }());
 //# sourceMappingURL=admin-layers.component.js.map
 
@@ -36920,7 +36975,12 @@ var AdminLayersComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_transitions__ = __webpack_require__(457);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_ckeditor__ = __webpack_require__(1255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_ckeditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_ckeditor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(777);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router_transitions__ = __webpack_require__(457);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services__ = __webpack_require__(759);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminMailComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -36933,22 +36993,68 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
 var AdminMailComponent = (function () {
-    function AdminMailComponent() {
+    function AdminMailComponent(adminService) {
+        var _this = this;
+        this.adminService = adminService;
+        __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].forkJoin(this.adminService.getUsers().map(function (res) { return res.json(); }), this.adminService.getAllGroups().map(function (res) { return res.json(); })).subscribe(function (data) {
+            var allUsers = data[0];
+            var allGroups = data[1];
+            console.log(allUsers, allGroups);
+            _this.groupsAndUsers = allGroups.map(function (g) { return ({
+                id: g.id,
+                name: g.name,
+                users: allUsers.filter(function (u) { return (u.groups || []).includes(g.name); })
+            }); });
+            console.log(_this.groupsAndUsers);
+        });
     }
-    AdminMailComponent.prototype.ngOnInit = function () {
+    AdminMailComponent.prototype.ngOnInit = function () { };
+    AdminMailComponent.prototype.sendMail = function () {
+        console.log(this.emailContent);
     };
+    AdminMailComponent.prototype.setEditorToolbar = function () {
+        this.ckeditor.config.toolbar_Full = [
+            { name: 'document', items: ['Source', '-', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates'] },
+            { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
+            { name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt'] },
+            { name: 'forms', items: ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+                    'HiddenField'] },
+            '/',
+            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
+            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv',
+                    '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'] },
+            { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+            { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
+            '/',
+            { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
+            { name: 'colors', items: ['TextColor', 'BGColor'] },
+            { name: 'tools', items: ['Maximize', 'ShowBlocks', '-', 'About'] }
+        ];
+        this.ckeditor.config.toolbar_Basic = [
+            ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About']
+        ];
+    };
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ng2_ckeditor__["CKEditorComponent"]), 
+        __metadata('design:type', Object)
+    ], AdminMailComponent.prototype, "ckeditor", void 0);
     AdminMailComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin-mail',
             template: __webpack_require__(1233),
             styles: [__webpack_require__(1216)],
-            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__router_transitions__["a" /* routerTransition */])()],
+            providers: [__WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */]],
+            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */]) === 'function' && _a) || Object])
     ], AdminMailComponent);
     return AdminMailComponent;
+    var _a;
 }());
 //# sourceMappingURL=admin-mail.component.js.map
 
@@ -36963,7 +37069,7 @@ var AdminMailComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(777);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router_transitions__ = __webpack_require__(457);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__ = __webpack_require__(781);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__ = __webpack_require__(782);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_dragula___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_dragula__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services__ = __webpack_require__(759);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminMapsEditComponent; });
@@ -37010,17 +37116,18 @@ var AdminMapsEditComponent = (function () {
         __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].forkJoin(this.adminService.getAllLayers().map(function (res) { return res.json(); }), this.adminService.getAllBaseLayers().map(function (res) { return res.json(); }), this.adminService.getMapById(params.id).map(function (res) { return res.json(); }))
             .map(function (res) {
             var allLayers = res[0], allBaseLayers = res[1], map = res[2];
-            //console.log(map);
-            console.log(res);
+            //map = map[0];
+            //console.log(res);
             _this.originalOrder = [];
             map.orden = (map.orden || []).sort(function (a, b) { return a.position - b.position; });
             map.orden.forEach(function (c) { c.id_map = params.id; _this.originalOrder.push(c); });
-            console.log(allLayers, 'allLayers', allBaseLayers, 'allBaseLayers', map, 'map');
+            //console.log(allLayers, 'allLayers', allBaseLayers, 'allBaseLayers', map, 'map');
             return [map, allLayers, allBaseLayers];
         }).subscribe(function (data) {
             var map = data[0], allLayers = data[1], allBaseLayers = data[2];
             var mapLayers = map.layers || [];
             var mapBaselayers = map.baselayers || [];
+            //console.log('orden', map, 'allLayers', allLayers, 'allBaselayers', allBaseLayers);
             _this.map = map;
             _this.AllLayersNotInMap = allLayers.filter(function (l) { return !mapLayers.find(function (ll) { return l.id == ll.id; }); });
             _this.AllBaseLayersNotInMap = allBaseLayers.filter(function (l) { return !mapBaselayers.find(function (ll) { return l.id == ll.id; }); });
@@ -37067,15 +37174,20 @@ var AdminMapsEditComponent = (function () {
     AdminMapsEditComponent.prototype.deleteLayerFromMap = function (id_layer) {
         var _this = this;
         this.adminService.deleteMapLayer(this.map.id, id_layer).subscribe(function () {
+            var capa = _this.map.orden.find(function (c) { return c.id == id_layer && c.layer_type == 'layer'; });
+            _this.AllLayersNotInMap.push(Object.create(null, capa));
             //console.log(this.map.orden.filter( l => !(l.id == id_layer && l.layer_type == 'layer') ));
             _this.map.orden = _this.map.orden.filter(function (l) { return !(l.id_layer == id_layer && l.layer_type == 'layer'); });
             _this.map.orden.forEach(function (c, i) { return c.position = i; });
             _this.originalOrder = _this.originalOrder.filter(function (l) { return !(l.id_layer == id_layer && l.layer_type == 'layer'); });
+            console.log(capa);
         });
     };
     AdminMapsEditComponent.prototype.deleteBaseLayerFromMap = function (id_layer) {
         var _this = this;
         this.adminService.deleteMapBaseLayer(this.map.id, id_layer).subscribe(function () {
+            var capa = _this.map.orden.find(function (c) { return c.id == id_layer && c.layer_type == 'base'; });
+            _this.AllBaseLayersNotInMap.push(Object.create(null, capa));
             //console.log(this.map.orden.filter( l => !(l.id == id_layer && l.layer_type == 'layer') ));
             _this.map.orden = _this.map.orden.filter(function (l) { return !(l.id_layer == id_layer && l.layer_type == 'base'); });
             _this.map.orden.forEach(function (c, i) { return c.position = i; });
@@ -37104,7 +37216,7 @@ var AdminMapsEditComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdSnackBar */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__["DragulaService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__["DragulaService"]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]) === 'function' && _e) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdSnackBar */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__["DragulaService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__["DragulaService"]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]) === 'function' && _e) || Object])
     ], AdminMapsEditComponent);
     return AdminMapsEditComponent;
     var _a, _b, _c, _d, _e;
@@ -37175,7 +37287,7 @@ var AdminMapsNewDefaultMapComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdSnackBar */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* Location */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* Location */]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdSnackBar */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"]) === 'function' && _c) || Object])
     ], AdminMapsNewDefaultMapComponent);
     return AdminMapsNewDefaultMapComponent;
     var _a, _b, _c;
@@ -37234,7 +37346,7 @@ var AdminMapsNewMapComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdSnackBar */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* Location */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* Location */]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdSnackBar */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"]) === 'function' && _c) || Object])
     ], AdminMapsNewMapComponent);
     return AdminMapsNewMapComponent;
     var _a, _b, _c;
@@ -37248,7 +37360,7 @@ var AdminMapsNewMapComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_datatables__ = __webpack_require__(805);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_datatables__ = __webpack_require__(779);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router_transitions__ = __webpack_require__(457);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(759);
@@ -37378,7 +37490,7 @@ var AdminMapsComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdSnackBar */]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdSnackBar */]) === 'function' && _c) || Object])
     ], AdminMapsComponent);
     return AdminMapsComponent;
     var _a, _b, _c;
@@ -37510,7 +37622,7 @@ var AdminUserDetailsComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* Location */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* Location */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]) === 'function' && _c) || Object])
     ], AdminUserDetailsComponent);
     return AdminUserDetailsComponent;
     var _a, _b, _c;
@@ -37525,7 +37637,7 @@ var AdminUserDetailsComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_transitions__ = __webpack_require__(457);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(759);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular_datatables__ = __webpack_require__(805);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular_datatables__ = __webpack_require__(779);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(271);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminUsersComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -37680,6 +37792,12 @@ var AdminComponent = (function () {
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_11__admin_groups_admin_groups_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__admin_maps_edit_admin_maps_edit_component__ = __webpack_require__(1190);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_12__admin_maps_edit_admin_maps_edit_component__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__admin_layer_edit_admin_layer_edit_component__ = __webpack_require__(1248);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "o", function() { return __WEBPACK_IMPORTED_MODULE_13__admin_layer_edit_admin_layer_edit_component__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__admin_group_edit_admin_group_edit_component__ = __webpack_require__(1245);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "n", function() { return __WEBPACK_IMPORTED_MODULE_14__admin_group_edit_admin_group_edit_component__["a"]; });
+
+
 
 
 
@@ -37747,6 +37865,9 @@ var AdminService = (function () {
         if (layerName)
             apiEndPoint += "?layerName=" + layerName;
         return this.http.post(apiEndPoint, formData);
+    };
+    AdminService.prototype.updateLayerName = function (old_name, new_name) {
+        return this.http.put('/api/admin/layers', { old_name: old_name, new_name: new_name });
     };
     AdminService.prototype.deleteLayer = function (tableName) {
         return this.http.delete('/api/admin/layers', {
@@ -37817,7 +37938,7 @@ var AdminService = (function () {
         return this.http.post('/api/admin/groups', { name: name });
     };
     AdminService.prototype.updateGroup = function (id, new_name) {
-        return this.http.post('/api/admin/groups', { id: id, new_name: new_name });
+        return this.http.put('/api/admin/groups', { id: id, new_name: new_name });
     };
     AdminService.prototype.deleteGroup = function (id) {
         return this.http.delete('/api/admin/groups', { body: { id: id } });
@@ -37861,7 +37982,7 @@ var DataTablesModule = (function () {
     };
     DataTablesModule.decorators = [
         { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{
-                    imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["a" /* CommonModule */]],
+                    imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"]],
                     declarations: [__WEBPACK_IMPORTED_MODULE_2__angular_datatables_directive__["a" /* DataTableDirective */]],
                     exports: [__WEBPACK_IMPORTED_MODULE_2__angular_datatables_directive__["a" /* DataTableDirective */]]
                 },] },
@@ -53506,7 +53627,7 @@ module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  
 /* 1233 */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  admin-mail works!\n</p>\n"
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card style=\"margin : 8px;\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Email</md-card-title>\n      <md-card-subtitle>Contenido del email</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <ckeditor\n        [(ngModel)]=\"emailContent\"\n        [config]=\"{ uiColor: '#f7f7f7', toolbar: 'Full' }\"\n        debounce=\"500\">\n      </ckeditor>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"sendMail()\">ENVIAR</button>\n    </md-card-actions>\n  </md-card>\n</div>\n<!--   \n  (change)=\"onChange($event)\"\n  (ready)=\"onReady($event)\"\n  (focus)=\"onFocus($event)\"\n  (blur)=\"onBlur($event)\" \n-->"
 
 /***/ }),
 /* 1234 */
@@ -53549,6 +53670,572 @@ module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  
 /***/ (function(module, exports) {
 
 module.exports = "<nav md-tab-nav-bar #navbarAdmin class=\"navbar-fixed\">\n  <a md-tab-link\n     *ngFor=\"let link of links\"\n     [routerLink]=\"link.path\"\n     routerLinkActive #rla=\"routerLinkActive\"\n     [active]=\"rla.isActive\">\n    {{link.label}}\n  </a>\n</nav>\n<router-outlet></router-outlet>\n\n<!--\n<md-toolbar #toolbarMenu color=\"primary\" style=\"text-align: center;\">\n    <button md-button [routerLink]=\"['/admin']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Inicio\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'users']\" routerLinkActive=\"active-link\">\n        Usuarios\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'maps']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mapas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'layers']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Capas\n    </button>\n    <button md-button [routerLink]=\"['/admin', 'mail']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n        Mail\n    </button>\n</md-toolbar>\n<router-outlet></router-outlet>\n-->"
+
+/***/ }),
+/* 1241 */,
+/* 1242 */,
+/* 1243 */,
+/* 1244 */,
+/* 1245 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(759);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminGroupEditComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AdminGroupEditComponent = (function () {
+    function AdminGroupEditComponent(adminService, dialogRef) {
+        this.adminService = adminService;
+        this.dialogRef = dialogRef;
+    }
+    AdminGroupEditComponent.prototype.ngOnInit = function () {
+    };
+    AdminGroupEditComponent.prototype.ngAfterViewInit = function () {
+    };
+    AdminGroupEditComponent.prototype.changeGroupName = function () {
+        var _this = this;
+        this.adminService.updateGroup(this.groupData.id, this.groupData.name).subscribe(function () {
+            _this.dialogRef.close('OK');
+        });
+    };
+    AdminGroupEditComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-admin-group-edit',
+            template: __webpack_require__(1247),
+            styles: [__webpack_require__(1246)],
+            providers: [__WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */]]
+        }), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */]) === 'function' && _b) || Object])
+    ], AdminGroupEditComponent);
+    return AdminGroupEditComponent;
+    var _a, _b;
+}());
+//# sourceMappingURL=admin-group-edit.component.js.map
+
+/***/ }),
+/* 1246 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 1247 */
+/***/ (function(module, exports) {
+
+module.exports = "<md-card>\n  <md-card-header>\n    <md-card-title>Nombre del grupo : {{groupData?.name}}</md-card-title>\n    <md-card-subtitle>ID del grupo : {{groupData?.id}}</md-card-subtitle>\n  </md-card-header>\n  <md-card-content>\n    <md-input-container style=\"width : 100%\">\n      <input mdInput [(ngModel)]=\"groupData.name\" placeholder=\"Nuevo nombre del grupo\" value=\"\">\n    </md-input-container>\n  </md-card-content>\n  <md-card-actions>\n    <button [disabled]=\"!groupData?.name || groupData?.name.length < 3\" md-button (click)=\"changeGroupName()\">ACTUALIZAR</button>\n  </md-card-actions>\n</md-card>"
+
+/***/ }),
+/* 1248 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(759);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminLayerEditComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AdminLayerEditComponent = (function () {
+    function AdminLayerEditComponent(adminService, dialogRef) {
+        this.adminService = adminService;
+        this.dialogRef = dialogRef;
+    }
+    AdminLayerEditComponent.prototype.ngOnInit = function () { };
+    AdminLayerEditComponent.prototype.changeLayerName = function () {
+        var _this = this;
+        this.adminService.updateLayerName(this.layerData.name, this.newName).subscribe(function () {
+            _this.dialogRef.close('OK');
+        });
+    };
+    AdminLayerEditComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-admin-layer-edit',
+            template: __webpack_require__(1250),
+            styles: [__webpack_require__(1249)],
+            providers: [__WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */]]
+        }), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AdminService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */]) === 'function' && _b) || Object])
+    ], AdminLayerEditComponent);
+    return AdminLayerEditComponent;
+    var _a, _b;
+}());
+//# sourceMappingURL=admin-layer-edit.component.js.map
+
+/***/ }),
+/* 1249 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 1250 */
+/***/ (function(module, exports) {
+
+module.exports = "<md-card>\n  <md-card-header>\n    <md-card-title>Nombre de la capa : {{layerData?.name}}</md-card-title>\n    <md-card-subtitle>ID de la capa : {{layerData?.id}}</md-card-subtitle>\n  </md-card-header>\n  <md-card-content>\n    <md-input-container style=\"width : 100%\">\n      <input mdInput [(ngModel)]=\"newName\" placeholder=\"Nuevo nombre de la capa\" value=\"\">\n    </md-input-container>\n  </md-card-content>\n  <md-card-actions>\n    <button [disabled]=\"!newName || newName.length < 3 || newName == layerData?.name\" md-button (click)=\"changeLayerName()\">ACTUALIZAR</button>\n  </md-card-actions>\n</md-card>"
+
+/***/ }),
+/* 1251 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+/**
+ * CKGroup component
+ * Usage :
+ *  <ckeditor [(ngModel)]="data" [config]="{...}" debounce="500">
+ *      <ckbutton [name]="'SaveButton'" [command]="'saveCommand'" (click)="save($event)"
+ *                [icon]="'/save.png'" [toolbar]="'customGroup,1'" [label]="'Save'">
+ *      </ckbutton>
+ *   </ckeditor>
+ */
+var CKButtonDirective = (function () {
+    function CKButtonDirective() {
+        this.click = new core_1.EventEmitter();
+    }
+    CKButtonDirective.prototype.initialize = function (editor) {
+        var _this = this;
+        editor.instance.addCommand(this.command, {
+            exec: function (evt) {
+                _this.click.emit(evt);
+            }
+        });
+        editor.instance.ui.addButton(this.name, {
+            label: this.label,
+            command: this.command,
+            toolbar: this.toolbar,
+            icon: this.icon
+        });
+    };
+    CKButtonDirective.prototype.ngOnInit = function () {
+        if (!this.name)
+            throw new Error("Attribute 'name' is required on <ckbutton>");
+        if (!this.command)
+            throw new Error("Attribute 'command' is required on <ckbutton>");
+    };
+    return CKButtonDirective;
+}());
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], CKButtonDirective.prototype, "click", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], CKButtonDirective.prototype, "label", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], CKButtonDirective.prototype, "command", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], CKButtonDirective.prototype, "toolbar", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], CKButtonDirective.prototype, "name", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], CKButtonDirective.prototype, "icon", void 0);
+CKButtonDirective = __decorate([
+    core_1.Directive({
+        selector: 'ckbutton'
+    })
+], CKButtonDirective);
+exports.CKButtonDirective = CKButtonDirective;
+//# sourceMappingURL=ckbutton.directive.js.map
+
+/***/ }),
+/* 1252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ckbutton_directive_1 = __webpack_require__(1251);
+/**
+ * CKGroup component
+ * Usage :
+ *  <ckeditor [(ngModel)]="data" [config]="{...}" debounce="500">
+ *      <ckgroup [name]="'exampleGroup2'" [previous]="'1'" [subgroupOf]="'exampleGroup1'">
+ *          .
+ *          .
+ *      </ckgroup>
+ *   </ckeditor>
+ */
+var CKGroupDirective = (function () {
+    function CKGroupDirective() {
+    }
+    CKGroupDirective.prototype.ngAfterContentInit = function () {
+        var _this = this;
+        // Reconfigure each button's toolbar property within ckgroup to hold its parent's name
+        this.toolbarButtons.forEach(function (button) { return button.toolbar = _this.name; });
+    };
+    CKGroupDirective.prototype.initialize = function (editor) {
+        editor.instance.ui.addToolbarGroup(this.name, this.previous, this.subgroupOf);
+        // Initialize each button within ckgroup
+        this.toolbarButtons.forEach(function (button) {
+            button.initialize(editor);
+        });
+    };
+    return CKGroupDirective;
+}());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], CKGroupDirective.prototype, "name", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], CKGroupDirective.prototype, "previous", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], CKGroupDirective.prototype, "subgroupOf", void 0);
+__decorate([
+    core_1.ContentChildren(ckbutton_directive_1.CKButtonDirective),
+    __metadata("design:type", core_1.QueryList)
+], CKGroupDirective.prototype, "toolbarButtons", void 0);
+CKGroupDirective = __decorate([
+    core_1.Directive({
+        selector: 'ckgroup'
+    })
+], CKGroupDirective);
+exports.CKGroupDirective = CKGroupDirective;
+//# sourceMappingURL=ckgroup.directive.js.map
+
+/***/ }),
+/* 1253 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+// Imports
+var core_1 = __webpack_require__(0);
+var forms_1 = __webpack_require__(24);
+var ckbutton_directive_1 = __webpack_require__(1251);
+var ckgroup_directive_1 = __webpack_require__(1252);
+/**
+ * CKEditor component
+ * Usage :
+ *  <ckeditor [(ngModel)]="data" [config]="{...}" debounce="500"></ckeditor>
+ */
+var CKEditorComponent = CKEditorComponent_1 = (function () {
+    /**
+     * Constructor
+     */
+    function CKEditorComponent(zone) {
+        this.change = new core_1.EventEmitter();
+        this.ready = new core_1.EventEmitter();
+        this.blur = new core_1.EventEmitter();
+        this.focus = new core_1.EventEmitter();
+        this._value = '';
+        this.zone = zone;
+    }
+    Object.defineProperty(CKEditorComponent.prototype, "value", {
+        get: function () { return this._value; },
+        set: function (v) {
+            if (v !== this._value) {
+                this._value = v;
+                this.onChange(v);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    /**
+     * On component destroy
+     */
+    CKEditorComponent.prototype.ngOnDestroy = function () {
+        var _this = this;
+        if (this.instance) {
+            setTimeout(function () {
+                _this.instance.removeAllListeners();
+                _this.instance.destroy();
+                _this.instance = null;
+            });
+        }
+    };
+    /**
+     * On component view init
+     */
+    CKEditorComponent.prototype.ngAfterViewInit = function () {
+        // Configuration
+        this.ckeditorInit(this.config || {});
+    };
+    /**
+     * Value update process
+     */
+    CKEditorComponent.prototype.updateValue = function (value) {
+        var _this = this;
+        this.zone.run(function () {
+            _this.value = value;
+            _this.onChange(value);
+            _this.onTouched();
+            _this.change.emit(value);
+        });
+    };
+    /**
+     * CKEditor init
+     */
+    CKEditorComponent.prototype.ckeditorInit = function (config) {
+        var _this = this;
+        if (typeof CKEDITOR == 'undefined') {
+            console.warn('CKEditor 4.x is missing (http://ckeditor.com/)');
+        }
+        else {
+            // CKEditor replace textarea
+            this.instance = CKEDITOR.replace(this.host.nativeElement, config);
+            // Set initial value
+            this.instance.setData(this.value);
+            // listen for instanceReady event
+            this.instance.on('instanceReady', function (evt) {
+                // send the evt to the EventEmitter
+                _this.ready.emit(evt);
+            });
+            // CKEditor change event
+            this.instance.on('change', function () {
+                _this.onTouched();
+                var value = _this.instance.getData();
+                // Debounce update
+                if (_this.debounce) {
+                    if (_this.debounceTimeout)
+                        clearTimeout(_this.debounceTimeout);
+                    _this.debounceTimeout = setTimeout(function () {
+                        _this.updateValue(value);
+                        _this.debounceTimeout = null;
+                    }, parseInt(_this.debounce));
+                }
+                else {
+                    _this.updateValue(value);
+                }
+            });
+            // CKEditor blur event
+            this.instance.on('blur', function (evt) {
+                _this.blur.emit(evt);
+            });
+            // CKEditor focus event
+            this.instance.on('focus', function (evt) {
+                _this.focus.emit(evt);
+            });
+            // Add Toolbar Groups to Editor. This will also add Buttons within groups.
+            this.toolbarGroups.forEach(function (group) {
+                group.initialize(_this);
+            });
+            // Add Toolbar Buttons to Editor.
+            this.toolbarButtons.forEach(function (button) {
+                button.initialize(_this);
+            });
+        }
+    };
+    /**
+     * Implements ControlValueAccessor
+     */
+    CKEditorComponent.prototype.writeValue = function (value) {
+        this._value = value;
+        if (this.instance)
+            this.instance.setData(value);
+    };
+    CKEditorComponent.prototype.onChange = function (_) { };
+    CKEditorComponent.prototype.onTouched = function () { };
+    CKEditorComponent.prototype.registerOnChange = function (fn) { this.onChange = fn; };
+    CKEditorComponent.prototype.registerOnTouched = function (fn) { this.onTouched = fn; };
+    return CKEditorComponent;
+}());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], CKEditorComponent.prototype, "config", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], CKEditorComponent.prototype, "debounce", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], CKEditorComponent.prototype, "change", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], CKEditorComponent.prototype, "ready", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], CKEditorComponent.prototype, "blur", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], CKEditorComponent.prototype, "focus", void 0);
+__decorate([
+    core_1.ViewChild('host'),
+    __metadata("design:type", Object)
+], CKEditorComponent.prototype, "host", void 0);
+__decorate([
+    core_1.ContentChildren(ckbutton_directive_1.CKButtonDirective),
+    __metadata("design:type", core_1.QueryList)
+], CKEditorComponent.prototype, "toolbarButtons", void 0);
+__decorate([
+    core_1.ContentChildren(ckgroup_directive_1.CKGroupDirective),
+    __metadata("design:type", core_1.QueryList)
+], CKEditorComponent.prototype, "toolbarGroups", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], CKEditorComponent.prototype, "value", null);
+CKEditorComponent = CKEditorComponent_1 = __decorate([
+    core_1.Component({
+        selector: 'ckeditor',
+        providers: [
+            {
+                provide: forms_1.NG_VALUE_ACCESSOR,
+                useExisting: core_1.forwardRef(function () { return CKEditorComponent_1; }),
+                multi: true
+            }
+        ],
+        template: "<textarea #host></textarea>",
+    }),
+    __metadata("design:paramtypes", [core_1.NgZone])
+], CKEditorComponent);
+exports.CKEditorComponent = CKEditorComponent;
+var CKEditorComponent_1;
+//# sourceMappingURL=ckeditor.component.js.map
+
+/***/ }),
+/* 1254 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var core_1 = __webpack_require__(0);
+var common_1 = __webpack_require__(12);
+var ckeditor_component_1 = __webpack_require__(1253);
+var ckbutton_directive_1 = __webpack_require__(1251);
+var ckgroup_directive_1 = __webpack_require__(1252);
+/**
+ * CKEditorModule
+ */
+var CKEditorModule = (function () {
+    function CKEditorModule() {
+    }
+    return CKEditorModule;
+}());
+CKEditorModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule
+        ],
+        declarations: [
+            ckeditor_component_1.CKEditorComponent,
+            ckbutton_directive_1.CKButtonDirective,
+            ckgroup_directive_1.CKGroupDirective
+        ],
+        exports: [
+            ckeditor_component_1.CKEditorComponent,
+            ckbutton_directive_1.CKButtonDirective,
+            ckgroup_directive_1.CKGroupDirective
+        ]
+    })
+], CKEditorModule);
+exports.CKEditorModule = CKEditorModule;
+//# sourceMappingURL=ckeditor.module.js.map
+
+/***/ }),
+/* 1255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var ckeditor_module_1 = __webpack_require__(1254);
+exports.CKEditorModule = ckeditor_module_1.CKEditorModule;
+var ckeditor_component_1 = __webpack_require__(1253);
+exports.CKEditorComponent = ckeditor_component_1.CKEditorComponent;
+var ckbutton_directive_1 = __webpack_require__(1251);
+exports.CKButtonDirective = ckbutton_directive_1.CKButtonDirective;
+var ckgroup_directive_1 = __webpack_require__(1252);
+exports.CKGroupDirective = ckgroup_directive_1.CKGroupDirective;
+//# sourceMappingURL=index.js.map
 
 /***/ })
 ]));

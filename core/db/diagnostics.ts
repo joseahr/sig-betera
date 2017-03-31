@@ -42,6 +42,7 @@ pgMonitor.setLog((msg, info) => {
         }
 
         //fs.appendFileSync(logFile, logText); // add error handling as required;
+        console.log(logText);
     }
 
     // We absolutely must not let the monitor write anything into the console

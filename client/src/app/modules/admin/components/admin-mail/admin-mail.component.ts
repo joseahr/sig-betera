@@ -1,18 +1,77 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CKEditorComponent } from 'ng2-ckeditor';
+import { Observable } from 'rxjs';
 import { routerTransition } from '../../../../router.transitions';
+import { AdminService } from '../../services';
 
 @Component({
   selector: 'app-admin-mail',
   templateUrl: './admin-mail.component.html',
   styleUrls: ['./admin-mail.component.css'],
+  providers : [ AdminService ],
   animations: [routerTransition()],
   host : { '[@routerTransition]': '' }
 })
 export class AdminMailComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(CKEditorComponent) private ckeditor;
 
-  ngOnInit() {
+  emailContent;
+  selectedEmails;
+  //allUsers;
+  //allGroups;
+  groupsAndUsers;
+
+  constructor(
+    private adminService : AdminService
+  ) {
+    Observable.forkJoin(
+      this.adminService.getUsers().map( res => res.json() ),
+      this.adminService.getAllGroups().map( res => res.json() )
+    ).subscribe(
+      (data)=>{
+        let allUsers = data[0];
+        let allGroups = data[1];
+        console.log(allUsers, allGroups);
+        this.groupsAndUsers = allGroups.map( g => ({
+          id : g.id,
+          name : g.name,
+          users : allUsers.filter( u => (u.groups || []).includes(g.name) )
+        }) );
+
+        console.log(this.groupsAndUsers);
+      }
+    )
+  }
+
+  ngOnInit() {}
+
+  sendMail(){
+    console.log(this.emailContent);
+  }
+
+  setEditorToolbar(){
+    this.ckeditor.config.toolbar_Full = [
+      { name: 'document', items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
+      { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+      { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
+      { name: 'forms', items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+          'HiddenField' ] },
+      '/',
+      { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+      { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv',
+          '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+      { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+      { name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ] },
+      '/',
+      { name: 'styles', items : [ 'Styles','Format','Font','FontSize' ] },
+      { name: 'colors', items : [ 'TextColor','BGColor' ] },
+      { name: 'tools', items : [ 'Maximize', 'ShowBlocks','-','About' ] }
+    ];
+
+    this.ckeditor.config.toolbar_Basic = [
+        ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','About']
+    ];
   }
 
 }

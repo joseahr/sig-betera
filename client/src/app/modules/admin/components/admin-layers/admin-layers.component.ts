@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdDialog } from '@angular/material';
 import { DataTableDirective } from 'angular-datatables';
+import { AdminLayerEditComponent } from '../';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
 
@@ -20,12 +21,14 @@ export class AdminLayersComponent implements OnInit {
 
   dtOptionsLayers;
   dtOptionsBase;
+  dtInstances = [];
 
   @ViewChildren(DataTableDirective) 
   private dtElements;
 
   constructor(
     private adminService : AdminService,
+    private dialogRef : MdDialog,
     private snackbar : MdSnackBar,
     private location : Location,
     private router : Router, 
@@ -40,6 +43,13 @@ export class AdminLayersComponent implements OnInit {
         dataSrc : ''
       },
       columns: [
+        {
+          title : 'Editar',
+          defaultContent : `
+          <button md-button class="mat-button edit-layer">
+            <md-icon style="color : #ffbb00" class="material-icons mat-icon">mode_edit</md-icon>
+          </button>`
+        },
         {
           title : 'Eliminar',
           defaultContent : `
@@ -83,6 +93,7 @@ export class AdminLayersComponent implements OnInit {
     //console.log('dtElements', this.dtElements);
     let self = this;
     this.dtElements._results[0].dtInstance.then(dtInstance =>{
+      this.dtInstances.push(dtInstance);
       dtInstance.on('click', '.remove-layer', function(){
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
@@ -96,8 +107,14 @@ export class AdminLayersComponent implements OnInit {
           }
         )
       });
+      dtInstance.on('click', '.edit-layer', function(){
+        let row_dom = $(this).closest('tr');
+        let row = dtInstance.row(row_dom).data();
+        self.openEditLayerNameDialog(row);
+      });
     });
     this.dtElements._results[1].dtInstance.then(dtInstance =>{
+      this.dtInstances.push(dtInstance);
       dtInstance.on('click', '.remove-baselayer', function(){
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
@@ -120,6 +137,16 @@ export class AdminLayersComponent implements OnInit {
 
   goToCreateBaseLayerPage(){
     this.router.navigate(['./new', 'baselayer'], { relativeTo : this.route })
+  }
+
+  openEditLayerNameDialog(layerData : any){
+    let dialog = this.dialogRef.open(AdminLayerEditComponent);
+    dialog.componentInstance.layerData = layerData;
+    dialog.afterClosed().subscribe(
+      (data)=>{
+        if(data) this.dtInstances[0].ajax.reload();
+      }
+    )
   }
 
 }

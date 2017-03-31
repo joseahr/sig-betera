@@ -146,11 +146,11 @@ router.route('/maps/layers')
 router.route('/maps/baselayers')
 .post( (req, res)=>{
     let { id_map, id_layer } = req.body;
-    handle(db.admin.addMapBaselayer(id_layer, id_layer), res);
+    handle(db.admin.addMapBaselayer(id_map, id_layer), res);
 })
 .delete( (req, res)=>{
     let { id_map, id_layer } = req.body;
-    handle(db.admin.deleteMapBaselayer(id_layer, id_layer), res);   
+    handle(db.admin.deleteMapBaselayer(id_map, id_layer), res);   
 });
 
 router.route('/maps/order')
@@ -164,6 +164,10 @@ router.route('/layers')
 .get( (req, res)=>{
     handleWithData(db.layers.getAllLayers(), res);
 })
+.put( (req, res)=>{
+    let { old_name , new_name } = req.body;
+    handle(db.admin.updateLayerName(old_name, new_name), res);
+})
 .post( (req, res)=>{
     multer(req, res, error =>{
         if(error) return res.status(500).json('No se pudo subir el archivo SHP : ' + error);
@@ -173,7 +177,7 @@ router.route('/layers')
         //console.log(filesExt, 'fffff');
         if( !['.shp', '.shx', '.dbf'].every( ext => filesExt.includes(ext) ) ){
             return Multer.removeFiles(...req.files.map( f => f.path ) )
-            .then( ()=> res.status(500).json('Debe añadir al menos los archivos .shp .shx .dbf') )
+            .then( ()=> res.status(500).json({ msg : 'Debe añadir al menos los archivos .shp .shx .dbf' }) )
             .catch( ( err : any ) => res.status(500).json(err) )
         }
 
@@ -190,7 +194,7 @@ router.route('/layers')
         .then( ( exist : Boolean ) =>{
             if(exist) {
                 Multer.removeFiles(...req.files.map( f => f.path ) )
-                return res.status(500).json(`La tabla ${tableName} ya existe`);
+                return res.status(500).json({ msg : `La tabla ${tableName} ya existe` });
             }
 
             db.layers.importSHP(shpPath, tableName)

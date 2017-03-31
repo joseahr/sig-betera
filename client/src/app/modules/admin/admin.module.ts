@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { DragulaModule } from 'ng2-dragula';
 import { DataTablesModule } from 'angular-datatables';
 import { NgMathPipesModule } from 'angular-pipes';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 import { 
     AdminComponent,
@@ -13,6 +14,7 @@ import {
     AdminUsersComponent,
     AdminUserDetailsComponent,
     AdminGroupsComponent,
+    AdminGroupEditComponent,
     AdminMapsComponent,
     AdminMapsEditComponent,
     AdminMapsNewMapComponent,
@@ -20,6 +22,7 @@ import {
     AdminLayersComponent,
     AdminLayersNewLayerComponent,
     AdminLayersNewBaselayerComponent,
+    AdminLayerEditComponent,
     AdminMailComponent,
 } from './components';
 
@@ -57,7 +60,9 @@ const adminRoutes : Route[] =  [{
         AdminLayersNewBaselayerComponent,
         AdminMapsNewMapComponent,
         AdminMapsNewDefaultMapComponent,
-        AdminMapsEditComponent
+        AdminMapsEditComponent,
+        AdminGroupEditComponent,
+        AdminLayerEditComponent
     ],
     providers : [
     ],
@@ -67,9 +72,11 @@ const adminRoutes : Route[] =  [{
         NgMathPipesModule,
         FormsModule,
         DragulaModule,
+        CKEditorModule,
         MaterialModule.forRoot(),
         RouterModule.forChild(adminRoutes)
-    ]
+    ],
+    entryComponents : [ AdminGroupEditComponent, AdminLayerEditComponent ]
 })
 export class AdminModule {
 

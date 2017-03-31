@@ -1,0 +1,14 @@
+<md-card>
+  <md-card-header>
+    <md-card-title>Nombre de la capa : {{layerData?.name}}</md-card-title>
+    <md-card-subtitle>ID de la capa : {{layerData?.id}}</md-card-subtitle>
+  </md-card-header>
+  <md-card-content>
+    <md-input-container style="width : 100%">
+      <input mdInput [(ngModel)]="newName" placeholder="Nuevo nombre de la capa" value="">
+    </md-input-container>
+  </md-card-content>
+  <md-card-actions>
+    <button [disabled]="!newName || newName.length < 3 || newName == layerData?.name" md-button (click)="changeLayerName()">ACTUALIZAR</button>
+  </md-card-actions>
+</md-card>

@@ -11,3 +11,5 @@ export * from './admin-maps-new-map/admin-maps-new-map.component';
 export * from './admin-maps-new-default-map/admin-maps-new-default-map.component';
 export * from './admin-groups/admin-groups.component';
 export * from './admin-maps-edit/admin-maps-edit.component';
+export * from './admin-layer-edit/admin-layer-edit.component';
+export * from './admin-group-edit/admin-group-edit.component';
