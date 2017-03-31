@@ -12,61 +12,30 @@ export let router = express.Router();
 
 router.use( (req, res, next)=>{
     if(!req.isAuthenticated())
-        return res.status(406).json('Permiso denegado');
+        return res.status(406).json({ msg : 'Permiso denegado'});
     if(req.user.rol != 'admin')
-        return res.status(406).json('Permiso denegado');
+        return res.status(406).json({ msg : 'Permiso denegado' });
     next();
 });
 
-router.get('/layers', (req, res)=>{
-    db.layers.getAllLayers()
-    .then(layers => res.status(200).json({ data : layers }))
-    .catch( err => res.status(500).json(err));
-});
-
-router.get('/baselayers', (req, res)=>{
-    db.layers.getAllBaseLayers()
-    .then( baselayers => res.status(200).json({ data : baselayers }))
-    .catch( err => res.status(500).json(err));
-});
 
 router.get('/users', (req, res)=>{
-    db.admin.getUsers()
-    .then( users => res.status(200).json({ data : users }) )
-    .catch( err => res.status(500).json(err));
+    handleWithData(db.admin.getUsers(), res);
 });
 
 router.get('/users/:id', (req, res)=>{
-    let id = req.params.id;
-    db.admin.getUserDetail(id)
-    .then( user => res.status(200).json(user) )
-    .catch( err => res.status(500).json(err));
+    let { id } = req.params;
+    handleWithData(db.admin.getUserDetail(id), res);
 });
 
 router.get('/map/:id', (req, res)=>{
     let { id } = req.params;
-    console.log(id);
-    db.maps.getMapById(id)
-    .then( map => res.status(200).json( map ? map[0] : undefined ) )
-    .catch( err => res.status(500).json(err));
+    handleWithData(db.maps.getMapById(id), res);
 });
 
-router.get('/maps', (req, res)=>{
-    db.maps.getAllMaps()
-    .then( maps => res.status(200).json({ data : maps }) )
-    .catch( err => res.status(500).json(err));
-});
 
 router.get('/default-maps', (req, res)=>{
-    db.maps.getDefaultMaps()
-    .then( dmaps => res.status(200).json({ data : dmaps }) )
-    .catch( err => res.status(500).json(err));
-});
-
-router.get('/groups', (req, res)=>{
-    db.users.getAllGroups()
-    .then( groups => res.status(200).json(groups) )
-    .catch( err => res.status(500).json(err));
+    handleWithData(db.maps.getDefaultMaps(), res);
 });
 
 /**************************
@@ -75,28 +44,12 @@ router.get('/groups', (req, res)=>{
  **************************/
 router.route('/user/map')
 .post( (req, res)=>{
-    // performance-optimized, reusable set of columns:
-    let cs = new pgp.helpers.ColumnSet(['id_user', 'id_map'], {table: 'user_maps'});
-
-    // input values:
-    let values = [{id_user: req.body.id_user, id_map: req.body.id_map}];
-
-    // generating a multi-row insert query:
-    let query = pgp.helpers.insert(values, cs);
-    
-    db.query(query)
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error') );
+    let { id_user, id_map } = req.body;
+    handle(db.admin.addUserMap(req.body.id_user, req.body.id_map), res);
 })
 .delete( (req, res)=>{
-    let query = 'DELETE FROM user_maps WHERE id_user = ${id_user} AND id_map = ${id_map}';
-
-    db.query(query, {
-        id_user : pgp.as.value(req.body.id_user),
-        id_map : pgp.as.value(req.body.id_map)
-    })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error') );
+    let { id_user, id_map } = req.body;
+    handle(db.admin.deleteUserMap(req.body.id_user, req.body.id_map), res);
 });
 
 /**************************
@@ -105,44 +58,18 @@ router.route('/user/map')
  **************************/
 router.route('/user/rol')
 .post( (req, res)=>{
-     // performance-optimized, reusable set of columns:
     let { id_user, id_layer, rol } = req.body;
     if(!id_user || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
-    let cs = new pgp.helpers.ColumnSet(['id_user', 'id_layer', { name : 'rol', cast : 'public.roles_enum'}], {table: 'roles'});
-    // input values:
-    let values = [{id_user, id_layer, rol}];
-
-    // generating a multi-row insert query:
-    let query = pgp.helpers.insert(values, cs);
-    
-    db.query(query)
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );   
+    handle(db.admin.addUserRol(id_user, id_layer, rol), res);
 })
 .put( (req, res)=>{
-    // performance-optimized, reusable set of columns:
     let { id_user, id_layer, rol } = req.body;
     if(!id_user || !id_layer || !rol) return res.status(404).json('Error : Faltan parámetros');
-    let cs = new pgp.helpers.ColumnSet([{ name : 'rol', cast : 'public.roles_enum' }]);
-    //console.log({ id_layer : +id_layer, id_user : +id_user, rol });
-    // input values:
-    let values = [{ rol }];
-
-    // generating a multi-row insert query:
-    let query = pgp.helpers.update(values, cs, 'roles', { tableAlias : 'r' }) + 
-        ' WHERE r.id_layer = ${id_layer} AND r.id_user = ${id_user}';
-    
-    db.query(query, { id_layer, id_user })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );
+    handle(db.admin.updateUserRol(id_user, id_layer, rol), res);
 })
 .delete( (req, res)=>{
     let { id_user, id_layer } = req.body;
-    db.query('DELETE FROM roles WHERE id_user = ${id_user} AND id_layer = ${id_layer}', { 
-        id_user, id_layer
-    })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error') );
+    handle(db.admin.deleteUserRol(id_user, id_layer), res);
 });
 
 /**************************
@@ -153,22 +80,11 @@ router.route('/user/group')
 .post( (req, res)=>{
     let { id_user, group } = req.body;
     if(!id_user || !group) return res.status(404).json('Error : Faltan parámetros');
-
-    let cs = new pgp.helpers.ColumnSet(['id_user', 'group'], {table: 'user_groups'});
-    let values = [{id_user, group}];
-    let query = pgp.helpers.insert(values, cs);
-    
-    db.query(query)
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );   
+    handle(db.admin.addUserGroup(id_user, group), res);
 })
 .delete( (req, res)=>{
     let { id_user, group } = req.body;
-    db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "group" = ${group}', { 
-        id_user, group 
-    })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );
+    handle(db.admin.deleteUserGroup(id_user, group), res);
 });
 
 /**************************
@@ -176,149 +92,78 @@ router.route('/user/group')
  *  UN NUEVO GRUPO DE USUARIOS
  **************************/
 router.route('/groups')
+.get( (req, res)=>{
+    handleWithData(db.users.getAllGroups(), res);
+})
 .post( (req, res)=>{
-    // performance-optimized, reusable set of columns:
-    let cs = new pgp.helpers.ColumnSet(['name'], {table: 'groups'});
-    let name = req.body.name;
-    let values = [req.body];
-
-    let query = pgp.helpers.insert(values, cs);
-
-    db.query(query)
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error') );  
+    let { name } = req.body;
+    handle(db.admin.createGroup(name), res);
 })
 .put( (req, res)=>{
     let { id, new_name } = req.body;
     if(!id || !new_name) return res.status(404).json('Error : Faltan parámetros');
-    // performance-optimized, reusable set of columns:
-    let cs = new pgp.helpers.ColumnSet(['name']);
-    let values = [{ name : new_name }];
-    let query = pgp.helpers.update(values, cs, 'groups', { tableAlias : 'g'}) + ' WHERE g.id = ${id}';
-    
-    db.query(query, { id })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );
+    handle(db.admin.updateGroup(id, new_name), res);
 })
 .delete( (req, res)=>{
     let { id } = req.body;
-    db.query('DELETE FROM groups WHERE id = ${id}', { id })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error') );
+    handle(db.admin.deleteGroup(id), res);
 });
 
 router.route('/maps')
+.get( (req, res)=>{
+    handleWithData(db.maps.getAllMaps(), res);
+})
 .post( (req, res)=>{
-    // performance-optimized, reusable set of columns:
-    let cs = new pgp.helpers.ColumnSet(['name'], {table: 'maps'});
-
-    // input values:
-    //console.log(req.body);
-    let values = [{name : req.body.name}];
-
-    // generating a multi-row insert query:
-    let query = pgp.helpers.insert(values, cs) + ' RETURNING *';
-
-    db.query(query)
-    .then( ( result : any ) => res.status(200).json(result) )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );
+    let { name } = req.body;
+    handle(db.admin.createMap(name), res);
 })
 .delete( (req, res)=>{
-    db.query('DELETE FROM maps WHERE id = ${id_map}', { id_map : pgp.as.value(req.body.id_map) })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) ); 
+    let { id_map } = req.body;
+    handle(db.admin.deleteMap(id_map), res);
 });
 
 
 router.route('/maps/defaults')
 .post( (req, res)=>{
-    // performance-optimized, reusable set of columns:
-    let cs = new pgp.helpers.ColumnSet(['id'], {table: 'default_maps'});
-
-    // input values:
-    //console.log(req.body);
-    let values = [{id : req.body.id_map}];
-
-    // generating a multi-row insert query:
-    let query = pgp.helpers.insert(values, cs);
-
-    db.query(query)
-    .then( ( result : any ) => res.status(200).json(result) )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );
+    let { id_map } = req.body;
+    handle(db.admin.addDefaultMap(id_map), res);
 })
 .delete( (req, res)=>{
-    db.query('DELETE FROM default_maps WHERE id = ${id_map}', { id_map : pgp.as.value(req.body.id_map) })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );    
+    let { id_map } = req.body;
+    handle(db.admin.deleteDefaultMap(id_map), res);
 });
 
 router.route('/maps/layers')
 .post( (req, res)=>{
-    // performance-optimized, reusable set of columns:
-    let cs = new pgp.helpers.ColumnSet(['id_map', 'id_layer'], {table: 'map_layers'});
-
-    // input values:
-    //console.log(req.body);
-    let values = [{id_map : req.body.id_map, id_layer : req.body.id_layer}];
-
-    // generating a multi-row insert query:
-    let query = pgp.helpers.insert(values, cs);
-
-    db.query(query)
-    .then( ( result : any ) => res.status(200).json(result) )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );
+    let { id_map, id_layer } = req.body;
+    handle(db.admin.addMapLayer(id_map, id_layer), res);
 })
 .delete( (req, res)=>{
-    db.query('DELETE FROM map_layers WHERE id_map = ${id_map} AND id_layer = ${id_layer}', 
-        { id_map : pgp.as.value(req.body.id_map), id_layer : pgp.as.value(req.body.id_layer) })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );  
+    let { id_map, id_layer } = req.body;
+    handle(db.admin.deleteMapLayer(id_map, id_layer), res);
 });
 
 router.route('/maps/baselayers')
 .post( (req, res)=>{
-    // performance-optimized, reusable set of columns:
-    let cs = new pgp.helpers.ColumnSet(['id_map', 'id_base_layer'], {table: 'map_base_layers'});
-
-    // input values:
-    //console.log(req.body);
-    let values = [{id_map : req.body.id_map, id_base_layer : req.body.id_layer}];
-
-    // generating a multi-row insert query:
-    let query = pgp.helpers.insert(values, cs);
-
-    db.query(query)
-    .then( ( result : any ) => res.status(200).json(result) )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );
+    let { id_map, id_layer } = req.body;
+    handle(db.admin.addMapBaselayer(id_layer, id_layer), res);
 })
 .delete( (req, res)=>{
-    db.query('DELETE FROM map_base_layers WHERE id_map = ${id_map} AND id_base_layer = ${id_layer}', 
-        { id_map : pgp.as.value(req.body.id_map), id_layer : pgp.as.value(req.body.id_layer) })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );     
+    let { id_map, id_layer } = req.body;
+    handle(db.admin.deleteMapBaselayer(id_layer, id_layer), res);   
 });
 
 router.route('/maps/order')
 .post( (req, res)=>{
-    let { order, id_map } = req.body;
-    db.query('DELETE FROM map_layers_order WHERE id_map = ${id_map}', { id_map })
-    .then( ()=>{
-        let cs = new pgp.helpers.ColumnSet(['id_map', 'id_layer', 'layer_type', 'position'], {table: 'map_layers_order'});
-
-        // input values:
-        //console.log(req.body);
-        console.log('valuees', order);
-        // generating a multi-row insert query:
-        let query = pgp.helpers.insert(order, cs);
-
-        db.query(query)
-        .then( ( result : any ) => res.status(200).json(result) )
-    })
-    .catch( ( err : any ) => res.status(500).json('Error' + err) );
+    let { id_map, order } = req.body;
+    handle(db.admin.addMapOrder(id_map, order), res);
 });
 
 
 router.route('/layers')
+.get( (req, res)=>{
+    handleWithData(db.layers.getAllLayers(), res);
+})
 .post( (req, res)=>{
     multer(req, res, error =>{
         if(error) return res.status(500).json('No se pudo subir el archivo SHP : ' + error);
@@ -358,14 +203,14 @@ router.route('/layers')
     });
 })
 .delete( (req, res)=>{
-    let tableName = req.body.tableName;
-    console.log(req.body.tableName);
-    db.none('DROP TABLE IF EXISTS "capas".${tableName~} CASCADE', { tableName })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json(err) ); 
+    let { tableName } = req.body;
+    handle(db.admin.removeLayer(tableName), res);
 });
 
 router.route('/baselayers')
+.get( (req, res)=>{
+    handleWithData(db.layers.getAllBaseLayers(), res);
+})
 .post( (req, res)=>{
     let { service_url, layers } = req.body;
     //console.log(req.body);
@@ -374,22 +219,20 @@ router.route('/baselayers')
 
     capabilitiesParser.parser(service_url)
     .then( ( layersCap : any ) =>{
-        if (!layersCap || !layersCap.length) return res.status(500).json('No es un capabilities válido');
+        let service_url_ = service_url.split('?')[0];
+        let layers_ = layers.join();
         let layerCapNames = layersCap.map( l => l['Name'] );
+
+        if (!layersCap || !layersCap.length) return res.status(500).json('No es un capabilities válido');
         if( layers.some( ( l : any ) => !layerCapNames.find( ( lcn : any ) => lcn === l) ) ) 
             return res.status(500).json('El nombre de algunas capas seleccionadas no aparece en el doc de capacidades');
         // Actualizar bdd
-        db.one("INSERT INTO base_layers(service_url, name) VALUES('${service_url#}', '${layers#}') RETURNING *", 
-            { service_url : service_url.split('?')[0], layers : layers.join() })
-        .then( ( baseLayer : any ) => res.status(200).json(baseLayer) )
-        .catch( ( err : any ) => res.status(500).json(err) );
+        handle(db.admin.createBaselayer(service_url_, layers_), res); 
     })
 })
 .delete( (req, res)=>{
-    let id = req.body.id;
-    db.none("DELETE FROM base_layers WHERE id = '${id#}'", { id })
-    .then( ()=> res.status(200).json('OK') )
-    .catch( ( err : any ) => res.status(500).json(err) );  
+    let { id } = req.body;
+    handle(db.admin.deleteBaselayer(id), res); 
 });
 
 
@@ -398,7 +241,18 @@ router.route('/mail/send')
     let { titulo, cuerpo, destinatarios } = req.body;
     destinatarios = JSON.parse(destinatarios);
     if(!titulo || !cuerpo || !destinatarios) return res.status(500).json('Faltan parámetros');
-    mailer.sendTextMailTo(titulo, cuerpo, ...destinatarios)
-    .then( ()=> res.status(200).json('OK'))
-    .catch(err => res.status(500).json('Error'));
+    handle(mailer.sendTextMailTo(titulo, cuerpo, ...destinatarios), res);
 });
+
+function handle(promise : Promise<any>, res : express.Response){
+    promise
+    .then(  ()=> res.status(200).json({ msg : 'OK' }) )
+    .catch( (err)=> res.status(500).json({ msg : err }) );
+}
+
+function handleWithData(promise : Promise<any>, res : express.Response){
+    promise
+    .then(  (data)=> res.status(200).json(data) )
+    .catch( (err)=> res.status(500).json({ msg : err }) );
+}
+

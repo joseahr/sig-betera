@@ -9,9 +9,10 @@ LEFT JOIN LATERAL (
 -- Lo unimos con la tabla user_groups y obtenemos el grupo 
 -- al que pertenece el usuario
 LEFT JOIN LATERAL (
-	SELECT array_agg(gg.group) AS grupos 
-	FROM user_groups gg
-	WHERE gg.id_user = u.id
+	SELECT json_agg(gg) AS grupos 
+	FROM user_groups ug
+	LEFT JOIN groups gg ON ug.group = gg.id
+	WHERE ug.id_user = u.id
 ) groups ON TRUE
 LEFT JOIN LATERAL (
 	SELECT json_agg(rr)::json AS layers_rol

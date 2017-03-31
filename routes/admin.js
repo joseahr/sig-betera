@@ -10,53 +10,24 @@ var multer = Multer.createMulter(Multer.TEMP_DIR_SHP, Multer.fileNameSHP, 50 * 1
 exports.router = express.Router();
 exports.router.use(function (req, res, next) {
     if (!req.isAuthenticated())
-        return res.status(406).json('Permiso denegado');
+        return res.status(406).json({ msg: 'Permiso denegado' });
     if (req.user.rol != 'admin')
-        return res.status(406).json('Permiso denegado');
+        return res.status(406).json({ msg: 'Permiso denegado' });
     next();
 });
-exports.router.get('/layers', function (req, res) {
-    db_1.db.layers.getAllLayers()
-        .then(function (layers) { return res.status(200).json({ data: layers }); })
-        .catch(function (err) { return res.status(500).json(err); });
-});
-exports.router.get('/baselayers', function (req, res) {
-    db_1.db.layers.getAllBaseLayers()
-        .then(function (baselayers) { return res.status(200).json({ data: baselayers }); })
-        .catch(function (err) { return res.status(500).json(err); });
-});
 exports.router.get('/users', function (req, res) {
-    db_1.db.admin.getUsers()
-        .then(function (users) { return res.status(200).json({ data: users }); })
-        .catch(function (err) { return res.status(500).json(err); });
+    handleWithData(db_1.db.admin.getUsers(), res);
 });
 exports.router.get('/users/:id', function (req, res) {
     var id = req.params.id;
-    db_1.db.admin.getUserDetail(id)
-        .then(function (user) { return res.status(200).json(user); })
-        .catch(function (err) { return res.status(500).json(err); });
+    handleWithData(db_1.db.admin.getUserDetail(id), res);
 });
 exports.router.get('/map/:id', function (req, res) {
     var id = req.params.id;
-    console.log(id);
-    db_1.db.maps.getMapById(id)
-        .then(function (map) { return res.status(200).json(map ? map[0] : undefined); })
-        .catch(function (err) { return res.status(500).json(err); });
-});
-exports.router.get('/maps', function (req, res) {
-    db_1.db.maps.getAllMaps()
-        .then(function (maps) { return res.status(200).json({ data: maps }); })
-        .catch(function (err) { return res.status(500).json(err); });
+    handleWithData(db_1.db.maps.getMapById(id), res);
 });
 exports.router.get('/default-maps', function (req, res) {
-    db_1.db.maps.getDefaultMaps()
-        .then(function (dmaps) { return res.status(200).json({ data: dmaps }); })
-        .catch(function (err) { return res.status(500).json(err); });
-});
-exports.router.get('/groups', function (req, res) {
-    db_1.db.users.getAllGroups()
-        .then(function (groups) { return res.status(200).json(groups); })
-        .catch(function (err) { return res.status(500).json(err); });
+    handleWithData(db_1.db.maps.getDefaultMaps(), res);
 });
 /**************************
  * AÑADIR / ELIMINAR UN MAPA
@@ -64,24 +35,12 @@ exports.router.get('/groups', function (req, res) {
  **************************/
 exports.router.route('/user/map')
     .post(function (req, res) {
-    // performance-optimized, reusable set of columns:
-    var cs = new db_1.pgp.helpers.ColumnSet(['id_user', 'id_map'], { table: 'user_maps' });
-    // input values:
-    var values = [{ id_user: req.body.id_user, id_map: req.body.id_map }];
-    // generating a multi-row insert query:
-    var query = db_1.pgp.helpers.insert(values, cs);
-    db_1.db.query(query)
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error'); });
+    var _a = req.body, id_user = _a.id_user, id_map = _a.id_map;
+    handle(db_1.db.admin.addUserMap(req.body.id_user, req.body.id_map), res);
 })
     .delete(function (req, res) {
-    var query = 'DELETE FROM user_maps WHERE id_user = ${id_user} AND id_map = ${id_map}';
-    db_1.db.query(query, {
-        id_user: db_1.pgp.as.value(req.body.id_user),
-        id_map: db_1.pgp.as.value(req.body.id_map)
-    })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error'); });
+    var _a = req.body, id_user = _a.id_user, id_map = _a.id_map;
+    handle(db_1.db.admin.deleteUserMap(req.body.id_user, req.body.id_map), res);
 });
 /**************************
  * AÑADIR / ELIMINAR / ACTUALIZAR
@@ -89,42 +48,20 @@ exports.router.route('/user/map')
  **************************/
 exports.router.route('/user/rol')
     .post(function (req, res) {
-    // performance-optimized, reusable set of columns:
     var _a = req.body, id_user = _a.id_user, id_layer = _a.id_layer, rol = _a.rol;
     if (!id_user || !id_layer || !rol)
         return res.status(404).json('Error : Faltan parámetros');
-    var cs = new db_1.pgp.helpers.ColumnSet(['id_user', 'id_layer', { name: 'rol', cast: 'public.roles_enum' }], { table: 'roles' });
-    // input values:
-    var values = [{ id_user: id_user, id_layer: id_layer, rol: rol }];
-    // generating a multi-row insert query:
-    var query = db_1.pgp.helpers.insert(values, cs);
-    db_1.db.query(query)
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    handle(db_1.db.admin.addUserRol(id_user, id_layer, rol), res);
 })
     .put(function (req, res) {
-    // performance-optimized, reusable set of columns:
     var _a = req.body, id_user = _a.id_user, id_layer = _a.id_layer, rol = _a.rol;
     if (!id_user || !id_layer || !rol)
         return res.status(404).json('Error : Faltan parámetros');
-    var cs = new db_1.pgp.helpers.ColumnSet([{ name: 'rol', cast: 'public.roles_enum' }]);
-    //console.log({ id_layer : +id_layer, id_user : +id_user, rol });
-    // input values:
-    var values = [{ rol: rol }];
-    // generating a multi-row insert query:
-    var query = db_1.pgp.helpers.update(values, cs, 'roles', { tableAlias: 'r' }) +
-        ' WHERE r.id_layer = ${id_layer} AND r.id_user = ${id_user}';
-    db_1.db.query(query, { id_layer: id_layer, id_user: id_user })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    handle(db_1.db.admin.updateUserRol(id_user, id_layer, rol), res);
 })
     .delete(function (req, res) {
     var _a = req.body, id_user = _a.id_user, id_layer = _a.id_layer;
-    db_1.db.query('DELETE FROM roles WHERE id_user = ${id_user} AND id_layer = ${id_layer}', {
-        id_user: id_user, id_layer: id_layer
-    })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error'); });
+    handle(db_1.db.admin.deleteUserRol(id_user, id_layer), res);
 });
 /**************************
  * AÑADIR / ELIMINAR / ACTUALIZAR
@@ -135,143 +72,82 @@ exports.router.route('/user/group')
     var _a = req.body, id_user = _a.id_user, group = _a.group;
     if (!id_user || !group)
         return res.status(404).json('Error : Faltan parámetros');
-    var cs = new db_1.pgp.helpers.ColumnSet(['id_user', 'group'], { table: 'user_groups' });
-    var values = [{ id_user: id_user, group: group }];
-    var query = db_1.pgp.helpers.insert(values, cs);
-    db_1.db.query(query)
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    handle(db_1.db.admin.addUserGroup(id_user, group), res);
 })
     .delete(function (req, res) {
     var _a = req.body, id_user = _a.id_user, group = _a.group;
-    db_1.db.query('DELETE FROM user_groups WHERE "id_user" = ${id_user} AND "group" = ${group}', {
-        id_user: id_user, group: group
-    })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    handle(db_1.db.admin.deleteUserGroup(id_user, group), res);
 });
 /**************************
  * AÑADIR / ELIMINAR / ACTUALIZAR
  *  UN NUEVO GRUPO DE USUARIOS
  **************************/
 exports.router.route('/groups')
+    .get(function (req, res) {
+    handleWithData(db_1.db.users.getAllGroups(), res);
+})
     .post(function (req, res) {
-    // performance-optimized, reusable set of columns:
-    var cs = new db_1.pgp.helpers.ColumnSet(['name'], { table: 'groups' });
     var name = req.body.name;
-    var values = [req.body];
-    var query = db_1.pgp.helpers.insert(values, cs);
-    db_1.db.query(query)
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error'); });
+    handle(db_1.db.admin.createGroup(name), res);
 })
     .put(function (req, res) {
     var _a = req.body, id = _a.id, new_name = _a.new_name;
     if (!id || !new_name)
         return res.status(404).json('Error : Faltan parámetros');
-    // performance-optimized, reusable set of columns:
-    var cs = new db_1.pgp.helpers.ColumnSet(['name']);
-    var values = [{ name: new_name }];
-    var query = db_1.pgp.helpers.update(values, cs, 'groups', { tableAlias: 'g' }) + ' WHERE g.id = ${id}';
-    db_1.db.query(query, { id: id })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    handle(db_1.db.admin.updateGroup(id, new_name), res);
 })
     .delete(function (req, res) {
     var id = req.body.id;
-    db_1.db.query('DELETE FROM groups WHERE id = ${id}', { id: id })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error'); });
+    handle(db_1.db.admin.deleteGroup(id), res);
 });
 exports.router.route('/maps')
+    .get(function (req, res) {
+    handleWithData(db_1.db.maps.getAllMaps(), res);
+})
     .post(function (req, res) {
-    // performance-optimized, reusable set of columns:
-    var cs = new db_1.pgp.helpers.ColumnSet(['name'], { table: 'maps' });
-    // input values:
-    //console.log(req.body);
-    var values = [{ name: req.body.name }];
-    // generating a multi-row insert query:
-    var query = db_1.pgp.helpers.insert(values, cs) + ' RETURNING *';
-    db_1.db.query(query)
-        .then(function (result) { return res.status(200).json(result); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    var name = req.body.name;
+    handle(db_1.db.admin.createMap(name), res);
 })
     .delete(function (req, res) {
-    db_1.db.query('DELETE FROM maps WHERE id = ${id_map}', { id_map: db_1.pgp.as.value(req.body.id_map) })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    var id_map = req.body.id_map;
+    handle(db_1.db.admin.deleteMap(id_map), res);
 });
 exports.router.route('/maps/defaults')
     .post(function (req, res) {
-    // performance-optimized, reusable set of columns:
-    var cs = new db_1.pgp.helpers.ColumnSet(['id'], { table: 'default_maps' });
-    // input values:
-    //console.log(req.body);
-    var values = [{ id: req.body.id_map }];
-    // generating a multi-row insert query:
-    var query = db_1.pgp.helpers.insert(values, cs);
-    db_1.db.query(query)
-        .then(function (result) { return res.status(200).json(result); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    var id_map = req.body.id_map;
+    handle(db_1.db.admin.addDefaultMap(id_map), res);
 })
     .delete(function (req, res) {
-    db_1.db.query('DELETE FROM default_maps WHERE id = ${id_map}', { id_map: db_1.pgp.as.value(req.body.id_map) })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    var id_map = req.body.id_map;
+    handle(db_1.db.admin.deleteDefaultMap(id_map), res);
 });
 exports.router.route('/maps/layers')
     .post(function (req, res) {
-    // performance-optimized, reusable set of columns:
-    var cs = new db_1.pgp.helpers.ColumnSet(['id_map', 'id_layer'], { table: 'map_layers' });
-    // input values:
-    //console.log(req.body);
-    var values = [{ id_map: req.body.id_map, id_layer: req.body.id_layer }];
-    // generating a multi-row insert query:
-    var query = db_1.pgp.helpers.insert(values, cs);
-    db_1.db.query(query)
-        .then(function (result) { return res.status(200).json(result); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    var _a = req.body, id_map = _a.id_map, id_layer = _a.id_layer;
+    handle(db_1.db.admin.addMapLayer(id_map, id_layer), res);
 })
     .delete(function (req, res) {
-    db_1.db.query('DELETE FROM map_layers WHERE id_map = ${id_map} AND id_layer = ${id_layer}', { id_map: db_1.pgp.as.value(req.body.id_map), id_layer: db_1.pgp.as.value(req.body.id_layer) })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    var _a = req.body, id_map = _a.id_map, id_layer = _a.id_layer;
+    handle(db_1.db.admin.deleteMapLayer(id_map, id_layer), res);
 });
 exports.router.route('/maps/baselayers')
     .post(function (req, res) {
-    // performance-optimized, reusable set of columns:
-    var cs = new db_1.pgp.helpers.ColumnSet(['id_map', 'id_base_layer'], { table: 'map_base_layers' });
-    // input values:
-    //console.log(req.body);
-    var values = [{ id_map: req.body.id_map, id_base_layer: req.body.id_layer }];
-    // generating a multi-row insert query:
-    var query = db_1.pgp.helpers.insert(values, cs);
-    db_1.db.query(query)
-        .then(function (result) { return res.status(200).json(result); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    var _a = req.body, id_map = _a.id_map, id_layer = _a.id_layer;
+    handle(db_1.db.admin.addMapBaselayer(id_layer, id_layer), res);
 })
     .delete(function (req, res) {
-    db_1.db.query('DELETE FROM map_base_layers WHERE id_map = ${id_map} AND id_base_layer = ${id_layer}', { id_map: db_1.pgp.as.value(req.body.id_map), id_layer: db_1.pgp.as.value(req.body.id_layer) })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    var _a = req.body, id_map = _a.id_map, id_layer = _a.id_layer;
+    handle(db_1.db.admin.deleteMapBaselayer(id_layer, id_layer), res);
 });
 exports.router.route('/maps/order')
     .post(function (req, res) {
-    var _a = req.body, order = _a.order, id_map = _a.id_map;
-    db_1.db.query('DELETE FROM map_layers_order WHERE id_map = ${id_map}', { id_map: id_map })
-        .then(function () {
-        var cs = new db_1.pgp.helpers.ColumnSet(['id_map', 'id_layer', 'layer_type', 'position'], { table: 'map_layers_order' });
-        // input values:
-        //console.log(req.body);
-        console.log('valuees', order);
-        // generating a multi-row insert query:
-        var query = db_1.pgp.helpers.insert(order, cs);
-        db_1.db.query(query)
-            .then(function (result) { return res.status(200).json(result); });
-    })
-        .catch(function (err) { return res.status(500).json('Error' + err); });
+    var _a = req.body, id_map = _a.id_map, order = _a.order;
+    handle(db_1.db.admin.addMapOrder(id_map, order), res);
 });
 exports.router.route('/layers')
+    .get(function (req, res) {
+    handleWithData(db_1.db.layers.getAllLayers(), res);
+})
     .post(function (req, res) {
     multer(req, res, function (error) {
         if (error)
@@ -303,12 +179,12 @@ exports.router.route('/layers')
 })
     .delete(function (req, res) {
     var tableName = req.body.tableName;
-    console.log(req.body.tableName);
-    db_1.db.none('DROP TABLE IF EXISTS "capas".${tableName~} CASCADE', { tableName: tableName })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json(err); });
+    handle(db_1.db.admin.removeLayer(tableName), res);
 });
 exports.router.route('/baselayers')
+    .get(function (req, res) {
+    handleWithData(db_1.db.layers.getAllBaseLayers(), res);
+})
     .post(function (req, res) {
     var _a = req.body, service_url = _a.service_url, layers = _a.layers;
     //console.log(req.body);
@@ -318,22 +194,20 @@ exports.router.route('/baselayers')
         return res.status(500).json('Debe seleccionar al menos una capa');
     capabilitiesParser.parser(service_url)
         .then(function (layersCap) {
+        var service_url_ = service_url.split('?')[0];
+        var layers_ = layers.join();
+        var layerCapNames = layersCap.map(function (l) { return l['Name']; });
         if (!layersCap || !layersCap.length)
             return res.status(500).json('No es un capabilities válido');
-        var layerCapNames = layersCap.map(function (l) { return l['Name']; });
         if (layers.some(function (l) { return !layerCapNames.find(function (lcn) { return lcn === l; }); }))
             return res.status(500).json('El nombre de algunas capas seleccionadas no aparece en el doc de capacidades');
         // Actualizar bdd
-        db_1.db.one("INSERT INTO base_layers(service_url, name) VALUES('${service_url#}', '${layers#}') RETURNING *", { service_url: service_url.split('?')[0], layers: layers.join() })
-            .then(function (baseLayer) { return res.status(200).json(baseLayer); })
-            .catch(function (err) { return res.status(500).json(err); });
+        handle(db_1.db.admin.createBaselayer(service_url_, layers_), res);
     });
 })
     .delete(function (req, res) {
     var id = req.body.id;
-    db_1.db.none("DELETE FROM base_layers WHERE id = '${id#}'", { id: id })
-        .then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json(err); });
+    handle(db_1.db.admin.deleteBaselayer(id), res);
 });
 exports.router.route('/mail/send')
     .post(function (req, res) {
@@ -341,6 +215,15 @@ exports.router.route('/mail/send')
     destinatarios = JSON.parse(destinatarios);
     if (!titulo || !cuerpo || !destinatarios)
         return res.status(500).json('Faltan parámetros');
-    mailer.sendTextMailTo.apply(mailer, [titulo, cuerpo].concat(destinatarios)).then(function () { return res.status(200).json('OK'); })
-        .catch(function (err) { return res.status(500).json('Error'); });
+    handle(mailer.sendTextMailTo.apply(mailer, [titulo, cuerpo].concat(destinatarios)), res);
 });
+function handle(promise, res) {
+    promise
+        .then(function () { return res.status(200).json({ msg: 'OK' }); })
+        .catch(function (err) { return res.status(500).json({ msg: err }); });
+}
+function handleWithData(promise, res) {
+    promise
+        .then(function (data) { return res.status(200).json(data); })
+        .catch(function (err) { return res.status(500).json({ msg: err }); });
+}

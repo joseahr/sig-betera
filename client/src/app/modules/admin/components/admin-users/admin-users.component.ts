@@ -29,21 +29,19 @@ export class AdminUsersComponent implements OnInit {
     private zone : NgZone,
     private router : Router,
   ) {
-    /*this.adminService.getUsers().subscribe(
-      (res) => {
-        this.users = res.json();
-      }
-    )*/
     this.dtOptions = {
       scrollX : true,
       scrollY : '60vh',
       scrollCollapse: true,
-      ajax: 'api/admin/users',
+      ajax  : {
+        url : 'api/admin/users',
+        dataSrc : ''
+      },
       columns: [{
         title : 'Editar',
         defaultContent : `
         <button md-button class="mat-button edit-user">
-          <md-icon class="material-icons mat-icon">mode_edit</md-icon>
+          <md-icon style="color : #ffbb00" class="material-icons mat-icon">mode_edit</md-icon>
         </button>`
       },
       { title: 'ID', data: 'id'}, 

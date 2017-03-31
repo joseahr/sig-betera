@@ -51,8 +51,8 @@ export class AdminMapsEditComponent implements OnInit {
     
     // Obtenemos el mapa
     Observable.forkJoin(
-      this.adminService.getAllLayers().map( res => res.json().data ),
-      this.adminService.getAllBaseLayers().map( res => res.json().data ),
+      this.adminService.getAllLayers().map( res => res.json() ),
+      this.adminService.getAllBaseLayers().map( res => res.json() ),
       this.adminService.getMapById(params.id).map( res => res.json() )
     )
     .map( res =>{

@@ -25,25 +25,7 @@ export class AdminUserDetailsComponent implements OnInit {
     private location : Location,
     private adminService : AdminService
   ) {
-    let params : any = this.route.snapshot.params;
-
-    Observable.forkJoin(
-      this.adminService.getUserDetail(params.id).map(res => res.json() ),
-      this.adminService.getAllGroups().map( res => res.json() )
-    ).map( data => {
-      let userDetail = data[0];
-      userDetail.not_assigned_maps = userDetail.not_assigned_maps || [];
-      userDetail.maps = userDetail.maps || [];
-      let userGroups = userDetail.grupos || [];
-      let allGroups  = data[1] || [];
-      return [userDetail, allGroups.filter( g => !userGroups.includes(g) )];
-    }).subscribe(
-      (data)=>{
-        this.userDetail = data[0];
-        this.allNotUserGroups = data[1];
-      }
-    );
-
+    this.getData();
   }
 
   ngOnInit() {
@@ -53,13 +35,31 @@ export class AdminUserDetailsComponent implements OnInit {
     this.location.back();
   }
 
+  getData(){
+    let params : any = this.route.snapshot.params;
+    Observable.forkJoin(
+      this.adminService.getUserDetail(params.id).map(res => res.json() ),
+      this.adminService.getAllGroups().map( res => res.json() )
+    ).map( data => {
+      let userDetail = data[0];
+      userDetail.not_assigned_maps = userDetail.not_assigned_maps || [];
+      userDetail.maps = userDetail.maps || [];
+      let userGroups = userDetail.grupos || [];
+      let allGroups  = data[1] || [];
+      return [userDetail, allGroups.filter( g => !userGroups.find( gg => g.id == gg.id ) )];
+    }).subscribe(
+      (data)=>{
+        this.userDetail = data[0];
+        this.allNotUserGroups = data[1];
+      }
+    );
+  }
+
   addGroup(){
     let params : any = this.route.snapshot.params;
     this.adminService.addUserGroup(params.id, this.selectedGroupToAdd).subscribe(
       ()=>{
-        this.allNotUserGroups = this.allNotUserGroups.filter( g => g != this.selectedGroupToAdd);
-        this.userDetail.grupos.push(this.selectedGroupToAdd);
-        this.selectedGroupToAdd = null;
+        this.getData();
       }
     )
   }
@@ -68,8 +68,7 @@ export class AdminUserDetailsComponent implements OnInit {
     let params : any = this.route.snapshot.params;
     this.adminService.deleteUserGroup(params.id, groupName).subscribe(
       ()=>{
-        this.allNotUserGroups.push(groupName);
-        this.userDetail.grupos = this.userDetail.grupos.filter( g => g != groupName );
+        this.getData();
       }
     )
   }
@@ -78,14 +77,15 @@ export class AdminUserDetailsComponent implements OnInit {
     let params : any = this.route.snapshot.params;
     this.adminService.addUserMap(params.id, this.selectedMapToAdd).subscribe(
       ()=>{
-        let map = this.userDetail.not_assigned_maps.find( m => m.id == this.selectedMapToAdd );
+        //let map = this.userDetail.not_assigned_maps.find( m => m.id == this.selectedMapToAdd );
         //console.log(map, 'map');
-        this.userDetail.maps.push(map);
-        this.userDetail.not_assigned_maps = this.userDetail.not_assigned_maps.filter( m => m.id != this.selectedMapToAdd );
+        //this.userDetail.maps.push(map);
+        //this.userDetail.not_assigned_maps = this.userDetail.not_assigned_maps.filter( m => m.id != this.selectedMapToAdd );
         //console.log(map, 'map');
-        this.selectedMapToAdd = null;
+        //this.selectedMapToAdd = null;
+        this.getData();
       }
-    )
+    );
   }
 
   deleteUserMap(map){
@@ -93,10 +93,12 @@ export class AdminUserDetailsComponent implements OnInit {
     let params : any = this.route.snapshot.params;
     this.adminService.deleteUserMap(params.id, map.id).subscribe(
       ()=>{
-        this.userDetail.not_assigned_maps.push(map);
-        this.userDetail.maps = this.userDetail.maps.filter( m => m.id != map.id );
+        //this.userDetail.not_assigned_maps.push(map);
+        //this.userDetail.maps = this.userDetail.maps.filter( m => m.id != map.id );
+        this.getData();
       }
-    )
+    );
+
   }
 
   changeRolOfLayer(event, layer){
@@ -119,6 +121,7 @@ export class AdminUserDetailsComponent implements OnInit {
   
     query.subscribe(
       ()=>{
+        layer.rol = newValue;
         console.log('Actualizado correctamente');
       }
     );

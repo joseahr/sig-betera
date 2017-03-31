@@ -19,13 +19,13 @@
           <md-list>
             <h3 md-subheader>Gestionar grupos del usuario {{userDetail?.name}}</h3>
             <md-select placeholder="Añadir grupo al usuario" [(ngModel)]="selectedGroupToAdd" style="margin : 20px 0px 20px 0px; width : 100%;">
-              <md-option *ngFor="let group of allNotUserGroups" [value]="group">{{ group }}</md-option>
+              <md-option *ngFor="let group of allNotUserGroups" [value]="group.id">{{ group.name }}</md-option>
             </md-select>
             <button md-button [disabled]="!selectedGroupToAdd" (click)="addGroup()" style="margin : 0 auto;">AÑADIR GRUPO</button>
             <md-list-item *ngFor="let grupo of userDetail?.grupos">
                 <md-icon md-list-avatar>group</md-icon>
-                <h4 md-line>{{grupo}}</h4>
-                <button md-mini-fab (click)="deleteGroup(grupo)" style="position : absolute; right: 1em;"><md-icon>remove_circle</md-icon></button>
+                <h4 md-line>{{grupo.name}}</h4>
+                <button md-mini-fab (click)="deleteGroup(grupo.id)" style="position : absolute; right: 1em;"><md-icon>remove_circle</md-icon></button>
             </md-list-item>
           </md-list>
         </md-tab>

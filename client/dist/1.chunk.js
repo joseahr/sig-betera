@@ -22751,7 +22751,7 @@ var MapComponent = (function () {
             target: 'map',
             controls: __WEBPACK_IMPORTED_MODULE_5_openlayers__["control"].defaults().extend([
                 new __WEBPACK_IMPORTED_MODULE_5_openlayers__["control"].FullScreen({
-                    source: 'body'
+                    source: 'app-body'
                 })
             ]),
             view: new __WEBPACK_IMPORTED_MODULE_5_openlayers__["View"]({

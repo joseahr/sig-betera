@@ -104,7 +104,7 @@ export class MapComponent implements OnInit {
       target : 'map',
       controls : ol.control.defaults().extend([
         new ol.control.FullScreen({
-          source: 'body'
+          source: 'app-body'
         })
       ]),
       view : new ol.View({

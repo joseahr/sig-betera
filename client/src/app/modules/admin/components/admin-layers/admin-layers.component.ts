@@ -35,7 +35,10 @@ export class AdminLayersComponent implements OnInit {
       scrollX : true,
       scrollY : '50vh',
       scrollCollapse: true,
-      ajax: 'api/admin/layers',
+      ajax  : {
+        url : 'api/admin/layers',
+        dataSrc : ''
+      },
       columns: [
         {
           title : 'Eliminar',
@@ -49,11 +52,15 @@ export class AdminLayersComponent implements OnInit {
         { title: 'OID', data: 'oid' },
       ]
     };
+
     this.dtOptionsBase = {
       scrollX : true,
       scrollY : '50vh',
       scrollCollapse: true,
-      ajax: 'api/admin/baselayers',
+      ajax  : {
+        url : 'api/admin/baselayers',
+        dataSrc : ''
+      },
       columns: [
         {
           title : 'Eliminar',

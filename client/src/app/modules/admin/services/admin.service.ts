@@ -128,4 +128,16 @@ export class AdminService {
         return this.http.delete('/api/admin/user/rol', { body : { id_user, id_layer } });
     }
 
+    createGroup(name : string){
+        return this.http.post('/api/admin/groups', { name });
+    }
+
+    updateGroup(id : number, new_name : string){
+        return this.http.post('/api/admin/groups', { id, new_name });
+    }
+
+    deleteGroup(id : number){
+        return this.http.delete('/api/admin/groups', { body : { id } });
+    }
+
 }

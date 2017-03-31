@@ -1,1 +1,1 @@
-SELECT array_agg(g.name) AS groups FROM groups g
+SELECT json_agg(g) AS groups FROM groups g

@@ -44,11 +44,11 @@ var adminRoutes = [{
             { path: 'maps/edit/:id', component: __WEBPACK_IMPORTED_MODULE_8__components__["f" /* AdminMapsEditComponent */] },
             { path: 'maps/new/default', component: __WEBPACK_IMPORTED_MODULE_8__components__["g" /* AdminMapsNewDefaultMapComponent */] },
             { path: 'maps', component: __WEBPACK_IMPORTED_MODULE_8__components__["h" /* AdminMapsComponent */] },
-            { path: 'maps', component: __WEBPACK_IMPORTED_MODULE_8__components__["h" /* AdminMapsComponent */] },
-            { path: 'layers', component: __WEBPACK_IMPORTED_MODULE_8__components__["i" /* AdminLayersComponent */] },
-            { path: 'layers/new/layer', component: __WEBPACK_IMPORTED_MODULE_8__components__["j" /* AdminLayersNewLayerComponent */] },
-            { path: 'layers/new/baselayer', component: __WEBPACK_IMPORTED_MODULE_8__components__["k" /* AdminLayersNewBaselayerComponent */] },
-            { path: 'mail', component: __WEBPACK_IMPORTED_MODULE_8__components__["l" /* AdminMailComponent */] },
+            { path: 'groups', component: __WEBPACK_IMPORTED_MODULE_8__components__["i" /* AdminGroupsComponent */] },
+            { path: 'layers', component: __WEBPACK_IMPORTED_MODULE_8__components__["j" /* AdminLayersComponent */] },
+            { path: 'layers/new/layer', component: __WEBPACK_IMPORTED_MODULE_8__components__["k" /* AdminLayersNewLayerComponent */] },
+            { path: 'layers/new/baselayer', component: __WEBPACK_IMPORTED_MODULE_8__components__["l" /* AdminLayersNewBaselayerComponent */] },
+            { path: 'mail', component: __WEBPACK_IMPORTED_MODULE_8__components__["m" /* AdminMailComponent */] },
             { path: '**', redirectTo: 'home' }
         ]
     }];
@@ -60,13 +60,14 @@ var AdminModule = (function () {
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_8__components__["a" /* AdminComponent */],
                 __WEBPACK_IMPORTED_MODULE_8__components__["c" /* AdminUsersComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__components__["i" /* AdminGroupsComponent */],
                 __WEBPACK_IMPORTED_MODULE_8__components__["h" /* AdminMapsComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["i" /* AdminLayersComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["l" /* AdminMailComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__components__["j" /* AdminLayersComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__components__["m" /* AdminMailComponent */],
                 __WEBPACK_IMPORTED_MODULE_8__components__["d" /* AdminUserDetailsComponent */],
                 __WEBPACK_IMPORTED_MODULE_8__components__["b" /* AdminHomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["j" /* AdminLayersNewLayerComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components__["k" /* AdminLayersNewBaselayerComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__components__["k" /* AdminLayersNewLayerComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__components__["l" /* AdminLayersNewBaselayerComponent */],
                 __WEBPACK_IMPORTED_MODULE_8__components__["e" /* AdminMapsNewMapComponent */],
                 __WEBPACK_IMPORTED_MODULE_8__components__["g" /* AdminMapsNewDefaultMapComponent */],
                 __WEBPACK_IMPORTED_MODULE_8__components__["f" /* AdminMapsEditComponent */]
@@ -36480,7 +36481,10 @@ function takeWhile(input, predicate) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* unused harmony export AdminGroupsComponent */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_datatables__ = __webpack_require__(805);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_transitions__ = __webpack_require__(457);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(759);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminGroupsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36491,20 +36495,69 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var AdminGroupsComponent = (function () {
-    function AdminGroupsComponent() {
+    function AdminGroupsComponent(adminService) {
+        this.adminService = adminService;
+        this.dtOptions = {
+            scrollX: true,
+            scrollY: '50vh',
+            scrollCollapse: true,
+            ajax: {
+                url: 'api/admin/groups',
+                dataSrc: ''
+            },
+            columns: [
+                {
+                    title: 'Eliminar',
+                    defaultContent: "\n          <button md-button class=\"mat-button remove-group\">\n            <md-icon style=\"color : #ff0000\" class=\"material-icons mat-icon\">remove_circle_outline</md-icon>\n          </button>"
+                },
+                { title: 'ID', data: 'id' },
+                { title: 'Nombre', data: 'name' },
+            ]
+        };
     }
-    AdminGroupsComponent.prototype.ngOnInit = function () {
+    AdminGroupsComponent.prototype.ngOnInit = function () { };
+    AdminGroupsComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        var self = this;
+        this.datatableElement.dtInstance.then(function (dtInstance) {
+            _this.dtInstance = dtInstance;
+            dtInstance.on('click', '.remove-group', function () {
+                var row_dom = $(this).closest('tr');
+                var row = dtInstance.row(row_dom).data();
+                self.adminService.deleteGroup(row.id).subscribe(function () {
+                    dtInstance.ajax.reload();
+                });
+            });
+        });
     };
+    AdminGroupsComponent.prototype.createGroup = function () {
+        var _this = this;
+        this.adminService.createGroup(this.newGroupName).subscribe(function () {
+            _this.dtInstance.ajax.reload();
+            _this.newGroupName = null;
+        });
+    };
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_angular_datatables__["b" /* DataTableDirective */]), 
+        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angular_datatables__["b" /* DataTableDirective */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_angular_datatables__["b" /* DataTableDirective */]) === 'function' && _a) || Object)
+    ], AdminGroupsComponent.prototype, "datatableElement", void 0);
     AdminGroupsComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-admin-groups',
             template: __webpack_require__(1228),
-            styles: [__webpack_require__(1211)]
+            styles: [__webpack_require__(1211)],
+            providers: [__WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]],
+            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__router_transitions__["a" /* routerTransition */])()],
+            host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]) === 'function' && _b) || Object])
     ], AdminGroupsComponent);
     return AdminGroupsComponent;
+    var _a, _b;
 }());
 //# sourceMappingURL=admin-groups.component.js.map
 
@@ -36770,7 +36823,10 @@ var AdminLayersComponent = (function () {
             scrollX: true,
             scrollY: '50vh',
             scrollCollapse: true,
-            ajax: 'api/admin/layers',
+            ajax: {
+                url: 'api/admin/layers',
+                dataSrc: ''
+            },
             columns: [
                 {
                     title: 'Eliminar',
@@ -36785,7 +36841,10 @@ var AdminLayersComponent = (function () {
             scrollX: true,
             scrollY: '50vh',
             scrollCollapse: true,
-            ajax: 'api/admin/baselayers',
+            ajax: {
+                url: 'api/admin/baselayers',
+                dataSrc: ''
+            },
             columns: [
                 {
                     title: 'Eliminar',
@@ -36948,7 +37007,7 @@ var AdminMapsEditComponent = (function () {
         var params = this.route.snapshot.params;
         //console.log(params.id);
         // Obtenemos el mapa
-        __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].forkJoin(this.adminService.getAllLayers().map(function (res) { return res.json().data; }), this.adminService.getAllBaseLayers().map(function (res) { return res.json().data; }), this.adminService.getMapById(params.id).map(function (res) { return res.json(); }))
+        __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].forkJoin(this.adminService.getAllLayers().map(function (res) { return res.json(); }), this.adminService.getAllBaseLayers().map(function (res) { return res.json(); }), this.adminService.getMapById(params.id).map(function (res) { return res.json(); }))
             .map(function (res) {
             var allLayers = res[0], allBaseLayers = res[1], map = res[2];
             //console.log(map);
@@ -37085,7 +37144,7 @@ var AdminMapsNewDefaultMapComponent = (function () {
         this.snackbar = snackbar;
         this.adminService = adminService;
         this.location = location;
-        this.allMapsNotDefault = __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].forkJoin(this.adminService.getAllMaps().map(function (res) { return res.json().data; }), this.adminService.getAllDefaultMaps().map(function (res) { return res.json().data; })).map(function (maps) {
+        this.allMapsNotDefault = __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].forkJoin(this.adminService.getAllMaps().map(function (res) { return res.json(); }), this.adminService.getAllDefaultMaps().map(function (res) { return res.json(); })).map(function (maps) {
             var allMaps = maps[0] || [];
             var defultMaps = maps[1] || [];
             return allMaps.filter(function (map) { return !defultMaps.find(function (dmap) { return map.id == dmap.id; }); });
@@ -37219,7 +37278,10 @@ var AdminMapsComponent = (function () {
             scrollX: true,
             scrollY: '50vh',
             scrollCollapse: true,
-            ajax: 'api/admin/maps',
+            ajax: {
+                url: 'api/admin/maps',
+                dataSrc: ''
+            },
             columns: [
                 {
                     title: 'Editar',
@@ -37240,7 +37302,10 @@ var AdminMapsComponent = (function () {
             scrollX: true,
             scrollY: '50vh',
             scrollCollapse: true,
-            ajax: 'api/admin/default-maps',
+            ajax: {
+                url: 'api/admin/default-maps',
+                dataSrc: ''
+            },
             columns: [
                 {
                     title: 'Eliminar',
@@ -37350,10 +37415,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var AdminUserDetailsComponent = (function () {
     function AdminUserDetailsComponent(route, location, adminService) {
-        var _this = this;
         this.route = route;
         this.location = location;
         this.adminService = adminService;
+        this.getData();
+    }
+    AdminUserDetailsComponent.prototype.ngOnInit = function () {
+    };
+    AdminUserDetailsComponent.prototype.goBack = function () {
+        this.location.back();
+    };
+    AdminUserDetailsComponent.prototype.getData = function () {
+        var _this = this;
         var params = this.route.snapshot.params;
         __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].forkJoin(this.adminService.getUserDetail(params.id).map(function (res) { return res.json(); }), this.adminService.getAllGroups().map(function (res) { return res.json(); })).map(function (data) {
             var userDetail = data[0];
@@ -37361,44 +37434,37 @@ var AdminUserDetailsComponent = (function () {
             userDetail.maps = userDetail.maps || [];
             var userGroups = userDetail.grupos || [];
             var allGroups = data[1] || [];
-            return [userDetail, allGroups.filter(function (g) { return !userGroups.includes(g); })];
+            return [userDetail, allGroups.filter(function (g) { return !userGroups.find(function (gg) { return g.id == gg.id; }); })];
         }).subscribe(function (data) {
             _this.userDetail = data[0];
             _this.allNotUserGroups = data[1];
         });
-    }
-    AdminUserDetailsComponent.prototype.ngOnInit = function () {
-    };
-    AdminUserDetailsComponent.prototype.goBack = function () {
-        this.location.back();
     };
     AdminUserDetailsComponent.prototype.addGroup = function () {
         var _this = this;
         var params = this.route.snapshot.params;
         this.adminService.addUserGroup(params.id, this.selectedGroupToAdd).subscribe(function () {
-            _this.allNotUserGroups = _this.allNotUserGroups.filter(function (g) { return g != _this.selectedGroupToAdd; });
-            _this.userDetail.grupos.push(_this.selectedGroupToAdd);
-            _this.selectedGroupToAdd = null;
+            _this.getData();
         });
     };
     AdminUserDetailsComponent.prototype.deleteGroup = function (groupName) {
         var _this = this;
         var params = this.route.snapshot.params;
         this.adminService.deleteUserGroup(params.id, groupName).subscribe(function () {
-            _this.allNotUserGroups.push(groupName);
-            _this.userDetail.grupos = _this.userDetail.grupos.filter(function (g) { return g != groupName; });
+            _this.getData();
         });
     };
     AdminUserDetailsComponent.prototype.addUserMap = function () {
         var _this = this;
         var params = this.route.snapshot.params;
         this.adminService.addUserMap(params.id, this.selectedMapToAdd).subscribe(function () {
-            var map = _this.userDetail.not_assigned_maps.find(function (m) { return m.id == _this.selectedMapToAdd; });
+            //let map = this.userDetail.not_assigned_maps.find( m => m.id == this.selectedMapToAdd );
             //console.log(map, 'map');
-            _this.userDetail.maps.push(map);
-            _this.userDetail.not_assigned_maps = _this.userDetail.not_assigned_maps.filter(function (m) { return m.id != _this.selectedMapToAdd; });
+            //this.userDetail.maps.push(map);
+            //this.userDetail.not_assigned_maps = this.userDetail.not_assigned_maps.filter( m => m.id != this.selectedMapToAdd );
             //console.log(map, 'map');
-            _this.selectedMapToAdd = null;
+            //this.selectedMapToAdd = null;
+            _this.getData();
         });
     };
     AdminUserDetailsComponent.prototype.deleteUserMap = function (map) {
@@ -37406,8 +37472,9 @@ var AdminUserDetailsComponent = (function () {
         //console.log(map);
         var params = this.route.snapshot.params;
         this.adminService.deleteUserMap(params.id, map.id).subscribe(function () {
-            _this.userDetail.not_assigned_maps.push(map);
-            _this.userDetail.maps = _this.userDetail.maps.filter(function (m) { return m.id != map.id; });
+            //this.userDetail.not_assigned_maps.push(map);
+            //this.userDetail.maps = this.userDetail.maps.filter( m => m.id != map.id );
+            _this.getData();
         });
     };
     AdminUserDetailsComponent.prototype.changeRolOfLayer = function (event, layer) {
@@ -37430,6 +37497,7 @@ var AdminUserDetailsComponent = (function () {
             query = this.adminService.updateUserRol(id_user, layer.id_layer, newValue);
         }
         query.subscribe(function () {
+            layer.rol = newValue;
             console.log('Actualizado correctamente');
         });
     };
@@ -37479,19 +37547,17 @@ var AdminUsersComponent = (function () {
         this.adminService = adminService;
         this.zone = zone;
         this.router = router;
-        /*this.adminService.getUsers().subscribe(
-          (res) => {
-            this.users = res.json();
-          }
-        )*/
         this.dtOptions = {
             scrollX: true,
             scrollY: '60vh',
             scrollCollapse: true,
-            ajax: 'api/admin/users',
+            ajax: {
+                url: 'api/admin/users',
+                dataSrc: ''
+            },
             columns: [{
                     title: 'Editar',
-                    defaultContent: "\n        <button md-button class=\"mat-button edit-user\">\n          <md-icon class=\"material-icons mat-icon\">mode_edit</md-icon>\n        </button>"
+                    defaultContent: "\n        <button md-button class=\"mat-button edit-user\">\n          <md-icon style=\"color : #ffbb00\" class=\"material-icons mat-icon\">mode_edit</md-icon>\n        </button>"
                 },
                 { title: 'ID', data: 'id' },
                 { title: 'Nombre', data: 'name' },
@@ -37593,9 +37659,9 @@ var AdminComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__admin_admin_component__ = __webpack_require__(1196);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__admin_admin_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_layers_admin_layers_component__ = __webpack_require__(1188);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_2__admin_layers_admin_layers_component__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_2__admin_layers_admin_layers_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__admin_mail_admin_mail_component__ = __webpack_require__(1189);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_3__admin_mail_admin_mail_component__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "m", function() { return __WEBPACK_IMPORTED_MODULE_3__admin_mail_admin_mail_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_maps_admin_maps_component__ = __webpack_require__(1193);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_4__admin_maps_admin_maps_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__admin_users_admin_users_component__ = __webpack_require__(1195);
@@ -37603,15 +37669,15 @@ var AdminComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_user_details_admin_user_details_component__ = __webpack_require__(1194);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_6__admin_user_details_admin_user_details_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__admin_layers_new_layer_admin_layers_new_layer_component__ = __webpack_require__(1187);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_7__admin_layers_new_layer_admin_layers_new_layer_component__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_7__admin_layers_new_layer_admin_layers_new_layer_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__admin_layers_new_baselayer_admin_layers_new_baselayer_component__ = __webpack_require__(1186);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_8__admin_layers_new_baselayer_admin_layers_new_baselayer_component__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_8__admin_layers_new_baselayer_admin_layers_new_baselayer_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__admin_maps_new_map_admin_maps_new_map_component__ = __webpack_require__(1192);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_9__admin_maps_new_map_admin_maps_new_map_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__admin_maps_new_default_map_admin_maps_new_default_map_component__ = __webpack_require__(1191);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_10__admin_maps_new_default_map_admin_maps_new_default_map_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__admin_groups_admin_groups_component__ = __webpack_require__(1184);
-/* unused harmony namespace reexport */
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_11__admin_groups_admin_groups_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__admin_maps_edit_admin_maps_edit_component__ = __webpack_require__(1190);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_12__admin_maps_edit_admin_maps_edit_component__["a"]; });
 
@@ -37746,6 +37812,15 @@ var AdminService = (function () {
     };
     AdminService.prototype.deleteUserRol = function (id_user, id_layer) {
         return this.http.delete('/api/admin/user/rol', { body: { id_user: id_user, id_layer: id_layer } });
+    };
+    AdminService.prototype.createGroup = function (name) {
+        return this.http.post('/api/admin/groups', { name: name });
+    };
+    AdminService.prototype.updateGroup = function (id, new_name) {
+        return this.http.post('/api/admin/groups', { id: id, new_name: new_name });
+    };
+    AdminService.prototype.deleteGroup = function (id) {
+        return this.http.delete('/api/admin/groups', { body: { id: id } });
     };
     AdminService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
@@ -53401,7 +53476,7 @@ module.exports = module.exports.toString();
 /* 1228 */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\r\n  <md-card class=\"card-margin\">\r\n    <md-card-header>\r\n      <div md-card-avatar></div>\r\n      <md-card-title>Grupos</md-card-title>\r\n      <md-card-subtitle>Añadir nuevo grupo</md-card-subtitle>\r\n    </md-card-header>\r\n    <md-card-content>\r\n        <md-input-container style=\"width : 100%\">\r\n            <input mdInput [(ngModel)]=\"newGroupName\" placeholder=\"Nombre del grupo\" value=\"\">\r\n        </md-input-container>\r\n    </md-card-content>\r\n    <md-card-actions>\r\n      <button [disabled]=\"!newGroupName || newGroupName.length < 3\" md-button (click)=\"createGroup()\">CREAR GRUPO</button>\r\n    </md-card-actions>\r\n  </md-card>\r\n  <md-card class=\"card-margin\">\r\n    <md-card-header>\r\n      <div md-card-avatar></div>\r\n      <md-card-title>Grupos</md-card-title>\r\n      <md-card-subtitle>Todos los grupos</md-card-subtitle>\r\n    </md-card-header>\r\n    <md-card-content>\r\n      <table datatable [dtOptions]=\"dtOptions\" class=\"row-border hover\" width=\"100%\"></table>\r\n    </md-card-content>\r\n  </md-card>\r\n</div>"
 
 /***/ }),
 /* 1229 */
@@ -53461,13 +53536,13 @@ module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  
 /* 1238 */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <button md-mini-fab (click)=\"goBack()\" style=\"position : fixed; z-index: 2; left: 0.5em; bottom: 0.5em;\">\n    <md-icon>arrow_back</md-icon>\n  </button>\n  <md-card style=\"margin : 8px; margin-top : 15px;\">\n    <!--<div [style.background]=\"'url(' + userDetail.gravatar + ')'\" class=\"user-avatar\"></div>-->\n    <md-card-header>\n      <div md-card-avatar><img src=\"{{ userDetail?.gravatar }}\" alt=\"\" class=\"user-avatar\"></div>\n      <md-card-title>{{userDetail?.name}}</md-card-title>\n      <md-card-subtitle>{{userDetail?.nombre}} {{userDetail?.apellidos}}</md-card-subtitle>\n    </md-card-header>\n    <div md-card-image\n      style=\"height : 100px; background-position-y : 350px; background: url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg'); background-size: cover;\"\n    >\n    </div>\n    <md-card-content>\n      <md-tab-group>\n        <md-tab label=\"Grupos\">\n          <md-list>\n            <h3 md-subheader>Gestionar grupos del usuario {{userDetail?.name}}</h3>\n            <md-select placeholder=\"Añadir grupo al usuario\" [(ngModel)]=\"selectedGroupToAdd\" style=\"margin : 20px 0px 20px 0px; width : 100%;\">\n              <md-option *ngFor=\"let group of allNotUserGroups\" [value]=\"group\">{{ group }}</md-option>\n            </md-select>\n            <button md-button [disabled]=\"!selectedGroupToAdd\" (click)=\"addGroup()\" style=\"margin : 0 auto;\">AÑADIR GRUPO</button>\n            <md-list-item *ngFor=\"let grupo of userDetail?.grupos\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>{{grupo}}</h4>\n                <button md-mini-fab (click)=\"deleteGroup(grupo)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n        <md-tab label=\"Mapas\">\n          <md-list>\n            <h3 md-subheader>Gestionar mapas del usuario {{userDetail?.name}}</h3>\n            <md-select placeholder=\"Añadir mapa al usuario\" [(ngModel)]=\"selectedMapToAdd\" style=\"margin : 20px 0px 20px 0px; width : 100%;\">\n              <md-option *ngFor=\"let map of userDetail?.not_assigned_maps\" [value]=\"map.id\">{{ map.name }}</md-option>\n            </md-select>\n            <button md-button [disabled]=\"!selectedMapToAdd\" (click)=\"addUserMap()\" style=\"margin : 0 auto;\">AÑADIR MAPA</button>\n            <md-list-item *ngFor=\"let map of userDetail?.maps\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>{{map.name}}</h4>\n                <button md-mini-fab (click)=\"deleteUserMap(map)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n        <md-tab label=\"Permisos\">\n          <md-list>\n            <h3 md-subheader>Gestionar permisos del usuario {{userDetail?.name}}</h3>\n            <md-list-item *ngFor=\"let layer of userDetail?.layers_rol;\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>#{{layer.id_layer}} {{layer.name}}</h4>\n                <div md-line>\n                  <md-select (change)=\"changeRolOfLayer($event, layer)\" [ngModel]=\"layer.rol\" placeholder=\"Permiso sobre la capa {{layer.name}}\" style=\"margin : 20px 0px 20px 0px; width : 100%;\">\n                    <md-option *ngFor=\"let rol of ['r', 'e', 'd']\" [value]=\"rol\">{{ rol }}</md-option>\n                  </md-select>\n                </div>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n      </md-tab-group>\n    </md-card-content>\n    <md-card-actions>\n\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <button md-mini-fab (click)=\"goBack()\" style=\"position : fixed; z-index: 2; left: 0.5em; bottom: 0.5em;\">\n    <md-icon>arrow_back</md-icon>\n  </button>\n  <md-card style=\"margin : 8px; margin-top : 15px;\">\n    <!--<div [style.background]=\"'url(' + userDetail.gravatar + ')'\" class=\"user-avatar\"></div>-->\n    <md-card-header>\n      <div md-card-avatar><img src=\"{{ userDetail?.gravatar }}\" alt=\"\" class=\"user-avatar\"></div>\n      <md-card-title>{{userDetail?.name}}</md-card-title>\n      <md-card-subtitle>{{userDetail?.nombre}} {{userDetail?.apellidos}}</md-card-subtitle>\n    </md-card-header>\n    <div md-card-image\n      style=\"height : 100px; background-position-y : 350px; background: url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg'); background-size: cover;\"\n    >\n    </div>\n    <md-card-content>\n      <md-tab-group>\n        <md-tab label=\"Grupos\">\n          <md-list>\n            <h3 md-subheader>Gestionar grupos del usuario {{userDetail?.name}}</h3>\n            <md-select placeholder=\"Añadir grupo al usuario\" [(ngModel)]=\"selectedGroupToAdd\" style=\"margin : 20px 0px 20px 0px; width : 100%;\">\n              <md-option *ngFor=\"let group of allNotUserGroups\" [value]=\"group.id\">{{ group.name }}</md-option>\n            </md-select>\n            <button md-button [disabled]=\"!selectedGroupToAdd\" (click)=\"addGroup()\" style=\"margin : 0 auto;\">AÑADIR GRUPO</button>\n            <md-list-item *ngFor=\"let grupo of userDetail?.grupos\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>{{grupo.name}}</h4>\n                <button md-mini-fab (click)=\"deleteGroup(grupo.id)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n        <md-tab label=\"Mapas\">\n          <md-list>\n            <h3 md-subheader>Gestionar mapas del usuario {{userDetail?.name}}</h3>\n            <md-select placeholder=\"Añadir mapa al usuario\" [(ngModel)]=\"selectedMapToAdd\" style=\"margin : 20px 0px 20px 0px; width : 100%;\">\n              <md-option *ngFor=\"let map of userDetail?.not_assigned_maps\" [value]=\"map.id\">{{ map.name }}</md-option>\n            </md-select>\n            <button md-button [disabled]=\"!selectedMapToAdd\" (click)=\"addUserMap()\" style=\"margin : 0 auto;\">AÑADIR MAPA</button>\n            <md-list-item *ngFor=\"let map of userDetail?.maps\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>{{map.name}}</h4>\n                <button md-mini-fab (click)=\"deleteUserMap(map)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n        <md-tab label=\"Permisos\">\n          <md-list>\n            <h3 md-subheader>Gestionar permisos del usuario {{userDetail?.name}}</h3>\n            <md-list-item *ngFor=\"let layer of userDetail?.layers_rol;\">\n                <md-icon md-list-avatar>group</md-icon>\n                <h4 md-line>#{{layer.id_layer}} {{layer.name}}</h4>\n                <div md-line>\n                  <md-select (change)=\"changeRolOfLayer($event, layer)\" [ngModel]=\"layer.rol\" placeholder=\"Permiso sobre la capa {{layer.name}}\" style=\"margin : 20px 0px 20px 0px; width : 100%;\">\n                    <md-option *ngFor=\"let rol of ['r', 'e', 'd']\" [value]=\"rol\">{{ rol }}</md-option>\n                  </md-select>\n                </div>\n            </md-list-item>\n          </md-list>\n        </md-tab>\n      </md-tab-group>\n    </md-card-content>\n    <md-card-actions>\n\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 /* 1239 */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptions\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>LIKE</button>\n      <button md-button>SHARE</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptions\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>ELIMINAR TODOS LOS PERMISOS</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 /* 1240 */

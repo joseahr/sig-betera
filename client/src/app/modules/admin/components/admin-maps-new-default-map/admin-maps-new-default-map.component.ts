@@ -24,8 +24,8 @@ export class AdminMapsNewDefaultMapComponent implements OnInit {
     private location : Location
   ) {
     this.allMapsNotDefault = Observable.forkJoin(
-      this.adminService.getAllMaps().map( res => res.json().data ),
-      this.adminService.getAllDefaultMaps().map(res => res.json().data )
+      this.adminService.getAllMaps().map( res => res.json() ),
+      this.adminService.getAllDefaultMaps().map(res => res.json() )
     ).map(maps =>{
       let allMaps = maps[0] || [];
       let defultMaps = maps[1] || [];

@@ -34,7 +34,7 @@ const adminRoutes : Route[] =  [{
         { path : 'maps/edit/:id'    , component : AdminMapsEditComponent          },
         { path : 'maps/new/default' , component : AdminMapsNewDefaultMapComponent },
         { path : 'maps'      , component : AdminMapsComponent        },
-        { path : 'maps'      , component : AdminMapsComponent        },
+        { path : 'groups'    , component : AdminGroupsComponent      },
         { path : 'layers'    , component : AdminLayersComponent      },
         { path : 'layers/new/layer'     , component : AdminLayersNewLayerComponent     },
         { path : 'layers/new/baselayer' , component : AdminLayersNewBaselayerComponent },
@@ -47,6 +47,7 @@ const adminRoutes : Route[] =  [{
     declarations : [
         AdminComponent, 
         AdminUsersComponent,
+        AdminGroupsComponent,
         AdminMapsComponent,
         AdminLayersComponent,
         AdminMailComponent,

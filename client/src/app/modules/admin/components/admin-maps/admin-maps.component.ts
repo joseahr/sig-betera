@@ -33,7 +33,10 @@ export class AdminMapsComponent implements OnInit {
       scrollX : true,
       scrollY : '50vh',
       scrollCollapse: true,
-      ajax  : 'api/admin/maps',
+      ajax  : {
+        url : 'api/admin/maps',
+        dataSrc : ''
+      },
       columns : [
         {
           title : 'Editar',
@@ -56,11 +59,15 @@ export class AdminMapsComponent implements OnInit {
         },targets : [4, 5]
       }]
     };
+
     this.dtOptionsDefaultMaps = {
       scrollX : true,
       scrollY : '50vh',
       scrollCollapse: true,
-      ajax: 'api/admin/default-maps',
+      ajax  : {
+        url : 'api/admin/default-maps',
+        dataSrc : ''
+      },
       columns: [
         {
           title : 'Eliminar',
