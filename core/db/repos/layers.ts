@@ -27,7 +27,7 @@ export class Repository {
 
     getFeaturesIntersecting(wkt : string, ...layers : string[]) {
         return this.db.task( t=>
-            t.batch(
+            return t.batch(
                 layers.map( layerName => 
                     this.getLayerSchema(layerName)
                     .then( (schema : any) =>{
