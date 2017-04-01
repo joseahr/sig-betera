@@ -50,3 +50,7 @@ table.dataTable td {
     margin-top: 5px;
     background: rgba(255, 0, 0, 0.15);
 }
+
+.loader {
+    background: rgba(0,0,0,0.3) !important;
+}

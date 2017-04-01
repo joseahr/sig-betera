@@ -117,7 +117,7 @@ var Repository = (function () {
         });
     };
     Repository.prototype.updateLayerName = function (oldName, newName) {
-        var query = 'ALTER TABLE "capas"."${oldName#}" RENAME TO ${newName#}';
+        var query = 'ALTER TABLE "capas".${oldName~} RENAME TO ${newName#}';
         return this.db.none(query, { oldName: oldName, newName: newName });
         /*
         let cs = new this.pgp.helpers.ColumnSet(['name']);

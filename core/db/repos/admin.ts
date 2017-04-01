@@ -147,7 +147,7 @@ export class Repository {
     }
 
     updateLayerName(oldName : string, newName : string){
-        let query = 'ALTER TABLE "capas"."${oldName#}" RENAME TO ${newName#}';
+        let query = 'ALTER TABLE "capas".${oldName~} RENAME TO ${newName#}';
         return this.db.none(query, { oldName, newName });
         /*
         let cs = new this.pgp.helpers.ColumnSet(['name']);

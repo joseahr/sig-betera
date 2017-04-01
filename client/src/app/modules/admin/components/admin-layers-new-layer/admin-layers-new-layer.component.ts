@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { LoadingAnimateService } from 'ng2-loading-animate';
+import { BytesPipe } from 'angular-pipes/src/math/bytes.pipe';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
-import { BytesPipe } from 'angular-pipes/src/math/bytes.pipe';
 
 @Component({
   selector: 'app-admin-layers-new-layer',
@@ -18,7 +19,10 @@ export class AdminLayersNewLayerComponent implements OnInit {
   layerName : string = '';
   error : any = null;
 
-  constructor(private adminService : AdminService) { }
+  constructor(
+    private loading : LoadingAnimateService,
+    private adminService : AdminService
+  ) { }
 
   ngOnInit() {}
 
@@ -65,16 +69,18 @@ export class AdminLayersNewLayerComponent implements OnInit {
     for (let i = 0; i < fileCount; i++) {
         formData.append('shp[]', this.files.item(i));
     }
-
+    this.loading.setValue(true);
     this.adminService.postLayer(formData, layerName).subscribe(
       (data)=>{
-        console.log('Sa subio');
+        //console.log('Sa subio');
         this.files = [];
         this.layerName = '';
+        this.loading.setValue(false);
       }, 
       (error)=>{
-        console.log(error.json(), 'jsooon');
+        //console.log(error.json(), 'jsooon');
         this.error = error.json();
+        this.loading.setValue(false);
       }
     )
   }

@@ -216,10 +216,10 @@ exports.router.route('/baselayers')
 exports.router.route('/mail/send')
     .post(function (req, res) {
     var _a = req.body, titulo = _a.titulo, cuerpo = _a.cuerpo, destinatarios = _a.destinatarios;
-    destinatarios = JSON.parse(destinatarios);
+    console.log(titulo, cuerpo, destinatarios);
     if (!titulo || !cuerpo || !destinatarios)
         return res.status(500).json('Faltan parámetros');
-    handle(mailer.sendTextMailTo.apply(mailer, [titulo, cuerpo].concat(destinatarios)), res);
+    handle(mailer.sendHTMLMailTo.apply(mailer, [titulo, decodeURIComponent(cuerpo)].concat(destinatarios)), res);
 });
 function handle(promise, res) {
     promise

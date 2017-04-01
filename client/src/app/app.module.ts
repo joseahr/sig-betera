@@ -14,6 +14,7 @@ import * as highchartsExporting from 'highcharts/modules/exporting';
 import { CanActivateAdmin } from './guards';
 import { AuthService } from './services';
 import 'hammerjs';
+import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
 import { 
   LoginComponent,
   SignupComponent,
@@ -38,11 +39,13 @@ export function highchartsFactory() {
     FormsModule,
     HttpModule,
     ReCaptchaModule,
+    LoadingAnimateModule.forRoot(),
     MaterialModule.forRoot(),
     RouterModule.forRoot(appRoutes, { useHash: true })
   ],
   entryComponents : [LoginComponent, SignupComponent],
   providers: [
+    LoadingAnimateService,
     AuthService,
     CanActivateAdmin,
     {

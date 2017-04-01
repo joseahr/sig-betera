@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Directive, Input } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { CKEditorComponent } from 'ng2-ckeditor';
 import { Observable } from 'rxjs';
+import { LoadingAnimateService } from 'ng2-loading-animate';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
 
@@ -16,30 +18,42 @@ export class AdminMailComponent implements OnInit {
 
   @ViewChild(CKEditorComponent) private ckeditor;
 
+  emailTitle;
   emailContent;
-  selectedEmails;
-  //allUsers;
-  //allGroups;
   groupsAndUsers;
 
+  busy;
+
   constructor(
+    private loading : LoadingAnimateService,
     private adminService : AdminService
   ) {
+    this.loading.setValue(true);
     Observable.forkJoin(
       this.adminService.getUsers().map( res => res.json() ),
       this.adminService.getAllGroups().map( res => res.json() )
     ).subscribe(
       (data)=>{
-        let allUsers = data[0];
-        let allGroups = data[1];
+        let allUsers = data[0] || [];
+        let allGroups = data[1] || [];
         console.log(allUsers, allGroups);
-        this.groupsAndUsers = allGroups.map( g => ({
-          id : g.id,
-          name : g.name,
-          users : allUsers.filter( u => (u.groups || []).includes(g.name) )
-        }) );
-
-        console.log(this.groupsAndUsers);
+        allUsers.forEach( u => u.selected = false );
+        this.groupsAndUsers = allGroups.map( g => 
+          ({
+            id : g.id, name : g.name, opened : false, selected : false,
+            users : allUsers.filter( u => (u.groups || []).includes(g.name) )
+          }) 
+        );
+        this.groupsAndUsers.push({
+            id : '-1', name : 'Usuarios sin grupo', opened : false, selected : false,
+            users : allUsers.filter( u => !u.groups )
+        });
+        
+        //console.log(this.groupsAndUsers);
+        this.loading.setValue(false);
+      },
+      (err) => {
+        this.loading.setValue(false);
       }
     )
   }
@@ -47,7 +61,31 @@ export class AdminMailComponent implements OnInit {
   ngOnInit() {}
 
   sendMail(){
-    console.log(this.emailContent);
+    //console.log(this.emailContent);
+    let destinators = this.groupsAndUsers.reduce( (selectedUsers, group, index)=>{
+      return selectedUsers.concat( group.users.filter( u => u.selected ) );
+    }, [])
+    .filter( (email, index, arr) => index == arr.indexOf(email) )
+    .map( u => u.email );
+    //console.log(destinators, 'destinators');
+    this.adminService.sendMail(this.emailTitle, encodeURIComponent(this.emailContent), destinators).subscribe(
+      ()=>{
+        this.emailContent = '';
+        this.emailTitle = '';
+        this.groupsAndUsers.forEach( g => g.selected = false );
+        this.groupsAndUsers.forEach( g => g.users.forEach( u => u.selected = false ) );
+        //console.log('Emails enviados');
+      },
+      (err)=>{}
+    );
+  }
+
+  isSomeUserSelected(){
+    return (this.groupsAndUsers || []).some( g => g.users.some( u => u.selected ) );
+  }
+
+  groupChanged(event, group){
+    group.users.forEach( u => u.selected = event.checked )
   }
 
   setEditorToolbar(){

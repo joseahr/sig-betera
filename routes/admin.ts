@@ -243,9 +243,9 @@ router.route('/baselayers')
 router.route('/mail/send')
 .post( (req, res)=>{
     let { titulo, cuerpo, destinatarios } = req.body;
-    destinatarios = JSON.parse(destinatarios);
+    console.log(titulo, cuerpo, destinatarios);
     if(!titulo || !cuerpo || !destinatarios) return res.status(500).json('Faltan parámetros');
-    handle(mailer.sendTextMailTo(titulo, cuerpo, ...destinatarios), res);
+    handle(mailer.sendHTMLMailTo(titulo, decodeURIComponent(cuerpo), ...destinatarios), res);
 });
 
 function handle(promise : Promise<any>, res : express.Response){

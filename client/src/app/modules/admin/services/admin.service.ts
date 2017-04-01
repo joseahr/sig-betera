@@ -144,4 +144,8 @@ export class AdminService {
         return this.http.delete('/api/admin/groups', { body : { id } });
     }
 
+    sendMail(titulo : string, cuerpo : string, destinatarios : string[]){
+        return this.http.post('/api/admin/mail/send', { titulo, cuerpo, destinatarios });
+    }
+
 }

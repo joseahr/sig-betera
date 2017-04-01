@@ -1,3 +1,4 @@
+<loading-animate></loading-animate>
 <div [@routerTransition]="" class="admin-page-margin">
   <md-card style="margin : 8px;">
     <md-card-header>
@@ -6,20 +7,49 @@
       <md-card-subtitle>Contenido del email</md-card-subtitle>
     </md-card-header>
     <md-card-content>
+      <md-input-container style="width : 100%;">
+        <input mdInput placeholder="Título del Email" [(ngModel)]="emailTitle">
+      </md-input-container>
       <ckeditor
         [(ngModel)]="emailContent"
         [config]="{ uiColor: '#f7f7f7', toolbar: 'Full' }"
         debounce="500">
       </ckeditor>
+
+      <md-card *ngFor="let group of groupsAndUsers" style="margin : 5px 0px 5px 0px;">
+        <md-card-header>
+          <!--<div md-card-avatar><img src="" alt="" class="user-avatar"></div>-->
+          <md-card-title>
+            <md-checkbox  [(ngModel)]="group.selected" (change)="groupChanged($event, group);">{{group.name}}</md-checkbox>
+          </md-card-title>
+          <md-card-subtitle>ID del grupo : {{group.id}}</md-card-subtitle>
+        </md-card-header>
+        <md-card-content *ngIf="group.users && group.users.length">
+        <md-slide-toggle
+          [checked]="false"
+          [(ngModel)]="group.opened"
+          >
+          Ver Usuarios
+        </md-slide-toggle>
+        <div [hidden]="!group.opened">
+          <md-card *ngFor="let user of group.users">
+            <md-card-header>
+              <div md-card-avatar><img src="{{user.gravatar}}" alt="" class="user-avatar"></div>
+              <md-card-title>
+                <md-checkbox  [(ngModel)]="user.selected">{{user.name}} - {{user.nombre}} {{user.apellidos}}</md-checkbox>
+              </md-card-title>
+              <md-card-subtitle>Email : {{user.email}}</md-card-subtitle>
+            </md-card-header>
+          </md-card>
+        </div>
+
+        </md-card-content>
+      </md-card>
+
+
     </md-card-content>
     <md-card-actions>
-      <button md-button (click)="sendMail()">ENVIAR</button>
+      <button md-button [disabled]="!isSomeUserSelected()" (click)="sendMail()">ENVIAR</button>
     </md-card-actions>
   </md-card>
 </div>
-<!--   
-  (change)="onChange($event)"
-  (ready)="onReady($event)"
-  (focus)="onFocus($event)"
-  (blur)="onBlur($event)" 
--->

@@ -32,6 +32,7 @@ export class AdminMapsEditComponent implements OnInit {
     private dragulaService: DragulaService,
     private adminService : AdminService
   ) {
+    this.getData();
     // Configurar Drag&Drop para que solo funcione apretando al botón
     this.dragulaService.setOptions('order', {
       moves : (el, container, handle) => handle.classList.contains('handle')
@@ -45,10 +46,14 @@ export class AdminMapsEditComponent implements OnInit {
         this.compareOrder();
       }
     );
+  }
+
+  ngOnInit() {}
+
+  getData(){
     // Parámetros de la ruta
     let params : any = this.route.snapshot.params;
     //console.log(params.id);
-    
     // Obtenemos el mapa
     Observable.forkJoin(
       this.adminService.getAllLayers().map( res => res.json() ),
@@ -69,17 +74,15 @@ export class AdminMapsEditComponent implements OnInit {
         let [ map, allLayers, allBaseLayers ] = data;
         let mapLayers = map.layers || [];
         let mapBaselayers = map.baselayers || [];
-
-        //console.log('orden', map, 'allLayers', allLayers, 'allBaselayers', allBaseLayers);
+        console.log('orden', map, 'allLayers', allLayers, 'allBaselayers', allBaseLayers);
         this.map = map;
         this.AllLayersNotInMap = allLayers.filter( l => !mapLayers.find( ll => l.id == ll.id ) );
         this.AllBaseLayersNotInMap = allBaseLayers.filter( l => !mapBaselayers.find( ll => l.id == ll.id ) );
+        console.log(this.AllLayersNotInMap, this.AllBaseLayersNotInMap);
         //console.log(data, 'data');
       }
     );
   }
-
-  ngOnInit() {}
 
   compareOrder(){
     let actualOrder : any[] = this.map.orden;
@@ -115,11 +118,14 @@ export class AdminMapsEditComponent implements OnInit {
     this.adminService.addLayerToMap(id_map, id_layer).subscribe(
       ()=>{
         this.selectedLayerToAdd = null;
+        /*
         let newLayer = { id_map, id_layer, position : this.map.orden.length, layer_type : 'layer', name : layer.name };
         this.AllLayersNotInMap = this.AllLayersNotInMap.filter( l => l.id != id_layer);
 
         this.map.orden.push(newLayer);
         this.originalOrder.push(newLayer);
+        */
+        this.getData();
       }
     );
   }
@@ -127,6 +133,7 @@ export class AdminMapsEditComponent implements OnInit {
   deleteLayerFromMap(id_layer){
     this.adminService.deleteMapLayer(this.map.id, id_layer).subscribe(
       ()=>{
+        /*
         let capa = this.map.orden.find( c => c.id == id_layer && c.layer_type == 'layer');
         this.AllLayersNotInMap.push(Object.create(null, capa));
         //console.log(this.map.orden.filter( l => !(l.id == id_layer && l.layer_type == 'layer') ));
@@ -134,6 +141,8 @@ export class AdminMapsEditComponent implements OnInit {
         this.map.orden.forEach( (c, i)=> c.position = i );
         this.originalOrder = this.originalOrder.filter( l => !(l.id_layer == id_layer && l.layer_type == 'layer') );
         console.log(capa)
+        */
+        this.getData();
       }
     )
   }
@@ -141,12 +150,14 @@ export class AdminMapsEditComponent implements OnInit {
   deleteBaseLayerFromMap(id_layer){
     this.adminService.deleteMapBaseLayer(this.map.id, id_layer).subscribe(
       ()=>{
-        let capa = this.map.orden.find( c => c.id == id_layer && c.layer_type == 'base');
+        /*let capa = this.map.orden.find( c => c.id == id_layer && c.layer_type == 'base');
         this.AllBaseLayersNotInMap.push(Object.create(null, capa));
         //console.log(this.map.orden.filter( l => !(l.id == id_layer && l.layer_type == 'layer') ));
         this.map.orden = this.map.orden.filter( l => !(l.id_layer == id_layer && l.layer_type == 'base') );
         this.map.orden.forEach( (c, i)=> c.position = i );
         this.originalOrder = this.originalOrder.filter( l => !(l.id_layer == id_layer && l.layer_type == 'base') );
+        */
+        this.getData();
       }
     )
   }
@@ -157,12 +168,13 @@ export class AdminMapsEditComponent implements OnInit {
     let layer = this.AllBaseLayersNotInMap.find( l => l.id == id_layer );
     this.adminService.addBaseLayerToMap(id_map, id_layer).subscribe(
       ()=>{
-        let newLayer = { id_map, id_layer, position : this.map.orden.length, layer_type : 'base', name : layer.name };
         this.selectedBaseLayerToAdd = null;
+        /*let newLayer = { id_map, id_layer, position : this.map.orden.length, layer_type : 'base', name : layer.name };
         this.AllBaseLayersNotInMap = this.AllBaseLayersNotInMap.filter( l => l.id != id_layer);
 
         this.map.orden.push(newLayer);
-        this.originalOrder.push(newLayer);
+        this.originalOrder.push(newLayer);*/
+        this.getData();
       }
     );
   }

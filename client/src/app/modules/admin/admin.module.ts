@@ -23,7 +23,7 @@ import {
     AdminLayersNewLayerComponent,
     AdminLayersNewBaselayerComponent,
     AdminLayerEditComponent,
-    AdminMailComponent,
+    AdminMailComponent
 } from './components';
 
 const adminRoutes : Route[] =  [{

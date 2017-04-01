@@ -1,4 +1,4 @@
-SELECT u.id, u.name, u.email, u.rol, valid_.valid, gg.*
+SELECT u.id, u.name, u.email, u.rol, u.gravatar, u.nombre, u.apellidos, valid_.valid, gg.*
 -- Seleccionamos id, nombre, email, rol de la tabla usuarios
 FROM Users u
 LEFT JOIN LATERAL (
