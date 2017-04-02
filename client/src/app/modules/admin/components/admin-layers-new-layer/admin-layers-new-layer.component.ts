@@ -79,7 +79,7 @@ export class AdminLayersNewLayerComponent implements OnInit {
       }, 
       (error)=>{
         //console.log(error.json(), 'jsooon');
-        this.error = error.json();
+        this.error = error.json().msg;
         this.loading.setValue(false);
       }
     )

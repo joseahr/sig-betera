@@ -28,7 +28,6 @@ export class AdminMailComponent implements OnInit {
     private loading : LoadingAnimateService,
     private adminService : AdminService
   ) {
-    this.loading.setValue(true);
     Observable.forkJoin(
       this.adminService.getUsers().map( res => res.json() ),
       this.adminService.getAllGroups().map( res => res.json() )
@@ -50,10 +49,8 @@ export class AdminMailComponent implements OnInit {
         });
         
         //console.log(this.groupsAndUsers);
-        this.loading.setValue(false);
       },
       (err) => {
-        this.loading.setValue(false);
       }
     )
   }
@@ -62,6 +59,7 @@ export class AdminMailComponent implements OnInit {
 
   sendMail(){
     //console.log(this.emailContent);
+    this.loading.setValue(true);
     let destinators = this.groupsAndUsers.reduce( (selectedUsers, group, index)=>{
       return selectedUsers.concat( group.users.filter( u => u.selected ) );
     }, [])
@@ -74,6 +72,7 @@ export class AdminMailComponent implements OnInit {
         this.emailTitle = '';
         this.groupsAndUsers.forEach( g => g.selected = false );
         this.groupsAndUsers.forEach( g => g.users.forEach( u => u.selected = false ) );
+        this.loading.setValue(false);
         //console.log('Emails enviados');
       },
       (err)=>{}

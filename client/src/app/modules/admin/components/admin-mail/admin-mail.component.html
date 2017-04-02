@@ -49,7 +49,7 @@
 
     </md-card-content>
     <md-card-actions>
-      <button md-button [disabled]="!isSomeUserSelected()" (click)="sendMail()">ENVIAR</button>
+      <button md-button [disabled]="!isSomeUserSelected() || !emailContent || !emailTitle" (click)="sendMail()">ENVIAR</button>
     </md-card-actions>
   </md-card>
 </div>

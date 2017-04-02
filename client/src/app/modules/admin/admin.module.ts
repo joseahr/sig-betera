@@ -7,6 +7,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { DataTablesModule } from 'angular-datatables';
 import { NgMathPipesModule } from 'angular-pipes';
 import { CKEditorModule } from 'ng2-ckeditor';
+import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
 
 import { 
     AdminComponent,
@@ -65,6 +66,7 @@ const adminRoutes : Route[] =  [{
         AdminLayerEditComponent
     ],
     providers : [
+       LoadingAnimateService 
     ],
     imports : [
         CommonModule,
@@ -73,6 +75,7 @@ const adminRoutes : Route[] =  [{
         FormsModule,
         DragulaModule,
         CKEditorModule,
+        LoadingAnimateModule.forRoot(),
         MaterialModule.forRoot(),
         RouterModule.forChild(adminRoutes)
     ],

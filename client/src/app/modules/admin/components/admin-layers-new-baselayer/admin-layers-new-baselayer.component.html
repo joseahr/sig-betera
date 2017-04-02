@@ -1,3 +1,4 @@
+<loading-animate></loading-animate>
 <div [@routerTransition]="" class="admin-page-margin">
   <md-card class="card-margin">
     <md-card-header>
@@ -7,7 +8,7 @@
     </md-card-header>
     <md-card-content>
       <md-input-container style="width : 100%;">
-        <input mdInput [(ngModel)]="serviceUrl" placeholder="url del servidor o capabilities"  value="">
+        <input mdInput [disabled]="serviceURLInputDisabled" [(ngModel)]="serviceUrl" placeholder="url del servidor o capabilities"  value="">
       </md-input-container>
       <button [disabled]="capas" md-button (click)="getCapabilities()" style="width : 100%;">OBTENER CAPAS</button>
       <button *ngIf="capas" md-button (click)="reset()" style="width : 100%;">LIMPIAR CAMPOS</button>

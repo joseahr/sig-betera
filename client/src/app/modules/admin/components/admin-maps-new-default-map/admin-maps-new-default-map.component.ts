@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
+import { LoadingAnimateService } from 'ng2-loading-animate';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
 
@@ -19,6 +20,7 @@ export class AdminMapsNewDefaultMapComponent implements OnInit {
   allMapsNotDefault;
 
   constructor(
+    private loading : LoadingAnimateService,
     private snackbar : MdSnackBar,
     private adminService : AdminService, 
     private location : Location
@@ -42,12 +44,15 @@ export class AdminMapsNewDefaultMapComponent implements OnInit {
   ngOnInit() {}
 
   createDefaultMap(){
+    this.loading.setValue(true);
     this.adminService.createDefaultMap(this.selectedMap).subscribe(
       ()=>{
+        this.loading.setValue(false);
         this.location.back();
       },
       (err)=>{
-        this.snackbar.open(`Error : ${err.json()}`, 'CERRAR', {
+        this.loading.setValue(false);
+        this.snackbar.open(`Error : ${err.json().msg}`, 'CERRAR', {
           duration : 2000
         })
       }

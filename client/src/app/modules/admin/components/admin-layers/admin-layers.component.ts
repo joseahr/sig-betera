@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { MdSnackBar, MdDialog } from '@angular/material';
 import { DataTableDirective } from 'angular-datatables';
+import { LoadingAnimateService } from 'ng2-loading-animate';
 import { AdminLayerEditComponent } from '../';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
@@ -27,6 +28,7 @@ export class AdminLayersComponent implements OnInit {
   private dtElements;
 
   constructor(
+    private loading : LoadingAnimateService,
     private adminService : AdminService,
     private dialogRef : MdDialog,
     private snackbar : MdSnackBar,
@@ -95,11 +97,13 @@ export class AdminLayersComponent implements OnInit {
     this.dtElements._results[0].dtInstance.then(dtInstance =>{
       this.dtInstances.push(dtInstance);
       dtInstance.on('click', '.remove-layer', function(){
+        self.loading.setValue(true);
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
         self.adminService.deleteLayer(row.name).subscribe(
           ()=>{
-            console.log('deleted');
+            self.loading.setValue(false);
+            //console.log('deleted');
             dtInstance.ajax.reload();
             self.snackbar.open(`Capa ${row.name} eliminada correctamente`, 'CERRAR', {
               duration : 2000
@@ -116,11 +120,13 @@ export class AdminLayersComponent implements OnInit {
     this.dtElements._results[1].dtInstance.then(dtInstance =>{
       this.dtInstances.push(dtInstance);
       dtInstance.on('click', '.remove-baselayer', function(){
+        self.loading.setValue(true);
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
         self.adminService.deleteBaseLayer(row.id).subscribe(
           ()=>{
-            console.log('deleted baselayer')
+            self.loading.setValue(false);
+            //console.log('deleted baselayer')
             dtInstance.ajax.reload();
             self.snackbar.open(`Capa Base ${row.id} eliminada correctamente`, 'CERRAR', {
               duration : 2000

@@ -221,6 +221,10 @@ router.route('/baselayers')
     if(!service_url) return res.status(500).json('Debe introducir una url del servicio');
     if (!layers || !layers.length) return res.status(500).json('Debe seleccionar al menos una capa');
 
+    let regex = /(\?|\&)([^=]+)\=([^&]+)/g;
+    let extract = (service_url.match(regex) || []).join('');
+    let serviceURL = service_url.replace(extract, '') + '?service=WMS&request=GetCapabilities';
+
     capabilitiesParser.parser(service_url)
     .then( ( layersCap : any ) =>{
         let service_url_ = service_url.split('?')[0];

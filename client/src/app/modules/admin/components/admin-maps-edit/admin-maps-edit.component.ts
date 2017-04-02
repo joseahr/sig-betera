@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { routerTransition } from '../../../../router.transitions';
 import { DragulaService, DragulaDirective } from 'ng2-dragula';
+import { LoadingAnimateService } from 'ng2-loading-animate';
+import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
 
 @Component({
@@ -26,6 +27,7 @@ export class AdminMapsEditComponent implements OnInit {
   hasChangedOrder : boolean = false;
 
   constructor(
+    private loading : LoadingAnimateService,
     private zone : NgZone,
     private route : ActivatedRoute,
     private snackBar : MdSnackBar,
@@ -71,6 +73,7 @@ export class AdminMapsEditComponent implements OnInit {
       return [map, allLayers, allBaseLayers];
     }).subscribe(
       data =>{
+        this.loading.setValue(false);
         let [ map, allLayers, allBaseLayers ] = data;
         let mapLayers = map.layers || [];
         let mapBaselayers = map.baselayers || [];
@@ -98,10 +101,12 @@ export class AdminMapsEditComponent implements OnInit {
   saveOrder(){
     let actualOrder : any[] = this.map.orden;
     let params : any = this.route.snapshot.params;
-
+    
+    this.loading.setValue(true);
     this.adminService.setMapOrder(params.id, actualOrder).subscribe(
       ()=>{
-        console.log('order saved');
+        this.loading.setValue(false);
+        //console.log('order saved');
         this.originalOrder = [];
         this.map.orden.forEach( c => this.originalOrder.push(c) );
         this.compareOrder();
@@ -112,9 +117,10 @@ export class AdminMapsEditComponent implements OnInit {
 
   addSelectedLayer(){
     let id_layer = this.selectedLayerToAdd;
-    console.log(id_layer, '');
+    //console.log(id_layer, '');
     let id_map = this.map.id;
     let layer = this.AllLayersNotInMap.find( l => l.id == id_layer );
+    this.loading.setValue(true);
     this.adminService.addLayerToMap(id_map, id_layer).subscribe(
       ()=>{
         this.selectedLayerToAdd = null;
@@ -131,6 +137,7 @@ export class AdminMapsEditComponent implements OnInit {
   }
 
   deleteLayerFromMap(id_layer){
+    this.loading.setValue(true);
     this.adminService.deleteMapLayer(this.map.id, id_layer).subscribe(
       ()=>{
         /*
@@ -148,6 +155,7 @@ export class AdminMapsEditComponent implements OnInit {
   }
 
   deleteBaseLayerFromMap(id_layer){
+    this.loading.setValue(true);
     this.adminService.deleteMapBaseLayer(this.map.id, id_layer).subscribe(
       ()=>{
         /*let capa = this.map.orden.find( c => c.id == id_layer && c.layer_type == 'base');
@@ -163,6 +171,7 @@ export class AdminMapsEditComponent implements OnInit {
   }
 
   addSelectedBaseLayer(){
+    this.loading.setValue(true);
     let id_layer = this.selectedBaseLayerToAdd;
     let id_map = this.map.id;
     let layer = this.AllBaseLayersNotInMap.find( l => l.id == id_layer );

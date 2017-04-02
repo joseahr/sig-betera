@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingAnimateService } from 'ng2-loading-animate';
 import { routerTransition } from '../../../../router.transitions';
 import { WMSCapabilitiesService } from '../../../map/services';
 import { AdminService } from '../../services';
@@ -18,7 +19,10 @@ export class AdminLayersNewBaselayerComponent implements OnInit {
   capasSeleccionadas : any[] = [];
   error : any;
 
+  serviceURLInputDisabled = false;
+
   constructor(
+    private loading : LoadingAnimateService,
     private capabilitiesService : WMSCapabilitiesService, 
     private adminService : AdminService
   ) { }
@@ -27,7 +31,7 @@ export class AdminLayersNewBaselayerComponent implements OnInit {
   }
 
   onChangeCheckbox(event, name){
-    console.log(event, name);
+    //console.log(event, name);
     let { checked } = event;
     if(!checked){
       this.capasSeleccionadas = 
@@ -43,13 +47,17 @@ export class AdminLayersNewBaselayerComponent implements OnInit {
       this.error = 'Debe añadir la url del servicio';
     }
     let regex = /(\?|\&)([^=]+)\=([^&]+)/g;
-    let extract = this.serviceUrl.match(regex).join('');
+    let extract = (this.serviceUrl.match(regex) || []).join('');
     let url = this.serviceUrl.replace(extract, '') + '?service=WMS&request=GetCapabilities';
+    this.loading.setValue(true);
     this.capabilitiesService.getCapabilities(url).subscribe(
       (layers)=>{
+        this.loading.setValue(false);
         this.error = null;
         this.capas = layers.json();
+        this.serviceURLInputDisabled = true;
       }, (error) =>{
+        this.loading.setValue(false);
         this.error = error.json();
       }
     );
@@ -57,20 +65,26 @@ export class AdminLayersNewBaselayerComponent implements OnInit {
 
   addBaseLayer(){
     let regex = /(\?|\&)([^=]+)\=([^&]+)/g;
-    let extract = this.serviceUrl.match(regex).join('');
-    let serviceURL = this.serviceUrl.replace(extract, '');
+    let extract = (this.serviceUrl.match(regex) || []).join('');
+    let serviceURL = this.serviceUrl.replace(extract, '') + '?service=WMS&request=GetCapabilities';
     let layers = this.capasSeleccionadas.map( l => l.Name );
-
+    console.log(serviceURL);
+    this.loading.setValue(true);
     this.adminService.postBaseLayer(serviceURL, layers).subscribe(
       ()=>{
+        this.loading.setValue(false);
+        this.serviceUrl = '';
         this.reset();
       }, (err)=>{
+        this.loading.setValue(false);
         this.error = err.json();
       }
     )
   }
 
   reset(){
+    this.serviceURLInputDisabled = false;
+    this.serviceUrl = '';
     this.capas = null;
     this.capasSeleccionadas = [];
   }

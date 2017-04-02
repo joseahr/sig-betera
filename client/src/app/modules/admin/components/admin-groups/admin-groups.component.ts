@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { MdDialog } from '@angular/material';
 import { AdminGroupEditComponent } from '..';
+import { LoadingAnimateService } from 'ng2-loading-animate';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
 
@@ -25,6 +26,7 @@ export class AdminGroupsComponent implements OnInit {
   private datatableElement: DataTableDirective;
 
   constructor(
+    private loading : LoadingAnimateService,
     private dialogRef :  MdDialog,
     private adminService : AdminService
   ) {
@@ -64,10 +66,12 @@ export class AdminGroupsComponent implements OnInit {
     this.datatableElement.dtInstance.then(dtInstance =>{
       this.dtInstance = dtInstance;
       dtInstance.on('click', '.remove-group', function(){
+        self.loading.setValue(true);
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
         self.adminService.deleteGroup(row.id).subscribe(
           ()=>{
+            self.loading.setValue(false);
             dtInstance.ajax.reload();
           }
         )
@@ -81,8 +85,10 @@ export class AdminGroupsComponent implements OnInit {
   }
 
   createGroup(){
+    this.loading.setValue(true);
     this.adminService.createGroup(this.newGroupName).subscribe(
       ()=>{
+        this.loading.setValue(false);
         this.dtInstance.ajax.reload();
         this.newGroupName = null;
       }

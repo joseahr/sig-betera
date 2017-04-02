@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { LoadingAnimateService } from 'ng2-loading-animate';
 import { Observable } from 'rxjs';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
@@ -21,6 +22,7 @@ export class AdminUserDetailsComponent implements OnInit {
   selectedMapToAdd;
 
   constructor(
+    private loading : LoadingAnimateService,
     private route : ActivatedRoute, 
     private location : Location,
     private adminService : AdminService
@@ -28,8 +30,7 @@ export class AdminUserDetailsComponent implements OnInit {
     this.getData();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   goBack(){
     this.location.back();
@@ -49,6 +50,7 @@ export class AdminUserDetailsComponent implements OnInit {
       return [userDetail, allGroups.filter( g => !userGroups.find( gg => g.id == gg.id ) )];
     }).subscribe(
       (data)=>{
+        this.loading.setValue(false);
         this.userDetail = data[0];
         this.allNotUserGroups = data[1];
       }
@@ -56,6 +58,7 @@ export class AdminUserDetailsComponent implements OnInit {
   }
 
   addGroup(){
+    this.loading.setValue(true);
     let params : any = this.route.snapshot.params;
     this.adminService.addUserGroup(params.id, this.selectedGroupToAdd).subscribe(
       ()=>{
@@ -65,6 +68,7 @@ export class AdminUserDetailsComponent implements OnInit {
   }
 
   deleteGroup(groupName){
+    this.loading.setValue(true);
     let params : any = this.route.snapshot.params;
     this.adminService.deleteUserGroup(params.id, groupName).subscribe(
       ()=>{
@@ -74,6 +78,7 @@ export class AdminUserDetailsComponent implements OnInit {
   }
 
   addUserMap(){
+    this.loading.setValue(true);
     let params : any = this.route.snapshot.params;
     this.adminService.addUserMap(params.id, this.selectedMapToAdd).subscribe(
       ()=>{
@@ -89,6 +94,7 @@ export class AdminUserDetailsComponent implements OnInit {
   }
 
   deleteUserMap(map){
+    this.loading.setValue(true);
     //console.log(map);
     let params : any = this.route.snapshot.params;
     this.adminService.deleteUserMap(params.id, map.id).subscribe(
@@ -118,10 +124,11 @@ export class AdminUserDetailsComponent implements OnInit {
       /* Ejecutamos un Update */
       query = this.adminService.updateUserRol(id_user, layer.id_layer, newValue);
     }
-  
+    this.loading.setValue(true);
     query.subscribe(
       ()=>{
         layer.rol = newValue;
+        this.loading.setValue(false);
         console.log('Actualizado correctamente');
       }
     );
