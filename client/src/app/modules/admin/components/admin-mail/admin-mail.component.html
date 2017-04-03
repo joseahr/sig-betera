@@ -7,6 +7,10 @@
       <md-card-subtitle>Contenido del email</md-card-subtitle>
     </md-card-header>
     <md-card-content>
+      <div style="display : inline-flex;">
+        <md-icon style="margin : 14px 14px 14px 0px;">email</md-icon>
+        <h4>Título y cuerpo del email</h4>
+      </div>
       <md-input-container style="width : 100%;">
         <input mdInput placeholder="Título del Email" [(ngModel)]="emailTitle">
       </md-input-container>
@@ -15,7 +19,10 @@
         [config]="{ uiColor: '#f7f7f7', toolbar: 'Full' }"
         debounce="500">
       </ckeditor>
-
+      <div style="display : inline-flex;">
+        <md-icon style="margin : 14px 14px 14px 0px;">group</md-icon>
+        <h4>Elige los destinatarios</h4>
+      </div>
       <md-card *ngFor="let group of groupsAndUsers" style="margin : 5px 0px 5px 0px;">
         <md-card-header>
           <!--<div md-card-avatar><img src="" alt="" class="user-avatar"></div>-->
@@ -32,7 +39,7 @@
           Ver Usuarios
         </md-slide-toggle>
         <div [hidden]="!group.opened">
-          <md-card *ngFor="let user of group.users">
+          <md-card *ngFor="let user of group.users" style="margin-bottom : 4px;">
             <md-card-header>
               <div md-card-avatar><img src="{{user.gravatar}}" alt="" class="user-avatar"></div>
               <md-card-title>

@@ -7,6 +7,7 @@ import { LoadingAnimateService } from 'ng2-loading-animate';
 import { AdminLayerEditComponent } from '../';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
+import { ConfirmDialogService } from '../../../../services';
 
 declare const $;
 
@@ -28,6 +29,7 @@ export class AdminLayersComponent implements OnInit {
   private dtElements;
 
   constructor(
+    private confirm : ConfirmDialogService,
     private loading : LoadingAnimateService,
     private adminService : AdminService,
     private dialogRef : MdDialog,
@@ -36,6 +38,7 @@ export class AdminLayersComponent implements OnInit {
     private router : Router, 
     private route : ActivatedRoute
   ) {
+    
     this.dtOptionsLayers = {
       scrollX : true,
       scrollY : '50vh',
@@ -97,19 +100,25 @@ export class AdminLayersComponent implements OnInit {
     this.dtElements._results[0].dtInstance.then(dtInstance =>{
       this.dtInstances.push(dtInstance);
       dtInstance.on('click', '.remove-layer', function(){
-        self.loading.setValue(true);
+        //self.loading.setValue(true);
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
-        self.adminService.deleteLayer(row.name).subscribe(
-          ()=>{
-            self.loading.setValue(false);
-            //console.log('deleted');
-            dtInstance.ajax.reload();
-            self.snackbar.open(`Capa ${row.name} eliminada correctamente`, 'CERRAR', {
-              duration : 2000
-            });
+        self.confirm.open(`¿Estás seguro de eliminar la capa ${row.name}?`).afterClosed().subscribe(
+          (removeBool)=>{
+            if(!removeBool) return;
+            self.loading.setValue(true);
+            self.adminService.deleteLayer(row.name).subscribe(
+              ()=>{
+                self.loading.setValue(false);
+                //console.log('deleted');
+                dtInstance.ajax.reload();
+                self.snackbar.open(`Capa ${row.name} eliminada correctamente`, 'CERRAR', {
+                  duration : 2000
+                });
+              }
+            )
           }
-        )
+        );
       });
       dtInstance.on('click', '.edit-layer', function(){
         let row_dom = $(this).closest('tr');
@@ -120,19 +129,24 @@ export class AdminLayersComponent implements OnInit {
     this.dtElements._results[1].dtInstance.then(dtInstance =>{
       this.dtInstances.push(dtInstance);
       dtInstance.on('click', '.remove-baselayer', function(){
-        self.loading.setValue(true);
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
-        self.adminService.deleteBaseLayer(row.id).subscribe(
-          ()=>{
-            self.loading.setValue(false);
-            //console.log('deleted baselayer')
-            dtInstance.ajax.reload();
-            self.snackbar.open(`Capa Base ${row.id} eliminada correctamente`, 'CERRAR', {
-              duration : 2000
-            });
+        self.confirm.open(`¿Estás seguro de eliminar la capa base que contiene las siguiente capas: ${row.name}?`).afterClosed().subscribe(
+          (removeBool)=>{
+            if(!removeBool) return;
+            self.loading.setValue(true);
+            self.adminService.deleteBaseLayer(row.id).subscribe(
+              ()=>{
+                self.loading.setValue(false);
+                //console.log('deleted baselayer')
+                dtInstance.ajax.reload();
+                self.snackbar.open(`Capa Base ${row.id} eliminada correctamente`, 'CERRAR', {
+                  duration : 2000
+                });
+              }
+            );
           }
-        )
+        );
       });
     });
   }

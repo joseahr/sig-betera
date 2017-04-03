@@ -19,7 +19,7 @@ router.route('/features/byGeom')
 router
 .post('/wms/capabilities', (req, res)=>{
     let serviceUrl = req.body.service_url;
-    console.log(serviceUrl, req.body);
+    //console.log(serviceUrl, req.body);
     if(!serviceUrl) return res.status(500).json('Introduce una url');
     capabilitiesParser.parser(serviceUrl)
     .then(layers =>{

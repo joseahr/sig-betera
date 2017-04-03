@@ -37,7 +37,7 @@ export class AddWmsComponent implements OnInit {
       this.error = 'Debe añadir la url del servicio';
     }
     let regex = /(\?|\&)([^=]+)\=([^&]+)/g;
-    let extract = this.serviceUrl.match(regex).join('');
+    let extract = (this.serviceUrl.match(regex) || []).join('');
     let url = this.serviceUrl.replace(extract, '') + '?service=WMS&request=GetCapabilities';
     this.capabilitiesService.getCapabilities(url).subscribe(
       (layers)=>{
@@ -51,7 +51,7 @@ export class AddWmsComponent implements OnInit {
 
   closeWithData(){
     let regex = /(\?|\&)([^=]+)\=([^&]+)/g;
-    let extract = this.serviceUrl.match(regex).join('');
+    let extract = (this.serviceUrl.match(regex) || []).join('');
     let serviceURL = this.serviceUrl.replace(extract, '');
     let layers = this.capasSeleccionadas;
     this.dialogRef.close({ serviceURL, layers });

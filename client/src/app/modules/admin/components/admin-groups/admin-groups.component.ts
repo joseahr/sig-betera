@@ -4,6 +4,7 @@ import { MdDialog } from '@angular/material';
 import { AdminGroupEditComponent } from '..';
 import { LoadingAnimateService } from 'ng2-loading-animate';
 import { routerTransition } from '../../../../router.transitions';
+import { ConfirmDialogService } from '../../../../services';
 import { AdminService } from '../../services';
 
 declare const $;
@@ -26,6 +27,7 @@ export class AdminGroupsComponent implements OnInit {
   private datatableElement: DataTableDirective;
 
   constructor(
+    private confirm : ConfirmDialogService,
     private loading : LoadingAnimateService,
     private dialogRef :  MdDialog,
     private adminService : AdminService
@@ -66,15 +68,23 @@ export class AdminGroupsComponent implements OnInit {
     this.datatableElement.dtInstance.then(dtInstance =>{
       this.dtInstance = dtInstance;
       dtInstance.on('click', '.remove-group', function(){
-        self.loading.setValue(true);
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
-        self.adminService.deleteGroup(row.id).subscribe(
-          ()=>{
-            self.loading.setValue(false);
-            dtInstance.ajax.reload();
+        self.confirm.open(
+          `¿Estás seguro de eliminar el grupo ${row.name}?`
+        ).afterClosed().subscribe(
+          (removeBool)=>{
+
+            if(!removeBool) return;
+            self.loading.setValue(true);
+            self.adminService.deleteGroup(row.id).subscribe(
+              ()=>{
+                self.loading.setValue(false);
+                dtInstance.ajax.reload();
+              }
+            );
           }
-        )
+        );
       });
       dtInstance.on('click', '.edit-group', function(){
         let row_dom = $(this).closest('tr');

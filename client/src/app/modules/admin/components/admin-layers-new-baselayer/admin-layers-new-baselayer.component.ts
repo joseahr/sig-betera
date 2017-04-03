@@ -66,7 +66,7 @@ export class AdminLayersNewBaselayerComponent implements OnInit {
   addBaseLayer(){
     let regex = /(\?|\&)([^=]+)\=([^&]+)/g;
     let extract = (this.serviceUrl.match(regex) || []).join('');
-    let serviceURL = this.serviceUrl.replace(extract, '') + '?service=WMS&request=GetCapabilities';
+    let serviceURL = this.serviceUrl.replace(extract, '');
     let layers = this.capasSeleccionadas.map( l => l.Name );
     console.log(serviceURL);
     this.loading.setValue(true);

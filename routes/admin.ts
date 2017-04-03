@@ -224,8 +224,8 @@ router.route('/baselayers')
     let regex = /(\?|\&)([^=]+)\=([^&]+)/g;
     let extract = (service_url.match(regex) || []).join('');
     let serviceURL = service_url.replace(extract, '') + '?service=WMS&request=GetCapabilities';
-
-    capabilitiesParser.parser(service_url)
+    //console.log(serviceURL);
+    capabilitiesParser.parser(serviceURL)
     .then( ( layersCap : any ) =>{
         let service_url_ = service_url.split('?')[0];
         let layers_ = layers.join();

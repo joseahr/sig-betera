@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { MdSnackBar } from '@angular/material';
 import { LoadingAnimateService } from 'ng2-loading-animate';
+import { ConfirmDialogService } from '../../../../services';
 import { routerTransition } from '../../../../router.transitions';
 import { AdminService } from '../../services';
 
@@ -26,6 +27,7 @@ export class AdminMapsComponent implements OnInit {
   private dtElements;
 
   constructor(
+    private confirm : ConfirmDialogService,
     private loading : LoadingAnimateService,
     private router : Router,
     private adminService : AdminService,
@@ -92,20 +94,27 @@ export class AdminMapsComponent implements OnInit {
     this.dtElements._results[0].dtInstance.then(dtInstance =>{
       this.dtInstances.push(dtInstance);
       dtInstance.on('click', '.remove-map', function(){
-        self.loading.setValue(true);
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
-        self.adminService.deleteMap(row.id).subscribe(
-          ()=>{
-            self.loading.setValue(false);
-            //console.log('deleted');
-            self.dtInstances.forEach( dtI => dtI.ajax.reload() )
-            //dtInstance.ajax.reload();
-            self.snackbar.open(`Mapa ${row.name} eliminado correctamente`, 'CERRAR', {
-              duration : 2000
-            });
+        self.confirm.open(
+          `¿Estás seguro de eliminar el mapa ${row.name}?`
+        ).afterClosed().subscribe(
+          (removeBool)=>{
+            if(!removeBool) return;
+            self.loading.setValue(true);
+            self.adminService.deleteMap(row.id).subscribe(
+              ()=>{
+                self.loading.setValue(false);
+                //console.log('deleted');
+                self.dtInstances.forEach( dtI => dtI.ajax.reload() )
+                //dtInstance.ajax.reload();
+                self.snackbar.open(`Mapa ${row.name} eliminado correctamente`, 'CERRAR', {
+                  duration : 2000
+                });
+              }
+            );
           }
-        )
+        );
       });
       dtInstance.on('click', '.edit-map', function(){
         let row_dom = $(this).closest('tr');
@@ -116,19 +125,27 @@ export class AdminMapsComponent implements OnInit {
     this.dtElements._results[1].dtInstance.then(dtInstance =>{
       this.dtInstances.push(dtInstance);
       dtInstance.on('click', '.remove-default-map', function(){
-        self.loading.setValue(true);
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
-        self.adminService.deleteDefaultMap(row.id).subscribe(
-          ()=>{
-            self.loading.setValue(false);
-            //console.log('deleted baselayer')
-            dtInstance.ajax.reload();
-            self.snackbar.open(`Mapa por defecto ${row.name} eliminado correctamente`, 'CERRAR', {
-              duration : 2000
-            });
+        self.confirm.open(
+          `El mapa ${row.name} dejará de ser visible por todos los usuarios. ¿Eliminar como mapa por defecto?`
+        ).afterClosed().subscribe(
+          (removeBool)=>{
+            if(!removeBool) return;
+            self.loading.setValue(true);
+            self.adminService.deleteDefaultMap(row.id).subscribe(
+              ()=>{
+                self.loading.setValue(false);
+                //console.log('deleted baselayer')
+                dtInstance.ajax.reload();
+                self.snackbar.open(`Mapa por defecto ${row.name} eliminado correctamente`, 'CERRAR', {
+                  duration : 2000
+                });
+              }
+            );
           }
-        )
+        );
+    
       });
     });
   }

@@ -218,7 +218,7 @@ export class MapComponent implements OnInit {
       service_url : 'http://sig.betera.es:8080/geoserver/betera/wms', 
       layers : params.name, 
       name : params.name,
-      crossOrigin : 'anonymous'  
+      //crossOrigin : 'anonymous'  
     });
     tile.set('type', params.geomColumnType);
     group.getLayers().extend([tile]);

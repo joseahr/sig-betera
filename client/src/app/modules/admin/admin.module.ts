@@ -8,6 +8,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { NgMathPipesModule } from 'angular-pipes';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
+import { ConfirmDialogComponent, ConfirmDialogService } from '../../services';
 
 import { 
     AdminComponent,
@@ -63,10 +64,12 @@ const adminRoutes : Route[] =  [{
         AdminMapsNewDefaultMapComponent,
         AdminMapsEditComponent,
         AdminGroupEditComponent,
-        AdminLayerEditComponent
+        AdminLayerEditComponent,
+        ConfirmDialogComponent
     ],
     providers : [
-       LoadingAnimateService 
+       LoadingAnimateService,
+       ConfirmDialogService
     ],
     imports : [
         CommonModule,
@@ -79,7 +82,7 @@ const adminRoutes : Route[] =  [{
         MaterialModule.forRoot(),
         RouterModule.forChild(adminRoutes)
     ],
-    entryComponents : [ AdminGroupEditComponent, AdminLayerEditComponent ]
+    entryComponents : [ AdminGroupEditComponent, AdminLayerEditComponent, ConfirmDialogComponent ]
 })
 export class AdminModule {
 

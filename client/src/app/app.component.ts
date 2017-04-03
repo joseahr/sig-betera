@@ -68,15 +68,16 @@ export class AppComponent {
   }
 
   private _hideSpinner(): void {
-      this.ngZone.runOutsideAngular(() => {
-        this.loading.setValue(false);
-      });
+    this.ngZone.runOutsideAngular(() => {
+      this.loading.setValue(false);
+    });
   }
 
   openLoginDialog(){
     let dialogRef = this.dialog.open(LoginComponent);
     dialogRef.afterClosed().subscribe(
       result => {
+        if(!result) return;
         this.authUser = result;
         this.router.navigate(['']);
       }

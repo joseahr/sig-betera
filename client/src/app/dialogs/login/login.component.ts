@@ -36,7 +36,7 @@ export class LoginComponent {
       (err) =>{
         console.log(err);
         this.isLoading = false;
-        this.snackBar.open(err, null, { duration : 1000 });
+        this.snackBar.open(err.json(), null, { duration : 1000 });
       },
       ()=>{
         console.log('end - login');

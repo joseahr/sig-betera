@@ -199,7 +199,8 @@ exports.router.route('/baselayers')
     var regex = /(\?|\&)([^=]+)\=([^&]+)/g;
     var extract = (service_url.match(regex) || []).join('');
     var serviceURL = service_url.replace(extract, '') + '?service=WMS&request=GetCapabilities';
-    capabilitiesParser.parser(service_url)
+    //console.log(serviceURL);
+    capabilitiesParser.parser(serviceURL)
         .then(function (layersCap) {
         var service_url_ = service_url.split('?')[0];
         var layers_ = layers.join();

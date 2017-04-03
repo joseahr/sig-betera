@@ -6,7 +6,7 @@ webpackJsonp([1,7],Array(748).concat([
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_dragula__ = __webpack_require__(783);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_dragula___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_dragula__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components__ = __webpack_require__(1101);
@@ -1596,7 +1596,7 @@ var Subject_1 = __webpack_require__(9);
 var queue_1 = __webpack_require__(801);
 var Subscription_1 = __webpack_require__(51);
 var observeOn_1 = __webpack_require__(465);
-var ObjectUnsubscribedError_1 = __webpack_require__(272);
+var ObjectUnsubscribedError_1 = __webpack_require__(273);
 var SubjectSubscription_1 = __webpack_require__(467);
 /**
  * @class ReplaySubject<T>
@@ -1855,7 +1855,7 @@ var EmptyError_1 = __webpack_require__(170);
 exports.EmptyError = EmptyError_1.EmptyError;
 var ArgumentOutOfRangeError_1 = __webpack_require__(764);
 exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError_1.ArgumentOutOfRangeError;
-var ObjectUnsubscribedError_1 = __webpack_require__(272);
+var ObjectUnsubscribedError_1 = __webpack_require__(273);
 exports.ObjectUnsubscribedError = ObjectUnsubscribedError_1.ObjectUnsubscribedError;
 var TimeoutError_1 = __webpack_require__(804);
 exports.TimeoutError = TimeoutError_1.TimeoutError;
@@ -22117,7 +22117,7 @@ var AddWmsComponent = (function () {
             this.error = 'Debe añadir la url del servicio';
         }
         var regex = /(\?|\&)([^=]+)\=([^&]+)/g;
-        var extract = this.serviceUrl.match(regex).join('');
+        var extract = (this.serviceUrl.match(regex) || []).join('');
         var url = this.serviceUrl.replace(extract, '') + '?service=WMS&request=GetCapabilities';
         this.capabilitiesService.getCapabilities(url).subscribe(function (layers) {
             _this.error = null;
@@ -22128,7 +22128,7 @@ var AddWmsComponent = (function () {
     };
     AddWmsComponent.prototype.closeWithData = function () {
         var regex = /(\?|\&)([^=]+)\=([^&]+)/g;
-        var extract = this.serviceUrl.match(regex).join('');
+        var extract = (this.serviceUrl.match(regex) || []).join('');
         var serviceURL = this.serviceUrl.replace(extract, '');
         var layers = this.capasSeleccionadas;
         this.dialogRef.close({ serviceURL: serviceURL, layers: layers });
@@ -22144,7 +22144,7 @@ var AddWmsComponent = (function () {
             styles: [__webpack_require__(1233)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__services__["a" /* WMSCapabilitiesService */]]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services__["a" /* WMSCapabilitiesService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["a" /* WMSCapabilitiesService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */]) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services__["a" /* WMSCapabilitiesService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["a" /* WMSCapabilitiesService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */]) === 'function' && _b) || Object])
     ], AddWmsComponent);
     return AddWmsComponent;
     var _a, _b;
@@ -22861,7 +22861,6 @@ var MapComponent = (function () {
             service_url: 'http://sig.betera.es:8080/geoserver/betera/wms',
             layers: params.name,
             name: params.name,
-            crossOrigin: 'anonymous'
         });
         tile.set('type', params.geomColumnType);
         group.getLayers().extend([tile]);
@@ -22909,7 +22908,7 @@ var MapComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _f) || Object, (typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdDialog */]) === 'function' && _g) || Object, (typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _h) || Object, (typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_2__services__["d" /* UserMapsService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["d" /* UserMapsService */]) === 'function' && _j) || Object, (typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_2__services__["c" /* ProjectionService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["c" /* ProjectionService */]) === 'function' && _k) || Object, (typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_2__services__["b" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["b" /* Profile3DService */]) === 'function' && _l) || Object])
+        __metadata('design:paramtypes', [(typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _f) || Object, (typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialog */]) === 'function' && _g) || Object, (typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _h) || Object, (typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_2__services__["d" /* UserMapsService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["d" /* UserMapsService */]) === 'function' && _j) || Object, (typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_2__services__["c" /* ProjectionService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["c" /* ProjectionService */]) === 'function' && _k) || Object, (typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_2__services__["b" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["b" /* Profile3DService */]) === 'function' && _l) || Object])
     ], MapComponent);
     return MapComponent;
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;

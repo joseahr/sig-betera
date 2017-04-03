@@ -6,7 +6,7 @@ webpackJsonp([0,7],Array(747).concat([
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__ = __webpack_require__(783);
@@ -15,9 +15,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angular_pipes__ = __webpack_require__(1209);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor__ = __webpack_require__(1187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components__ = __webpack_require__(808);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services__ = __webpack_require__(644);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components__ = __webpack_require__(808);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminModule", function() { return AdminModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -39,22 +40,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var adminRoutes = [{
         path: '',
-        component: __WEBPACK_IMPORTED_MODULE_10__components__["a" /* AdminComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_11__components__["a" /* AdminComponent */],
         children: [
-            { path: 'home', component: __WEBPACK_IMPORTED_MODULE_10__components__["b" /* AdminHomeComponent */] },
-            { path: 'users', component: __WEBPACK_IMPORTED_MODULE_10__components__["c" /* AdminUsersComponent */] },
-            { path: 'users/:id', component: __WEBPACK_IMPORTED_MODULE_10__components__["d" /* AdminUserDetailsComponent */] },
-            { path: 'maps/new/map', component: __WEBPACK_IMPORTED_MODULE_10__components__["e" /* AdminMapsNewMapComponent */] },
-            { path: 'maps/edit/:id', component: __WEBPACK_IMPORTED_MODULE_10__components__["f" /* AdminMapsEditComponent */] },
-            { path: 'maps/new/default', component: __WEBPACK_IMPORTED_MODULE_10__components__["g" /* AdminMapsNewDefaultMapComponent */] },
-            { path: 'maps', component: __WEBPACK_IMPORTED_MODULE_10__components__["h" /* AdminMapsComponent */] },
-            { path: 'groups', component: __WEBPACK_IMPORTED_MODULE_10__components__["i" /* AdminGroupsComponent */] },
-            { path: 'layers', component: __WEBPACK_IMPORTED_MODULE_10__components__["j" /* AdminLayersComponent */] },
-            { path: 'layers/new/layer', component: __WEBPACK_IMPORTED_MODULE_10__components__["k" /* AdminLayersNewLayerComponent */] },
-            { path: 'layers/new/baselayer', component: __WEBPACK_IMPORTED_MODULE_10__components__["l" /* AdminLayersNewBaselayerComponent */] },
-            { path: 'mail', component: __WEBPACK_IMPORTED_MODULE_10__components__["m" /* AdminMailComponent */] },
+            { path: 'home', component: __WEBPACK_IMPORTED_MODULE_11__components__["b" /* AdminHomeComponent */] },
+            { path: 'users', component: __WEBPACK_IMPORTED_MODULE_11__components__["c" /* AdminUsersComponent */] },
+            { path: 'users/:id', component: __WEBPACK_IMPORTED_MODULE_11__components__["d" /* AdminUserDetailsComponent */] },
+            { path: 'maps/new/map', component: __WEBPACK_IMPORTED_MODULE_11__components__["e" /* AdminMapsNewMapComponent */] },
+            { path: 'maps/edit/:id', component: __WEBPACK_IMPORTED_MODULE_11__components__["f" /* AdminMapsEditComponent */] },
+            { path: 'maps/new/default', component: __WEBPACK_IMPORTED_MODULE_11__components__["g" /* AdminMapsNewDefaultMapComponent */] },
+            { path: 'maps', component: __WEBPACK_IMPORTED_MODULE_11__components__["h" /* AdminMapsComponent */] },
+            { path: 'groups', component: __WEBPACK_IMPORTED_MODULE_11__components__["i" /* AdminGroupsComponent */] },
+            { path: 'layers', component: __WEBPACK_IMPORTED_MODULE_11__components__["j" /* AdminLayersComponent */] },
+            { path: 'layers/new/layer', component: __WEBPACK_IMPORTED_MODULE_11__components__["k" /* AdminLayersNewLayerComponent */] },
+            { path: 'layers/new/baselayer', component: __WEBPACK_IMPORTED_MODULE_11__components__["l" /* AdminLayersNewBaselayerComponent */] },
+            { path: 'mail', component: __WEBPACK_IMPORTED_MODULE_11__components__["m" /* AdminMailComponent */] },
             { path: '**', redirectTo: 'home' }
         ]
     }];
@@ -64,24 +66,26 @@ var AdminModule = (function () {
     AdminModule = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_10__components__["a" /* AdminComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["c" /* AdminUsersComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["i" /* AdminGroupsComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["h" /* AdminMapsComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["j" /* AdminLayersComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["m" /* AdminMailComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["d" /* AdminUserDetailsComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["b" /* AdminHomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["k" /* AdminLayersNewLayerComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["l" /* AdminLayersNewBaselayerComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["e" /* AdminMapsNewMapComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["g" /* AdminMapsNewDefaultMapComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["f" /* AdminMapsEditComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["n" /* AdminGroupEditComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components__["o" /* AdminLayerEditComponent */]
+                __WEBPACK_IMPORTED_MODULE_11__components__["a" /* AdminComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["c" /* AdminUsersComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["i" /* AdminGroupsComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["h" /* AdminMapsComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["j" /* AdminLayersComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["m" /* AdminMailComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["d" /* AdminUserDetailsComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["b" /* AdminHomeComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["k" /* AdminLayersNewLayerComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["l" /* AdminLayersNewBaselayerComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["e" /* AdminMapsNewMapComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["g" /* AdminMapsNewDefaultMapComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["f" /* AdminMapsEditComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["n" /* AdminGroupEditComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components__["o" /* AdminLayerEditComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__services__["b" /* ConfirmDialogComponent */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate__["LoadingAnimateService"]
+                __WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate__["LoadingAnimateService"],
+                __WEBPACK_IMPORTED_MODULE_10__services__["c" /* ConfirmDialogService */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"],
@@ -94,7 +98,7 @@ var AdminModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_3__angular_material__["a" /* MaterialModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* RouterModule */].forChild(adminRoutes)
             ],
-            entryComponents: [__WEBPACK_IMPORTED_MODULE_10__components__["n" /* AdminGroupEditComponent */], __WEBPACK_IMPORTED_MODULE_10__components__["o" /* AdminLayerEditComponent */]]
+            entryComponents: [__WEBPACK_IMPORTED_MODULE_11__components__["n" /* AdminGroupEditComponent */], __WEBPACK_IMPORTED_MODULE_11__components__["o" /* AdminLayerEditComponent */], __WEBPACK_IMPORTED_MODULE_10__services__["b" /* ConfirmDialogComponent */]]
         }), 
         __metadata('design:paramtypes', [])
     ], AdminModule);
@@ -1917,7 +1921,7 @@ var Subject_1 = __webpack_require__(9);
 var queue_1 = __webpack_require__(801);
 var Subscription_1 = __webpack_require__(51);
 var observeOn_1 = __webpack_require__(465);
-var ObjectUnsubscribedError_1 = __webpack_require__(272);
+var ObjectUnsubscribedError_1 = __webpack_require__(273);
 var SubjectSubscription_1 = __webpack_require__(467);
 /**
  * @class ReplaySubject<T>
@@ -2176,7 +2180,7 @@ var EmptyError_1 = __webpack_require__(170);
 exports.EmptyError = EmptyError_1.EmptyError;
 var ArgumentOutOfRangeError_1 = __webpack_require__(764);
 exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError_1.ArgumentOutOfRangeError;
-var ObjectUnsubscribedError_1 = __webpack_require__(272);
+var ObjectUnsubscribedError_1 = __webpack_require__(273);
 exports.ObjectUnsubscribedError = ObjectUnsubscribedError_1.ObjectUnsubscribedError;
 var TimeoutError_1 = __webpack_require__(804);
 exports.TimeoutError = TimeoutError_1.TimeoutError;
@@ -36921,7 +36925,7 @@ function takeWhile(input, predicate) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(751);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminGroupEditComponent; });
@@ -36961,7 +36965,7 @@ var AdminGroupEditComponent = (function () {
             styles: [__webpack_require__(1218)],
             providers: [__WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */]) === 'function' && _c) || Object])
     ], AdminGroupEditComponent);
     return AdminGroupEditComponent;
     var _a, _b, _c;
@@ -36977,10 +36981,11 @@ var AdminGroupEditComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_datatables__ = __webpack_require__(780);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3____ = __webpack_require__(808);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(458);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services__ = __webpack_require__(751);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services__ = __webpack_require__(644);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services__ = __webpack_require__(751);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminGroupsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -36998,8 +37003,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AdminGroupsComponent = (function () {
-    function AdminGroupsComponent(loading, dialogRef, adminService) {
+    function AdminGroupsComponent(confirm, loading, dialogRef, adminService) {
+        this.confirm = confirm;
         this.loading = loading;
         this.dialogRef = dialogRef;
         this.adminService = adminService;
@@ -37032,12 +37039,16 @@ var AdminGroupsComponent = (function () {
         this.datatableElement.dtInstance.then(function (dtInstance) {
             _this.dtInstance = dtInstance;
             dtInstance.on('click', '.remove-group', function () {
-                self.loading.setValue(true);
                 var row_dom = $(this).closest('tr');
                 var row = dtInstance.row(row_dom).data();
-                self.adminService.deleteGroup(row.id).subscribe(function () {
-                    self.loading.setValue(false);
-                    dtInstance.ajax.reload();
+                self.confirm.open("\u00BFEst\u00E1s seguro de eliminar el grupo " + row.name + "?").afterClosed().subscribe(function (removeBool) {
+                    if (!removeBool)
+                        return;
+                    self.loading.setValue(true);
+                    self.adminService.deleteGroup(row.id).subscribe(function () {
+                        self.loading.setValue(false);
+                        dtInstance.ajax.reload();
+                    });
                 });
             });
             dtInstance.on('click', '.edit-group', function () {
@@ -37074,14 +37085,14 @@ var AdminGroupsComponent = (function () {
             selector: 'app-admin-groups',
             template: __webpack_require__(1239),
             styles: [__webpack_require__(1219)],
-            providers: [__WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]],
+            providers: [__WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */]],
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdDialog */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_6__services__["c" /* ConfirmDialogService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services__["c" /* ConfirmDialogService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdDialog */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */]) === 'function' && _e) || Object])
     ], AdminGroupsComponent);
     return AdminGroupsComponent;
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
 }());
 //# sourceMappingURL=admin-groups.component.js.map
 
@@ -37126,7 +37137,7 @@ var AdminHomeComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(751);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminLayerEditComponent; });
@@ -37165,7 +37176,7 @@ var AdminLayerEditComponent = (function () {
             styles: [__webpack_require__(1221)],
             providers: [__WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialogRef */]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */]) === 'function' && _c) || Object])
     ], AdminLayerEditComponent);
     return AdminLayerEditComponent;
     var _a, _b, _c;
@@ -37178,7 +37189,7 @@ var AdminLayerEditComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_transitions__ = __webpack_require__(458);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__map_services__ = __webpack_require__(779);
@@ -37243,7 +37254,7 @@ var AdminLayersNewBaselayerComponent = (function () {
         var _this = this;
         var regex = /(\?|\&)([^=]+)\=([^&]+)/g;
         var extract = (this.serviceUrl.match(regex) || []).join('');
-        var serviceURL = this.serviceUrl.replace(extract, '') + '?service=WMS&request=GetCapabilities';
+        var serviceURL = this.serviceUrl.replace(extract, '');
         var layers = this.capasSeleccionadas.map(function (l) { return l.Name; });
         console.log(serviceURL);
         this.loading.setValue(true);
@@ -37284,7 +37295,7 @@ var AdminLayersNewBaselayerComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_pipes_src_math_bytes_pipe__ = __webpack_require__(1188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router_transitions__ = __webpack_require__(458);
@@ -37389,15 +37400,16 @@ var AdminLayersNewLayerComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_datatables__ = __webpack_require__(780);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6____ = __webpack_require__(808);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__router_transitions__ = __webpack_require__(458);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services__ = __webpack_require__(751);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services__ = __webpack_require__(644);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminLayersComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -37417,8 +37429,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AdminLayersComponent = (function () {
-    function AdminLayersComponent(loading, adminService, dialogRef, snackbar, location, router, route) {
+    function AdminLayersComponent(confirm, loading, adminService, dialogRef, snackbar, location, router, route) {
+        this.confirm = confirm;
         this.loading = loading;
         this.adminService = adminService;
         this.dialogRef = dialogRef;
@@ -37477,15 +37491,20 @@ var AdminLayersComponent = (function () {
         this.dtElements._results[0].dtInstance.then(function (dtInstance) {
             _this.dtInstances.push(dtInstance);
             dtInstance.on('click', '.remove-layer', function () {
-                self.loading.setValue(true);
+                //self.loading.setValue(true);
                 var row_dom = $(this).closest('tr');
                 var row = dtInstance.row(row_dom).data();
-                self.adminService.deleteLayer(row.name).subscribe(function () {
-                    self.loading.setValue(false);
-                    //console.log('deleted');
-                    dtInstance.ajax.reload();
-                    self.snackbar.open("Capa " + row.name + " eliminada correctamente", 'CERRAR', {
-                        duration: 2000
+                self.confirm.open("\u00BFEst\u00E1s seguro de eliminar la capa " + row.name + "?").afterClosed().subscribe(function (removeBool) {
+                    if (!removeBool)
+                        return;
+                    self.loading.setValue(true);
+                    self.adminService.deleteLayer(row.name).subscribe(function () {
+                        self.loading.setValue(false);
+                        //console.log('deleted');
+                        dtInstance.ajax.reload();
+                        self.snackbar.open("Capa " + row.name + " eliminada correctamente", 'CERRAR', {
+                            duration: 2000
+                        });
                     });
                 });
             });
@@ -37498,15 +37517,19 @@ var AdminLayersComponent = (function () {
         this.dtElements._results[1].dtInstance.then(function (dtInstance) {
             _this.dtInstances.push(dtInstance);
             dtInstance.on('click', '.remove-baselayer', function () {
-                self.loading.setValue(true);
                 var row_dom = $(this).closest('tr');
                 var row = dtInstance.row(row_dom).data();
-                self.adminService.deleteBaseLayer(row.id).subscribe(function () {
-                    self.loading.setValue(false);
-                    //console.log('deleted baselayer')
-                    dtInstance.ajax.reload();
-                    self.snackbar.open("Capa Base " + row.id + " eliminada correctamente", 'CERRAR', {
-                        duration: 2000
+                self.confirm.open("\u00BFEst\u00E1s seguro de eliminar la capa base que contiene las siguiente capas: " + row.name + "?").afterClosed().subscribe(function (removeBool) {
+                    if (!removeBool)
+                        return;
+                    self.loading.setValue(true);
+                    self.adminService.deleteBaseLayer(row.id).subscribe(function () {
+                        self.loading.setValue(false);
+                        //console.log('deleted baselayer')
+                        dtInstance.ajax.reload();
+                        self.snackbar.open("Capa Base " + row.id + " eliminada correctamente", 'CERRAR', {
+                            duration: 2000
+                        });
                     });
                 });
             });
@@ -37540,10 +37563,10 @@ var AdminLayersComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_8__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_8__services__["a" /* AdminService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdDialog */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdSnackBar */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _f) || Object, (typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _g) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_9__services__["c" /* ConfirmDialogService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_9__services__["c" /* ConfirmDialogService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_8__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_8__services__["a" /* AdminService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"]) === 'function' && _f) || Object, (typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _g) || Object, (typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _h) || Object])
     ], AdminLayersComponent);
     return AdminLayersComponent;
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
 }());
 //# sourceMappingURL=admin-layers.component.js.map
 
@@ -37557,7 +37580,7 @@ var AdminLayersComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_ckeditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_ckeditor__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(776);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router_transitions__ = __webpack_require__(458);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(751);
@@ -37676,12 +37699,12 @@ var AdminMailComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(776);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_dragula__ = __webpack_require__(783);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_dragula___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_dragula__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__router_transitions__ = __webpack_require__(458);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services__ = __webpack_require__(751);
@@ -37854,7 +37877,7 @@ var AdminMapsEditComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdSnackBar */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_dragula__["DragulaService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_dragula__["DragulaService"]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */]) === 'function' && _f) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_dragula__["DragulaService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_dragula__["DragulaService"]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */]) === 'function' && _f) || Object])
     ], AdminMapsEditComponent);
     return AdminMapsEditComponent;
     var _a, _b, _c, _d, _e, _f;
@@ -37871,7 +37894,7 @@ var AdminMapsEditComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(776);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(458);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services__ = __webpack_require__(751);
@@ -37932,7 +37955,7 @@ var AdminMapsNewDefaultMapComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdSnackBar */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"]) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdSnackBar */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"]) === 'function' && _d) || Object])
     ], AdminMapsNewDefaultMapComponent);
     return AdminMapsNewDefaultMapComponent;
     var _a, _b, _c, _d;
@@ -37947,7 +37970,7 @@ var AdminMapsNewDefaultMapComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router_transitions__ = __webpack_require__(458);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(751);
@@ -37998,7 +38021,7 @@ var AdminMapsNewMapComponent = (function () {
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdSnackBar */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"]) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdSnackBar */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["a" /* AdminService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"]) === 'function' && _d) || Object])
     ], AdminMapsNewMapComponent);
     return AdminMapsNewMapComponent;
     var _a, _b, _c, _d;
@@ -38011,13 +38034,14 @@ var AdminMapsNewMapComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_datatables__ = __webpack_require__(780);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(458);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services__ = __webpack_require__(751);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(644);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__router_transitions__ = __webpack_require__(458);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services__ = __webpack_require__(751);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminMapsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -38035,8 +38059,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AdminMapsComponent = (function () {
-    function AdminMapsComponent(loading, router, adminService, snackbar) {
+    function AdminMapsComponent(confirm, loading, router, adminService, snackbar) {
+        this.confirm = confirm;
         this.loading = loading;
         this.router = router;
         this.adminService = adminService;
@@ -38092,16 +38118,20 @@ var AdminMapsComponent = (function () {
         this.dtElements._results[0].dtInstance.then(function (dtInstance) {
             _this.dtInstances.push(dtInstance);
             dtInstance.on('click', '.remove-map', function () {
-                self.loading.setValue(true);
                 var row_dom = $(this).closest('tr');
                 var row = dtInstance.row(row_dom).data();
-                self.adminService.deleteMap(row.id).subscribe(function () {
-                    self.loading.setValue(false);
-                    //console.log('deleted');
-                    self.dtInstances.forEach(function (dtI) { return dtI.ajax.reload(); });
-                    //dtInstance.ajax.reload();
-                    self.snackbar.open("Mapa " + row.name + " eliminado correctamente", 'CERRAR', {
-                        duration: 2000
+                self.confirm.open("\u00BFEst\u00E1s seguro de eliminar el mapa " + row.name + "?").afterClosed().subscribe(function (removeBool) {
+                    if (!removeBool)
+                        return;
+                    self.loading.setValue(true);
+                    self.adminService.deleteMap(row.id).subscribe(function () {
+                        self.loading.setValue(false);
+                        //console.log('deleted');
+                        self.dtInstances.forEach(function (dtI) { return dtI.ajax.reload(); });
+                        //dtInstance.ajax.reload();
+                        self.snackbar.open("Mapa " + row.name + " eliminado correctamente", 'CERRAR', {
+                            duration: 2000
+                        });
                     });
                 });
             });
@@ -38114,15 +38144,19 @@ var AdminMapsComponent = (function () {
         this.dtElements._results[1].dtInstance.then(function (dtInstance) {
             _this.dtInstances.push(dtInstance);
             dtInstance.on('click', '.remove-default-map', function () {
-                self.loading.setValue(true);
                 var row_dom = $(this).closest('tr');
                 var row = dtInstance.row(row_dom).data();
-                self.adminService.deleteDefaultMap(row.id).subscribe(function () {
-                    self.loading.setValue(false);
-                    //console.log('deleted baselayer')
-                    dtInstance.ajax.reload();
-                    self.snackbar.open("Mapa por defecto " + row.name + " eliminado correctamente", 'CERRAR', {
-                        duration: 2000
+                self.confirm.open("El mapa " + row.name + " dejar\u00E1 de ser visible por todos los usuarios. \u00BFEliminar como mapa por defecto?").afterClosed().subscribe(function (removeBool) {
+                    if (!removeBool)
+                        return;
+                    self.loading.setValue(true);
+                    self.adminService.deleteDefaultMap(row.id).subscribe(function () {
+                        self.loading.setValue(false);
+                        //console.log('deleted baselayer')
+                        dtInstance.ajax.reload();
+                        self.snackbar.open("Mapa por defecto " + row.name + " eliminado correctamente", 'CERRAR', {
+                            duration: 2000
+                        });
                     });
                 });
             });
@@ -38146,14 +38180,14 @@ var AdminMapsComponent = (function () {
             selector: 'app-admin-maps',
             template: __webpack_require__(1249),
             styles: [__webpack_require__(1229)],
-            providers: [__WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]],
-            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__router_transitions__["a" /* routerTransition */])()],
+            providers: [__WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */]],
+            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services__["a" /* AdminService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdSnackBar */]) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__services__["c" /* ConfirmDialogService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["c" /* ConfirmDialogService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7__services__["a" /* AdminService */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */]) === 'function' && _e) || Object])
     ], AdminMapsComponent);
     return AdminMapsComponent;
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
 }());
 //# sourceMappingURL=admin-maps.component.js.map
 
@@ -38163,9 +38197,9 @@ var AdminMapsComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs__ = __webpack_require__(776);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs__);
@@ -38309,7 +38343,7 @@ var AdminUserDetailsComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_transitions__ = __webpack_require__(458);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(751);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular_datatables__ = __webpack_require__(780);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(272);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminUsersComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -54340,7 +54374,7 @@ module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=
 /* 1245 */
 /***/ (function(module, exports) {
 
-module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card style=\"margin : 8px;\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Email</md-card-title>\n      <md-card-subtitle>Contenido del email</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <md-input-container style=\"width : 100%;\">\n        <input mdInput placeholder=\"Título del Email\" [(ngModel)]=\"emailTitle\">\n      </md-input-container>\n      <ckeditor\n        [(ngModel)]=\"emailContent\"\n        [config]=\"{ uiColor: '#f7f7f7', toolbar: 'Full' }\"\n        debounce=\"500\">\n      </ckeditor>\n\n      <md-card *ngFor=\"let group of groupsAndUsers\" style=\"margin : 5px 0px 5px 0px;\">\n        <md-card-header>\n          <!--<div md-card-avatar><img src=\"\" alt=\"\" class=\"user-avatar\"></div>-->\n          <md-card-title>\n            <md-checkbox  [(ngModel)]=\"group.selected\" (change)=\"groupChanged($event, group);\">{{group.name}}</md-checkbox>\n          </md-card-title>\n          <md-card-subtitle>ID del grupo : {{group.id}}</md-card-subtitle>\n        </md-card-header>\n        <md-card-content *ngIf=\"group.users && group.users.length\">\n        <md-slide-toggle\n          [checked]=\"false\"\n          [(ngModel)]=\"group.opened\"\n          >\n          Ver Usuarios\n        </md-slide-toggle>\n        <div [hidden]=\"!group.opened\">\n          <md-card *ngFor=\"let user of group.users\">\n            <md-card-header>\n              <div md-card-avatar><img src=\"{{user.gravatar}}\" alt=\"\" class=\"user-avatar\"></div>\n              <md-card-title>\n                <md-checkbox  [(ngModel)]=\"user.selected\">{{user.name}} - {{user.nombre}} {{user.apellidos}}</md-checkbox>\n              </md-card-title>\n              <md-card-subtitle>Email : {{user.email}}</md-card-subtitle>\n            </md-card-header>\n          </md-card>\n        </div>\n\n        </md-card-content>\n      </md-card>\n\n\n    </md-card-content>\n    <md-card-actions>\n      <button md-button [disabled]=\"!isSomeUserSelected() || !emailContent || !emailTitle\" (click)=\"sendMail()\">ENVIAR</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card style=\"margin : 8px;\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Email</md-card-title>\n      <md-card-subtitle>Contenido del email</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <div style=\"display : inline-flex;\">\n        <md-icon style=\"margin : 14px 14px 14px 0px;\">email</md-icon>\n        <h4>Título y cuerpo del email</h4>\n      </div>\n      <md-input-container style=\"width : 100%;\">\n        <input mdInput placeholder=\"Título del Email\" [(ngModel)]=\"emailTitle\">\n      </md-input-container>\n      <ckeditor\n        [(ngModel)]=\"emailContent\"\n        [config]=\"{ uiColor: '#f7f7f7', toolbar: 'Full' }\"\n        debounce=\"500\">\n      </ckeditor>\n      <div style=\"display : inline-flex;\">\n        <md-icon style=\"margin : 14px 14px 14px 0px;\">group</md-icon>\n        <h4>Elige los destinatarios</h4>\n      </div>\n      <md-card *ngFor=\"let group of groupsAndUsers\" style=\"margin : 5px 0px 5px 0px;\">\n        <md-card-header>\n          <!--<div md-card-avatar><img src=\"\" alt=\"\" class=\"user-avatar\"></div>-->\n          <md-card-title>\n            <md-checkbox  [(ngModel)]=\"group.selected\" (change)=\"groupChanged($event, group);\">{{group.name}}</md-checkbox>\n          </md-card-title>\n          <md-card-subtitle>ID del grupo : {{group.id}}</md-card-subtitle>\n        </md-card-header>\n        <md-card-content *ngIf=\"group.users && group.users.length\">\n        <md-slide-toggle\n          [checked]=\"false\"\n          [(ngModel)]=\"group.opened\"\n          >\n          Ver Usuarios\n        </md-slide-toggle>\n        <div [hidden]=\"!group.opened\">\n          <md-card *ngFor=\"let user of group.users\" style=\"margin-bottom : 4px;\">\n            <md-card-header>\n              <div md-card-avatar><img src=\"{{user.gravatar}}\" alt=\"\" class=\"user-avatar\"></div>\n              <md-card-title>\n                <md-checkbox  [(ngModel)]=\"user.selected\">{{user.name}} - {{user.nombre}} {{user.apellidos}}</md-checkbox>\n              </md-card-title>\n              <md-card-subtitle>Email : {{user.email}}</md-card-subtitle>\n            </md-card-header>\n          </md-card>\n        </div>\n\n        </md-card-content>\n      </md-card>\n\n\n    </md-card-content>\n    <md-card-actions>\n      <button md-button [disabled]=\"!isSomeUserSelected() || !emailContent || !emailTitle\" (click)=\"sendMail()\">ENVIAR</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 /* 1246 */

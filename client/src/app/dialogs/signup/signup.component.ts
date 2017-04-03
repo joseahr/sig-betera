@@ -1,9 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { MdDialogRef, MdSnackBar } from '@angular/material';
-
 import { AuthService } from '../../services/auth.service';
-
 import { ReCaptchaComponent } from 'angular2-recaptcha/lib/captcha.component';
 
 @Component({
@@ -16,13 +13,13 @@ export class SignupComponent implements OnInit {
 
   userToCreate : 
     { 
-      name ? : String, 
-      password ? : String, 
-      repassword ? : String, 
-      nombre ? : String, 
-      apellidos ? : String, 
-      email ? : String,
-      "g-recaptcha-response" ? : String
+      name ? : string, 
+      password ? : string, 
+      repassword ? : string, 
+      nombre ? : string, 
+      apellidos ? : string, 
+      email ? : string,
+      "g-recaptcha-response" ? : string
     } = {};
 
   constructor(
