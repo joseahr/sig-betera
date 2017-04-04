@@ -18,13 +18,13 @@
     </div>
 
     <div #mapTools class="collapsed">
-      <button md-button (click)="searchControl.setActive(true, 1)" class="list-button">
+      <button md-button (click)="toggleSearchControl(1)" class="list-button">
         <md-icon>search</md-icon>BÚSQUEDA POR PUNTO
       </button>
     </div>
 
     <div #mapTools class="collapsed">
-      <button md-button (click)="searchControl.setActive(true, 2)" class="list-button">
+      <button md-button (click)="toggleSearchControl(2)" class="list-button">
         <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE
       </button>
     </div>

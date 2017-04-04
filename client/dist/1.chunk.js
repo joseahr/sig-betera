@@ -16,7 +16,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angular2_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_angular2_highcharts__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_layer_switcher_layer_switcher_component__ = __webpack_require__(1104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_add_wms_add_wms_component__ = __webpack_require__(1102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_search_search_component__ = __webpack_require__(1210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_search_search_component__ = __webpack_require__(1105);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MapModule", function() { return MapModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -22208,15 +22208,15 @@ var AddWmsComponent = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map_map_component__ = __webpack_require__(1208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map_map_component__ = __webpack_require__(1209);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__map_map_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__profile_profile_component__ = __webpack_require__(1209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__profile_profile_component__ = __webpack_require__(1210);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__profile_profile_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__layer_switcher_layer_switcher_component__ = __webpack_require__(1104);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_2__layer_switcher_layer_switcher_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_wms_add_wms_component__ = __webpack_require__(1102);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__add_wms_add_wms_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search_component__ = __webpack_require__(1210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search_component__ = __webpack_require__(1105);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_4__search_search_component__["a"]; });
 
 
@@ -22368,7 +22368,134 @@ var LayerSwitcherComponent = (function () {
 //# sourceMappingURL=layer-switcher.component.js.map
 
 /***/ }),
-/* 1105 */,
+/* 1105 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers__ = __webpack_require__(755);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_openlayers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(780);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var SearchInteraction;
+(function (SearchInteraction) {
+    SearchInteraction[SearchInteraction["Point"] = 1] = "Point";
+    SearchInteraction[SearchInteraction["Box"] = 2] = "Box";
+})(SearchInteraction || (SearchInteraction = {}));
+var SearchComponent = (function () {
+    function SearchComponent(zone, userLayerService, loading) {
+        this.zone = zone;
+        this.userLayerService = userLayerService;
+        this.loading = loading;
+        this.active = false;
+        this.activeInteraction = null;
+        this.boxInteraction = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["interaction"].DragBox();
+        this.boxInteraction.on('boxend', this.boxHandler.bind(this));
+    }
+    SearchComponent.prototype.ngOnInit = function () { };
+    SearchComponent.prototype.clickHandler = function (e) {
+        var point = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"].Point(e.coordinate);
+        var feature = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Feature"](point);
+        this.search(feature);
+    };
+    SearchComponent.prototype.boxHandler = function () {
+        var box = this.boxInteraction.getGeometry();
+        var feature = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Feature"](box);
+        this.search(feature);
+    };
+    SearchComponent.prototype.search = function (feature) {
+        var _this = this;
+        this.loading.setValue(true);
+        var layerNames = this.getActiveLayers();
+        //console.log('layerNAmes', layerNames)
+        this.userLayerService.getFeatures(feature, layerNames).subscribe(function (data) {
+            _this.loading.setValue(false);
+            var features = data.json();
+            _this.zone.run(function () {
+                _this.found = features;
+                _this.map.render();
+            });
+            console.log(features, 'featurrees');
+        }, function (err) {
+            _this.loading.setValue(false);
+        });
+    };
+    SearchComponent.prototype.getActiveLayers = function () {
+        var layerNames = [];
+        this.map.getLayers().forEach(function (l) {
+            l.get('layers').forEach(function (al) {
+                console.log('layer', al.get('type'), al.get('visible'), al.getVisible());
+                if (al.get('visible') && al.get('type') == 'layer') {
+                    layerNames.push(al.get('name'));
+                }
+            });
+        });
+        return layerNames;
+    };
+    SearchComponent.prototype.setActive = function (value, interaction) {
+        if (!value) {
+            this.active = false;
+            this.found = null;
+            this.activeInteraction = null;
+            this.map.removeInteraction(this.boxInteraction);
+            __WEBPACK_IMPORTED_MODULE_1_openlayers__["Observable"].unByKey(this.clickInteraction);
+        }
+        else {
+            if (!interaction)
+                return;
+            this.active = true;
+            this.setInteraction(interaction);
+        }
+    };
+    SearchComponent.prototype.setInteraction = function (interaction) {
+        console.log(interaction, this.activeInteraction, SearchInteraction.Point, SearchInteraction.Box, 'slsjlsk');
+        if (interaction == this.activeInteraction)
+            return;
+        if (interaction == SearchInteraction.Point) {
+            this.map.removeInteraction(this.boxInteraction);
+            this.clickInteraction = this.map.on('singleclick', this.clickHandler.bind(this));
+            this.activeInteraction = SearchInteraction.Point;
+        }
+        else {
+            __WEBPACK_IMPORTED_MODULE_1_openlayers__["Observable"].unByKey(this.clickInteraction);
+            this.map.addInteraction(this.boxInteraction);
+            this.activeInteraction = SearchInteraction.Box;
+        }
+    };
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])('map'), 
+        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_openlayers__["Map"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_openlayers__["Map"]) === 'function' && _a) || Object)
+    ], SearchComponent.prototype, "map", void 0);
+    SearchComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-search',
+            template: __webpack_require__(1261),
+            styles: [__webpack_require__(1240)],
+            providers: [__WEBPACK_IMPORTED_MODULE_3__services__["b" /* UserLayersService */]]
+        }), 
+        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services__["b" /* UserLayersService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["b" /* UserLayersService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _d) || Object])
+    ], SearchComponent);
+    return SearchComponent;
+    var _a, _b, _c, _d;
+}());
+//# sourceMappingURL=search.component.js.map
+
+/***/ }),
 /* 1106 */,
 /* 1107 */,
 /* 1108 */,
@@ -22446,7 +22573,8 @@ var LayerSwitcherComponent = (function () {
 /* 1180 */,
 /* 1181 */,
 /* 1182 */,
-/* 1183 */
+/* 1183 */,
+/* 1184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22510,7 +22638,7 @@ exports.ChartPointComponent = ChartPointComponent;
 //# sourceMappingURL=ChartPointComponent.js.map
 
 /***/ }),
-/* 1184 */
+/* 1185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22525,7 +22653,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = __webpack_require__(0);
-var ChartPointComponent_1 = __webpack_require__(1183);
+var ChartPointComponent_1 = __webpack_require__(1184);
 var ChartSeriesComponent = (function () {
     function ChartSeriesComponent() {
         this.click = new core_1.EventEmitter();
@@ -22584,7 +22712,7 @@ exports.ChartSeriesComponent = ChartSeriesComponent;
 //# sourceMappingURL=ChartSeriesComponent.js.map
 
 /***/ }),
-/* 1185 */
+/* 1186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22638,7 +22766,7 @@ exports.ChartXAxisComponent = ChartXAxisComponent;
 //# sourceMappingURL=ChartXAxisComponent.js.map
 
 /***/ }),
-/* 1186 */
+/* 1187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22692,7 +22820,6 @@ exports.ChartYAxisComponent = ChartYAxisComponent;
 //# sourceMappingURL=ChartYAxisComponent.js.map
 
 /***/ }),
-/* 1187 */,
 /* 1188 */,
 /* 1189 */,
 /* 1190 */,
@@ -22713,7 +22840,8 @@ exports.ChartYAxisComponent = ChartYAxisComponent;
 /* 1205 */,
 /* 1206 */,
 /* 1207 */,
-/* 1208 */
+/* 1208 */,
+/* 1209 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22757,6 +22885,14 @@ var MapComponent = (function () {
         this.sidenav.onClose.subscribe(this.clearIntervalUpdateMapSize.bind(this));
         this.zone.runOutsideAngular(this.createMap.bind(this));
         //this.map.getLayers().on('change:length', ()=>{ this.updateMapAndOverview() });
+        this.customComponentsWithInteractions = [
+            this.searchControl, this.profileControl
+        ];
+    };
+    MapComponent.prototype.disableControls = function () {
+        this.customComponentsWithInteractions.forEach(function (control) {
+            control.setActive(false);
+        });
     };
     MapComponent.prototype.ngAfterViewInit = function () {
         //console.log(this.el.nativeElement.parentNode);
@@ -22800,15 +22936,6 @@ var MapComponent = (function () {
         this.toolsContainer.forEach(function (element) {
             element.nativeElement.classList.toggle('collapsed');
         });
-    };
-    MapComponent.prototype.toggleProfileControl = function () {
-        if (!this.profileControl.active) {
-            this.profileControl.enableDraw();
-        }
-        else {
-            this.profileControl.disableDraw();
-        }
-        this.sidenav.close();
     };
     MapComponent.prototype.createMap = function () {
         this.mapProperties = {
@@ -22938,6 +23065,34 @@ var MapComponent = (function () {
             _this.map.addLayer(group);
         });
     };
+    MapComponent.prototype.toggleSearchControl = function (interaction) {
+        if (interaction && this.searchControl.activeInteraction != interaction) {
+            this.disableControls();
+            this.searchControl.setActive(true, interaction);
+            this.sidenav.close();
+            return;
+        }
+        if (!this.searchControl.active) {
+            this.disableControls();
+            this.searchControl.setActive(true, interaction);
+        }
+        else {
+            this.disableControls();
+            this.searchControl.setActive(false);
+        }
+        this.sidenav.close();
+    };
+    MapComponent.prototype.toggleProfileControl = function () {
+        if (!this.profileControl.active) {
+            this.disableControls();
+            this.profileControl.setActive(true);
+        }
+        else {
+            this.disableControls();
+            this.profileControl.setActive(false);
+        }
+        this.sidenav.close();
+    };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_5____["d" /* SearchComponent */]; })), 
         __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5____["d" /* SearchComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5____["d" /* SearchComponent */]) === 'function' && _a) || Object)
@@ -22979,14 +23134,16 @@ var MapComponent = (function () {
 //# sourceMappingURL=map.component.js.map
 
 /***/ }),
-/* 1209 */
+/* 1210 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers__ = __webpack_require__(755);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_openlayers__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(780);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(755);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_openlayers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(780);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -23000,32 +23157,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ProfileComponent = (function () {
-    function ProfileComponent(profileService, zone) {
+    function ProfileComponent(loading, profileService, zone) {
+        this.loading = loading;
         this.profileService = profileService;
         this.zone = zone;
         this.active = false;
-        this.pointLayer = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["layer"].Vector({
-            source: new __WEBPACK_IMPORTED_MODULE_1_openlayers__["source"].Vector(),
+        this.events = [];
+        this.dataChartArray = [];
+        this.loadLayers();
+        this.loadInteraction();
+    }
+    ProfileComponent.prototype.loadLayers = function () {
+        this.pointLayer = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["layer"].Vector({
+            source: new __WEBPACK_IMPORTED_MODULE_2_openlayers__["source"].Vector(),
             style: [
-                new __WEBPACK_IMPORTED_MODULE_1_openlayers__["style"].Style({
+                new __WEBPACK_IMPORTED_MODULE_2_openlayers__["style"].Style({
                     /*image: new ol.style.Icon({
                       src: 'https://rawcdn.githack.com/google/material-design-icons/master/maps/svg/production/ic_add_location_48px.svg'
                     })*/
-                    image: new __WEBPACK_IMPORTED_MODULE_1_openlayers__["style"].Circle({
+                    image: new __WEBPACK_IMPORTED_MODULE_2_openlayers__["style"].Circle({
                         radius: 5,
-                        stroke: new __WEBPACK_IMPORTED_MODULE_1_openlayers__["style"].Stroke({
+                        stroke: new __WEBPACK_IMPORTED_MODULE_2_openlayers__["style"].Stroke({
                             color: '#000'
                         })
                     })
                 })
             ]
         });
-        this.drawProfileLayer = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["layer"].Vector({
-            source: new __WEBPACK_IMPORTED_MODULE_1_openlayers__["source"].Vector(),
+        this.drawProfileLayer = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["layer"].Vector({
+            source: new __WEBPACK_IMPORTED_MODULE_2_openlayers__["source"].Vector(),
             style: [
-                new __WEBPACK_IMPORTED_MODULE_1_openlayers__["style"].Style({
-                    stroke: new __WEBPACK_IMPORTED_MODULE_1_openlayers__["style"].Stroke({
+                new __WEBPACK_IMPORTED_MODULE_2_openlayers__["style"].Style({
+                    stroke: new __WEBPACK_IMPORTED_MODULE_2_openlayers__["style"].Stroke({
                         color: [48, 63, 159],
                         width: 3,
                         lineDash: [.5, 10]
@@ -23033,14 +23198,24 @@ var ProfileComponent = (function () {
                 })
             ]
         });
-        this.drawProfileInteraction = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["interaction"].Draw({
+        this.drawProfileLayer.set('name', 'DrawProfileLayer');
+    };
+    ProfileComponent.prototype.loadInteraction = function () {
+        this.drawProfileInteraction = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["interaction"].Draw({
             type: 'LineString',
             source: this.drawProfileLayer.getSource()
         });
-        this.events = [];
-        this.dataChartArray = [];
-        this.drawProfileLayer.set('name', 'DrawProfileLayer');
-    }
+    };
+    ProfileComponent.prototype.setActive = function (value) {
+        if (value) {
+            this.enableDraw();
+            this.active = true;
+        }
+        else {
+            this.disableDraw();
+            this.active = false;
+        }
+    };
     ProfileComponent.prototype.enableDraw = function () {
         var _this = this;
         var drawStart = this.drawProfileInteraction.on('drawstart', function (e) {
@@ -23049,28 +23224,31 @@ var ProfileComponent = (function () {
             _this.profileGeom = null;
         });
         var drawEnd = this.drawProfileInteraction.on('drawend', function (e) {
+            _this.zone.run(function () { return _this.loading.setValue(true); });
             _this.profileService.getProfile(e.feature).subscribe(function (res) {
                 _this.zone.run(function () {
-                    _this.profileGeom = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"].LineString(res.json().coordinates, 'XYZ');
+                    _this.profileGeom = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["geom"].LineString(res.json().coordinates, 'XYZ');
                     _this.setProfile();
+                    _this.loading.setValue(false);
                 });
+            }, function (err) {
+                _this.loading.setValue(false);
             });
         });
         this.events.push(drawStart, drawEnd);
         this.map.addLayer(this.drawProfileLayer);
         this.map.addLayer(this.pointLayer);
         this.map.addInteraction(this.drawProfileInteraction);
-        this.active = true;
     };
     ProfileComponent.prototype.disableDraw = function () {
-        this.events.forEach(function (e) { __WEBPACK_IMPORTED_MODULE_1_openlayers__["Observable"].unByKey(e); });
+        this.events.forEach(function (e) { __WEBPACK_IMPORTED_MODULE_2_openlayers__["Observable"].unByKey(e); });
         this.drawProfileLayer.getSource().clear();
         this.pointLayer.getSource().clear();
         this.map.removeLayer(this.drawProfileLayer);
         this.map.removeLayer(this.pointLayer);
         this.map.removeInteraction(this.drawProfileInteraction);
         this.profileGeom = null;
-        this.active = false;
+        this.events = [];
     };
     ProfileComponent.prototype.saveInstance = function (chartInstance) {
         var _this = this;
@@ -23087,9 +23265,11 @@ var ProfileComponent = (function () {
     };
     ProfileComponent.prototype.setProfile = function () {
         var _this = this;
+        if (!this.profileGeom)
+            return;
         this.dataChartArray = [];
-        var wgs84Sphere = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Sphere"](6378137);
-        var profile3D = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Feature"]({
+        var wgs84Sphere = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["Sphere"](6378137);
+        var profile3D = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["Feature"]({
             geometry: this.profileGeom
         });
         // [ [dist, cota],... ]
@@ -23099,20 +23279,23 @@ var ProfileComponent = (function () {
         for (var i = 0; i < points.length - 1; i++) {
             //console.log('pooooint', points[i])
             this.dataChartArray.push([dist, points[i][2]]);
-            var p = __WEBPACK_IMPORTED_MODULE_1_openlayers__["proj"].transform(points[i], this.map.getView().getProjection(), 'EPSG:4326');
-            var next = __WEBPACK_IMPORTED_MODULE_1_openlayers__["proj"].transform(points[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
-            var subLineStringGeom = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"].LineString([p, next]);
+            var p = __WEBPACK_IMPORTED_MODULE_2_openlayers__["proj"].transform(points[i], this.map.getView().getProjection(), 'EPSG:4326');
+            var next = __WEBPACK_IMPORTED_MODULE_2_openlayers__["proj"].transform(points[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
+            var subLineStringGeom = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["geom"].LineString([p, next]);
             dist += wgs84Sphere.haversineDistance(p, next);
         }
         //console.log(this.dataChartArray);
         if (this.chart) {
             if (this.chart.series[0])
                 this.chart.series[0].remove();
-            this.chart.addSeries({ name: 'Perfil', data: this.dataChartArray });
-            setTimeout(function () {
-                _this.chart.reflow();
-                //this.chart.redraw();
-            }, 500);
+            this.zone.run(function () {
+                _this.chart.addSeries({ name: 'Perfil', data: _this.dataChartArray });
+                setTimeout(function () {
+                    _this.chart.reflow();
+                    //this.chart.redraw();
+                }, 500);
+                _this.map.render();
+            });
         }
     };
     ProfileComponent.prototype.ngOnInit = function () {
@@ -23127,22 +23310,22 @@ var ProfileComponent = (function () {
     ProfileComponent.prototype.onSelectProfile = function (event) {
         var dist = event.context.x;
         var coordinate = this.getClosestPointToDistance(dist);
-        var featurePoint = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Feature"]({
-            geometry: new __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"].Point(coordinate, 'XYZ')
+        var featurePoint = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["Feature"]({
+            geometry: new __WEBPACK_IMPORTED_MODULE_2_openlayers__["geom"].Point(coordinate, 'XYZ')
         });
         console.log(coordinate);
         this.pointLayer.getSource().clear();
         this.pointLayer.getSource().addFeature(featurePoint);
     };
     ProfileComponent.prototype.getClosestPointToDistance = function (distance) {
-        var wgs84Sphere = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Sphere"](6378137);
+        var wgs84Sphere = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["Sphere"](6378137);
         var coords = this.profileGeom.getCoordinates();
         var distance_ = 0;
         distance -= 1e-5;
         for (var i = 0; i < coords.length - 1; i++) {
-            var p = __WEBPACK_IMPORTED_MODULE_1_openlayers__["proj"].transform(coords[i], this.map.getView().getProjection(), 'EPSG:4326');
-            var next = __WEBPACK_IMPORTED_MODULE_1_openlayers__["proj"].transform(coords[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
-            var subLineStringGeom = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"].LineString([p, next]);
+            var p = __WEBPACK_IMPORTED_MODULE_2_openlayers__["proj"].transform(coords[i], this.map.getView().getProjection(), 'EPSG:4326');
+            var next = __WEBPACK_IMPORTED_MODULE_2_openlayers__["proj"].transform(coords[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
+            var subLineStringGeom = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["geom"].LineString([p, next]);
             distance_ += wgs84Sphere.haversineDistance(p, next);
             if (distance_ > distance) {
                 return coords[i];
@@ -23156,139 +23339,21 @@ var ProfileComponent = (function () {
     };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])('map'), 
-        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_openlayers__ !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_openlayers__["Map"]) === 'function' && _a) || Object)
+        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_openlayers__ !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_openlayers__["Map"]) === 'function' && _a) || Object)
     ], ProfileComponent.prototype, "map", void 0);
     ProfileComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-map-profile',
             template: __webpack_require__(1260),
             styles: [__webpack_require__(1239)],
-            providers: [__WEBPACK_IMPORTED_MODULE_2__services__["c" /* Profile3DService */]]
+            providers: [__WEBPACK_IMPORTED_MODULE_3__services__["c" /* Profile3DService */]]
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services__["c" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["c" /* Profile3DService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services__["c" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["c" /* Profile3DService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _d) || Object])
     ], ProfileComponent);
     return ProfileComponent;
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
 }());
 //# sourceMappingURL=profile.component.js.map
-
-/***/ }),
-/* 1210 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers__ = __webpack_require__(755);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_openlayers__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(780);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var SearchInteraction;
-(function (SearchInteraction) {
-    SearchInteraction[SearchInteraction["Point"] = 1] = "Point";
-    SearchInteraction[SearchInteraction["Box"] = 2] = "Box";
-})(SearchInteraction || (SearchInteraction = {}));
-var SearchComponent = (function () {
-    function SearchComponent(userLayerService, loading) {
-        this.userLayerService = userLayerService;
-        this.loading = loading;
-        this.active = false;
-        this.activeInteraction = null;
-        this.boxInteraction = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["interaction"].DragBox();
-        this.boxInteraction.on('boxend', this.boxHandler.bind(this));
-    }
-    SearchComponent.prototype.ngOnInit = function () { };
-    SearchComponent.prototype.clickHandler = function (e) {
-        var point = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["geom"].Point(e.coordinate);
-        var feature = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Feature"](point);
-        this.search(feature);
-    };
-    SearchComponent.prototype.boxHandler = function () {
-        var box = this.boxInteraction.getGeometry();
-        var feature = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Feature"](box);
-        this.search(feature);
-    };
-    SearchComponent.prototype.search = function (feature) {
-        var _this = this;
-        this.loading.setValue(true);
-        var layerNames = this.getActiveLayers();
-        //console.log('layerNAmes', layerNames)
-        this.userLayerService.getFeatures(feature, layerNames).subscribe(function (data) {
-            _this.loading.setValue(false);
-            var features = data.json();
-            console.log(features, 'featurrees');
-        }, function (err) {
-            _this.loading.setValue(false);
-        });
-    };
-    SearchComponent.prototype.getActiveLayers = function () {
-        var layerNames = [];
-        this.map.getLayers().forEach(function (l) {
-            l.get('layers').forEach(function (al) {
-                console.log('layer', al.get('type'), al.get('visible'), al.getVisible());
-                if (al.get('visible') && al.get('type') == 'layer') {
-                    layerNames.push(al.get('name'));
-                }
-            });
-        });
-        return layerNames;
-    };
-    SearchComponent.prototype.setActive = function (value, interaction) {
-        if (!value) {
-            this.activeInteraction = null;
-            this.map.removeInteraction(this.boxInteraction);
-            __WEBPACK_IMPORTED_MODULE_1_openlayers__["Observable"].unByKey(this.clickInteraction);
-        }
-        else {
-            this.setInteraction(interaction);
-        }
-    };
-    SearchComponent.prototype.setInteraction = function (interaction) {
-        console.log(interaction, this.activeInteraction, SearchInteraction.Point, SearchInteraction.Box, 'slsjlsk');
-        if (interaction == this.activeInteraction)
-            return;
-        if (interaction == SearchInteraction.Point) {
-            this.map.removeInteraction(this.boxInteraction);
-            this.clickInteraction = this.map.on('singleclick', this.clickHandler.bind(this));
-            this.activeInteraction = SearchInteraction.Point;
-        }
-        else {
-            __WEBPACK_IMPORTED_MODULE_1_openlayers__["Observable"].unByKey(this.clickInteraction);
-            this.map.addInteraction(this.boxInteraction);
-            this.activeInteraction = SearchInteraction.Box;
-        }
-    };
-    __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])('map'), 
-        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_openlayers__["Map"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_openlayers__["Map"]) === 'function' && _a) || Object)
-    ], SearchComponent.prototype, "map", void 0);
-    SearchComponent = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'app-search',
-            template: __webpack_require__(1261),
-            styles: [__webpack_require__(1240)],
-            providers: [__WEBPACK_IMPORTED_MODULE_3__services__["b" /* UserLayersService */]]
-        }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services__["b" /* UserLayersService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["b" /* UserLayersService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _c) || Object])
-    ], SearchComponent);
-    return SearchComponent;
-    var _a, _b, _c;
-}());
-//# sourceMappingURL=search.component.js.map
 
 /***/ }),
 /* 1211 */,
@@ -23308,9 +23373,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = __webpack_require__(0);
-var ChartSeriesComponent_1 = __webpack_require__(1184);
-var ChartXAxisComponent_1 = __webpack_require__(1185);
-var ChartYAxisComponent_1 = __webpack_require__(1186);
+var ChartSeriesComponent_1 = __webpack_require__(1185);
+var ChartXAxisComponent_1 = __webpack_require__(1186);
+var ChartYAxisComponent_1 = __webpack_require__(1187);
 var HighchartsService_1 = __webpack_require__(467);
 var initChart_1 = __webpack_require__(1218);
 var createBaseOpts_1 = __webpack_require__(1215);
@@ -23624,13 +23689,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = __webpack_require__(0);
 var ChartComponent_1 = __webpack_require__(1213);
 exports.ChartComponent = ChartComponent_1.ChartComponent;
-var ChartSeriesComponent_1 = __webpack_require__(1184);
+var ChartSeriesComponent_1 = __webpack_require__(1185);
 exports.ChartSeriesComponent = ChartSeriesComponent_1.ChartSeriesComponent;
-var ChartPointComponent_1 = __webpack_require__(1183);
+var ChartPointComponent_1 = __webpack_require__(1184);
 exports.ChartPointComponent = ChartPointComponent_1.ChartPointComponent;
-var ChartXAxisComponent_1 = __webpack_require__(1185);
+var ChartXAxisComponent_1 = __webpack_require__(1186);
 exports.ChartXAxisComponent = ChartXAxisComponent_1.ChartXAxisComponent;
-var ChartYAxisComponent_1 = __webpack_require__(1186);
+var ChartYAxisComponent_1 = __webpack_require__(1187);
 exports.ChartYAxisComponent = ChartYAxisComponent_1.ChartYAxisComponent;
 var HighchartsService_1 = __webpack_require__(467);
 var CHART_DIRECTIVES = [
@@ -23839,7 +23904,7 @@ module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" cl
 /* 1259 */
 /***/ (function(module, exports) {
 
-module.exports = "<button\n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button main\" (click)=\"toggleTools()\">\n      <md-icon>apps</md-icon>HERRAMIENTAS\n    </button>\n\n    <div #mapTools class=\"collapsed\">\n      <button md-button class=\"list-button\" (click)=\"toggleProfileControl()\">\n        <md-icon>terrain</md-icon>PERFIL\n      </button>\n    </div>\n\n    <div #mapTools class=\"collapsed\">\n      <button md-button (click)=\"searchControl.setActive(true, 1)\" class=\"list-button\">\n        <md-icon>search</md-icon>BÚSQUEDA POR PUNTO\n      </button>\n    </div>\n\n    <div #mapTools class=\"collapsed\">\n      <button md-button (click)=\"searchControl.setActive(true, 2)\" class=\"list-button\">\n        <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE\n      </button>\n    </div>\n\n    <button md-button class=\"list-button main\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <app-layer-switcher [map]=\"map\" (layersChanged)=\"updateMapAndOverview()\"></app-layer-switcher>\n    <!-- END control de capas -->\n    <button md-button class=\"list-button main\" (click)=\"overviewMap.classList.toggle('collapsed')\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div #overviewMap class=\"overview-map\" style=\"flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;\"></div>\n    <button md-button class=\"list-button main\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n\n    <button md-button class=\"list-button main\" (click)=\"openWMSDialog()\">\n      <md-icon>map</md-icon>AÑADIR WMS\n    </button>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{'map-expanded': sidenav.opened }\" \n  >    \n  </div>\n\n  <app-map-profile\n    [map]=\"map\"\n  ></app-map-profile>\n\n  <app-search [map]=\"map\"></app-search>\n\n</md-sidenav-container>\n"
+module.exports = "<button\n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button main\" (click)=\"toggleTools()\">\n      <md-icon>apps</md-icon>HERRAMIENTAS\n    </button>\n\n    <div #mapTools class=\"collapsed\">\n      <button md-button class=\"list-button\" (click)=\"toggleProfileControl()\">\n        <md-icon>terrain</md-icon>PERFIL\n      </button>\n    </div>\n\n    <div #mapTools class=\"collapsed\">\n      <button md-button (click)=\"toggleSearchControl(1)\" class=\"list-button\">\n        <md-icon>search</md-icon>BÚSQUEDA POR PUNTO\n      </button>\n    </div>\n\n    <div #mapTools class=\"collapsed\">\n      <button md-button (click)=\"toggleSearchControl(2)\" class=\"list-button\">\n        <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE\n      </button>\n    </div>\n\n    <button md-button class=\"list-button main\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <app-layer-switcher [map]=\"map\" (layersChanged)=\"updateMapAndOverview()\"></app-layer-switcher>\n    <!-- END control de capas -->\n    <button md-button class=\"list-button main\" (click)=\"overviewMap.classList.toggle('collapsed')\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div #overviewMap class=\"overview-map\" style=\"flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;\"></div>\n    <button md-button class=\"list-button main\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n\n    <button md-button class=\"list-button main\" (click)=\"openWMSDialog()\">\n      <md-icon>map</md-icon>AÑADIR WMS\n    </button>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{'map-expanded': sidenav.opened }\" \n  >    \n  </div>\n\n  <app-map-profile\n    [map]=\"map\"\n  ></app-map-profile>\n\n  <app-search [map]=\"map\"></app-search>\n\n</md-sidenav-container>\n"
 
 /***/ }),
 /* 1260 */
@@ -23851,7 +23916,7 @@ module.exports = "<div\r\n    id=\"profile-container\"\r\n    [ngClass]=\"{'open
 /* 1261 */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "<md-card *ngIf=\"found\" style=\"position : absolute; bottom : 0px; left : 0.5em; right: 0.5em; height : 35vh;\">\r\n  <md-card-header>\r\n    <md-card-title>Shiba Inu</md-card-title>\r\n    <md-card-subtitle>Dog Breed</md-card-subtitle>\r\n  </md-card-header>\r\n  <md-card-content>\r\n    <p>\r\n      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.\r\n      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally\r\n      bred for hunting.\r\n    </p>\r\n  </md-card-content>\r\n  <md-card-actions style=\"position: absolute; bottom : 1.5em;\">\r\n    <button md-button>LIKE</button>\r\n    <button md-button>SHARE</button>\r\n  </md-card-actions>\r\n</md-card>\r\n"
 
 /***/ })
 ]));

@@ -21,6 +21,7 @@ export class MapComponent implements OnInit {
   map : ol.Map;
   overviewCtrl : ol.Map;
   sideNavMapInterval : any;
+  customComponentsWithInteractions : Component[];
   
   @ViewChild(forwardRef(() => SearchComponent)) searchControl : SearchComponent;
   @ViewChild(forwardRef(() => ProfileComponent)) profileControl : ProfileComponent;
@@ -36,8 +37,7 @@ export class MapComponent implements OnInit {
     private userMapsService : UserMapsService,
     private projService : ProjectionService, 
     private profileService : Profile3DService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(){
     this.sidenav.onOpenStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
@@ -46,6 +46,15 @@ export class MapComponent implements OnInit {
     this.sidenav.onClose.subscribe(this.clearIntervalUpdateMapSize.bind(this));
     this.zone.runOutsideAngular(this.createMap.bind(this));
     //this.map.getLayers().on('change:length', ()=>{ this.updateMapAndOverview() });
+    this.customComponentsWithInteractions = [
+      this.searchControl, this.profileControl
+    ]
+  }
+
+  disableControls(){
+    this.customComponentsWithInteractions.forEach( (control : any )=>{
+      control.setActive(false);
+    });
   }
 
   ngAfterViewInit() {
@@ -92,16 +101,6 @@ export class MapComponent implements OnInit {
     this.toolsContainer.forEach(element =>{
       element.nativeElement.classList.toggle('collapsed');
     });
-  }
-
-  toggleProfileControl(){
-    if(!this.profileControl.active) {
-      this.profileControl.enableDraw();
-    }
-    else {
-      this.profileControl.disableDraw();
-    }
-    this.sidenav.close();
   }
 
   createMap(){
@@ -242,6 +241,36 @@ export class MapComponent implements OnInit {
         this.map.addLayer(group);
       }
     );
+  }
+
+  toggleSearchControl(interaction?){
+    if(interaction && this.searchControl.activeInteraction != interaction){
+      this.disableControls();
+      this.searchControl.setActive(true, interaction);
+      this.sidenav.close();
+      return;
+    }
+    if(!this.searchControl.active) {
+      this.disableControls();
+      this.searchControl.setActive(true, interaction);
+    }
+    else {
+      this.disableControls();
+      this.searchControl.setActive(false);
+    }
+    this.sidenav.close();
+  }
+
+  toggleProfileControl(){
+    if(!this.profileControl.active) {
+      this.disableControls();
+      this.profileControl.setActive(true);
+    }
+    else {
+      this.disableControls();
+      this.profileControl.setActive(false);
+    }
+    this.sidenav.close();
   }
 
 }

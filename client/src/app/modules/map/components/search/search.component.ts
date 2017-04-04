@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { Feature, Map, interaction, MapBrowserPointerEvent, geom, Observable as olObs} from 'openlayers';
 import { LoadingAnimateService } from 'ng2-loading-animate';
 import { UserLayersService } from '../../services';
@@ -15,14 +15,16 @@ enum SearchInteraction {
 })
 export class SearchComponent implements OnInit {
   
-  private active : Boolean = false;
-  private activeInteraction : SearchInteraction = null;
+  private found : any;
+  active : Boolean = false;
+  activeInteraction : SearchInteraction = null;
   private boxInteraction : interaction.DragBox = new interaction.DragBox();
   private clickInteraction : ol.Object | ol.Object[];
 
   @Input('map') map : Map;
 
   constructor(
+    private zone : NgZone,
     private userLayerService : UserLayersService,
     private loading : LoadingAnimateService
   ) {
@@ -51,6 +53,10 @@ export class SearchComponent implements OnInit {
       (data)=>{
         this.loading.setValue(false);
         let features = data.json();
+        this.zone.run(()=>{
+          this.found = features;
+          this.map.render();
+        });
         console.log(features, 'featurrees');
       }, 
       (err)=>{
@@ -72,12 +78,16 @@ export class SearchComponent implements OnInit {
     return layerNames;
   }
 
-  setActive(value : Boolean, interaction : SearchInteraction){
+  setActive(value : Boolean, interaction? : SearchInteraction){
     if(!value){
+      this.active = false;
+      this.found = null;
       this.activeInteraction = null;
       this.map.removeInteraction(this.boxInteraction);
       olObs.unByKey(this.clickInteraction);
     } else {
+      if(!interaction) return;
+      this.active = true;
       this.setInteraction(interaction);
     }
   }

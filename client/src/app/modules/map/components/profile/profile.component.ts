@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, NgZone } from '@angular/core';
 import * as highcharts from 'highcharts';
+import { LoadingAnimateService } from 'ng2-loading-animate';
 import * as ol from 'openlayers';
 import { Profile3DService } from '../../services';
 
@@ -12,43 +13,10 @@ import { Profile3DService } from '../../services';
 export class ProfileComponent implements OnInit {
 
   active : Boolean = false;
-
   chart : highcharts.ChartObject;
-
-  pointLayer : ol.layer.Vector = new ol.layer.Vector({
-    source : new ol.source.Vector(),
-    style : [
-      new ol.style.Style({
-        /*image: new ol.style.Icon({
-          src: 'https://rawcdn.githack.com/google/material-design-icons/master/maps/svg/production/ic_add_location_48px.svg'
-        })*/
-        image: new ol.style.Circle({
-          radius: 5,
-          stroke: new ol.style.Stroke({
-            color: '#000'
-          })
-        })
-      })
-    ]
-  });
-
-  drawProfileLayer : ol.layer.Vector = new ol.layer.Vector({
-    source : new ol.source.Vector(),
-    style : [
-      new ol.style.Style({	
-        stroke: new ol.style.Stroke({	
-          color: [48, 63, 159],
-          width: 3,
-          lineDash: [.5, 10]
-        })
-      })
-    ]
-  });
-  
-  drawProfileInteraction : ol.interaction.Draw = new ol.interaction.Draw({
-    type : 'LineString',
-    source : this.drawProfileLayer.getSource()
-  });
+  pointLayer : ol.layer.Vector;
+  drawProfileLayer : ol.layer.Vector;
+  drawProfileInteraction : ol.interaction.Draw;
 
   events = [];
   
@@ -60,10 +28,62 @@ export class ProfileComponent implements OnInit {
   dataChartArray = [];
 
   constructor(
+    private loading : LoadingAnimateService,
     private profileService : Profile3DService,
     private zone : NgZone
   ) {
+    this.loadLayers();
+    this.loadInteraction();
+  }
+
+  loadLayers(){
+    this.pointLayer = new ol.layer.Vector({
+      source : new ol.source.Vector(),
+      style : [
+        new ol.style.Style({
+          /*image: new ol.style.Icon({
+            src: 'https://rawcdn.githack.com/google/material-design-icons/master/maps/svg/production/ic_add_location_48px.svg'
+          })*/
+          image: new ol.style.Circle({
+            radius: 5,
+            stroke: new ol.style.Stroke({
+              color: '#000'
+            })
+          })
+        })
+      ]
+    });
+
+    this.drawProfileLayer = new ol.layer.Vector({
+      source : new ol.source.Vector(),
+      style : [
+        new ol.style.Style({	
+          stroke: new ol.style.Stroke({	
+            color: [48, 63, 159],
+            width: 3,
+            lineDash: [.5, 10]
+          })
+        })
+      ]
+    });
     this.drawProfileLayer.set('name', 'DrawProfileLayer');
+  }
+
+  loadInteraction(){
+    this.drawProfileInteraction = new ol.interaction.Draw({
+      type : 'LineString',
+      source : this.drawProfileLayer.getSource()
+    });
+  }
+
+  setActive(value : Boolean){
+    if(value){
+      this.enableDraw();
+      this.active = true;
+    } else {
+      this.disableDraw();
+      this.active = false;
+    }
   }
 
   enableDraw(){
@@ -73,12 +93,17 @@ export class ProfileComponent implements OnInit {
       this.profileGeom = null;
     });
     let drawEnd = this.drawProfileInteraction.on('drawend', (e : ol.interaction.DrawEvent)=>{
+      this.zone.run( ()=> this.loading.setValue(true) );
       this.profileService.getProfile(e.feature).subscribe(
         (res)=> {
           this.zone.run( ()=>{
             this.profileGeom = new ol.geom.LineString(res.json().coordinates, 'XYZ');
             this.setProfile();
+            this.loading.setValue(false);
           });
+        }, 
+        (err)=>{
+          this.loading.setValue(false);
         }
       );
     });
@@ -86,7 +111,6 @@ export class ProfileComponent implements OnInit {
     this.map.addLayer(this.drawProfileLayer);
     this.map.addLayer(this.pointLayer);
     this.map.addInteraction(this.drawProfileInteraction);
-    this.active = true;
   }
 
   disableDraw(){
@@ -97,7 +121,7 @@ export class ProfileComponent implements OnInit {
     this.map.removeLayer(this.pointLayer);
     this.map.removeInteraction(this.drawProfileInteraction);
     this.profileGeom = null;
-    this.active = false;
+    this.events = [];
   }
 
   saveInstance(chartInstance) {
@@ -116,6 +140,7 @@ export class ProfileComponent implements OnInit {
 
   
   setProfile(){
+    if(!this.profileGeom) return;
     this.dataChartArray = [];
     let wgs84Sphere = new ol.Sphere(6378137);
 
@@ -139,13 +164,16 @@ export class ProfileComponent implements OnInit {
     //console.log(this.dataChartArray);
     if(this.chart){
       if(this.chart.series[0]) this.chart.series[0].remove();
-      this.chart.addSeries(
-        { name : 'Perfil', data : this.dataChartArray }
-      );
-      setTimeout( ()=>{
-        this.chart.reflow();
-        //this.chart.redraw();
-      }, 500);
+      this.zone.run(()=>{
+        this.chart.addSeries(
+          { name : 'Perfil', data : this.dataChartArray }
+        );
+        setTimeout( ()=>{
+          this.chart.reflow();
+          //this.chart.redraw();
+        }, 500);
+        this.map.render();
+      });
     }
   }
 
