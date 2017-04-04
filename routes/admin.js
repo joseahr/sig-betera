@@ -190,7 +190,7 @@ exports.router.route('/baselayers')
     handleWithData(db_1.db.layers.getAllBaseLayers(), res);
 })
     .post(function (req, res) {
-    var _a = req.body, service_url = _a.service_url, layers = _a.layers;
+    var _a = req.body, baselayer_name = _a.baselayer_name, service_url = _a.service_url, layers = _a.layers;
     //console.log(req.body);
     if (!service_url)
         return res.status(500).json('Debe introducir una url del servicio');
@@ -210,7 +210,7 @@ exports.router.route('/baselayers')
         if (layers.some(function (l) { return !layerCapNames.find(function (lcn) { return lcn === l; }); }))
             return res.status(500).json('El nombre de algunas capas seleccionadas no aparece en el doc de capacidades');
         // Actualizar bdd
-        handle(db_1.db.admin.createBaselayer(service_url_, layers_), res);
+        handle(db_1.db.admin.createBaselayer(baselayer_name, service_url_, layers_), res);
     });
 })
     .delete(function (req, res) {

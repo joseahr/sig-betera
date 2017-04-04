@@ -9,6 +9,7 @@ import { ChartModule } from 'angular2-highcharts';
 import { LayerSwitcherComponent } from './components/layer-switcher/layer-switcher.component';
 import { ReverseLayersPipe } from './pipes';
 import { AddWmsComponent } from './components/add-wms/add-wms.component';
+import { SearchComponent } from './components/search/search.component';
 
 const mapRoutes : Route[] =  [{
     path : '',
@@ -20,7 +21,8 @@ const mapRoutes : Route[] =  [{
         MapComponent, 
         ProfileComponent, 
         LayerSwitcherComponent,
-        AddWmsComponent
+        AddWmsComponent,
+        SearchComponent
     ],
     providers : [
     ],

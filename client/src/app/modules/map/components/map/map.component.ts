@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, NgZone, forwardRef } from '@angular/core';
+import {  } from '@angular/common';
 import { MdSidenav, MdDialog } from '@angular/material';
+import * as ol from 'openlayers';
 import { ProjectionService, Profile3DService, UserMapsService } from '../../services';
 import { routerTransition } from '../../../../router.transitions';
-import { ProfileComponent, LayerSwitcherComponent, AddWmsComponent } from '../';
-import * as ol from 'openlayers';
+import { ProfileComponent, LayerSwitcherComponent, AddWmsComponent, SearchComponent } from '../';
 
 @Component({
   selector: 'app-map',
@@ -15,15 +16,17 @@ import * as ol from 'openlayers';
 })
 export class MapComponent implements OnInit {
   
+  DEVELOPMENT_GEOSERVER_URL = 'http://localhost:8080/geoserver/betera-workspace/wms';
   mapProperties : any;
   map : ol.Map;
   overviewCtrl : ol.Map;
   sideNavMapInterval : any;
   
+  @ViewChild(forwardRef(() => SearchComponent)) searchControl : SearchComponent;
   @ViewChild(forwardRef(() => ProfileComponent)) profileControl : ProfileComponent;
   @ViewChild(forwardRef(() => LayerSwitcherComponent)) layerSwitcherControl : LayerSwitcherComponent;
   @ViewChild('overviewMap') overviewMapEl : ElementRef;
-  @ViewChild('mapTools') toolsContainer : ElementRef;
+  @ViewChildren('mapTools') toolsContainer : QueryList<ElementRef>;
   @ViewChild('sidenav') sidenav: MdSidenav;
 
   constructor(
@@ -46,7 +49,7 @@ export class MapComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.el.nativeElement.parentNode);
+    //console.log(this.el.nativeElement.parentNode);
     this.el.nativeElement.parentNode.parentNode.childNodes[0].style.position = 'relative';
     setTimeout(function () { window.scrollTo(0, 1); }, 1000);
     document.body.style.overflow = 'hidden';
@@ -86,7 +89,9 @@ export class MapComponent implements OnInit {
   }
 
   toggleTools(){
-    this.toolsContainer.nativeElement.classList.toggle('collapsed');
+    this.toolsContainer.forEach(element =>{
+      element.nativeElement.classList.toggle('collapsed');
+    });
   }
 
   toggleProfileControl(){
@@ -150,7 +155,7 @@ export class MapComponent implements OnInit {
       // Obtenemos una lista de mapas con las capas ya ordenadas
       // y la recorremos 
       mapas.forEach( (mapa, index, arr) => {
-        console.log('mapa', mapa);
+        //console.log('mapa', mapa);
         // Creamos un grupo de capas vacío
         let groupCapasMap = new ol.layer.Group({
             visible : mapa.visible === true 
@@ -165,7 +170,7 @@ export class MapComponent implements OnInit {
         this.map.addLayer(groupCapasMap);
 
         mapa.capas.forEach( capa =>{
-          console.log('capaa', capa);
+          //console.log('capaa', capa);
           if(capa.type == 'base') 
             this.addBaseLayerToGroup(capa, groupCapasMap);
           else if(capa.type == 'layer') 
@@ -183,11 +188,10 @@ export class MapComponent implements OnInit {
               url : opts.service_url,
               gutter : opts.gutter <= 0 ? 0 : 250,
               projection : opts.projection || 'EPSG:25830',
-              crossOrigin: opts.crossOrigin || 'anonymous', // Configurar Geoserver para orígenes remotos primero
+              //crossOrigin: opts.crossOrigin || 'anonymous', // Configurar Geoserver para orígenes remotos primero
               //crossOrigin : 'anonymous',
               params: {
                   'FORMAT': 'image/png', 
-                  'VERSION': '1.1.1',
                   'TRANSPARENT' : true,
                   'TILED' : true, 
                   'LAYERS': opts.layers,
@@ -197,7 +201,7 @@ export class MapComponent implements OnInit {
       });
 
       tile.set('name', opts.name);
-      tile.set('wms_externo', opts.wms_externo);
+      tile.set('type', opts.type);
       return tile;
   }
 
@@ -205,22 +209,23 @@ export class MapComponent implements OnInit {
     let tile = this.getTile({
         name : params.name,
         service_url : params.service_url,
-        layers : params.name,
+        type : 'base',
+        layers : params.layers,
         gutter : 250,
         wms_externo : true,
         crossOrigin : ''  
     });
+    tile.set('wms_externo', true);
     group.getLayers().extend([tile]);
   }
 
   addLayerToGroup(params : any, group : ol.layer.Group){
     let tile = this.getTile({ 
-      service_url : 'http://sig.betera.es:8080/geoserver/betera/wms', 
+      service_url : this.DEVELOPMENT_GEOSERVER_URL, 
       layers : params.name, 
       name : params.name,
-      //crossOrigin : 'anonymous'  
+      type : 'layer',
     });
-    tile.set('type', params.geomColumnType);
     group.getLayers().extend([tile]);
   }
 

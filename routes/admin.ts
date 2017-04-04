@@ -216,7 +216,7 @@ router.route('/baselayers')
     handleWithData(db.layers.getAllBaseLayers(), res);
 })
 .post( (req, res)=>{
-    let { service_url, layers } = req.body;
+    let { baselayer_name, service_url, layers } = req.body;
     //console.log(req.body);
     if(!service_url) return res.status(500).json('Debe introducir una url del servicio');
     if (!layers || !layers.length) return res.status(500).json('Debe seleccionar al menos una capa');
@@ -235,7 +235,7 @@ router.route('/baselayers')
         if( layers.some( ( l : any ) => !layerCapNames.find( ( lcn : any ) => lcn === l) ) ) 
             return res.status(500).json('El nombre de algunas capas seleccionadas no aparece en el doc de capacidades');
         // Actualizar bdd
-        handle(db.admin.createBaselayer(service_url_, layers_), res); 
+        handle(db.admin.createBaselayer(baselayer_name, service_url_, layers_), res); 
     })
 })
 .delete( (req, res)=>{

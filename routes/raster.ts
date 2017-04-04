@@ -4,7 +4,7 @@ import { db } from '../core/db';
 export let router = express.Router();
 
 router.post('/perfil', (req, res)=>{
-    console.log('wktttt', req.body.wkt);
+    //console.log('wktttt', req.body.wkt);
     if(!req.body.wkt){
         res.status(404).json('Debe pasar como parámetro un WKT');
     }

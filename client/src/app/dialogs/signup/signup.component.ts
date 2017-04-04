@@ -13,13 +13,13 @@ export class SignupComponent implements OnInit {
 
   userToCreate : 
     { 
-      name ? : string, 
-      password ? : string, 
-      repassword ? : string, 
-      nombre ? : string, 
-      apellidos ? : string, 
-      email ? : string,
-      "g-recaptcha-response" ? : string
+      name ? : String, 
+      password ? : String, 
+      repassword ? : String, 
+      nombre ? : String, 
+      apellidos ? : String, 
+      email ? : String,
+      "g-recaptcha-response" ? : String
     } = {};
 
   constructor(

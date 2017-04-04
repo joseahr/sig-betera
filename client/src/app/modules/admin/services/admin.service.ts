@@ -54,8 +54,8 @@ export class AdminService {
         });
     }
 
-    postBaseLayer(service_url : string, layers : string[]){
-        return this.http.post('/api/admin/baselayers', { service_url, layers });
+    postBaseLayer(baselayer_name : string, service_url : string, layers : string[]){
+        return this.http.post('/api/admin/baselayers', { baselayer_name, service_url, layers });
     }
 
     deleteBaseLayer(id : number){

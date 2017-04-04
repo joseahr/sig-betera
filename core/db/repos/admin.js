@@ -129,8 +129,8 @@ var Repository = (function () {
     Repository.prototype.removeLayer = function (tableName) {
         return this.db.none('DROP TABLE IF EXISTS "capas".${tableName~} CASCADE', { tableName: tableName });
     };
-    Repository.prototype.createBaselayer = function (service_url, layers) {
-        return this.db.none("INSERT INTO base_layers(service_url, name) VALUES('${service_url#}', '${layers#}')", { service_url: service_url, layers: layers });
+    Repository.prototype.createBaselayer = function (baselayer_name, service_url, layers) {
+        return this.db.none("INSERT INTO base_layers(name, service_url, layers) VALUES(${baselayer_name}, ${service_url}, ${layers})", { baselayer_name: baselayer_name, service_url: service_url, layers: layers });
     };
     Repository.prototype.deleteBaselayer = function (id) {
         return this.db.none("DELETE FROM base_layers WHERE id = '${id#}'", { id: id });

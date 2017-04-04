@@ -24,6 +24,15 @@ export class Repository {
     private db:IDatabase<any>;
 
     private pgp:IMain;
+    
+    // Devuelve las capas que aparecen en default_maps
+    getDefaultLayers(){
+        return this.db.any(`
+            SELECT l.id, l.name FROM Default_Maps dm
+            INNER JOIN Map_Layers ml ON dm.id = ml.id_map
+            LEFT JOIN Layers l ON l.id = ml.id_layer
+        `);
+    }
 
     getFeaturesIntersecting(wkt : string, ...layers : string[]) {
         return this.db.task( t=>

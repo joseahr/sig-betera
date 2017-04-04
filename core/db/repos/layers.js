@@ -14,6 +14,10 @@ var Repository = (function () {
         this.db = db;
         this.pgp = pgp; // library's root, if ever needed;
     }
+    // Devuelve las capas que aparecen en default_maps
+    Repository.prototype.getDefaultLayers = function () {
+        return this.db.any("\n            SELECT l.id, l.name FROM Default_Maps dm\n            INNER JOIN Map_Layers ml ON dm.id = ml.id_map\n            LEFT JOIN Layers l ON l.id = ml.id_layer\n        ");
+    };
     Repository.prototype.getFeaturesIntersecting = function (wkt) {
         var _this = this;
         var layers = [];

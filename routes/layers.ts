@@ -4,16 +4,22 @@ import * as capabilitiesParser from '../core/capabilities-parser';
 
 export let router = express.Router();
 
-router.route('/features/byGeom')
+router.route('/features')
 .post( (req, res)=>{
-    console.log('byGeom');
-    if(!req.body.wkt) return res.status(500).json('Debe enviar una extensión, área o punto.');
-    if(!req.body.layers || !req.body.layers.length) return res.status(500).json('Debe enviar al menos una capa en la que buscar.');
-    if(typeof req.body.layers === 'string') req.body.layers = req.body.layers.split(',');
-
-    db.layers.getFeaturesIntersecting(req.body.wkt, ...req.body.layers)
-    .then( ( result : any ) => res.status(200).json(result) )
-    .catch( ( err : any ) => res.status(500).json('Hubo un error durante la búsqueda.') );
+    let { user } = req;
+    let { wkt, layers } = req.body;
+    //console.log('byGeom');
+    if(!wkt) return res.status(500).json('Debe enviar una extensión, área o punto.');
+    if(!layers || !layers.length) return res.status(500).json('Debe enviar al menos una capa en la que buscar.');
+    //if(typeof req.body.layers === 'string') req.body.layers = req.body.layers.split(',');
+    db.layers.getDefaultLayers().then( (defaultLayers : any = []) =>{
+        if(!user){
+            layers = layers.filter( (l : any) => defaultLayers.find( (dl : any) => dl.name == l) );
+        }
+        db.layers.getFeaturesIntersecting(wkt, ...layers)
+        .then( ( result : any ) => res.status(200).json(result) )
+        .catch( ( err : any ) => res.status(500).json('Hubo un error durante la búsqueda.') );
+    });
 });
 
 router
@@ -34,7 +40,6 @@ router
 .get( (req, res)=>{
     //if(!req.user) return res.status(500).json('No capas asignadas');
     var id = req.user ? req.user.id : null;
-
     // Buscamos qué rol tiene sobre la capa
     db.roles.getRol(id, req.params.id_layer)
     .then( ( rol : string ) =>{
@@ -42,7 +47,7 @@ router
         rol = rol || 'r';
         db.layers.getLayerNames(req.params.id_layer)
         .then( ( layerName : any ) => {
-            console.log(layerName);
+            //console.log(layerName);
             layerName = layerName[0];
             // Obtener la capa como GeoJSON
             res.status(200).json({
@@ -58,7 +63,7 @@ router
 router
 .route('/base/:id_layer')
 .get( (req, res)=>{
-    console.log(req.params.id_layer);
+    //console.log(req.params.id_layer);
     //if(!req.user) return res.status(500).json('No capas asignadas');
     db.layers.getBaseLayer(req.params.id_layer)
     .then( ( baseLayer : any ) => res.status(200).json(baseLayer) )

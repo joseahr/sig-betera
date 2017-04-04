@@ -86,6 +86,7 @@ export class AdminLayersComponent implements OnInit {
         },
         { title: 'ID', data: 'id'}, 
         { title: 'Nombre', data: 'name' }, 
+        { title: 'Capas', data: 'layers' }, 
         { title: 'URL', data: 'service_url' },
       ]
     };

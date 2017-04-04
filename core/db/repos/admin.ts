@@ -161,8 +161,8 @@ export class Repository {
         return this.db.none('DROP TABLE IF EXISTS "capas".${tableName~} CASCADE', { tableName });
     }
 
-    createBaselayer(service_url : string, layers : string){
-        return this.db.none("INSERT INTO base_layers(service_url, name) VALUES('${service_url#}', '${layers#}')", { service_url, layers });
+    createBaselayer(baselayer_name : string, service_url : string, layers : string){
+        return this.db.none("INSERT INTO base_layers(name, service_url, layers) VALUES(${baselayer_name}, ${service_url}, ${layers})", { baselayer_name, service_url, layers });
     }
 
     deleteBaselayer(id : number){

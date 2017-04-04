@@ -4,18 +4,25 @@ var express = require("express");
 var db_1 = require("../core/db");
 var capabilitiesParser = require("../core/capabilities-parser");
 exports.router = express.Router();
-exports.router.route('/features/byGeom')
+exports.router.route('/features')
     .post(function (req, res) {
-    console.log('byGeom');
-    if (!req.body.wkt)
+    var user = req.user;
+    var _a = req.body, wkt = _a.wkt, layers = _a.layers;
+    //console.log('byGeom');
+    if (!wkt)
         return res.status(500).json('Debe enviar una extensión, área o punto.');
-    if (!req.body.layers || !req.body.layers.length)
+    if (!layers || !layers.length)
         return res.status(500).json('Debe enviar al menos una capa en la que buscar.');
-    if (typeof req.body.layers === 'string')
-        req.body.layers = req.body.layers.split(',');
-    (_a = db_1.db.layers).getFeaturesIntersecting.apply(_a, [req.body.wkt].concat(req.body.layers)).then(function (result) { return res.status(200).json(result); })
-        .catch(function (err) { return res.status(500).json('Hubo un error durante la búsqueda.'); });
-    var _a;
+    //if(typeof req.body.layers === 'string') req.body.layers = req.body.layers.split(',');
+    db_1.db.layers.getDefaultLayers().then(function (defaultLayers) {
+        if (defaultLayers === void 0) { defaultLayers = []; }
+        if (!user) {
+            layers = layers.filter(function (l) { return defaultLayers.find(function (dl) { return dl.name == l; }); });
+        }
+        (_a = db_1.db.layers).getFeaturesIntersecting.apply(_a, [wkt].concat(layers)).then(function (result) { return res.status(200).json(result); })
+            .catch(function (err) { return res.status(500).json('Hubo un error durante la búsqueda.'); });
+        var _a;
+    });
 });
 exports.router
     .post('/wms/capabilities', function (req, res) {
@@ -43,7 +50,7 @@ exports.router
         rol = rol || 'r';
         db_1.db.layers.getLayerNames(req.params.id_layer)
             .then(function (layerName) {
-            console.log(layerName);
+            //console.log(layerName);
             layerName = layerName[0];
             // Obtener la capa como GeoJSON
             res.status(200).json({
@@ -57,7 +64,7 @@ exports.router
 exports.router
     .route('/base/:id_layer')
     .get(function (req, res) {
-    console.log(req.params.id_layer);
+    //console.log(req.params.id_layer);
     //if(!req.user) return res.status(500).json('No capas asignadas');
     db_1.db.layers.getBaseLayer(req.params.id_layer)
         .then(function (baseLayer) { return res.status(200).json(baseLayer); })

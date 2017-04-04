@@ -8,7 +8,10 @@
     </md-card-header>
     <md-card-content>
       <md-input-container style="width : 100%;">
-        <input mdInput [disabled]="serviceURLInputDisabled" [(ngModel)]="serviceUrl" placeholder="url del servidor o capabilities"  value="">
+        <input mdInput [(ngModel)]="baselayerName" placeholder="Nombre de la capa base"  value="">
+      </md-input-container>
+      <md-input-container style="width : 100%;">
+        <input mdInput [disabled]="serviceURLInputDisabled" [(ngModel)]="serviceUrl" placeholder="URL del servidor WMS o Capabilities"  value="">
       </md-input-container>
       <button [disabled]="capas" md-button (click)="getCapabilities()" style="width : 100%;">OBTENER CAPAS</button>
       <button *ngIf="capas" md-button (click)="reset()" style="width : 100%;">LIMPIAR CAMPOS</button>
@@ -21,7 +24,7 @@
       </md-list>
     </md-card-content>
     <md-card-actions>
-      <button md-button *ngIf="capasSeleccionadas.length" (click)="addBaseLayer()">AÑADIR CAPA BASE</button>
+      <button md-button [disabled]="!capasSeleccionadas?.length || baselayerName?.length < 3" (click)="addBaseLayer()">AÑADIR CAPA BASE</button>
     </md-card-actions>
   </md-card>
 </div>

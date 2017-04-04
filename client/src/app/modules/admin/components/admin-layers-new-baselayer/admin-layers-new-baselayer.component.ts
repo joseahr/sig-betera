@@ -15,6 +15,7 @@ import { AdminService } from '../../services';
 export class AdminLayersNewBaselayerComponent implements OnInit {
 
   serviceUrl;
+  baselayerName;
   capas : any[];
   capasSeleccionadas : any[] = [];
   error : any;
@@ -70,7 +71,7 @@ export class AdminLayersNewBaselayerComponent implements OnInit {
     let layers = this.capasSeleccionadas.map( l => l.Name );
     console.log(serviceURL);
     this.loading.setValue(true);
-    this.adminService.postBaseLayer(serviceURL, layers).subscribe(
+    this.adminService.postBaseLayer(this.baselayerName, serviceURL, layers).subscribe(
       ()=>{
         this.loading.setValue(false);
         this.serviceUrl = '';
