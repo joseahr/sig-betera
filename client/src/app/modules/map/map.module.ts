@@ -2,14 +2,15 @@ import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Route } from '@angular/router';
 import { DragulaModule } from 'ng2-dragula';
+import { DataTablesModule } from 'angular-datatables';
 import { MapComponent, ProfileComponent } from './components';
 import { MaterialModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { ChartModule } from 'angular2-highcharts';
-import { LayerSwitcherComponent } from './components/layer-switcher/layer-switcher.component';
+import { NgObjectPipesModule } from 'angular-pipes';
 import { ReverseLayersPipe } from './pipes';
-import { AddWmsComponent } from './components/add-wms/add-wms.component';
-import { SearchComponent } from './components/search/search.component';
+import { AddWmsComponent, LayerSwitcherComponent, SearchComponent, SearchComponentDialog } from './components';
+
 
 const mapRoutes : Route[] =  [{
     path : '',
@@ -22,7 +23,8 @@ const mapRoutes : Route[] =  [{
         ProfileComponent, 
         LayerSwitcherComponent,
         AddWmsComponent,
-        SearchComponent
+        SearchComponent,
+        SearchComponentDialog
     ],
     providers : [
     ],
@@ -31,11 +33,13 @@ const mapRoutes : Route[] =  [{
         DragulaModule,
         ChartModule,
         FormsModule,
+        DataTablesModule,
+        NgObjectPipesModule,
         MaterialModule.forRoot(),
         RouterModule.forChild(mapRoutes)
     ],
     entryComponents: [
-        AddWmsComponent
+        AddWmsComponent, SearchComponentDialog
     ]
 })
 export class MapModule {

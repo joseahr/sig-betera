@@ -54,3 +54,7 @@ table.dataTable td {
 .loader {
     background: rgba(0,0,0,0.3) !important;
 }
+
+#search-tab .mat-tab-body-wrapper {
+    /*overflow : scroll;*/
+}

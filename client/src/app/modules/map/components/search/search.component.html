@@ -1,17 +1,7 @@
-<md-card *ngIf="found" style="position : absolute; bottom : 0px; left : 0.5em; right: 0.5em; height : 35vh;">
-  <md-card-header>
-    <md-card-title>Shiba Inu</md-card-title>
-    <md-card-subtitle>Dog Breed</md-card-subtitle>
-  </md-card-header>
-  <md-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
-    </p>
-  </md-card-content>
-  <md-card-actions style="position: absolute; bottom : 1.5em;">
-    <button md-button>LIKE</button>
-    <button md-button>SHARE</button>
-  </md-card-actions>
-</md-card>
+<md-tab-group id="search-tab" (selectChange)="onChangeTab($event)">
+  <md-tab label="{{search.layername}}" *ngFor="let search of found"> 
+  </md-tab>
+</md-tab-group>
+<table datatable style="width : 100%;">
+</table>
+<button (click)="close()" md-mini-fab style="position : absolute; top : 0.5em; right : 0.5em;"><md-icon>close</md-icon></button>

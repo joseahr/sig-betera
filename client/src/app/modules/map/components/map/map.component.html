@@ -12,19 +12,19 @@
     </button>
 
     <div #mapTools class="collapsed">
-      <button md-button class="list-button" (click)="toggleProfileControl()">
+      <button md-button class="list-button" (click)="toggleProfileControl()" [style.background-color]="getBackgroundColor(profileControl.active)">
         <md-icon>terrain</md-icon>PERFIL
       </button>
     </div>
 
     <div #mapTools class="collapsed">
-      <button md-button (click)="toggleSearchControl(1)" class="list-button">
+      <button md-button (click)="toggleSearchControl(1)" class="list-button" [style.background-color]="getBackgroundColor(searchControl.active && searchControl.activeInteraction == 1)">
         <md-icon>search</md-icon>BÚSQUEDA POR PUNTO
       </button>
     </div>
 
     <div #mapTools class="collapsed">
-      <button md-button (click)="toggleSearchControl(2)" class="list-button">
+      <button md-button (click)="toggleSearchControl(2)" class="list-button" [style.background-color]="getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)">
         <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE
       </button>
     </div>

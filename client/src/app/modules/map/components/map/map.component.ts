@@ -51,6 +51,10 @@ export class MapComponent implements OnInit {
     ]
   }
 
+  getBackgroundColor(bool : Boolean){
+    return bool ? '#33ff99' : '#f7f7f7';
+  }
+
   disableControls(){
     this.customComponentsWithInteractions.forEach( (control : any )=>{
       control.setActive(false);

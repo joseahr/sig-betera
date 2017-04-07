@@ -1,7 +1,13 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
-import { Feature, Map, interaction, MapBrowserPointerEvent, geom, Observable as olObs} from 'openlayers';
+import { Component, OnInit, Input, NgZone, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs/Rx';
+import { Feature, Map, interaction, MapBrowserPointerEvent, geom, layer, source, format, extent, Observable as olObs} from 'openlayers';
+import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
+import { KeysPipe } from 'angular-pipes/src/object/keys.pipe';
 import { LoadingAnimateService } from 'ng2-loading-animate';
+import { DataTableDirective } from 'angular-datatables';
 import { UserLayersService } from '../../services';
+
+declare const $;
 
 enum SearchInteraction {
   Point = 1, Box
@@ -9,29 +15,42 @@ enum SearchInteraction {
 
 @Component({
   selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css'],
-  providers : [ UserLayersService ]
+  template : `<button (click)="openDialog()" md-mini-fab *ngIf="dialogCollapsed" style="position : absolute;z-index : 1; bottom: 0.5em; left : 0.5em;"><md-icon>search</md-icon></button>`,
+  providers : [ UserLayersService, KeysPipe ]
 })
 export class SearchComponent implements OnInit {
   
   private found : any;
   active : Boolean = false;
   activeInteraction : SearchInteraction = null;
+  dialogCollapsed : Boolean = false;
+  dialogRef : MdDialogRef<SearchComponentDialog>;
   private boxInteraction : interaction.DragBox = new interaction.DragBox();
   private clickInteraction : ol.Object | ol.Object[];
+  private geojsonParser : format.GeoJSON = new format.GeoJSON();
+  private searchLayer = new layer.Vector({
+    source : new source.Vector()
+  });
 
   @Input('map') map : Map;
 
   constructor(
+    private snackbar : MdSnackBar,
+    private dialog : MdDialog,
     private zone : NgZone,
     private userLayerService : UserLayersService,
     private loading : LoadingAnimateService
   ) {
     this.boxInteraction.on('boxend', this.boxHandler.bind(this));
+    this.searchLayer.set('name', 'SearchLayer');
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  ngAfterViewInit(){
+    //this.map.addLayer(this.searchLayer);
+  }
 
   clickHandler(e : MapBrowserPointerEvent){
     let point = new geom.Point(e.coordinate);
@@ -45,22 +64,62 @@ export class SearchComponent implements OnInit {
     this.search(feature);
   }
 
+  openDialog(){
+    if(!this.found) return;
+    this.dialogCollapsed = false;
+    let dialogRef = this.dialogRef = this.dialog.open(SearchComponentDialog, {
+      height : '90vh',
+      width : '90vh'
+    });
+    dialogRef.componentInstance.found = this.found;
+    dialogRef.afterClosed().subscribe(()=>{
+      this.dialogCollapsed = true;
+    });
+    dialogRef.componentInstance.rowClicked.subscribe(
+      (data)=>{
+        if(!data) return;
+        //console.log('rowClicked -- ', data);
+        let feature : any = this.geojsonParser.readFeature(data, {
+          dataProjection : this.map.getView().getProjection(),
+          featureProjection : this.map.getView().getProjection()
+        });
+        this.searchLayer.getSource().clear();
+        this.searchLayer.getSource().addFeature(feature);
+        this.dialogRef.close();
+        let view : any = this.map.getView();
+        //console.log(feature.getGeometry(), 'geom')
+        view.fit( feature.getGeometry(), {
+          duration : 1000
+        });
+      }
+    );
+
+  }
+
+  collapseDialog(){
+    if(!this.dialogRef) return;
+    this.dialogRef.close();
+    this.dialogCollapsed = true;
+  }
+
   search(feature : Feature){
-    this.loading.setValue(true);
+    this.zone.run(()=>{ this.loading.setValue(true); this.dialog.closeAll(); });
     let layerNames = this.getActiveLayers();
     //console.log('layerNAmes', layerNames)
     this.userLayerService.getFeatures(feature, layerNames).subscribe(
       (data)=>{
-        this.loading.setValue(false);
-        let features = data.json();
         this.zone.run(()=>{
+          this.loading.setValue(false);
+          let features = data.filter( f => f.found.features );
+          features.forEach(f => console.log(f.layername))
           this.found = features;
           this.map.render();
+          //console.log(features, 'featurrees');
+          this.openDialog();
         });
-        console.log(features, 'featurrees');
       }, 
       (err)=>{
-        this.loading.setValue(false);
+        this.zone.run(()=>{ this.loading.setValue(false); });
       }
     )
   }
@@ -68,8 +127,9 @@ export class SearchComponent implements OnInit {
   getActiveLayers(){
     let layerNames = [];
     this.map.getLayers().forEach( l => {
+      if(!l.get('layers')) return;
       l.get('layers').forEach(al => {
-        console.log('layer', al.get('type'), al.get('visible'), al.getVisible())
+        //console.log('layer', al.get('type'), al.get('visible'), al.getVisible())
         if(al.get('visible') && al.get('type') == 'layer'){
           layerNames.push(al.get('name'));
         }
@@ -85,15 +145,23 @@ export class SearchComponent implements OnInit {
       this.activeInteraction = null;
       this.map.removeInteraction(this.boxInteraction);
       olObs.unByKey(this.clickInteraction);
+      this.dialogCollapsed = false;
+      this.snackbar._openedSnackBarRef ? this.snackbar._openedSnackBarRef.dismiss() : '';
+      this.map.removeLayer(this.searchLayer);
     } else {
       if(!interaction) return;
       this.active = true;
       this.setInteraction(interaction);
+      if(!this.map.getLayers().getArray().find( l => l.get('name') == 'SearchLayer')){
+        this.map.addLayer(this.searchLayer);
+      }
     }
   }
 
   setInteraction(interaction : SearchInteraction){
-    console.log(interaction, this.activeInteraction, SearchInteraction.Point, SearchInteraction.Box, 'slsjlsk');
+    let msg = interaction == SearchInteraction.Point ? 'Haz click' : 'Dibuja un recuadro';
+    this.snackbar.open(`${msg} para realizar la búsqueda`, 'CERRAR');
+    //console.log(interaction, this.activeInteraction, SearchInteraction.Point, SearchInteraction.Box, 'slsjlsk');
     if(interaction == this.activeInteraction) return;
 
     if(interaction == SearchInteraction.Point){
@@ -107,6 +175,102 @@ export class SearchComponent implements OnInit {
     }
   }
 
+}
 
+
+@Component({
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css'],
+  providers : [ ]
+})
+export class SearchComponentDialog {
+  found;
+  selectedTabData;
+  tabIndex : number = 0;
+  rowClicked : Subject<any> = new Subject<any>();
+  @ViewChild(DataTableDirective) dtElement : any;
+
+  constructor(private zone : NgZone, private dialog : MdDialogRef<SearchComponentDialog>){}
+
+  ngOnInit(){
+    console.log('oninit');
+    this.dtElement.dtOptions = this.getTableOptions(0);
+    let subject : any = new Subject<any>();
+    this.dtElement.dtTrigger = subject;
+  }
+  
+
+  ngAfterViewInit(){
+    console.log('AfterViewInit');
+    this.dtElement.dtTrigger.next();
+    this.addRowClickListener();
+  }
+
+  addRowClickListener(){
+    let self = this;
+    let f = function(){
+      self.dtElement.dtInstance.then( dtInstance =>{
+        dtInstance
+        .on('click', '.see-map', function(){
+          try {
+            let row_dom = $(this).closest('tr');
+            console.log('row_dom', row_dom);
+            //if(!row_dom) return;
+            let row = $(self.dtElement.getElement().nativeElement).DataTable().row(row_dom).data();
+            console.log('row', row);
+            let feature = self.found[self.tabIndex].found.features.find( f => f.properties.gid == row.gid );
+            self.rowClicked.next(feature);
+          } catch(e){
+            console.log(e);
+          }
+        })
+      });
+    }
+    this.dtElement.dtInstance.then( dtInstance =>{
+      dtInstance
+      .on( 'order.dt', f)
+      .on( 'search.dt', f)
+      .on( 'page.dt', f);
+      f();
+    });
+  }
+
+  close(){
+    this.dialog.close();
+  }
+
+  onChangeTab(event){
+    this.tabIndex = event.index;
+    console.log(event);
+    //this.dtOptions = this.getTableOptions(event.index);
+    this.dtElement.dtInstance.then( dtInstance =>{
+      dtInstance.destroy();
+      $(this.dtElement.getElement().nativeElement).empty();
+      this.dtElement.dtOptions = this.getTableOptions(event.index);
+      this.dtElement.dtTrigger.next();
+      this.addRowClickListener();
+    });
+
+  }
+
+  getTableOptions(index){
+    let features = this.found[index].found.features;
+    let data = features.map( feature => feature.properties || {} );
+    let columns = [
+      { title : 'Ver en Mapa', defaultContent : `
+        <button md-button class="mat-button see-map">
+          <md-icon style="color : #ffbb00" class="material-icons mat-icon">map</md-icon>
+        </button>
+      ` },
+      ...Object.keys(features[0].properties).map( key => ({ title : key, data : key }) )
+    ];
+    console.log('FEATURES - ', features, 'DATA - ', data, 'COLUMNS - ', columns);
+    return {
+      scrollX : true,
+      scrollY : '50vh',
+      scrollCollapse : true,
+      data, columns
+    };
+  }
 
 }
