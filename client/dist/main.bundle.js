@@ -62,13 +62,17 @@ var AuthService = (function () {
 
 /***/ }),
 
-/***/ 425:
+/***/ 426:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__secciones__ = __webpack_require__(640);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_transitions__ = __webpack_require__(458);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__secciones__ = __webpack_require__(646);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_transitions__ = __webpack_require__(464);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_fullpage_js__ = __webpack_require__(443);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_fullpage_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_fullpage_js__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -82,50 +86,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var HomeComponent = (function () {
     function HomeComponent(el, ngZone) {
         this.el = el;
         this.ngZone = ngZone;
-        this.cols = window.innerWidth < 600 ? 1 : 2;
         this.secciones = __WEBPACK_IMPORTED_MODULE_1__secciones__["a" /* sections */];
     }
+    HomeComponent.prototype.ngOnDestroy = function () {
+        document.getElementsByTagName('html')[0].style.overflow = 'auto';
+        __WEBPACK_IMPORTED_MODULE_3_jquery__["fn"].fullpage.destroy('all');
+        console.log('destroyyy');
+    };
     HomeComponent.prototype.ngAfterViewInit = function () {
         this.toolbar = this.el.nativeElement.parentNode.parentNode.childNodes[0];
         document.body.style.overflow = '';
         //console.log(this.el.nativeElement.parentNode.childNodes[0], this.el.nativeElement, 'toooooool')
     };
-    HomeComponent.prototype.setCols = function () {
-        if (window.innerWidth < 600 && this.cols !== 1) {
-            this.cols = 1;
-        }
-        else if (window.innerWidth >= 600) {
-            this.cols = 2;
-        }
-    };
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])('window:resize', ['$event']), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', []), 
-        __metadata('design:returntype', void 0)
-    ], HomeComponent.prototype, "setCols", null);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('full'), 
+        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object)
+    ], HomeComponent.prototype, "full", void 0);
     HomeComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-home',
-            template: __webpack_require__(717),
-            styles: [__webpack_require__(706)],
+            template: __webpack_require__(724),
+            styles: [__webpack_require__(711)],
             animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _c) || Object])
     ], HomeComponent);
     return HomeComponent;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 //# sourceMappingURL=home.component.js.map
 
 /***/ }),
 
-/***/ 426:
+/***/ 427:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -164,20 +164,20 @@ var LoginComponent = (function () {
             _this.dialogRef.close(result.json());
             _this.snackBar.open("\u00A1Hola de nuevo, " + result.json().name + "!", null, { duration: 1000 });
         }, function (err) {
-            console.log(err);
+            //console.log(err);
             _this.isLoading = false;
             _this.snackBar.open(err.json(), null, { duration: 1000 });
         }, function () {
-            console.log('end - login');
+            //console.log('end - login');
             _this.isLoading = false;
         });
-        console.log(this.userNotLoggedParams);
+        //console.log(this.userNotLoggedParams);
     };
     LoginComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-login',
-            template: __webpack_require__(719),
-            styles: [__webpack_require__(708)],
+            template: __webpack_require__(726),
+            styles: [__webpack_require__(713)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */]) === 'function' && _c) || Object])
@@ -189,14 +189,14 @@ var LoginComponent = (function () {
 
 /***/ }),
 
-/***/ 427:
+/***/ 428:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_recaptcha_lib_captcha_component__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_recaptcha_lib_captcha_component__ = __webpack_require__(430);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_recaptcha_lib_captcha_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_recaptcha_lib_captcha_component__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -225,7 +225,7 @@ var SignupComponent = (function () {
     SignupComponent.prototype.signup = function () {
         var _this = this;
         var recaptcha = this.captcha.getResponse();
-        console.log('token', recaptcha);
+        //console.log('token', recaptcha);
         if (!recaptcha) {
             this.snackBar.open('Debes verificar el captcha', null, { duration: 1500 });
             return;
@@ -233,7 +233,7 @@ var SignupComponent = (function () {
         var user = this.userToCreate;
         user['g-recaptcha-response'] = recaptcha;
         this.authService.signup(user).subscribe(function () {
-            console.log('Usuario registrado con éxito');
+            //console.log('Usuario registrado con éxito');
             _this.snackBar.open('Registrado con éxito', null, { duration: 1500 });
             _this.dialogRef.close();
         }, function (err) { _this.snackBar.open(err, null, { duration: 1500 }); }, function () { _this.captcha.reset(); });
@@ -245,8 +245,8 @@ var SignupComponent = (function () {
     SignupComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-signup',
-            template: __webpack_require__(720),
-            styles: [__webpack_require__(709)],
+            template: __webpack_require__(727),
+            styles: [__webpack_require__(714)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MdDialogRef */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MdSnackBar */]) === 'function' && _d) || Object])
@@ -258,27 +258,27 @@ var SignupComponent = (function () {
 
 /***/ }),
 
-/***/ 428:
+/***/ 429:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__guards__ = __webpack_require__(644);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__guards__ = __webpack_require__(650);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__guards__["a"]; });
 
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ 448:
+/***/ 455:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"./modules/admin/admin.module": [
-		748,
+		750,
 		0
 	],
 	"./modules/map/map.module": [
-		749,
+		751,
 		1
 	]
 };
@@ -293,20 +293,20 @@ webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
 module.exports = webpackAsyncContext;
-webpackAsyncContext.id = 448;
+webpackAsyncContext.id = 455;
 
 
 /***/ }),
 
-/***/ 449:
+/***/ 456:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(607);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(638);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(646);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(613);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(644);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(652);
 
 
 
@@ -319,7 +319,7 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 
 /***/ }),
 
-/***/ 458:
+/***/ 464:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -347,13 +347,13 @@ function slideToLeft() {
 
 /***/ }),
 
-/***/ 464:
+/***/ 470:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth_service__ = __webpack_require__(104);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__auth_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__confirm_dialog_service__ = __webpack_require__(645);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__confirm_dialog_service__ = __webpack_require__(651);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__confirm_dialog_service__["a"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_1__confirm_dialog_service__["b"]; });
 
@@ -362,17 +362,17 @@ function slideToLeft() {
 
 /***/ }),
 
-/***/ 637:
+/***/ 643:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs_login_login_component__ = __webpack_require__(426);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dialogs_signup_signup_component__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs_login_login_component__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dialogs_signup_signup_component__ = __webpack_require__(428);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_auth_service__ = __webpack_require__(104);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -465,8 +465,8 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-root',
-            template: __webpack_require__(716),
-            styles: [__webpack_require__(705)],
+            template: __webpack_require__(723),
+            styles: [__webpack_require__(710)],
             providers: [__WEBPACK_IMPORTED_MODULE_6__services_auth_service__["a" /* AuthService */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdDialog */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services_auth_service__["a" /* AuthService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _e) || Object])
@@ -478,7 +478,7 @@ var AppComponent = (function () {
 
 /***/ }),
 
-/***/ 638:
+/***/ 644:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -486,26 +486,28 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(637);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components__ = __webpack_require__(641);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_routes__ = __webpack_require__(639);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(643);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components__ = __webpack_require__(647);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_routes__ = __webpack_require__(645);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_material__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__ = __webpack_require__(647);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__ = __webpack_require__(653);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular2_highcharts_dist_HighchartsService__ = __webpack_require__(467);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular2_highcharts_dist_HighchartsService__ = __webpack_require__(473);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular2_highcharts_dist_HighchartsService___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_angular2_highcharts_dist_HighchartsService__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_highcharts__ = __webpack_require__(711);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_highcharts__ = __webpack_require__(716);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_highcharts__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting__ = __webpack_require__(712);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting__ = __webpack_require__(717);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__guards__ = __webpack_require__(428);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services__ = __webpack_require__(464);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_hammerjs__ = __webpack_require__(710);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_hammerjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_loading_animate__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16_ng2_loading_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__dialogs__ = __webpack_require__(643);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__guards__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services__ = __webpack_require__(470);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_fullpage__ = __webpack_require__(719);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_fullpage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16_ng2_fullpage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__dialogs__ = __webpack_require__(649);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_hammerjs__ = __webpack_require__(715);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18_hammerjs__);
 /* unused harmony export highchartsFactory */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -535,6 +537,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 function highchartsFactory() {
     __WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting__(__WEBPACK_IMPORTED_MODULE_11_highcharts__);
     return __WEBPACK_IMPORTED_MODULE_11_highcharts__;
@@ -545,6 +548,7 @@ var AppModule = (function () {
     AppModule = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
             declarations: [
+                __WEBPACK_IMPORTED_MODULE_16_ng2_fullpage__["MnFullpageDirective"],
                 __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
                 __WEBPACK_IMPORTED_MODULE_5__components__["a" /* HomeComponent */],
                 __WEBPACK_IMPORTED_MODULE_17__dialogs__["a" /* LoginComponent */],
@@ -556,13 +560,14 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormsModule"],
                 __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__["ReCaptchaModule"],
-                __WEBPACK_IMPORTED_MODULE_16_ng2_loading_animate__["LoadingAnimateModule"].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__["LoadingAnimateModule"].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_8__angular_material__["a" /* MaterialModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_7__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_routes__["a" /* appRoutes */], { useHash: true })
             ],
             entryComponents: [__WEBPACK_IMPORTED_MODULE_17__dialogs__["a" /* LoginComponent */], __WEBPACK_IMPORTED_MODULE_17__dialogs__["b" /* SignupComponent */]],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_16_ng2_loading_animate__["LoadingAnimateService"],
+                __WEBPACK_IMPORTED_MODULE_16_ng2_fullpage__["MnFullpageService"],
+                __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__["LoadingAnimateService"],
                 __WEBPACK_IMPORTED_MODULE_14__services__["a" /* AuthService */],
                 __WEBPACK_IMPORTED_MODULE_13__guards__["a" /* CanActivateAdmin */],
                 {
@@ -580,12 +585,12 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 639:
+/***/ 645:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_home_home_component__ = __webpack_require__(425);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__guards__ = __webpack_require__(428);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_home_home_component__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__guards__ = __webpack_require__(429);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return appRoutes; });
 
 
@@ -599,7 +604,7 @@ var appRoutes = [
 
 /***/ }),
 
-/***/ 640:
+/***/ 646:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -609,43 +614,47 @@ var sections = [
         titulo: 'Servicios WMS',
         subtitulo: 'Servicios WMS',
         resumen: "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n        Phasellus et ornare erat. Suspendisse dapibus sapien ac elit blandit ullamcorper. \n        Morbi venenatis vestibulum lacus sit amet lacinia. Integer aliquam, tellus sed venenatis dignissim, eros diam finibus libero, ut venenatis lectus elit vitae ipsum. Phasellus tristique tempor diam id ultrices. Phasellus vitae elit sem. Mauris tristique dolor ex, vel auctor eros fringilla sit amet. Etiam in lorem non diam condimentum rutrum. Pellentesque felis velit, consectetur eu ullamcorper eget, dapibus sed dolor. In lacinia purus dictum magna tincidunt, id venenatis erat viverra.\n        ",
-        img: 'http://1.bp.blogspot.com/-vjllfyk5IAk/Ul23gz5r58I/AAAAAAAAGT4/W20TBxDWeJI/s1600/Capture.PNG'
+        img: 'http://1.bp.blogspot.com/-vjllfyk5IAk/Ul23gz5r58I/AAAAAAAAGT4/W20TBxDWeJI/s1600/Capture.PNG',
+        color: '#ffbb00'
     },
     {
         titulo: 'Descargas',
         subtitulo: 'Servicios WMS',
         resumen: "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n        Phasellus et ornare erat. Suspendisse dapibus sapien ac elit blandit ullamcorper. \n        Morbi venenatis vestibulum lacus sit amet lacinia. Integer aliquam, tellus sed venenatis dignissim, eros diam finibus libero, ut venenatis lectus elit vitae ipsum. Phasellus tristique tempor diam id ultrices. Phasellus vitae elit sem. Mauris tristique dolor ex, vel auctor eros fringilla sit amet. Etiam in lorem non diam condimentum rutrum. Pellentesque felis velit, consectetur eu ullamcorper eget, dapibus sed dolor. In lacinia purus dictum magna tincidunt, id venenatis erat viverra.\n        ",
-        img: 'http://www.betera.com/wp-content/uploads/METRO-OK3.jpg'
+        img: 'http://www.betera.com/wp-content/uploads/METRO-OK3.jpg',
+        color: '#00bbff'
     },
     {
         titulo: 'Noticias',
         subtitulo: 'Servicios WMS',
         resumen: "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n        Phasellus et ornare erat. Suspendisse dapibus sapien ac elit blandit ullamcorper. \n        Morbi venenatis vestibulum lacus sit amet lacinia. Integer aliquam, tellus sed venenatis dignissim, eros diam finibus libero, ut venenatis lectus elit vitae ipsum. Phasellus tristique tempor diam id ultrices. Phasellus vitae elit sem. Mauris tristique dolor ex, vel auctor eros fringilla sit amet. Etiam in lorem non diam condimentum rutrum. Pellentesque felis velit, consectetur eu ullamcorper eget, dapibus sed dolor. In lacinia purus dictum magna tincidunt, id venenatis erat viverra.\n        ",
-        img: 'http://blog.elrealista.es/wp-content/uploads/2011/07/Catastro1.png'
+        img: 'http://blog.elrealista.es/wp-content/uploads/2011/07/Catastro1.png',
+        color: '#f7f7f7'
     },
     {
         titulo: 'Blablabla',
         subtitulo: 'Servicios WMS',
         resumen: "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n        Phasellus et ornare erat. Suspendisse dapibus sapien ac elit blandit ullamcorper. \n        Morbi venenatis vestibulum lacus sit amet lacinia. Integer aliquam, tellus sed venenatis dignissim, eros diam finibus libero, ut venenatis lectus elit vitae ipsum. Phasellus tristique tempor diam id ultrices. Phasellus vitae elit sem. Mauris tristique dolor ex, vel auctor eros fringilla sit amet. Etiam in lorem non diam condimentum rutrum. Pellentesque felis velit, consectetur eu ullamcorper eget, dapibus sed dolor. In lacinia purus dictum magna tincidunt, id venenatis erat viverra.\n        ",
-        img: 'http://1.bp.blogspot.com/--lMM9MTMf8s/UaJ6zs9CCQI/AAAAAAAByk0/q9Aw-4ZHPjg/s1600/paisaje-natural-con-%C3%A1rboles-y-pasto-verde-.jpg'
+        img: 'http://1.bp.blogspot.com/--lMM9MTMf8s/UaJ6zs9CCQI/AAAAAAAByk0/q9Aw-4ZHPjg/s1600/paisaje-natural-con-%C3%A1rboles-y-pasto-verde-.jpg',
+        color: '#f7f7f7'
     },
 ];
 //# sourceMappingURL=secciones.js.map
 
 /***/ }),
 
-/***/ 641:
+/***/ 647:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_home_component__ = __webpack_require__(425);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_home_component__ = __webpack_require__(426);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__home_home_component__["a"]; });
 
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ 642:
+/***/ 648:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -669,8 +678,8 @@ var ForgotComponent = (function () {
     ForgotComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-forgot',
-            template: __webpack_require__(718),
-            styles: [__webpack_require__(707)]
+            template: __webpack_require__(725),
+            styles: [__webpack_require__(712)]
         }), 
         __metadata('design:paramtypes', [])
     ], ForgotComponent);
@@ -680,15 +689,15 @@ var ForgotComponent = (function () {
 
 /***/ }),
 
-/***/ 643:
+/***/ 649:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__login_login_component__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__login_login_component__ = __webpack_require__(427);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__login_login_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__signup_signup_component__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__signup_signup_component__ = __webpack_require__(428);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__signup_signup_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__forgot_forgot_component__ = __webpack_require__(642);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__forgot_forgot_component__ = __webpack_require__(648);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__forgot_forgot_component__["a"]; });
 
 
@@ -697,7 +706,7 @@ var ForgotComponent = (function () {
 
 /***/ }),
 
-/***/ 644:
+/***/ 650:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -734,7 +743,7 @@ var CanActivateAdmin = (function () {
 
 /***/ }),
 
-/***/ 645:
+/***/ 651:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -789,7 +798,7 @@ var ConfirmDialogComponent = (function () {
 
 /***/ }),
 
-/***/ 646:
+/***/ 652:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -805,10 +814,10 @@ var environment = {
 
 /***/ }),
 
-/***/ 705:
+/***/ 710:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(18)();
+exports = module.exports = __webpack_require__(23)();
 // imports
 
 
@@ -823,10 +832,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 706:
+/***/ 711:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(18)();
+exports = module.exports = __webpack_require__(23)();
 // imports
 
 
@@ -841,10 +850,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 707:
+/***/ 712:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(18)();
+exports = module.exports = __webpack_require__(23)();
 // imports
 
 
@@ -859,10 +868,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 708:
+/***/ 713:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(18)();
+exports = module.exports = __webpack_require__(23)();
 // imports
 
 
@@ -877,10 +886,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 709:
+/***/ 714:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(18)();
+exports = module.exports = __webpack_require__(23)();
 // imports
 
 
@@ -895,48 +904,48 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 716:
+/***/ 723:
 /***/ (function(module, exports) {
 
 module.exports = "<loading-animate></loading-animate>\n<md-toolbar #toolbarMenu color=\"primary\">\n  <img src=\"assets/escudo.png\" alt=\"\" class=\"logo-betera\">\n  <span class=\"title\">SIG Bétera</span>\n  <span class=\"spacer\"></span>\n  <button md-button [routerLink]=\"['']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n    Inicio\n  </button>\n  <button md-button [routerLink]=\"['map']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: true }\">\n    Mapa\n  </button>\n  <button md-button [routerLink]=\"['admin']\" routerLinkActive=\"active-link\" *ngIf=\"authUser && authUser.rol == 'admin'\">\n    Admin\n  </button>\n  <button md-button *ngIf=\"authUser\" [mdMenuTriggerFor]=\"menuLogedIn\">\n      {{authUser.name}}\n      <img style=\"max-height : 35px; border-radius: 20px; margin-left : 10px; margin-right: 10px;\" src=\"{{authUser.gravatar}}\">\n  </button> \n  <button *ngIf=\"!authUser\" md-icon-button [mdMenuTriggerFor]=\"menu\">\n    <md-icon>more_vert</md-icon>\n  </button>\n\n\n  <!-- Menú usuario no logueado -->\n  <md-menu #menu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"!authUser\" (click)=\"openLoginDialog()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Login</span>\n    </button>\n    <button md-menu-item (click)=\"openSignupDialog()\">\n      <md-icon>accessibility</md-icon>\n      <span>Registrarse</span>\n    </button>\n    <button md-menu-item (click)=\"openForgotDialog()\">\n      <md-icon>vpn_key</md-icon>\n      <span>¿Olvidaste credenciales?</span>\n    </button>\n  </md-menu>\n  <!-- Menú usuario logueado -->\n  <md-menu #menuLogedIn=\"mdMenu\">\n    <button md-menu-item *ngIf=\"authUser\" (click)=\"logout()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Logout</span>\n    </button>\n  </md-menu>\n</md-toolbar>\n\n<div id=\"app-body\" class=\"container-router\">\n  <router-outlet></router-outlet>  \n</div>"
 
 /***/ }),
 
-/***/ 717:
+/***/ 724:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <md-card class=\"card\" *ngFor=\"let seccion of secciones\" flex>\r\n    <md-card-header>\r\n      <div md-card-avatar class=\"example-header-image\"></div>\r\n      <md-card-title>{{ seccion.titulo }}</md-card-title>\r\n      <md-card-subtitle>{{ seccion.subtitulo }}</md-card-subtitle>\r\n    </md-card-header>\r\n    <img md-card-image src=\"{{ seccion.img }}\" alt=\"\">\r\n    <md-card-content>\r\n      <p>\r\n        {{ seccion.resumen }}\r\n      </p>\r\n    </md-card-content>\r\n    <md-card-actions>\r\n      <button md-button>LIKE</button>\r\n      <button md-button>SHARE</button>\r\n    </md-card-actions>\r\n  </md-card>\r\n</div>"
+module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <div #full mnFullpage \r\n      [mnFullpageNavigation]=\"true\" \r\n      [mnFullpageKeyboardScrolling]=\"true\"\r\n      [mnFullpageControlArrows]=\"true\">\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\">\r\n            Bienvenido a SIG Bétera\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #ce93d8\">        \r\n          <div class=\"fp-tableCell\">\r\n            Visita nuestro mapa\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #ef9a9a\">        \r\n          <div class=\"fp-tableCell\">\r\n            Descarga información Geográfica\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #9fa8da\">        \r\n          <div class=\"fp-tableCell\">\r\n            Hazte usuario\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\">        \r\n          <div class=\"fp-tableCell\">\r\n            <div class=\"slide\" style=\"background: #b2ebf2\"> Contacto </div>\r\n            <div class=\"slide\" style=\"background: #c5e1a5\"> Noticias </div>\r\n            <div class=\"slide\" style=\"background: #e6ee9c\"> Slide 3 </div>\r\n            <div class=\"slide\" style=\"background: #ffe082\"> Slide 4 </div>\r\n          </div> \r\n      </div>\r\n\r\n  </div>\r\n</div>"
 
 /***/ }),
 
-/***/ 718:
+/***/ 725:
 /***/ (function(module, exports) {
 
 module.exports = "<p>\n  forgot works!\n</p>\n"
 
 /***/ }),
 
-/***/ 719:
+/***/ 726:
 /***/ (function(module, exports) {
 
 module.exports = "<h1 md-dialog-title color=\"primary\"><md-icon>fingerprint</md-icon>Iniciar Sesión</h1>\n<div md-dialog-content>\n  <div #progress>\n  </div>\n  <img src=\"https://ukla.org/images/icons/user-icon.svg\" alt=\"\" style=\"margin : 0 auto; border-radius : 50px; max-height: 100px;\">\n  <md-input-container  style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.nameOrEmail\" placeholder=\"Usuario o Email\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userNotLoggedParams.password\" placeholder=\"Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n</div>\n<div md-dialog-actions>\n  <button md-button (click)=\"login()\" [disabled]=\"isLoading\">Iniciar</button>\n  <button md-button (click)=\"dialogRef.close()\" [disabled]=\"isLoading\">Cancelar</button>\n</div>"
 
 /***/ }),
 
-/***/ 720:
+/***/ 727:
 /***/ (function(module, exports) {
 
 module.exports = "\n<!-- { name, password, repassword, nombre, apellidos, email } -->\n<h1 md-dialog-title color=\"primary\"><md-icon>accessibility</md-icon>Registrarse en SIG Bétera</h1>\n<div md-dialog-content>\n  <img src=\"https://ukla.org/images/icons/user-icon.svg\" alt=\"\" style=\"margin : 0 auto; border-radius : 50px; max-height: 100px;\">\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.name\" placeholder=\"Nombre de usuario\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.email\" type=\"email\" placeholder=\"Email\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.nombre\" placeholder=\"Nombre\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\" >\n    <input mdInput [(ngModel)]=\"userToCreate.apellidos\" placeholder=\"Apellidos\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userToCreate.password\" placeholder=\"Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n  <md-input-container style=\"width : 100%\">\n    <input mdInput [(ngModel)]=\"userToCreate.repassword\" placeholder=\"Repetir Contraseña\" type=\"password\" value=\"\">\n  </md-input-container>\n  <div style=\"width : 100%; text-align: center;\">\n    <re-captcha site_key=\"6LfjRAsUAAAAAEav71yglI9Mntr_z5faCBs3QTyw\"></re-captcha>\n  </div>\n</div>\n<div md-dialog-actions>\n  <button md-button (click)=\"signup()\">Registrarse</button>\n  <button md-button (click)=\"dialogRef.close('Option 2')\">Cancelar</button>\n</div>"
 
 /***/ }),
 
-/***/ 745:
+/***/ 747:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(449);
+module.exports = __webpack_require__(456);
 
 
 /***/ })
 
-},[745]);
+},[747]);
 //# sourceMappingURL=main.bundle.js.map

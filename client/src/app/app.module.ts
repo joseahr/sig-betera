@@ -13,13 +13,14 @@ import * as highcharts from 'highcharts';
 import * as highchartsExporting from 'highcharts/modules/exporting';
 import { CanActivateAdmin } from './guards';
 import { AuthService } from './services';
-import 'hammerjs';
 import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
+import { MnFullpageDirective, MnFullpageService } from "ng2-fullpage";
 import { 
   LoginComponent,
   SignupComponent,
   ForgotComponent
 } from './dialogs';
+import 'hammerjs';
 
 export function highchartsFactory() {
   highchartsExporting(highcharts);
@@ -28,6 +29,7 @@ export function highchartsFactory() {
 
 @NgModule({
   declarations: [
+    MnFullpageDirective,
     AppComponent,
     HomeComponent,
     LoginComponent,
@@ -45,6 +47,7 @@ export function highchartsFactory() {
   ],
   entryComponents : [LoginComponent, SignupComponent],
   providers: [
+    MnFullpageService,
     LoadingAnimateService,
     AuthService,
     CanActivateAdmin,

@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter,
+} from '@angular/core';
 import { DragulaService, DragulaDirective } from 'ng2-dragula';
 import { Map } from 'openlayers';
 
@@ -18,7 +19,7 @@ export class LayerSwitcherComponent implements OnInit {
   constructor(
     private dragulaService: DragulaService
   ) {
-    console.log('maaap');
+    //console.log('maaap');
   }
 
   getReversed(array : any[]){
@@ -43,6 +44,10 @@ export class LayerSwitcherComponent implements OnInit {
 
   toggleMaps(){
     this.mapsDetailsContainer.nativeElement.classList.toggle('collapsed');
+  }
+
+  getDisplay(layer){
+    return layer.get('showInLayerSwitcher') === false ? 'none' : '';
   }
 
   changeVisible(event, indexGroup){
@@ -107,7 +112,7 @@ export class LayerSwitcherComponent implements OnInit {
   }
 
   changeOpacityGroupLayer(event, indexGroup, indexLayer){
-    console.log('changeOpacityGroupLayer', indexGroup, indexLayer)
+    //console.log('changeOpacityGroupLayer', indexGroup, indexLayer)
     this.map
     .getLayers()
     .item(indexGroup)

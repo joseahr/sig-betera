@@ -10,20 +10,13 @@
     <button md-button class="list-button main" (click)="toggleTools()">
       <md-icon>apps</md-icon>HERRAMIENTAS
     </button>
-
-    <div #mapTools class="collapsed">
+    <div [@collapsed]="toolsControlVisible">
       <button md-button class="list-button" (click)="toggleProfileControl()" [style.background-color]="getBackgroundColor(profileControl.active)">
         <md-icon>terrain</md-icon>PERFIL
       </button>
-    </div>
-
-    <div #mapTools class="collapsed">
       <button md-button (click)="toggleSearchControl(1)" class="list-button" [style.background-color]="getBackgroundColor(searchControl.active && searchControl.activeInteraction == 1)">
         <md-icon>search</md-icon>BÚSQUEDA POR PUNTO
       </button>
-    </div>
-
-    <div #mapTools class="collapsed">
       <button md-button (click)="toggleSearchControl(2)" class="list-button" [style.background-color]="getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)">
         <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE
       </button>
@@ -33,12 +26,12 @@
       <md-icon>layers</md-icon>MAPAS
     </button>
     <!-- control de capas -->
-    <app-layer-switcher [map]="map" (layersChanged)="updateMapAndOverview()"></app-layer-switcher>
+    <app-layer-switcher [@collapsed]="mapsControlVisible" [map]="map" (layersChanged)="updateMapAndOverview()"></app-layer-switcher>
     <!-- END control de capas -->
-    <button md-button class="list-button main" (click)="overviewMap.classList.toggle('collapsed')">
+    <button md-button class="list-button main" (click)="toggleOverview()">
       <md-icon>map</md-icon>MINIATURA
     </button>
-    <div #overviewMap class="overview-map" style="flex : 1 1 auto; height : 300px; padding : 5px 20px 10px 20px;"></div>
+    <div [@collapsed]="overviewControlVisible" #overviewMap class="overview-map"></div>
     <button md-button class="list-button main">
       <md-icon>file_download</md-icon>DESCARGAR MAPA
     </button>

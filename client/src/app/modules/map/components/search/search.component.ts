@@ -1,6 +1,30 @@
-import { Component, OnInit, Input, NgZone, ViewChild } from '@angular/core';
+import {
+  Component, 
+  OnInit, 
+  Input, 
+  NgZone, 
+  ViewChild,
+  ElementRef,
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/core';
+
+import {
+  Feature, 
+  Map, 
+  interaction, 
+  MapBrowserPointerEvent, 
+  geom, 
+  layer, 
+  source, 
+  format, 
+  extent, 
+  Observable as olObs
+} from 'openlayers';
 import { Subject } from 'rxjs/Rx';
-import { Feature, Map, interaction, MapBrowserPointerEvent, geom, layer, source, format, extent, Observable as olObs} from 'openlayers';
 import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
 import { KeysPipe } from 'angular-pipes/src/object/keys.pipe';
 import { LoadingAnimateService } from 'ng2-loading-animate';
@@ -15,15 +39,50 @@ enum SearchInteraction {
 
 @Component({
   selector: 'app-search',
-  template : `<button (click)="openDialog()" md-mini-fab *ngIf="dialogCollapsed" style="position : absolute;z-index : 1; bottom: 0.5em; left : 0.5em;"><md-icon>search</md-icon></button>`,
-  providers : [ UserLayersService, KeysPipe ]
+  template : `
+    <button [@buttonVisible]="state" (click)="openDialog()" md-mini-fab style="z-index : 1002; position : absolute; bottom: 0.5em; left : 0.5em;"><md-icon>search</md-icon></button>
+    <button [@buttonCloseVisible]="closeState" (click)="close()"      md-mini-fab style="z-index : 1002; position : absolute; top : 0.5em; right : 0.5em;"><md-icon>close</md-icon></button>
+  `,
+  providers : [ UserLayersService, KeysPipe ],
+  animations : [
+    trigger('buttonVisible', [
+      state('invisible', style({
+        display : 'none',
+        left : 'calc(100% - 0.5em - 40px)',
+        bottom : 'calc(100% - 0.5em - 40px)'
+      })),
+      state('visible', style({
+        display : '',
+        left : '0.5em',
+        bottom : '0.5em'
+      })),
+      transition('invisible => visible', animate('200ms ease-in')),
+      transition('visible => invisible', animate('0ms ease-out'))
+    ]),
+    trigger('buttonCloseVisible', [
+      state('invisible', style({
+        display : 'none',
+        right : 'calc(100% - 0.5em - 40px)',
+        top : 'calc(100% - 0.5em - 40px)'
+      })),
+      state('visible', style({
+        display : '',
+        right : '0.5em',
+        top : '0.5em'
+      })),
+      transition('invisible => visible', animate('200ms ease-in')),
+      transition('visible => invisible', animate('0ms ease-out'))
+    ])
+  ]
 })
 export class SearchComponent implements OnInit {
   
+  state  = 'invisible';
+  closeState = 'invisible';
   private found : any;
   active : Boolean = false;
   activeInteraction : SearchInteraction = null;
-  dialogCollapsed : Boolean = false;
+  //dialogCollapsed : Boolean = false;
   dialogRef : MdDialogRef<SearchComponentDialog>;
   private boxInteraction : interaction.DragBox = new interaction.DragBox();
   private clickInteraction : ol.Object | ol.Object[];
@@ -43,6 +102,7 @@ export class SearchComponent implements OnInit {
   ) {
     this.boxInteraction.on('boxend', this.boxHandler.bind(this));
     this.searchLayer.set('name', 'SearchLayer');
+    this.searchLayer.set('showInLayerSwitcher', false);
   }
 
   ngOnInit() {
@@ -66,15 +126,20 @@ export class SearchComponent implements OnInit {
 
   openDialog(){
     if(!this.found) return;
-    this.dialogCollapsed = false;
+    this.state = 'invisible';
+    this.closeState = 'visible';
+    //this.dialogCollapsed = false;
     let dialogRef = this.dialogRef = this.dialog.open(SearchComponentDialog, {
       height : '90vh',
       width : '90vh'
     });
     dialogRef.componentInstance.found = this.found;
     dialogRef.afterClosed().subscribe(()=>{
-      this.dialogCollapsed = true;
+      //this.dialogCollapsed = true;
+      this.closeState = 'invisible';
+      this.state = 'visible';
     });
+    
     dialogRef.componentInstance.rowClicked.subscribe(
       (data)=>{
         if(!data) return;
@@ -96,12 +161,6 @@ export class SearchComponent implements OnInit {
 
   }
 
-  collapseDialog(){
-    if(!this.dialogRef) return;
-    this.dialogRef.close();
-    this.dialogCollapsed = true;
-  }
-
   search(feature : Feature){
     this.zone.run(()=>{ this.loading.setValue(true); this.dialog.closeAll(); });
     let layerNames = this.getActiveLayers();
@@ -110,8 +169,11 @@ export class SearchComponent implements OnInit {
       (data)=>{
         this.zone.run(()=>{
           this.loading.setValue(false);
-          let features = data.filter( f => f.found.features );
-          features.forEach(f => console.log(f.layername))
+          let features = data
+            .filter( f => f.found.features );
+          features
+            .forEach( d => d.found.features.forEach( (f : any) => f.properties.data_urls = (f.properties.data_urls || []).map(du => du.url) ) );
+          //features.forEach(f => console.log(f.layername))
           this.found = features;
           this.map.render();
           //console.log(features, 'featurrees');
@@ -127,7 +189,7 @@ export class SearchComponent implements OnInit {
   getActiveLayers(){
     let layerNames = [];
     this.map.getLayers().forEach( l => {
-      if(!l.get('layers')) return;
+      if(!l.get('layers') || !l.get('visible')) return;
       l.get('layers').forEach(al => {
         //console.log('layer', al.get('type'), al.get('visible'), al.getVisible())
         if(al.get('visible') && al.get('type') == 'layer'){
@@ -145,9 +207,12 @@ export class SearchComponent implements OnInit {
       this.activeInteraction = null;
       this.map.removeInteraction(this.boxInteraction);
       olObs.unByKey(this.clickInteraction);
-      this.dialogCollapsed = false;
+      this.searchLayer.getSource().clear();
+      //this.dialogCollapsed = false;
       this.snackbar._openedSnackBarRef ? this.snackbar._openedSnackBarRef.dismiss() : '';
       this.map.removeLayer(this.searchLayer);
+      this.state = 'invisible';
+      this.closeState = 'invisible';
     } else {
       if(!interaction) return;
       this.active = true;
@@ -181,19 +246,20 @@ export class SearchComponent implements OnInit {
 @Component({
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
-  providers : [ ]
 })
 export class SearchComponentDialog {
+
   found;
   selectedTabData;
   tabIndex : number = 0;
   rowClicked : Subject<any> = new Subject<any>();
-  @ViewChild(DataTableDirective) dtElement : any;
+  @ViewChild(DataTableDirective) dtElement : DataTableDirective;
+  @ViewChild('table') table : ElementRef;
 
   constructor(private zone : NgZone, private dialog : MdDialogRef<SearchComponentDialog>){}
 
   ngOnInit(){
-    console.log('oninit');
+    //console.log('oninit');
     this.dtElement.dtOptions = this.getTableOptions(0);
     let subject : any = new Subject<any>();
     this.dtElement.dtTrigger = subject;
@@ -201,37 +267,31 @@ export class SearchComponentDialog {
   
 
   ngAfterViewInit(){
-    console.log('AfterViewInit');
+    //console.log('AfterViewInit');
     this.dtElement.dtTrigger.next();
     this.addRowClickListener();
   }
 
   addRowClickListener(){
-    let self = this;
-    let f = function(){
-      self.dtElement.dtInstance.then( dtInstance =>{
-        dtInstance
-        .on('click', '.see-map', function(){
-          try {
-            let row_dom = $(this).closest('tr');
-            console.log('row_dom', row_dom);
-            //if(!row_dom) return;
-            let row = $(self.dtElement.getElement().nativeElement).DataTable().row(row_dom).data();
-            console.log('row', row);
-            let feature = self.found[self.tabIndex].found.features.find( f => f.properties.gid == row.gid );
-            self.rowClicked.next(feature);
-          } catch(e){
-            console.log(e);
-          }
-        })
-      });
-    }
     this.dtElement.dtInstance.then( dtInstance =>{
+      let table = this.table.nativeElement;
+      let tabIndex = this.tabIndex;
+      let data = this.found[tabIndex];
+      let rowClicked = this.rowClicked;
       dtInstance
-      .on( 'order.dt', f)
-      .on( 'search.dt', f)
-      .on( 'page.dt', f);
-      f();
+      .on('click', '.see-map', function(){
+        try {
+          let row_dom = $(this).closest('tr');
+          //console.log('row_dom', row_dom);
+          //if(!row_dom) return;
+          let row = $(table).DataTable().row(row_dom).data();
+          //console.log('row', row);
+          let feature = data.found.features.find( f => f.properties.gid == row.gid );
+          rowClicked.next(feature);
+        } catch(e){
+          console.log(e);
+        }
+      })
     });
   }
 
@@ -241,11 +301,11 @@ export class SearchComponentDialog {
 
   onChangeTab(event){
     this.tabIndex = event.index;
-    console.log(event);
+    //console.log(event);
     //this.dtOptions = this.getTableOptions(event.index);
     this.dtElement.dtInstance.then( dtInstance =>{
       dtInstance.destroy();
-      $(this.dtElement.getElement().nativeElement).empty();
+      $(this.table.nativeElement).empty();
       this.dtElement.dtOptions = this.getTableOptions(event.index);
       this.dtElement.dtTrigger.next();
       this.addRowClickListener();
@@ -264,12 +324,18 @@ export class SearchComponentDialog {
       ` },
       ...Object.keys(features[0].properties).map( key => ({ title : key, data : key }) )
     ];
-    console.log('FEATURES - ', features, 'DATA - ', data, 'COLUMNS - ', columns);
+    //console.log('FEATURES - ', features, 'DATA - ', data, 'COLUMNS - ', columns);
     return {
       scrollX : true,
       scrollY : '50vh',
       scrollCollapse : true,
-      data, columns
+      data, columns,
+      dom : 'frtlip',
+      language : {
+        "lengthMenu":     "_MENU_",
+        "search":         "",
+        "searchPlaceholder": "Search...",
+      }
     };
   }
 

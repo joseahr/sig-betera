@@ -1,19 +1,41 @@
 <div class="container-sections" [@routerTransition]="">
-  <md-card class="card" *ngFor="let seccion of secciones" flex>
-    <md-card-header>
-      <div md-card-avatar class="example-header-image"></div>
-      <md-card-title>{{ seccion.titulo }}</md-card-title>
-      <md-card-subtitle>{{ seccion.subtitulo }}</md-card-subtitle>
-    </md-card-header>
-    <img md-card-image src="{{ seccion.img }}" alt="">
-    <md-card-content>
-      <p>
-        {{ seccion.resumen }}
-      </p>
-    </md-card-content>
-    <md-card-actions>
-      <button md-button>LIKE</button>
-      <button md-button>SHARE</button>
-    </md-card-actions>
-  </md-card>
+  <div #full mnFullpage 
+      [mnFullpageNavigation]="true" 
+      [mnFullpageKeyboardScrolling]="true"
+      [mnFullpageControlArrows]="true">
+
+      <div class="section fp-section fp-table" style="background: #fff">        
+          <div class="fp-tableCell">
+            Bienvenido a SIG Bétera
+          </div> 
+      </div>
+
+      <div class="section fp-section fp-table" style="background: #ce93d8">        
+          <div class="fp-tableCell">
+            Visita nuestro mapa
+          </div> 
+      </div>
+
+      <div class="section fp-section fp-table" style="background: #ef9a9a">        
+          <div class="fp-tableCell">
+            Descarga información Geográfica
+          </div> 
+      </div>
+
+      <div class="section fp-section fp-table" style="background: #9fa8da">        
+          <div class="fp-tableCell">
+            Hazte usuario
+          </div> 
+      </div>
+
+      <div class="section fp-section fp-table">        
+          <div class="fp-tableCell">
+            <div class="slide" style="background: #b2ebf2"> Contacto </div>
+            <div class="slide" style="background: #c5e1a5"> Noticias </div>
+            <div class="slide" style="background: #e6ee9c"> Slide 3 </div>
+            <div class="slide" style="background: #ffe082"> Slide 4 </div>
+          </div> 
+      </div>
+
+  </div>
 </div>

@@ -2,6 +2,5 @@
   <md-tab label="{{search.layername}}" *ngFor="let search of found"> 
   </md-tab>
 </md-tab-group>
-<table datatable style="width : 100%;">
+<table #table datatable class="mdl-data-table" style="width : 100%;">
 </table>
-<button (click)="close()" md-mini-fab style="position : absolute; top : 0.5em; right : 0.5em;"><md-icon>close</md-icon></button>

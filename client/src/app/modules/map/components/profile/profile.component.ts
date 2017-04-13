@@ -48,7 +48,8 @@ export class ProfileComponent implements OnInit {
             radius: 5,
             stroke: new ol.style.Stroke({
               color: '#000'
-            })
+            }), 
+            fill : new ol.style.Fill({ color : '#f7f7f7' })
           })
         })
       ]
@@ -60,12 +61,13 @@ export class ProfileComponent implements OnInit {
         new ol.style.Style({	
           stroke: new ol.style.Stroke({	
             color: [48, 63, 159],
-            width: 3,
-            lineDash: [.5, 10]
+            width: 1,
           })
         })
       ]
     });
+    this.pointLayer.set('showInLayerSwitcher', false);
+    this.drawProfileLayer.set('showInLayerSwitcher', false);
     this.drawProfileLayer.set('name', 'DrawProfileLayer');
   }
 
@@ -90,6 +92,8 @@ export class ProfileComponent implements OnInit {
     let drawStart = this.drawProfileInteraction.on('drawstart', (e)=>{
       this.drawProfileLayer.getSource().clear();
       this.drawProfileLayer.getSource().changed();
+      this.pointLayer.getSource().clear();
+      this.pointLayer.getSource().changed();
       this.profileGeom = null;
     });
     let drawEnd = this.drawProfileInteraction.on('drawend', (e : ol.interaction.DrawEvent)=>{
@@ -126,7 +130,7 @@ export class ProfileComponent implements OnInit {
 
   saveInstance(chartInstance) {
     this.chart = chartInstance;
-    console.log(this.chart.options);
+    //console.log(this.chart.options);
     //this.chart.options = this.options;
     if(this.chart.series[0]) this.chart.series[0].remove();
     this.chart.addSeries(
@@ -145,22 +149,26 @@ export class ProfileComponent implements OnInit {
     let wgs84Sphere = new ol.Sphere(6378137);
 
     let profile3D = new ol.Feature({
-      geometry : this.profileGeom
+      geometry : new ol.geom.LineString(this.profileGeom.getCoordinates().map( c => c.slice(0, 2) ))
     });
-    
+    this.drawProfileLayer.getSource().clear();
+    this.drawProfileLayer.getSource().addFeature(profile3D);
+
     // [ [dist, cota],... ]
     this.dataChartArray = [];
     let dist = 0;
     let points = this.profileGeom.getCoordinates();
-
-    for(let i = 0; i < points.length - 1; i++){
+    //console.log('last', this.profileGeom.getLastCoordinate())
+    this.dataChartArray.push([dist, points[0][2]]);
+    for(var i = 0; i < points.length - 1; i++){ // Cambiar por let solo pruebas
       //console.log('pooooint', points[i])
-      this.dataChartArray.push([dist, points[i][2]]);
+      //this.dataChartArray.push([dist, points[i][2]]);
       let p = ol.proj.transform(points[i], this.map.getView().getProjection(), 'EPSG:4326');
       let next = ol.proj.transform(points[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
-      let subLineStringGeom = new ol.geom.LineString([ p, next ]);
       dist += wgs84Sphere.haversineDistance(p, next);
+      this.dataChartArray.push([dist, points[i + 1][2]]);
     }
+    //console.log(dist, points[points.length - 1], i, points.length, points[i]);
     //console.log(this.dataChartArray);
     if(this.chart){
       if(this.chart.series[0]) this.chart.series[0].remove();
@@ -190,26 +198,31 @@ export class ProfileComponent implements OnInit {
   onSelectProfile(event){
     let dist = event.context.x;
     let coordinate = this.getClosestPointToDistance(dist);
-    let featurePoint = new ol.Feature({
-      geometry : new ol.geom.Point(coordinate, 'XYZ')
+    let featurePoint : any = new ol.Feature({
+      geometry : new ol.geom.Point(coordinate)
     });
-    console.log(coordinate);
+    //console.log(coordinate);
     this.pointLayer.getSource().clear();
     this.pointLayer.getSource().addFeature(featurePoint);
+    this.pointLayer.getSource().changed();
+    
+    let view : any = this.map.getView();
+    this.map.once('postcompose', ()=>view.fit(featurePoint.getGeometry(), { duration : 100, maxZoom : 15 } ));
   }
 
   getClosestPointToDistance(distance){
     let wgs84Sphere = new ol.Sphere(6378137);
     let coords = this.profileGeom.getCoordinates();
     let distance_ = 0;
-    distance -= 1e-5;
+    if(distance == 0) return coords[0];
     for(let i = 0; i < coords.length - 1; i++){
       let p = ol.proj.transform(coords[i], this.map.getView().getProjection(), 'EPSG:4326');
       let next = ol.proj.transform(coords[i + 1], this.map.getView().getProjection(), 'EPSG:4326');
-      let subLineStringGeom = new ol.geom.LineString([ p, next ]);
       distance_ += wgs84Sphere.haversineDistance(p, next);
-      if(distance_ > distance){
-        return coords[i];
+      //console.log(distance_, distance);
+      if(distance_ >= distance){
+        //console.log('i + 1', i + 1, coords[i + 1]);
+        return coords[i + 1];
       }
     }
   }

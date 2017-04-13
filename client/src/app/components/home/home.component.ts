@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, HostListener, NgZone } from '@angular/core';
 import { sections } from './secciones';
 import { routerTransition } from '../../router.transitions';
+import * as $ from 'jquery';
+import 'fullpage.js';
 
 @Component({
   selector: 'app-home',
@@ -11,29 +13,24 @@ import { routerTransition } from '../../router.transitions';
 })
 export class HomeComponent {
   
+  secciones = sections;
+
   constructor(private el : ElementRef, private ngZone : NgZone) {
-    this.secciones = sections;
   }
   
   toolbar;
+  @ViewChild('full') full : ElementRef;
 
-  cols = window.innerWidth < 600 ? 1 : 2;
-
-  secciones : any[];
+  ngOnDestroy(){
+    document.getElementsByTagName('html')[0].style.overflow = 'auto';
+    $.fn.fullpage.destroy('all');
+    console.log('destroyyy');
+  }
 
   ngAfterViewInit() {
     this.toolbar = this.el.nativeElement.parentNode.parentNode.childNodes[0];
     document.body.style.overflow = '';
     //console.log(this.el.nativeElement.parentNode.childNodes[0], this.el.nativeElement, 'toooooool')
-  }
-
-  @HostListener('window:resize', ['$event'])
-  setCols(){
-    if(window.innerWidth < 600 && this.cols !== 1){
-      this.cols = 1;
-    } else if(window.innerWidth >= 600){
-      this.cols = 2;
-    }
   }
   
 }

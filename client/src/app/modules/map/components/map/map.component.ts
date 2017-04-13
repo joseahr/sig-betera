@@ -1,4 +1,18 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, NgZone, forwardRef } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  ViewChild, 
+  ElementRef, 
+  ViewChildren, 
+  QueryList, 
+  NgZone, 
+  forwardRef,
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/core';
 import {  } from '@angular/common';
 import { MdSidenav, MdDialog } from '@angular/material';
 import * as ol from 'openlayers';
@@ -11,7 +25,23 @@ import { ProfileComponent, LayerSwitcherComponent, AddWmsComponent, SearchCompon
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
   providers: [ProjectionService, Profile3DService, UserMapsService],
-  animations: [routerTransition()],
+  animations: [
+    routerTransition(),
+    trigger('collapsed', [
+      state('invisible', style({
+        transform : 'translateX(-100%)',
+        opacity : 0,
+        display : 'none'
+      })),
+      state('visible', style({
+        transform : 'translateX(0%)',
+        opacity : 1,
+        display : ''
+      })),
+      transition('invisible => visible', animate('500ms ease-in')),
+      transition('visible => invisible', animate('500ms ease-out'))
+    ])
+  ],
   host : { '[@routerTransition]': '' }
 })
 export class MapComponent implements OnInit {
@@ -23,6 +53,10 @@ export class MapComponent implements OnInit {
   sideNavMapInterval : any;
   customComponentsWithInteractions : Component[];
   
+  mapsControlVisible = 'invisible';
+  toolsControlVisible = 'invisible';
+  overviewControlVisible = 'visible';
+
   @ViewChild(forwardRef(() => SearchComponent)) searchControl : SearchComponent;
   @ViewChild(forwardRef(() => ProfileComponent)) profileControl : ProfileComponent;
   @ViewChild(forwardRef(() => LayerSwitcherComponent)) layerSwitcherControl : LayerSwitcherComponent;
@@ -52,7 +86,7 @@ export class MapComponent implements OnInit {
   }
 
   getBackgroundColor(bool : Boolean){
-    return bool ? '#33ff99' : '#f7f7f7';
+    return bool ? '#8BC34A' : '#f7f7f7';
   }
 
   disableControls(){
@@ -98,13 +132,19 @@ export class MapComponent implements OnInit {
   }
 
   toggleMaps(){
-    this.layerSwitcherControl.toggleMaps.call(this.layerSwitcherControl);
+    //this.layerSwitcherControl.toggleMaps.call(this.layerSwitcherControl);
+    this.mapsControlVisible = (this.mapsControlVisible === 'visible') ? 'invisible' : 'visible';
   }
 
   toggleTools(){
-    this.toolsContainer.forEach(element =>{
+    /*this.toolsContainer.forEach(element =>{
       element.nativeElement.classList.toggle('collapsed');
-    });
+    });*/
+    this.toolsControlVisible = (this.toolsControlVisible === 'visible') ? 'invisible' : 'visible';
+  }
+
+  toggleOverview(){
+    this.overviewControlVisible = (this.overviewControlVisible === 'visible') ? 'invisible' : 'visible';
   }
 
   createMap(){
@@ -118,7 +158,8 @@ export class MapComponent implements OnInit {
       view : new ol.View({
         projection : 'EPSG:4326',
         center : [-0.459108, 39.589353],
-        zoom : 12
+        zoom : 12,
+        maxZoom : 20
       })
     }
 

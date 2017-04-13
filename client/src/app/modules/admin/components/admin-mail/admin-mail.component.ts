@@ -35,7 +35,7 @@ export class AdminMailComponent implements OnInit {
       (data)=>{
         let allUsers = data[0] || [];
         let allGroups = data[1] || [];
-        console.log(allUsers, allGroups);
+        //console.log(allUsers, allGroups);
         allUsers.forEach( u => u.selected = false );
         this.groupsAndUsers = allGroups.map( g => 
           ({

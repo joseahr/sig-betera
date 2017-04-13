@@ -108,7 +108,7 @@ export class AdminUserDetailsComponent implements OnInit {
   }
 
   changeRolOfLayer(event, layer){
-    console.log(event, layer);
+    //console.log(event, layer);
     let params : any = this.route.snapshot.params;
     let id_user  = params.id;
     let oldValue = layer.rol;
@@ -129,7 +129,7 @@ export class AdminUserDetailsComponent implements OnInit {
       ()=>{
         layer.rol = newValue;
         this.loading.setValue(false);
-        console.log('Actualizado correctamente');
+        //console.log('Actualizado correctamente');
       }
     );
   

@@ -21,7 +21,6 @@
       "styles": [
         "../node_modules/dragula/dist/dragula.css",
         "../node_modules/openlayers/dist/ol.css",
-        "../node_modules/datatables.net-dt/css/jquery.dataTables.css",
         "styles.css"
       ],
       "scripts": [

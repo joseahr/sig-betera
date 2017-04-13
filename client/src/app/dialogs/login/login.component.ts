@@ -34,15 +34,15 @@ export class LoginComponent {
         this.snackBar.open(`¡Hola de nuevo, ${result.json().name}!`, null, { duration : 1000 });
       },
       (err) =>{
-        console.log(err);
+        //console.log(err);
         this.isLoading = false;
         this.snackBar.open(err.json(), null, { duration : 1000 });
       },
       ()=>{
-        console.log('end - login');
+        //console.log('end - login');
         this.isLoading = false;
       }
     );
-    console.log(this.userNotLoggedParams);
+    //console.log(this.userNotLoggedParams);
   }
 }

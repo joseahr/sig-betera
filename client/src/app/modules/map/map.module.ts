@@ -11,7 +11,6 @@ import { NgObjectPipesModule } from 'angular-pipes';
 import { ReverseLayersPipe } from './pipes';
 import { AddWmsComponent, LayerSwitcherComponent, SearchComponent, SearchComponentDialog } from './components';
 
-
 const mapRoutes : Route[] =  [{
     path : '',
     component : MapComponent

@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
 
   signup(){
     let recaptcha = this.captcha.getResponse();
-    console.log('token', recaptcha);
+    //console.log('token', recaptcha);
     if(!recaptcha){
       this.snackBar.open('Debes verificar el captcha', null, { duration : 1500 });
       return;
@@ -45,7 +45,7 @@ export class SignupComponent implements OnInit {
     user['g-recaptcha-response'] = recaptcha;
     this.authService.signup(user).subscribe(
       ()=> {        
-        console.log('Usuario registrado con éxito');
+        //console.log('Usuario registrado con éxito');
         this.snackBar.open('Registrado con éxito', null, { duration : 1500 });
         this.dialogRef.close();
       },

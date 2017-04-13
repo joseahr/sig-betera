@@ -1,5 +1,5 @@
-<div #mapsDetailsContainer *ngIf="map && map.getLayers()" class="list collapsed" [dragula]='"layers"' [dragulaModel]='map.getLayers().getArray()'>
-  <div class="list-item" *ngFor="let layer of map.getLayers().getArray(); let i = index; ">
+<div #mapsDetailsContainer *ngIf="map && map.getLayers()" class="list" [dragula]='"layers"' [dragulaModel]='map.getLayers().getArray()'>
+  <div class="list-item" [style.display]="getDisplay(layer)" *ngFor="let layer of map.getLayers().getArray(); let i = index; ">
     <div class="buttons">
       <button md-button 
         *ngIf="i > 0" 
@@ -12,7 +12,7 @@
       </md-slide-toggle>
       <md-slider (input)="changeOpacity($event, i)" step="0.05" [min]="0" [max]="1" [value]="layer.getOpacity()">
       </md-slider>
-      <div class="actions">
+      <div class="actions" [style.display]="getDisplay(layer)">
         <div class="separator"></div>
         <button *ngIf="layer.get('layers')" md-button (click)="groups._results[i].nativeElement.classList.toggle('collapsed')"><md-icon>add</md-icon></button>
         <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->

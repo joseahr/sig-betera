@@ -77,11 +77,11 @@ export class AdminMapsEditComponent implements OnInit {
         let [ map, allLayers, allBaseLayers ] = data;
         let mapLayers = map.layers || [];
         let mapBaselayers = map.baselayers || [];
-        console.log('orden', map, 'allLayers', allLayers, 'allBaselayers', allBaseLayers);
+        //console.log('orden', map, 'allLayers', allLayers, 'allBaselayers', allBaseLayers);
         this.map = map;
         this.AllLayersNotInMap = allLayers.filter( l => !mapLayers.find( ll => l.id == ll.id ) );
         this.AllBaseLayersNotInMap = allBaseLayers.filter( l => !mapBaselayers.find( ll => l.id == ll.id ) );
-        console.log(this.AllLayersNotInMap, this.AllBaseLayersNotInMap);
+        //console.log(this.AllLayersNotInMap, this.AllBaseLayersNotInMap);
         //console.log(data, 'data');
       }
     );

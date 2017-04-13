@@ -21,7 +21,7 @@ export class AddWmsComponent implements OnInit {
   }
 
   onChangeCheckbox(event, name){
-    console.log(event, name);
+    //console.log(event, name);
     let { checked } = event;
     if(!checked){
       this.capasSeleccionadas = 

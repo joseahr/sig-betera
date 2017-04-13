@@ -69,7 +69,7 @@ export class AdminLayersNewBaselayerComponent implements OnInit {
     let extract = (this.serviceUrl.match(regex) || []).join('');
     let serviceURL = this.serviceUrl.replace(extract, '');
     let layers = this.capasSeleccionadas.map( l => l.Name );
-    console.log(serviceURL);
+    //console.log(serviceURL);
     this.loading.setValue(true);
     this.adminService.postBaseLayer(this.baselayerName, serviceURL, layers).subscribe(
       ()=>{

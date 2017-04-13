@@ -37,6 +37,24 @@ md-sidenav-container {
     transition : transform .4s cubic-bezier(.25,.8,.25,1)
 }
 
+.overview-map {
+    width: 95%;
+    height: 30vh;
+    margin: 0px auto;
+    transition-property: height;
+    transition-duration: 0.6s;
+}
+
+.list, 
+.list-button {
+    transition-property: height;
+    transition-duration: 0.6s;
+}
+
+.overview-map .ol-viewport {
+    border-radius: 4px;
+}
+
 .burguer-expanded {
     margin-left: calc(75vw + 20px);
     transform: rotate(-45deg);
@@ -63,7 +81,6 @@ md-sidenav-container {
 }
 
 .collapsed {
-    display : none;
     height: 0px;
 }
 
