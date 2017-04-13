@@ -27,6 +27,9 @@ var options: IOptions<IExtensions> = {
     // To make the custom promise protocol visible, you need to patch the
     // following file: node_modules/pg-promise/typescript/ext-promise.d.ts
     promiseLib: promise,
+    
+    // Capitalize all generated SQL:
+    capSQL: true,
 
     // Extending the database protocol with our custom repositories:
     extend: (obj: IExtensions) => {
