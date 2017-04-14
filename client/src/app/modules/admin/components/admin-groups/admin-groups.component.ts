@@ -36,6 +36,12 @@ export class AdminGroupsComponent implements OnInit {
       scrollX : true,
       scrollY : '50vh',
       scrollCollapse: true,
+      dom : 'frtlip',
+      language : {
+        "lengthMenu":     "_MENU_",
+        "search":         "",
+        "searchPlaceholder": "Search...",
+      },
       ajax  : {
         url : 'api/admin/groups',
         dataSrc : ''

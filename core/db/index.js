@@ -15,6 +15,8 @@ var options = {
     // To make the custom promise protocol visible, you need to patch the
     // following file: node_modules/pg-promise/typescript/ext-promise.d.ts
     promiseLib: promise,
+    // Capitalize all generated SQL:
+    capSQL: true,
     // Extending the database protocol with our custom repositories:
     extend: function (obj) {
         // Do not use 'require()' here, because this event occurs for every task
@@ -48,4 +50,4 @@ diag.init(options);
 // Database object is all that's needed.
 // And if you even need access to the library's root (pgp object),
 // you can do it via db.$config.pgp
-// See: http://vitaly-t.github.io/pg-promise/Database.html#.$config 
+// See: http://vitaly-t.github.io/pg-promise/Database.html#.$config

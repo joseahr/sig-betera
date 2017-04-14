@@ -62,16 +62,16 @@ var AuthService = (function () {
 
 /***/ }),
 
-/***/ 426:
+/***/ 427:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__secciones__ = __webpack_require__(646);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_transitions__ = __webpack_require__(464);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__(166);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_fullpage_js__ = __webpack_require__(443);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_fullpage_js__ = __webpack_require__(267);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_fullpage_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_fullpage_js__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -125,7 +125,7 @@ var HomeComponent = (function () {
 
 /***/ }),
 
-/***/ 427:
+/***/ 428:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -189,14 +189,14 @@ var LoginComponent = (function () {
 
 /***/ }),
 
-/***/ 428:
+/***/ 429:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_recaptcha_lib_captcha_component__ = __webpack_require__(430);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_recaptcha_lib_captcha_component__ = __webpack_require__(431);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_recaptcha_lib_captcha_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_recaptcha_lib_captcha_component__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -258,7 +258,7 @@ var SignupComponent = (function () {
 
 /***/ }),
 
-/***/ 429:
+/***/ 430:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -367,12 +367,12 @@ function slideToLeft() {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs_login_login_component__ = __webpack_require__(427);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dialogs_signup_signup_component__ = __webpack_require__(428);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs_login_login_component__ = __webpack_require__(428);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dialogs_signup_signup_component__ = __webpack_require__(429);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_auth_service__ = __webpack_require__(104);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -489,7 +489,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(643);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components__ = __webpack_require__(647);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_routes__ = __webpack_require__(645);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_material__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__ = __webpack_require__(653);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular2_recaptcha__);
@@ -499,9 +499,9 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_highcharts__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting__ = __webpack_require__(717);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_highcharts_modules_exporting__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__guards__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__guards__ = __webpack_require__(430);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services__ = __webpack_require__(470);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_fullpage__ = __webpack_require__(719);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_fullpage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16_ng2_fullpage__);
@@ -589,8 +589,8 @@ var AppModule = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_home_home_component__ = __webpack_require__(426);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__guards__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_home_home_component__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__guards__ = __webpack_require__(430);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return appRoutes; });
 
 
@@ -647,7 +647,7 @@ var sections = [
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_home_component__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_home_component__ = __webpack_require__(427);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__home_home_component__["a"]; });
 
 //# sourceMappingURL=index.js.map
@@ -693,9 +693,9 @@ var ForgotComponent = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__login_login_component__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__login_login_component__ = __webpack_require__(428);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__login_login_component__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__signup_signup_component__ = __webpack_require__(428);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__signup_signup_component__ = __webpack_require__(429);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__signup_signup_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__forgot_forgot_component__ = __webpack_require__(648);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__forgot_forgot_component__["a"]; });
@@ -914,7 +914,7 @@ module.exports = "<loading-animate></loading-animate>\n<md-toolbar #toolbarMenu 
 /***/ 724:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <div #full mnFullpage \r\n      [mnFullpageNavigation]=\"true\" \r\n      [mnFullpageKeyboardScrolling]=\"true\"\r\n      [mnFullpageControlArrows]=\"true\">\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\">\r\n            Bienvenido a SIG Bétera\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #ce93d8\">        \r\n          <div class=\"fp-tableCell\">\r\n            Visita nuestro mapa\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #ef9a9a\">        \r\n          <div class=\"fp-tableCell\">\r\n            Descarga información Geográfica\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #9fa8da\">        \r\n          <div class=\"fp-tableCell\">\r\n            Hazte usuario\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\">        \r\n          <div class=\"fp-tableCell\">\r\n            <div class=\"slide\" style=\"background: #b2ebf2\"> Contacto </div>\r\n            <div class=\"slide\" style=\"background: #c5e1a5\"> Noticias </div>\r\n            <div class=\"slide\" style=\"background: #e6ee9c\"> Slide 3 </div>\r\n            <div class=\"slide\" style=\"background: #ffe082\"> Slide 4 </div>\r\n          </div> \r\n      </div>\r\n\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <div #full mnFullpage \r\n      [mnFullpageNavigation]=\"true\" \r\n      [mnFullpageKeyboardScrolling]=\"true\"\r\n      [mnFullpageControlArrows]=\"true\">\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\">\r\n            <h4>Bienvenido a SIG Bétera</h4>\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #ce93d8\">        \r\n          <div class=\"fp-tableCell\">\r\n            Visita nuestro mapa\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #ef9a9a\">        \r\n          <div class=\"fp-tableCell\">\r\n            Descarga información Geográfica\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #9fa8da\">        \r\n          <div class=\"fp-tableCell\">\r\n            Hazte usuario\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\">        \r\n          <div class=\"fp-tableCell\">\r\n            <div class=\"slide\" style=\"background: #b2ebf2\"> Contacto </div>\r\n            <div class=\"slide\" style=\"background: #c5e1a5\"> Noticias </div>\r\n            <div class=\"slide\" style=\"background: #e6ee9c\"> Slide 3 </div>\r\n            <div class=\"slide\" style=\"background: #ffe082\"> Slide 4 </div>\r\n          </div> \r\n      </div>\r\n\r\n  </div>\r\n</div>"
 
 /***/ }),
 

@@ -33,6 +33,12 @@ export class AdminUsersComponent implements OnInit {
       scrollX : true,
       scrollY : '60vh',
       scrollCollapse: true,
+      dom : 'frtlip',
+      language : {
+        "lengthMenu":     "_MENU_",
+        "search":         "",
+        "searchPlaceholder": "Search...",
+      },
       ajax  : {
         url : 'api/admin/users',
         dataSrc : ''

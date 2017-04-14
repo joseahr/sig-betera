@@ -36,7 +36,7 @@
       <div *ngIf="map?.orden" [dragula]='"order"' [(dragulaModel)]="map.orden">
         <md-card *ngFor="let capa of map?.orden; let i = index;" style="background : #f7f7f7; margin : 3px;">
           <md-card-header>
-            <md-icon md-card-avatar [style.color]="getColor(capa)" style="cursor: pointer;" md-list-avatar class="handle">layers</md-icon>
+            <md-icon md-card-avatar [style.color]="getColor(capa)" style="cursor: pointer; padding:5px; border-radius : 25px; background: rgba(0,0,0,0.05);" md-list-avatar class="handle">layers</md-icon>
             <md-card-title>#{{i}} {{capa.name}}</md-card-title>
             <md-card-subtitle>ID Capa : {{capa.id_layer}}</md-card-subtitle>
             <button md-mini-fab *ngIf="capa.layer_type == 'layer'" (click)="deleteLayerFromMap(capa.id_layer)" style="position : absolute; right: 1em;"><md-icon>remove_circle</md-icon></button>

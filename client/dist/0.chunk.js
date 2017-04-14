@@ -6,7 +6,7 @@ webpackJsonp([0,7],Array(750).concat([
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_dragula__ = __webpack_require__(864);
@@ -15,7 +15,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angular_pipes__ = __webpack_require__(898);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor__ = __webpack_require__(1191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_ng2_ckeditor__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services__ = __webpack_require__(470);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components__ = __webpack_require__(890);
@@ -1651,7 +1651,7 @@ exports.isDate = isDate;
 
 "use strict";
 
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 function isNumeric(val) {
     // parseFloat NaNs numeric-cast false positives (null|true|false|"")
     // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
@@ -1713,7 +1713,7 @@ __webpack_require__(956);
 __webpack_require__(959);
 __webpack_require__(475);
 __webpack_require__(960);
-__webpack_require__(275);
+__webpack_require__(276);
 __webpack_require__(961);
 __webpack_require__(962);
 __webpack_require__(963);
@@ -1765,7 +1765,7 @@ __webpack_require__(481);
 __webpack_require__(482);
 __webpack_require__(1002);
 __webpack_require__(1003);
-__webpack_require__(170);
+__webpack_require__(171);
 __webpack_require__(1004);
 __webpack_require__(1005);
 __webpack_require__(1006);
@@ -1809,7 +1809,7 @@ __webpack_require__(1038);
 __webpack_require__(1039);
 __webpack_require__(1040);
 __webpack_require__(1041);
-__webpack_require__(276);
+__webpack_require__(277);
 __webpack_require__(1042);
 __webpack_require__(1043);
 __webpack_require__(484);
@@ -1849,11 +1849,11 @@ var ConnectableObservable_1 = __webpack_require__(485);
 exports.ConnectableObservable = ConnectableObservable_1.ConnectableObservable;
 var Notification_1 = __webpack_require__(466);
 exports.Notification = Notification_1.Notification;
-var EmptyError_1 = __webpack_require__(169);
+var EmptyError_1 = __webpack_require__(170);
 exports.EmptyError = EmptyError_1.EmptyError;
 var ArgumentOutOfRangeError_1 = __webpack_require__(768);
 exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError_1.ArgumentOutOfRangeError;
-var ObjectUnsubscribedError_1 = __webpack_require__(274);
+var ObjectUnsubscribedError_1 = __webpack_require__(275);
 exports.ObjectUnsubscribedError = ObjectUnsubscribedError_1.ObjectUnsubscribedError;
 var TimeoutError_1 = __webpack_require__(885);
 exports.TimeoutError = TimeoutError_1.TimeoutError;
@@ -1875,8 +1875,8 @@ var asap_1 = __webpack_require__(881);
 var async_1 = __webpack_require__(463);
 var queue_1 = __webpack_require__(882);
 var animationFrame_1 = __webpack_require__(1173);
-var rxSubscriber_1 = __webpack_require__(173);
-var iterator_1 = __webpack_require__(168);
+var rxSubscriber_1 = __webpack_require__(174);
+var iterator_1 = __webpack_require__(169);
 var observable_1 = __webpack_require__(115);
 /* tslint:enable:no-unused-variable */
 /**
@@ -2178,7 +2178,7 @@ var Subject_1 = __webpack_require__(9);
 var queue_1 = __webpack_require__(882);
 var Subscription_1 = __webpack_require__(51);
 var observeOn_1 = __webpack_require__(472);
-var ObjectUnsubscribedError_1 = __webpack_require__(274);
+var ObjectUnsubscribedError_1 = __webpack_require__(275);
 var SubjectSubscription_1 = __webpack_require__(474);
 /**
  * @class ReplaySubject<T>
@@ -2283,7 +2283,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var ArrayObservable_1 = __webpack_require__(78);
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 var none = {};
@@ -2441,11 +2441,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var ArrayObservable_1 = __webpack_require__(78);
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var Subscriber_1 = __webpack_require__(15);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
-var iterator_1 = __webpack_require__(168);
+var iterator_1 = __webpack_require__(169);
 /* tslint:enable:max-line-length */
 /**
  * @param observables
@@ -7746,8 +7746,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var root_1 = __webpack_require__(33);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var Observable_1 = __webpack_require__(1);
 var Subscriber_1 = __webpack_require__(15);
 var map_1 = __webpack_require__(79);
@@ -8165,8 +8165,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 /* tslint:enable:max-line-length */
 /**
  * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item.
@@ -8547,7 +8547,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var FromObservable_1 = __webpack_require__(486);
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /* tslint:enable:max-line-length */
@@ -8628,7 +8628,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var ArrayObservable_1 = __webpack_require__(78);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
@@ -15250,7 +15250,7 @@ Observable_1.Observable.empty = empty_1.empty;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var from_1 = __webpack_require__(171);
+var from_1 = __webpack_require__(172);
 Observable_1.Observable.from = from_1.from;
 //# sourceMappingURL=from.js.map
 
@@ -15272,7 +15272,7 @@ Observable_1.Observable.fromEventPattern = fromEventPattern_1.fromEventPattern;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var fromPromise_1 = __webpack_require__(172);
+var fromPromise_1 = __webpack_require__(173);
 Observable_1.Observable.fromPromise = fromPromise_1.fromPromise;
 //# sourceMappingURL=fromPromise.js.map
 
@@ -15514,7 +15514,7 @@ Observable_1.Observable.prototype.concat = concat_1.concat;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var concatAll_1 = __webpack_require__(277);
+var concatAll_1 = __webpack_require__(278);
 Observable_1.Observable.prototype.concatAll = concatAll_1.concatAll;
 //# sourceMappingURL=concatAll.js.map
 
@@ -15525,7 +15525,7 @@ Observable_1.Observable.prototype.concatAll = concatAll_1.concatAll;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var concatMap_1 = __webpack_require__(278);
+var concatMap_1 = __webpack_require__(279);
 Observable_1.Observable.prototype.concatMap = concatMap_1.concatMap;
 //# sourceMappingURL=concatMap.js.map
 
@@ -15668,7 +15668,7 @@ Observable_1.Observable.prototype.elementAt = elementAt_1.elementAt;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var every_1 = __webpack_require__(279);
+var every_1 = __webpack_require__(280);
 Observable_1.Observable.prototype.every = every_1.every;
 //# sourceMappingURL=every.js.map
 
@@ -16414,8 +16414,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = __webpack_require__(1);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var AsyncSubject_1 = __webpack_require__(767);
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -16688,8 +16688,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = __webpack_require__(1);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var AsyncSubject_1 = __webpack_require__(767);
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -17149,7 +17149,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var isFunction_1 = __webpack_require__(174);
+var isFunction_1 = __webpack_require__(175);
 var Observable_1 = __webpack_require__(1);
 var Subscription_1 = __webpack_require__(51);
 /**
@@ -18081,7 +18081,7 @@ exports.bindNodeCallback = BoundNodeCallbackObservable_1.BoundNodeCallbackObserv
 "use strict";
 
 var isScheduler_1 = __webpack_require__(111);
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var ArrayObservable_1 = __webpack_require__(78);
 var combineLatest_1 = __webpack_require__(781);
 /* tslint:enable:max-line-length */
@@ -18253,8 +18253,8 @@ var Observable_1 = __webpack_require__(1);
 var Subscription_1 = __webpack_require__(51);
 var root_1 = __webpack_require__(33);
 var ReplaySubject_1 = __webpack_require__(780);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var assign_1 = __webpack_require__(1183);
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -18631,8 +18631,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -19306,8 +19306,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscription_1 = __webpack_require__(51);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -20976,8 +20976,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /* tslint:enable:max-line-length */
@@ -21762,8 +21762,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var subscribeToResult_1 = __webpack_require__(76);
 var OuterSubscriber_1 = __webpack_require__(75);
 /**
@@ -22023,7 +22023,7 @@ var PairwiseSubscriber = (function (_super) {
 "use strict";
 
 var not_1 = __webpack_require__(1184);
-var filter_1 = __webpack_require__(280);
+var filter_1 = __webpack_require__(281);
 /**
  * Splits the source Observable into two, one with values that satisfy a
  * predicate, and another with values that don't satisfy the predicate.
@@ -22317,8 +22317,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subject_1 = __webpack_require__(9);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -22502,8 +22502,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subject_1 = __webpack_require__(9);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -22925,8 +22925,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 /**
  * Compares all values of two observables in sequence using an optional comparor function
  * and returns an observable of a single boolean value representing whether or not the two sequences
@@ -23095,7 +23095,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var EmptyError_1 = __webpack_require__(169);
+var EmptyError_1 = __webpack_require__(170);
 /**
  * Returns an Observable that emits the single item emitted by the source Observable that matches a specified
  * predicate, if that Observable emits one such item. If the source Observable emits more than one such item or no
@@ -24978,8 +24978,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Subject_1 = __webpack_require__(9);
 var Subscription_1 = __webpack_require__(51);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -25163,8 +25163,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subject_1 = __webpack_require__(9);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -26857,7 +26857,7 @@ var BytesPipe = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(754);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminGroupEditComponent; });
@@ -26913,7 +26913,7 @@ var AdminGroupEditComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_datatables__ = __webpack_require__(771);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3____ = __webpack_require__(890);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(464);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services__ = __webpack_require__(470);
@@ -26946,6 +26946,12 @@ var AdminGroupsComponent = (function () {
             scrollX: true,
             scrollY: '50vh',
             scrollCollapse: true,
+            dom: 'frtlip',
+            language: {
+                "lengthMenu": "_MENU_",
+                "search": "",
+                "searchPlaceholder": "Search...",
+            },
             ajax: {
                 url: 'api/admin/groups',
                 dataSrc: ''
@@ -27069,7 +27075,7 @@ var AdminHomeComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(754);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminLayerEditComponent; });
@@ -27121,7 +27127,7 @@ var AdminLayerEditComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_transitions__ = __webpack_require__(464);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__map_services__ = __webpack_require__(783);
@@ -27227,7 +27233,7 @@ var AdminLayersNewBaselayerComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_pipes_src_math_bytes_pipe__ = __webpack_require__(1192);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router_transitions__ = __webpack_require__(464);
@@ -27332,11 +27338,11 @@ var AdminLayersNewLayerComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_datatables__ = __webpack_require__(771);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6____ = __webpack_require__(890);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__router_transitions__ = __webpack_require__(464);
@@ -27377,6 +27383,12 @@ var AdminLayersComponent = (function () {
             scrollX: true,
             scrollY: '50vh',
             scrollCollapse: true,
+            dom: 'frtlip',
+            language: {
+                "lengthMenu": "_MENU_",
+                "search": "",
+                "searchPlaceholder": "Search...",
+            },
             ajax: {
                 url: 'api/admin/layers',
                 dataSrc: ''
@@ -27399,6 +27411,12 @@ var AdminLayersComponent = (function () {
             scrollX: true,
             scrollY: '50vh',
             scrollCollapse: true,
+            dom: 'frtlip',
+            language: {
+                "lengthMenu": "_MENU_",
+                "search": "",
+                "searchPlaceholder": "Search...",
+            },
             ajax: {
                 url: 'api/admin/baselayers',
                 dataSrc: ''
@@ -27513,7 +27531,7 @@ var AdminLayersComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_ckeditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_ckeditor__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(772);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router_transitions__ = __webpack_require__(464);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(754);
@@ -27632,12 +27650,12 @@ var AdminMailComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(772);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_dragula__ = __webpack_require__(864);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_dragula___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_dragula__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__router_transitions__ = __webpack_require__(464);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services__ = __webpack_require__(754);
@@ -27827,7 +27845,7 @@ var AdminMapsEditComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(772);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(464);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services__ = __webpack_require__(754);
@@ -27903,7 +27921,7 @@ var AdminMapsNewDefaultMapComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router_transitions__ = __webpack_require__(464);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(754);
@@ -27967,10 +27985,10 @@ var AdminMapsNewMapComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_datatables__ = __webpack_require__(771);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(470);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__router_transitions__ = __webpack_require__(464);
@@ -28005,6 +28023,12 @@ var AdminMapsComponent = (function () {
             scrollX: true,
             scrollY: '50vh',
             scrollCollapse: true,
+            dom: 'frtlip',
+            language: {
+                "lengthMenu": "_MENU_",
+                "search": "",
+                "searchPlaceholder": "Search...",
+            },
             ajax: {
                 url: 'api/admin/maps',
                 dataSrc: ''
@@ -28029,6 +28053,12 @@ var AdminMapsComponent = (function () {
             scrollX: true,
             scrollY: '50vh',
             scrollCollapse: true,
+            dom: 'frtlip',
+            language: {
+                "lengthMenu": "_MENU_",
+                "search": "",
+                "searchPlaceholder": "Search...",
+            },
             ajax: {
                 url: 'api/admin/default-maps',
                 dataSrc: ''
@@ -28130,9 +28160,9 @@ var AdminMapsComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs__ = __webpack_require__(772);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs__);
@@ -28276,7 +28306,7 @@ var AdminUserDetailsComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_transitions__ = __webpack_require__(464);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(754);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular_datatables__ = __webpack_require__(771);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(274);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminUsersComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -28301,6 +28331,12 @@ var AdminUsersComponent = (function () {
             scrollX: true,
             scrollY: '60vh',
             scrollCollapse: true,
+            dom: 'frtlip',
+            language: {
+                "lengthMenu": "_MENU_",
+                "search": "",
+                "searchPlaceholder": "Search...",
+            },
             ajax: {
                 url: 'api/admin/users',
                 dataSrc: ''
@@ -28868,7 +28904,7 @@ module.exports = "<loading-animate></loading-animate>\n<md-card>\n  <md-card-hea
 /* 1244 */
 /***/ (function(module, exports) {
 
-module.exports = "<loading-animate></loading-animate>\r\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\r\n  <md-card class=\"card-margin\">\r\n    <md-card-header>\r\n      <div md-card-avatar></div>\r\n      <md-card-title>Grupos</md-card-title>\r\n      <md-card-subtitle>Añadir nuevo grupo</md-card-subtitle>\r\n    </md-card-header>\r\n    <md-card-content>\r\n        <md-input-container style=\"width : 100%\">\r\n            <input mdInput [(ngModel)]=\"newGroupName\" placeholder=\"Nombre del grupo\" value=\"\">\r\n        </md-input-container>\r\n    </md-card-content>\r\n    <md-card-actions>\r\n      <button [disabled]=\"!newGroupName || newGroupName.length < 3\" md-button (click)=\"createGroup()\">CREAR GRUPO</button>\r\n    </md-card-actions>\r\n  </md-card>\r\n  <md-card class=\"card-margin\">\r\n    <md-card-header>\r\n      <div md-card-avatar></div>\r\n      <md-card-title>Grupos</md-card-title>\r\n      <md-card-subtitle>Todos los grupos</md-card-subtitle>\r\n    </md-card-header>\r\n    <md-card-content>\r\n      <table datatable [dtOptions]=\"dtOptions\" class=\"row-border hover\" width=\"100%\"></table>\r\n    </md-card-content>\r\n  </md-card>\r\n</div>"
+module.exports = "<loading-animate></loading-animate>\r\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\r\n  <md-card class=\"card-margin\">\r\n    <md-card-header>\r\n      <div md-card-avatar></div>\r\n      <md-card-title>Grupos</md-card-title>\r\n      <md-card-subtitle>Añadir nuevo grupo</md-card-subtitle>\r\n    </md-card-header>\r\n    <md-card-content>\r\n        <md-input-container style=\"width : 100%\">\r\n            <input mdInput [(ngModel)]=\"newGroupName\" placeholder=\"Nombre del grupo\" value=\"\">\r\n        </md-input-container>\r\n    </md-card-content>\r\n    <md-card-actions>\r\n      <button [disabled]=\"!newGroupName || newGroupName.length < 3\" md-button (click)=\"createGroup()\">CREAR GRUPO</button>\r\n    </md-card-actions>\r\n  </md-card>\r\n  <md-card class=\"card-margin\">\r\n    <md-card-header>\r\n      <div md-card-avatar></div>\r\n      <md-card-title>Grupos</md-card-title>\r\n      <md-card-subtitle>Todos los grupos</md-card-subtitle>\r\n    </md-card-header>\r\n    <md-card-content>\r\n      <table datatable class=\"mdl-data-table\" [dtOptions]=\"dtOptions\" style=\"width : 100%;\"></table>\r\n    </md-card-content>\r\n  </md-card>\r\n</div>"
 
 /***/ }),
 /* 1245 */
@@ -28898,7 +28934,7 @@ module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=
 /* 1249 */
 /***/ (function(module, exports) {
 
-module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>PostGIS</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsLayers\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateLayerPage()\">AÑADIR NUEVA CAPA (SHP)</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>Otros servidores</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsBase\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateBaseLayerPage()\">AÑADIR NUEVA CAPA (WMS)</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>PostGIS</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsLayers\" class=\"mdl-data-table\" style=\"width : 100%;\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateLayerPage()\">AÑADIR NUEVA CAPA (SHP)</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Capas</md-card-title>\n      <md-card-subtitle>Otros servidores</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsBase\" class=\"mdl-data-table\" style=\"width : 100%;\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateBaseLayerPage()\">AÑADIR NUEVA CAPA (WMS)</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 /* 1250 */
@@ -28910,7 +28946,7 @@ module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=
 /* 1251 */
 /***/ (function(module, exports) {
 
-module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Añadir Capas</md-card-title>\n      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <h4>Añadir Capa</h4>\n      <md-select placeholder=\"Capa PostGIS\" [(ngModel)]=\"selectedLayerToAdd\" style=\"width : 100%;\">\n        <md-option *ngFor=\"let layer of AllLayersNotInMap\" [value]=\"layer.id\">\n          {{layer.name}}\n        </md-option>\n      </md-select>\n      <h4>Añadir Capa Base</h4>\n      <md-select placeholder=\"Capas Base\" [(ngModel)]=\"selectedBaseLayerToAdd\" style=\"width : 100%;\">\n        <md-option *ngFor=\"let layer of AllBaseLayersNotInMap\" [value]=\"layer.id\">\n          {{layer.name}}\n        </md-option>\n      </md-select>\n    </md-card-content>\n    <md-card-actions>\n      <button [disabled]=\"!selectedLayerToAdd\" md-button (click)=\"addSelectedLayer()\">AÑADIR CAPA SELECCIONADA</button>\n      <button [disabled]=\"!selectedBaseLayerToAdd\" md-button (click)=\"addSelectedBaseLayer()\">AÑADIR CAPA BASE SELECCIONADA</button>\n    </md-card-actions>\n  </md-card>\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Alterar orden</md-card-title>\n      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <h4>Orden de las capas</h4>\n      <div *ngIf=\"map?.orden\" [dragula]='\"order\"' [(dragulaModel)]=\"map.orden\">\n        <md-card *ngFor=\"let capa of map?.orden; let i = index;\" style=\"background : #f7f7f7; margin : 3px;\">\n          <md-card-header>\n            <md-icon md-card-avatar [style.color]=\"getColor(capa)\" style=\"cursor: pointer;\" md-list-avatar class=\"handle\">layers</md-icon>\n            <md-card-title>#{{i}} {{capa.name}}</md-card-title>\n            <md-card-subtitle>ID Capa : {{capa.id_layer}}</md-card-subtitle>\n            <button md-mini-fab *ngIf=\"capa.layer_type == 'layer'\" (click)=\"deleteLayerFromMap(capa.id_layer)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n            <button md-mini-fab *ngIf=\"capa.layer_type == 'base'\" (click)=\"deleteBaseLayerFromMap(capa.id_layer)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n          </md-card-header>\n        </md-card>\n      </div>\n    </md-card-content>\n    <md-card-actions>\n      <button [disabled]=\"!hasChangedOrder\" md-button (click)=\"saveOrder()\">GUARDAR ORDEN</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Añadir Capas</md-card-title>\n      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <h4>Añadir Capa</h4>\n      <md-select placeholder=\"Capa PostGIS\" [(ngModel)]=\"selectedLayerToAdd\" style=\"width : 100%;\">\n        <md-option *ngFor=\"let layer of AllLayersNotInMap\" [value]=\"layer.id\">\n          {{layer.name}}\n        </md-option>\n      </md-select>\n      <h4>Añadir Capa Base</h4>\n      <md-select placeholder=\"Capas Base\" [(ngModel)]=\"selectedBaseLayerToAdd\" style=\"width : 100%;\">\n        <md-option *ngFor=\"let layer of AllBaseLayersNotInMap\" [value]=\"layer.id\">\n          {{layer.name}}\n        </md-option>\n      </md-select>\n    </md-card-content>\n    <md-card-actions>\n      <button [disabled]=\"!selectedLayerToAdd\" md-button (click)=\"addSelectedLayer()\">AÑADIR CAPA SELECCIONADA</button>\n      <button [disabled]=\"!selectedBaseLayerToAdd\" md-button (click)=\"addSelectedBaseLayer()\">AÑADIR CAPA BASE SELECCIONADA</button>\n    </md-card-actions>\n  </md-card>\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Alterar orden</md-card-title>\n      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <h4>Orden de las capas</h4>\n      <div *ngIf=\"map?.orden\" [dragula]='\"order\"' [(dragulaModel)]=\"map.orden\">\n        <md-card *ngFor=\"let capa of map?.orden; let i = index;\" style=\"background : #f7f7f7; margin : 3px;\">\n          <md-card-header>\n            <md-icon md-card-avatar [style.color]=\"getColor(capa)\" style=\"cursor: pointer; padding:5px; border-radius : 25px; background: rgba(0,0,0,0.05);\" md-list-avatar class=\"handle\">layers</md-icon>\n            <md-card-title>#{{i}} {{capa.name}}</md-card-title>\n            <md-card-subtitle>ID Capa : {{capa.id_layer}}</md-card-subtitle>\n            <button md-mini-fab *ngIf=\"capa.layer_type == 'layer'\" (click)=\"deleteLayerFromMap(capa.id_layer)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n            <button md-mini-fab *ngIf=\"capa.layer_type == 'base'\" (click)=\"deleteBaseLayerFromMap(capa.id_layer)\" style=\"position : absolute; right: 1em;\"><md-icon>remove_circle</md-icon></button>\n          </md-card-header>\n        </md-card>\n      </div>\n    </md-card-content>\n    <md-card-actions>\n      <button [disabled]=\"!hasChangedOrder\" md-button (click)=\"saveOrder()\">GUARDAR ORDEN</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 /* 1252 */
@@ -28928,7 +28964,7 @@ module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=
 /* 1254 */
 /***/ (function(module, exports) {
 
-module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsMaps\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateMap()\">CREAR UN MAPA</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Mapas default</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsDefaultMaps\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateDefaultMap()\">DECLARAR UN MAPA POR DEFECTO</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsMaps\" class=\"mdl-data-table\" style=\"width : 100%;\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateMap()\">CREAR UN MAPA</button>\n    </md-card-actions>\n  </md-card>\n\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Mapas default</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptionsDefaultMaps\" class=\"mdl-data-table\" style=\"width : 100%;\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button (click)=\"goToCreateDefaultMap()\">DECLARAR UN MAPA POR DEFECTO</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 /* 1255 */
@@ -28940,7 +28976,7 @@ module.exports = "<loading-animate></loading-animate>\n<div [@routerTransition]=
 /* 1256 */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptions\" class=\"row-border hover\" width=\"100%\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>ELIMINAR TODOS LOS PERMISOS</button>\n    </md-card-actions>\n  </md-card>\n</div>"
+module.exports = "<div [@routerTransition]=\"\" class=\"admin-page-margin\">\n  <md-card class=\"card-margin\">\n    <md-card-header>\n      <div md-card-avatar></div>\n      <md-card-title>Mapas</md-card-title>\n      <md-card-subtitle>Todos los mapas</md-card-subtitle>\n    </md-card-header>\n    <md-card-content>\n      <table datatable [dtOptions]=\"dtOptions\" class=\"mdl-data-table\" style=\"width : 100%;\"></table>\n    </md-card-content>\n    <md-card-actions>\n      <button md-button>ELIMINAR TODOS LOS PERMISOS</button>\n    </md-card-actions>\n  </md-card>\n</div>"
 
 /***/ }),
 /* 1257 */

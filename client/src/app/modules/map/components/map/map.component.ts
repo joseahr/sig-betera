@@ -185,7 +185,9 @@ export class MapComponent implements OnInit {
     this.projService.setProjection(this.overviewCtrl, '25830');
     this.overviewCtrl.getView().on('change', ()=>{
       this.map.getView().setProperties(this.overviewCtrl.getView().getProperties());
+      this.overviewCtrl.updateSize()
     });
+    //window.on('resize', ()=>this.overviewCtrl.updateSize());
     this.overviewCtrl.getLayers().clear();
     this.overviewCtrl.getLayers().extend([...this.map.getLayers().getArray()]);
   }

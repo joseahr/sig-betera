@@ -6,7 +6,7 @@ webpackJsonp([1,7],Array(751).concat([
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_dragula__ = __webpack_require__(864);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_dragula___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_dragula__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_datatables__ = __webpack_require__(771);
@@ -1610,7 +1610,7 @@ exports.isDate = isDate;
 
 "use strict";
 
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 function isNumeric(val) {
     // parseFloat NaNs numeric-cast false positives (null|true|false|"")
     // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
@@ -1672,7 +1672,7 @@ __webpack_require__(956);
 __webpack_require__(959);
 __webpack_require__(475);
 __webpack_require__(960);
-__webpack_require__(275);
+__webpack_require__(276);
 __webpack_require__(961);
 __webpack_require__(962);
 __webpack_require__(963);
@@ -1724,7 +1724,7 @@ __webpack_require__(481);
 __webpack_require__(482);
 __webpack_require__(1002);
 __webpack_require__(1003);
-__webpack_require__(170);
+__webpack_require__(171);
 __webpack_require__(1004);
 __webpack_require__(1005);
 __webpack_require__(1006);
@@ -1768,7 +1768,7 @@ __webpack_require__(1038);
 __webpack_require__(1039);
 __webpack_require__(1040);
 __webpack_require__(1041);
-__webpack_require__(276);
+__webpack_require__(277);
 __webpack_require__(1042);
 __webpack_require__(1043);
 __webpack_require__(484);
@@ -1808,11 +1808,11 @@ var ConnectableObservable_1 = __webpack_require__(485);
 exports.ConnectableObservable = ConnectableObservable_1.ConnectableObservable;
 var Notification_1 = __webpack_require__(466);
 exports.Notification = Notification_1.Notification;
-var EmptyError_1 = __webpack_require__(169);
+var EmptyError_1 = __webpack_require__(170);
 exports.EmptyError = EmptyError_1.EmptyError;
 var ArgumentOutOfRangeError_1 = __webpack_require__(768);
 exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError_1.ArgumentOutOfRangeError;
-var ObjectUnsubscribedError_1 = __webpack_require__(274);
+var ObjectUnsubscribedError_1 = __webpack_require__(275);
 exports.ObjectUnsubscribedError = ObjectUnsubscribedError_1.ObjectUnsubscribedError;
 var TimeoutError_1 = __webpack_require__(885);
 exports.TimeoutError = TimeoutError_1.TimeoutError;
@@ -1834,8 +1834,8 @@ var asap_1 = __webpack_require__(881);
 var async_1 = __webpack_require__(463);
 var queue_1 = __webpack_require__(882);
 var animationFrame_1 = __webpack_require__(1173);
-var rxSubscriber_1 = __webpack_require__(173);
-var iterator_1 = __webpack_require__(168);
+var rxSubscriber_1 = __webpack_require__(174);
+var iterator_1 = __webpack_require__(169);
 var observable_1 = __webpack_require__(115);
 /* tslint:enable:no-unused-variable */
 /**
@@ -2137,7 +2137,7 @@ var Subject_1 = __webpack_require__(9);
 var queue_1 = __webpack_require__(882);
 var Subscription_1 = __webpack_require__(51);
 var observeOn_1 = __webpack_require__(472);
-var ObjectUnsubscribedError_1 = __webpack_require__(274);
+var ObjectUnsubscribedError_1 = __webpack_require__(275);
 var SubjectSubscription_1 = __webpack_require__(474);
 /**
  * @class ReplaySubject<T>
@@ -2242,7 +2242,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var ArrayObservable_1 = __webpack_require__(78);
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 var none = {};
@@ -2400,11 +2400,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var ArrayObservable_1 = __webpack_require__(78);
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var Subscriber_1 = __webpack_require__(15);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
-var iterator_1 = __webpack_require__(168);
+var iterator_1 = __webpack_require__(169);
 /* tslint:enable:max-line-length */
 /**
  * @param observables
@@ -7705,8 +7705,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var root_1 = __webpack_require__(33);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var Observable_1 = __webpack_require__(1);
 var Subscriber_1 = __webpack_require__(15);
 var map_1 = __webpack_require__(79);
@@ -8124,8 +8124,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 /* tslint:enable:max-line-length */
 /**
  * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item.
@@ -8506,7 +8506,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var FromObservable_1 = __webpack_require__(486);
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /* tslint:enable:max-line-length */
@@ -8587,7 +8587,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var ArrayObservable_1 = __webpack_require__(78);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
@@ -15031,7 +15031,7 @@ Observable_1.Observable.empty = empty_1.empty;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var from_1 = __webpack_require__(171);
+var from_1 = __webpack_require__(172);
 Observable_1.Observable.from = from_1.from;
 //# sourceMappingURL=from.js.map
 
@@ -15053,7 +15053,7 @@ Observable_1.Observable.fromEventPattern = fromEventPattern_1.fromEventPattern;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var fromPromise_1 = __webpack_require__(172);
+var fromPromise_1 = __webpack_require__(173);
 Observable_1.Observable.fromPromise = fromPromise_1.fromPromise;
 //# sourceMappingURL=fromPromise.js.map
 
@@ -15295,7 +15295,7 @@ Observable_1.Observable.prototype.concat = concat_1.concat;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var concatAll_1 = __webpack_require__(277);
+var concatAll_1 = __webpack_require__(278);
 Observable_1.Observable.prototype.concatAll = concatAll_1.concatAll;
 //# sourceMappingURL=concatAll.js.map
 
@@ -15306,7 +15306,7 @@ Observable_1.Observable.prototype.concatAll = concatAll_1.concatAll;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var concatMap_1 = __webpack_require__(278);
+var concatMap_1 = __webpack_require__(279);
 Observable_1.Observable.prototype.concatMap = concatMap_1.concatMap;
 //# sourceMappingURL=concatMap.js.map
 
@@ -15449,7 +15449,7 @@ Observable_1.Observable.prototype.elementAt = elementAt_1.elementAt;
 "use strict";
 
 var Observable_1 = __webpack_require__(1);
-var every_1 = __webpack_require__(279);
+var every_1 = __webpack_require__(280);
 Observable_1.Observable.prototype.every = every_1.every;
 //# sourceMappingURL=every.js.map
 
@@ -16195,8 +16195,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = __webpack_require__(1);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var AsyncSubject_1 = __webpack_require__(767);
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -16469,8 +16469,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = __webpack_require__(1);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var AsyncSubject_1 = __webpack_require__(767);
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -16930,7 +16930,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var isFunction_1 = __webpack_require__(174);
+var isFunction_1 = __webpack_require__(175);
 var Observable_1 = __webpack_require__(1);
 var Subscription_1 = __webpack_require__(51);
 /**
@@ -17862,7 +17862,7 @@ exports.bindNodeCallback = BoundNodeCallbackObservable_1.BoundNodeCallbackObserv
 "use strict";
 
 var isScheduler_1 = __webpack_require__(111);
-var isArray_1 = __webpack_require__(167);
+var isArray_1 = __webpack_require__(168);
 var ArrayObservable_1 = __webpack_require__(78);
 var combineLatest_1 = __webpack_require__(781);
 /* tslint:enable:max-line-length */
@@ -18034,8 +18034,8 @@ var Observable_1 = __webpack_require__(1);
 var Subscription_1 = __webpack_require__(51);
 var root_1 = __webpack_require__(33);
 var ReplaySubject_1 = __webpack_require__(780);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var assign_1 = __webpack_require__(1183);
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -18412,8 +18412,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -19087,8 +19087,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscription_1 = __webpack_require__(51);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -20757,8 +20757,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /* tslint:enable:max-line-length */
@@ -21543,8 +21543,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var subscribeToResult_1 = __webpack_require__(76);
 var OuterSubscriber_1 = __webpack_require__(75);
 /**
@@ -21804,7 +21804,7 @@ var PairwiseSubscriber = (function (_super) {
 "use strict";
 
 var not_1 = __webpack_require__(1184);
-var filter_1 = __webpack_require__(280);
+var filter_1 = __webpack_require__(281);
 /**
  * Splits the source Observable into two, one with values that satisfy a
  * predicate, and another with values that don't satisfy the predicate.
@@ -22098,8 +22098,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subject_1 = __webpack_require__(9);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -22283,8 +22283,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subject_1 = __webpack_require__(9);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -22706,8 +22706,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 /**
  * Compares all values of two observables in sequence using an optional comparor function
  * and returns an observable of a single boolean value representing whether or not the two sequences
@@ -22876,7 +22876,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = __webpack_require__(15);
-var EmptyError_1 = __webpack_require__(169);
+var EmptyError_1 = __webpack_require__(170);
 /**
  * Returns an Observable that emits the single item emitted by the source Observable that matches a specified
  * predicate, if that Observable emits one such item. If the source Observable emits more than one such item or no
@@ -24759,8 +24759,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Subject_1 = __webpack_require__(9);
 var Subscription_1 = __webpack_require__(51);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -24944,8 +24944,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subject_1 = __webpack_require__(9);
-var tryCatch_1 = __webpack_require__(271);
-var errorObject_1 = __webpack_require__(166);
+var tryCatch_1 = __webpack_require__(272);
+var errorObject_1 = __webpack_require__(167);
 var OuterSubscriber_1 = __webpack_require__(75);
 var subscribeToResult_1 = __webpack_require__(76);
 /**
@@ -27008,7 +27008,9 @@ var MapComponent = (function () {
         this.projService.setProjection(this.overviewCtrl, '25830');
         this.overviewCtrl.getView().on('change', function () {
             _this.map.getView().setProperties(_this.overviewCtrl.getView().getProperties());
+            _this.overviewCtrl.updateSize();
         });
+        //window.on('resize', ()=>this.overviewCtrl.updateSize());
         this.overviewCtrl.getLayers().clear();
         this.overviewCtrl.getLayers().extend(this.map.getLayers().getArray().slice());
     };
@@ -27192,7 +27194,7 @@ var MapComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(757);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_openlayers__);
@@ -27434,7 +27436,7 @@ var ProfileComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_pipes_src_object_keys_pipe__ = __webpack_require__(1193);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angular_datatables__ = __webpack_require__(771);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services__ = __webpack_require__(783);
