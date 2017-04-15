@@ -40,6 +40,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var mapRoutes = [{
         path: '',
         component: __WEBPACK_IMPORTED_MODULE_5__components__["a" /* MapComponent */]
+    }, {
+        path: ':id',
+        component: __WEBPACK_IMPORTED_MODULE_5__components__["a" /* MapComponent */]
+    }, {
+        path: ':id/:name',
+        component: __WEBPACK_IMPORTED_MODULE_5__components__["a" /* MapComponent */]
     }];
 var MapModule = (function () {
     function MapModule() {
@@ -26766,11 +26772,18 @@ var LayerSwitcherComponent = (function () {
             _this.emmiter.next();
         });
     };
+    LayerSwitcherComponent.prototype.getLengthWithoutNotVisibleLayers = function () {
+        console.log(this.map.getLayers().getArray());
+        console.log(this.map.getLayers().getArray().filter(function (m) { return !(m.get('showInLayerSwitcher') === false); }), 'arrrr');
+        return this.map.getLayers().getArray().filter(function (m) { return !(m.get('showInLayerSwitcher') === false); }).length;
+    };
     LayerSwitcherComponent.prototype.toggleMaps = function () {
         this.mapsDetailsContainer.nativeElement.classList.toggle('collapsed');
     };
     LayerSwitcherComponent.prototype.getDisplay = function (layer) {
-        return layer.get('showInLayerSwitcher') === false ? 'none' : '';
+        return layer.get('showInLayerSwitcher') === false
+            ? 'invisible'
+            : this.collapsed;
     };
     LayerSwitcherComponent.prototype.changeVisible = function (event, indexGroup) {
         this.map
@@ -26840,28 +26853,44 @@ var LayerSwitcherComponent = (function () {
         __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object)
     ], LayerSwitcherComponent.prototype, "mapsDetailsContainer", void 0);
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChildren"])('group'), 
-        __metadata('design:type', (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["QueryList"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["QueryList"]) === 'function' && _b) || Object)
-    ], LayerSwitcherComponent.prototype, "groups", void 0);
-    __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])('map'), 
-        __metadata('design:type', (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_openlayers__["Map"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_openlayers__["Map"]) === 'function' && _c) || Object)
+        __metadata('design:type', (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_openlayers__["Map"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_openlayers__["Map"]) === 'function' && _b) || Object)
     ], LayerSwitcherComponent.prototype, "map", void 0);
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])('layersChanged'), 
-        __metadata('design:type', (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]) === 'function' && _d) || Object)
+        __metadata('design:type', (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]) === 'function' && _c) || Object)
     ], LayerSwitcherComponent.prototype, "emmiter", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])('visibility'), 
+        __metadata('design:type', Object)
+    ], LayerSwitcherComponent.prototype, "collapsed", void 0);
     LayerSwitcherComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-layer-switcher',
             template: __webpack_require__(1259),
             styles: [__webpack_require__(1238)],
-            providers: [__WEBPACK_IMPORTED_MODULE_1_ng2_dragula__["DragulaService"]]
+            providers: [__WEBPACK_IMPORTED_MODULE_1_ng2_dragula__["DragulaService"]],
+            animations: [
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('collapsed', [
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('invisible', __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
+                        transform: 'translateX(-100%)',
+                        opacity: 0,
+                        display: 'none'
+                    })),
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('visible', __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
+                        transform: 'translateX(0%)',
+                        opacity: 1,
+                        display: ''
+                    })),
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('invisible => visible', __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('500ms ease-in')),
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('visible => invisible', __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('500ms ease-out'))
+                ])
+            ],
         }), 
-        __metadata('design:paramtypes', [(typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ng2_dragula__["DragulaService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ng2_dragula__["DragulaService"]) === 'function' && _e) || Object])
+        __metadata('design:paramtypes', [(typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ng2_dragula__["DragulaService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ng2_dragula__["DragulaService"]) === 'function' && _d) || Object])
     ], LayerSwitcherComponent);
     return LayerSwitcherComponent;
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d;
 }());
 //# sourceMappingURL=layer-switcher.component.js.map
 
@@ -26871,12 +26900,14 @@ var LayerSwitcherComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(757);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_openlayers__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(783);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router_transitions__ = __webpack_require__(464);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5____ = __webpack_require__(891);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_openlayers__ = __webpack_require__(757);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_openlayers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(783);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__router_transitions__ = __webpack_require__(464);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7____ = __webpack_require__(891);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -26893,37 +26924,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var MapComponent = (function () {
-    function MapComponent(zone, dialog, el, userMapsService, projService, profileService) {
+    function MapComponent(zone, dialog, el, route, router, location, userMapsService, projService, profileService) {
         this.zone = zone;
         this.dialog = dialog;
         this.el = el;
+        this.route = route;
+        this.router = router;
+        this.location = location;
         this.userMapsService = userMapsService;
         this.projService = projService;
         this.profileService = profileService;
         this.DEVELOPMENT_GEOSERVER_URL = 'http://localhost:8080/geoserver/betera-workspace/wms';
+        this.customComponentsWithInteractions = [];
+        this.accesibleMaps = [];
+        this.actualMap = -1;
         this.mapsControlVisible = 'invisible';
         this.toolsControlVisible = 'invisible';
         this.overviewControlVisible = 'visible';
     }
     MapComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.sidenav.onOpenStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
         this.sidenav.onCloseStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
         this.sidenav.onOpen.subscribe(this.clearIntervalUpdateMapSize.bind(this));
         this.sidenav.onClose.subscribe(this.clearIntervalUpdateMapSize.bind(this));
-        this.zone.runOutsideAngular(this.createMap.bind(this));
+        this.createMap();
+        this.route.params.subscribe(function () { return _this.addUserMaps(); });
         //this.map.getLayers().on('change:length', ()=>{ this.updateMapAndOverview() });
         this.customComponentsWithInteractions = [
             this.searchControl, this.profileControl
         ];
-    };
-    MapComponent.prototype.getBackgroundColor = function (bool) {
-        return bool ? '#8BC34A' : '#f7f7f7';
-    };
-    MapComponent.prototype.disableControls = function () {
-        this.customComponentsWithInteractions.forEach(function (control) {
-            control.setActive(false);
-        });
     };
     MapComponent.prototype.ngAfterViewInit = function () {
         //console.log(this.el.nativeElement.parentNode);
@@ -26933,6 +26966,17 @@ var MapComponent = (function () {
         /*let toolbar = <HTMLElement>document.querySelector('md-toolbar');
         toolbar.style.boxShadow = '0 4px 6px 0 rgba(0,0,0,.3);';*/
         //this.createMap();
+    };
+    MapComponent.prototype.onChangeMap = function () {
+        this.router.navigate(['/map', this.actualMap]);
+    };
+    MapComponent.prototype.getBackgroundColor = function (bool) {
+        return bool ? '#8BC34A' : '#f7f7f7';
+    };
+    MapComponent.prototype.disableControls = function () {
+        this.customComponentsWithInteractions.forEach(function (control) {
+            control.setActive(false);
+        });
     };
     MapComponent.prototype.setIntervalUpdateMapSize = function () {
         var _this = this;
@@ -26976,34 +27020,34 @@ var MapComponent = (function () {
     MapComponent.prototype.createMap = function () {
         this.mapProperties = {
             target: 'map',
-            controls: __WEBPACK_IMPORTED_MODULE_2_openlayers__["control"].defaults().extend([
-                new __WEBPACK_IMPORTED_MODULE_2_openlayers__["control"].FullScreen({
+            controls: __WEBPACK_IMPORTED_MODULE_4_openlayers__["control"].defaults().extend([
+                new __WEBPACK_IMPORTED_MODULE_4_openlayers__["control"].FullScreen({
                     source: 'app-body'
                 })
             ]),
-            view: new __WEBPACK_IMPORTED_MODULE_2_openlayers__["View"]({
+            view: new __WEBPACK_IMPORTED_MODULE_4_openlayers__["View"]({
                 projection: 'EPSG:4326',
                 center: [-0.459108, 39.589353],
                 zoom: 12,
                 maxZoom: 20
             })
         };
-        this.map = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["Map"](this.mapProperties);
+        this.map = new __WEBPACK_IMPORTED_MODULE_4_openlayers__["Map"](this.mapProperties);
         this.projService.setProjection(this.map, '25830');
         //this.addDummyLayers(this.map);
-        this.addUserMaps();
+        //this.addUserMaps();
     };
     MapComponent.prototype.createOverviewMap = function () {
         var _this = this;
         var overviewMapProperties = {
             target: this.overviewMapEl.nativeElement,
-            view: new __WEBPACK_IMPORTED_MODULE_2_openlayers__["View"]({
+            view: new __WEBPACK_IMPORTED_MODULE_4_openlayers__["View"]({
                 projection: 'EPSG:4326',
                 center: [-0.459108, 39.589353],
                 zoom: 12
             })
         };
-        this.overviewCtrl = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["Map"](overviewMapProperties);
+        this.overviewCtrl = new __WEBPACK_IMPORTED_MODULE_4_openlayers__["Map"](overviewMapProperties);
         this.overviewCtrl.getControls().forEach(function (c) { return _this.overviewCtrl.removeControl(c); });
         this.projService.setProjection(this.overviewCtrl, '25830');
         this.overviewCtrl.getView().on('change', function () {
@@ -27016,24 +27060,34 @@ var MapComponent = (function () {
     };
     MapComponent.prototype.addUserMaps = function () {
         var _this = this;
-        var visibleMap = false;
+        this.disableControls();
         this.map.getLayers().clear();
+        var params = this.route.snapshot.params;
+        var idMap = params.id;
+        var visibleMap = false;
         this.userMapsService.getUserMaps()
             .subscribe(function (mapas) {
+            if (!idMap) {
+                var firstMap = mapas[0].id;
+                if (firstMap === undefined)
+                    return;
+                _this.router.navigateByUrl("/map/" + firstMap);
+                return;
+            }
+            _this.accesibleMaps = mapas;
+            _this.actualMap = mapas.find(function (m) { return m.id == idMap; }).id;
+            _this.location.replaceState("/map/" + _this.actualMap + "/" + mapas.find(function (m) { return m.id == _this.actualMap; }).name);
             // Obtenemos una lista de mapas con las capas ya ordenadas
             // y la recorremos 
             mapas.forEach(function (mapa, index, arr) {
+                if (mapa.id != idMap)
+                    return;
                 //console.log('mapa', mapa);
                 // Creamos un grupo de capas vacío
-                var groupCapasMap = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["layer"].Group({
-                    visible: mapa.visible === true
-                        ? true
-                        : mapa.visible === false
-                            ? false
-                            : !visibleMap && (index == arr.length - 1)
-                });
+                var groupCapasMap = new __WEBPACK_IMPORTED_MODULE_4_openlayers__["layer"].Group();
                 // Le damos un nombre
                 groupCapasMap.set('name', mapa.name);
+                groupCapasMap.set('collapsed', 'invisible');
                 // Lo añadimos al mapa
                 _this.map.addLayer(groupCapasMap);
                 mapa.capas.forEach(function (capa) {
@@ -27047,9 +27101,9 @@ var MapComponent = (function () {
         });
     };
     MapComponent.prototype.getTile = function (opts) {
-        var tile = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["layer"].Tile({
+        var tile = new __WEBPACK_IMPORTED_MODULE_4_openlayers__["layer"].Tile({
             visible: true,
-            source: new __WEBPACK_IMPORTED_MODULE_2_openlayers__["source"].TileWMS({
+            source: new __WEBPACK_IMPORTED_MODULE_4_openlayers__["source"].TileWMS({
                 url: opts.service_url,
                 gutter: opts.gutter <= 0 ? 0 : 250,
                 projection: opts.projection || 'EPSG:25830',
@@ -27092,16 +27146,19 @@ var MapComponent = (function () {
     };
     MapComponent.prototype.openWMSDialog = function () {
         var _this = this;
-        var dialog = this.dialog.open(__WEBPACK_IMPORTED_MODULE_5____["d" /* AddWmsComponent */]);
+        var dialog = this.dialog.open(__WEBPACK_IMPORTED_MODULE_7____["d" /* AddWmsComponent */]);
         dialog.afterClosed().subscribe(function (wmsGroup) {
             if (!wmsGroup)
                 return;
-            var group = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["layer"].Group();
+            var group = new __WEBPACK_IMPORTED_MODULE_4_openlayers__["layer"].Group();
+            var idx = _this.map.getLayers().getArray().findIndex(function (l) { return l.get('showInLayerSwitcher') === false; });
+            idx = (idx === -1 ? _this.map.getLayers().getArray().length : idx);
+            console.log(idx);
             group.set('name', wmsGroup.serviceURL);
             var layers = wmsGroup.layers
                 .map(function (l) { return _this.getTile({ service_url: wmsGroup.serviceURL, layers: l.Name, name: l.Name }); });
             group.getLayers().extend(layers);
-            _this.map.addLayer(group);
+            _this.map.getLayers().insertAt(idx, group);
         });
     };
     MapComponent.prototype.toggleSearchControl = function (interaction) {
@@ -27133,16 +27190,16 @@ var MapComponent = (function () {
         this.sidenav.close();
     };
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_5____["e" /* SearchComponent */]; })), 
-        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5____["e" /* SearchComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5____["e" /* SearchComponent */]) === 'function' && _a) || Object)
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_7____["e" /* SearchComponent */]; })), 
+        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_7____["e" /* SearchComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7____["e" /* SearchComponent */]) === 'function' && _a) || Object)
     ], MapComponent.prototype, "searchControl", void 0);
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_5____["b" /* ProfileComponent */]; })), 
-        __metadata('design:type', (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5____["b" /* ProfileComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5____["b" /* ProfileComponent */]) === 'function' && _b) || Object)
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_7____["b" /* ProfileComponent */]; })), 
+        __metadata('design:type', (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_7____["b" /* ProfileComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7____["b" /* ProfileComponent */]) === 'function' && _b) || Object)
     ], MapComponent.prototype, "profileControl", void 0);
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_5____["c" /* LayerSwitcherComponent */]; })), 
-        __metadata('design:type', (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5____["c" /* LayerSwitcherComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5____["c" /* LayerSwitcherComponent */]) === 'function' && _c) || Object)
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_7____["c" /* LayerSwitcherComponent */]; })), 
+        __metadata('design:type', (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7____["c" /* LayerSwitcherComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7____["c" /* LayerSwitcherComponent */]) === 'function' && _c) || Object)
     ], MapComponent.prototype, "layerSwitcherControl", void 0);
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('overviewMap'), 
@@ -27154,16 +27211,16 @@ var MapComponent = (function () {
     ], MapComponent.prototype, "toolsContainer", void 0);
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('sidenav'), 
-        __metadata('design:type', (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MdSidenav */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MdSidenav */]) === 'function' && _f) || Object)
+        __metadata('design:type', (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["e" /* MdSidenav */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["e" /* MdSidenav */]) === 'function' && _f) || Object)
     ], MapComponent.prototype, "sidenav", void 0);
     MapComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-map',
             template: __webpack_require__(1260),
             styles: [__webpack_require__(1239)],
-            providers: [__WEBPACK_IMPORTED_MODULE_3__services__["d" /* ProjectionService */], __WEBPACK_IMPORTED_MODULE_3__services__["c" /* Profile3DService */], __WEBPACK_IMPORTED_MODULE_3__services__["e" /* UserMapsService */]],
+            providers: [__WEBPACK_IMPORTED_MODULE_5__services__["d" /* ProjectionService */], __WEBPACK_IMPORTED_MODULE_5__services__["c" /* Profile3DService */], __WEBPACK_IMPORTED_MODULE_5__services__["e" /* UserMapsService */]],
             animations: [
-                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__router_transitions__["a" /* routerTransition */])(),
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__router_transitions__["a" /* routerTransition */])(),
                 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('collapsed', [
                     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('invisible', __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
                         transform: 'translateX(-100%)',
@@ -27181,10 +27238,10 @@ var MapComponent = (function () {
             ],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _g) || Object, (typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MdDialog */]) === 'function' && _h) || Object, (typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _j) || Object, (typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_3__services__["e" /* UserMapsService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["e" /* UserMapsService */]) === 'function' && _k) || Object, (typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_3__services__["d" /* ProjectionService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["d" /* ProjectionService */]) === 'function' && _l) || Object, (typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_3__services__["c" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["c" /* Profile3DService */]) === 'function' && _m) || Object])
+        __metadata('design:paramtypes', [(typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _g) || Object, (typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */]) === 'function' && _h) || Object, (typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _j) || Object, (typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _k) || Object, (typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _l) || Object, (typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"]) === 'function' && _m) || Object, (typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_5__services__["e" /* UserMapsService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["e" /* UserMapsService */]) === 'function' && _o) || Object, (typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_5__services__["d" /* ProjectionService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["d" /* ProjectionService */]) === 'function' && _p) || Object, (typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_5__services__["c" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["c" /* Profile3DService */]) === 'function' && _q) || Object])
     ], MapComponent);
     return MapComponent;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
 }());
 //# sourceMappingURL=map.component.js.map
 
@@ -27480,6 +27537,7 @@ var SearchComponent = (function () {
         this.searchLayer = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["layer"].Vector({
             source: new __WEBPACK_IMPORTED_MODULE_1_openlayers__["source"].Vector()
         });
+        this.selectedTabIndex = 0;
         this.boxInteraction.on('boxend', this.boxHandler.bind(this));
         this.searchLayer.set('name', 'SearchLayer');
         this.searchLayer.set('showInLayerSwitcher', false);
@@ -27499,7 +27557,7 @@ var SearchComponent = (function () {
         var feature = new __WEBPACK_IMPORTED_MODULE_1_openlayers__["Feature"](box);
         this.search(feature);
     };
-    SearchComponent.prototype.openDialog = function () {
+    SearchComponent.prototype.openDialog = function (newSearch) {
         var _this = this;
         if (!this.found)
             return;
@@ -27511,36 +27569,42 @@ var SearchComponent = (function () {
             width: '90vh'
         });
         dialogRef.componentInstance.found = this.found;
+        dialogRef.componentInstance.tabIndex = newSearch ? 0 : this.selectedTabIndex;
         dialogRef.afterClosed().subscribe(function () {
             //this.dialogCollapsed = true;
+            _this.selectedTabIndex = dialogRef.componentInstance.tabIndex;
             _this.closeState = 'invisible';
             _this.state = 'visible';
         });
         dialogRef.componentInstance.rowClicked.subscribe(function (data) {
             if (!data)
                 return;
-            //console.log('rowClicked -- ', data);
+            console.log('rowClicked -- ', data);
             var feature = _this.geojsonParser.readFeature(data, {
                 dataProjection: _this.map.getView().getProjection(),
                 featureProjection: _this.map.getView().getProjection()
             });
             _this.searchLayer.getSource().clear();
             _this.searchLayer.getSource().addFeature(feature);
+            _this.searchLayer.getSource().changed();
             _this.dialogRef.close();
             var view = _this.map.getView();
-            //console.log(feature.getGeometry(), 'geom')
+            console.log(feature.getGeometry(), 'geom');
             view.fit(feature.getGeometry(), {
-                duration: 1000
+                duration: 1000,
+                maxZoom: 15
             });
         });
     };
     SearchComponent.prototype.search = function (feature) {
         var _this = this;
+        //this.addLayer();
         this.zone.run(function () { _this.loading.setValue(true); _this.dialog.closeAll(); });
         var layerNames = this.getActiveLayers();
         //console.log('layerNAmes', layerNames)
         this.userLayerService.getFeatures(feature, layerNames).subscribe(function (data) {
             _this.zone.run(function () {
+                _this.selectedTabIndex = 0;
                 _this.loading.setValue(false);
                 var features = data
                     .filter(function (f) { return f.found.features; });
@@ -27550,7 +27614,7 @@ var SearchComponent = (function () {
                 _this.found = features;
                 _this.map.render();
                 //console.log(features, 'featurrees');
-                _this.openDialog();
+                _this.openDialog(true);
             });
         }, function (err) {
             _this.zone.run(function () { _this.loading.setValue(false); });
@@ -27574,6 +27638,7 @@ var SearchComponent = (function () {
         if (!value) {
             this.active = false;
             this.found = null;
+            this.selectedTabIndex = 0;
             this.activeInteraction = null;
             this.map.removeInteraction(this.boxInteraction);
             __WEBPACK_IMPORTED_MODULE_1_openlayers__["Observable"].unByKey(this.clickInteraction);
@@ -27589,9 +27654,12 @@ var SearchComponent = (function () {
                 return;
             this.active = true;
             this.setInteraction(interaction);
-            if (!this.map.getLayers().getArray().find(function (l) { return l.get('name') == 'SearchLayer'; })) {
-                this.map.addLayer(this.searchLayer);
-            }
+            this.addLayer();
+        }
+    };
+    SearchComponent.prototype.addLayer = function () {
+        if (!this.map.getLayers().getArray().find(function (l) { return l.get('name') == 'SearchLayer'; })) {
+            this.map.addLayer(this.searchLayer);
         }
     };
     SearchComponent.prototype.setInteraction = function (interaction) {
@@ -27660,12 +27728,11 @@ var SearchComponentDialog = (function () {
     function SearchComponentDialog(zone, dialog) {
         this.zone = zone;
         this.dialog = dialog;
-        this.tabIndex = 0;
         this.rowClicked = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Subject"]();
     }
     SearchComponentDialog.prototype.ngOnInit = function () {
         //console.log('oninit');
-        this.dtElement.dtOptions = this.getTableOptions(0);
+        this.dtElement.dtOptions = this.getTableOptions(this.tabIndex);
         var subject = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Subject"]();
         this.dtElement.dtTrigger = subject;
     };
@@ -28209,7 +28276,7 @@ exports = module.exports = __webpack_require__(23)();
 
 
 // module
-exports.push([module.i, ".group {\r\n    -webkit-transition: all 1s cubic-bezier(.39,.575,.565,1);\r\n    transition: all 1s cubic-bezier(.39,.575,.565,1);\r\n}\r\n\r\n.collapsed {\r\n    display : none;\r\n    height: 0px;\r\n}\r\n\r\n.group .list-item {\r\n    padding-left: 15px;\r\n    background: #f7f7f7;\r\n    border-radius: 0px;\r\n}\r\n\r\n.content .actions {\r\n    display : block;\r\n    min-height: 50px;\r\n}\r\n\r\n.actions button {\r\n    min-width: 20px !important;\r\n}\r\n\r\n.buttons {\r\n    display : block;\r\n    max-width: 50px;\r\n    max-height: 50px;\r\n    float : right;\r\n}\r\n\r\n.buttons button {\r\n    float : right;\r\n    display : block;\r\n    min-width: 30px !important;\r\n}\r\n\r\n.list {\r\n    height: auto;\r\n}\r\n\r\n.list-item {\r\n    min-height: 100px;\r\n    height : auto;\r\n    background: #fff;\r\n    padding : 5px;\r\n    margin-bottom : 10px;\r\n    box-shadow: 0 0px 4px 0 rgba(0,0,0,.3);\r\n    border-radius: 2px;\r\n    margin-left : 10px;\r\n    margin-right: 10px;\r\n}\r\n\r\nmd-slider {\r\n    display: block;\r\n    width: 85%;\r\n    min-width: 105px;\r\n}", ""]);
+exports.push([module.i, ".group {\r\n    -webkit-transition: all 1s cubic-bezier(.39,.575,.565,1);\r\n    transition: all 1s cubic-bezier(.39,.575,.565,1);\r\n}\r\n\r\n.collapsed {\r\n    display : none;\r\n    height: 0px;\r\n}\r\n\r\n.list-item.collapsed {\r\n    display : none;\r\n    height: 0px;\r\n    -webkit-transform: translateX(-100%);\r\n            transform: translateX(-100%);\r\n}\r\n\r\n.group .list-item {\r\n    padding-left: 15px;\r\n    background: #f7f7f7;\r\n    border-radius: 0px;\r\n}\r\n\r\n.content .actions {\r\n    display : block;\r\n    min-height: 50px;\r\n}\r\n\r\n.actions button {\r\n    min-width: 20px !important;\r\n}\r\n\r\n.buttons {\r\n    display : block;\r\n    max-width: 50px;\r\n    max-height: 50px;\r\n    float : right;\r\n}\r\n\r\n.buttons button {\r\n    float : right;\r\n    display : block;\r\n    min-width: 30px !important;\r\n}\r\n\r\n.list {\r\n    height: auto;\r\n}\r\n\r\n.list-item {\r\n    min-height: 100px;\r\n    height : auto;\r\n    background: #fff;\r\n    padding : 5px;\r\n    margin-bottom : 10px;\r\n    box-shadow: 0 0px 4px 0 rgba(0,0,0,.3);\r\n    border-radius: 2px;\r\n    margin-left : 10px;\r\n    margin-right: 10px;\r\n}\r\n\r\nmd-slider {\r\n    display: block;\r\n    width: 85%;\r\n    min-width: 105px;\r\n}", ""]);
 
 // exports
 
@@ -28294,13 +28361,13 @@ module.exports = "<md-card style=\"margin : -15px;\">\n  <!--<div [style.backgro
 /* 1259 */
 /***/ (function(module, exports) {
 
-module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" class=\"list\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n  <div class=\"list-item\" [style.display]=\"getDisplay(layer)\" *ngFor=\"let layer of map.getLayers().getArray(); let i = index; \">\n    <div class=\"buttons\">\n      <button md-button \n        *ngIf=\"i > 0\" \n        (click)= \"moveLayerDown(i)\"><md-icon>keyboard_arrow_up</md-icon></button>\n      <button md-button *ngIf=\"i < map.getLayers().getArray().length - 1\" (click)=\"moveLayerUp(i)\"><md-icon>keyboard_arrow_down</md-icon></button>\n    </div>\n    <div class=\"content\">\n      <md-slide-toggle (change)=\"changeVisible($event, i)\" [checked]=\"layer.getVisible()\">\n        {{ layer.get('name') }}\n      </md-slide-toggle>\n      <md-slider (input)=\"changeOpacity($event, i)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n      </md-slider>\n      <div class=\"actions\" [style.display]=\"getDisplay(layer)\">\n        <div class=\"separator\"></div>\n        <button *ngIf=\"layer.get('layers')\" md-button (click)=\"groups._results[i].nativeElement.classList.toggle('collapsed')\"><md-icon>add</md-icon></button>\n        <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n        <!--<button md-button><md-icon>map</md-icon></button>-->\n        <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n      </div>\n    </div>\n    <div #group class=\"group collapsed\">\n      <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n        <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n          <div class=\"buttons\">\n            <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(i, j)\"><md-icon>keyboard_arrow_up</md-icon></button>\n            <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(i, j)\"><md-icon>keyboard_arrow_down</md-icon></button>\n          </div>\n          <div class=\"content\">\n            <md-slide-toggle (change)=\"changeVisibleGroupLayer($event, i, j)\" [checked]=\"layer_.getVisible()\">\n              {{ layer_.get('name') }}\n            </md-slide-toggle>\n            <md-slider (input)=\"changeOpacityGroupLayer($event, i, j)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer_.getOpacity()\">\n            </md-slider>\n            <div class=\"actions\">\n              <div class=\"separator\"></div>\n              <button md-button><md-icon>info</md-icon></button>\n              <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n              <!--<button md-button><md-icon>map</md-icon></button>-->\n              <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" class=\"list\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n  <div [@collapsed]=\"getDisplay(layer)\" class=\"list-item\"  *ngFor=\"let layer of map.getLayers().getArray(); let i = index; \">\n    <div class=\"buttons\">\n      <button md-button \n        *ngIf=\"i > 0\" \n        (click)= \"moveLayerDown(i)\"><md-icon>keyboard_arrow_up</md-icon></button>\n      <button md-button *ngIf=\"i < getLengthWithoutNotVisibleLayers() - 1\" (click)=\"moveLayerUp(i)\"><md-icon>keyboard_arrow_down</md-icon></button>\n    </div>\n    <div class=\"content\">\n      <md-slide-toggle (change)=\"changeVisible($event, i)\" [checked]=\"layer.getVisible()\">\n        {{ layer.get('name') }}\n      </md-slide-toggle>\n      <md-slider (input)=\"changeOpacity($event, i)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n      </md-slider>\n      <div class=\"actions\" [style.display]=\"getDisplay(layer)\">\n        <div class=\"separator\"></div>\n        <button *ngIf=\"layer.get('layers')\" md-button (click)=\"layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )\"><md-icon>add</md-icon></button>\n        <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n        <!--<button md-button><md-icon>map</md-icon></button>-->\n        <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n      </div>\n    </div>\n    <div [@collapsed]=\"layer.get('collapsed')\" #group class=\"group\">\n      <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n        <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n          <div class=\"buttons\">\n            <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(i, j)\"><md-icon>keyboard_arrow_up</md-icon></button>\n            <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(i, j)\"><md-icon>keyboard_arrow_down</md-icon></button>\n          </div>\n          <div class=\"content\">\n            <md-slide-toggle (change)=\"changeVisibleGroupLayer($event, i, j)\" [checked]=\"layer_.getVisible()\">\n              {{ layer_.get('name') }}\n            </md-slide-toggle>\n            <md-slider (input)=\"changeOpacityGroupLayer($event, i, j)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer_.getOpacity()\">\n            </md-slider>\n            <div class=\"actions\">\n              <div class=\"separator\"></div>\n              <button md-button><md-icon>info</md-icon></button>\n              <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n              <!--<button md-button><md-icon>map</md-icon></button>-->\n              <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 /* 1260 */
 /***/ (function(module, exports) {
 
-module.exports = "<button\n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button main\" (click)=\"toggleTools()\">\n      <md-icon>apps</md-icon>HERRAMIENTAS\n    </button>\n    <div [@collapsed]=\"toolsControlVisible\">\n      <button md-button class=\"list-button\" (click)=\"toggleProfileControl()\" [style.background-color]=\"getBackgroundColor(profileControl.active)\">\n        <md-icon>terrain</md-icon>PERFIL\n      </button>\n      <button md-button (click)=\"toggleSearchControl(1)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 1)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR PUNTO\n      </button>\n      <button md-button (click)=\"toggleSearchControl(2)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE\n      </button>\n    </div>\n\n    <button md-button class=\"list-button main\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <app-layer-switcher [@collapsed]=\"mapsControlVisible\" [map]=\"map\" (layersChanged)=\"updateMapAndOverview()\"></app-layer-switcher>\n    <!-- END control de capas -->\n    <button md-button class=\"list-button main\" (click)=\"toggleOverview()\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div [@collapsed]=\"overviewControlVisible\" #overviewMap class=\"overview-map\"></div>\n    <button md-button class=\"list-button main\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n\n    <button md-button class=\"list-button main\" (click)=\"openWMSDialog()\">\n      <md-icon>map</md-icon>AÑADIR WMS\n    </button>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{'map-expanded': sidenav.opened }\" \n  >    \n  </div>\n\n  <app-map-profile\n    [map]=\"map\"\n  ></app-map-profile>\n\n  <app-search [map]=\"map\"></app-search>\n\n</md-sidenav-container>\n"
+module.exports = "<button\n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button main\" (click)=\"toggleTools()\">\n      <md-icon>apps</md-icon>HERRAMIENTAS\n    </button>\n    <div [@collapsed]=\"toolsControlVisible\">\n      <button md-button class=\"list-button\" (click)=\"toggleProfileControl()\" [style.background-color]=\"getBackgroundColor(profileControl.active)\">\n        <md-icon>terrain</md-icon>PERFIL\n      </button>\n      <button md-button (click)=\"toggleSearchControl(1)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 1)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR PUNTO\n      </button>\n      <button md-button (click)=\"toggleSearchControl(2)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE\n      </button>\n    </div>\n\n    <button md-button class=\"list-button main\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <md-select [@collapsed]=\"mapsControlVisible\" placeholder=\"Mapa actual\" (change)=\"onChangeMap()\" [(ngModel)]=\"actualMap\" style=\"margin-top : 20px; margin-left : 2.5%; width : 95%;\">\n      <md-option *ngFor=\"let map of accesibleMaps\" [value]=\"map.id\">{{ map.name }}</md-option>\n    </md-select>\n    <app-layer-switcher [@collapsed]=\"mapsControlVisible\" [visibility]=\"mapsControlVisible\" [map]=\"map\" (layersChanged)=\"updateMapAndOverview()\"></app-layer-switcher>\n    <!-- END control de capas -->\n    <button md-button class=\"list-button main\" (click)=\"toggleOverview()\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div [@collapsed]=\"overviewControlVisible\" #overviewMap class=\"overview-map\"></div>\n    <button md-button class=\"list-button main\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n\n    <button md-button class=\"list-button main\" (click)=\"openWMSDialog()\">\n      <md-icon>map</md-icon>AÑADIR WMS\n    </button>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{ 'map-expanded': sidenav.opened }\" \n  >    \n  </div>\n\n  <app-map-profile\n    [map]=\"map\"\n  ></app-map-profile>\n\n  <app-search [map]=\"map\"></app-search>\n\n</md-sidenav-container>\n"
 
 /***/ }),
 /* 1261 */
@@ -28312,7 +28379,7 @@ module.exports = "<div\r\n    id=\"profile-container\"\r\n    [ngClass]=\"{'open
 /* 1262 */
 /***/ (function(module, exports) {
 
-module.exports = "<md-tab-group id=\"search-tab\" (selectChange)=\"onChangeTab($event)\">\r\n  <md-tab label=\"{{search.layername}}\" *ngFor=\"let search of found\"> \r\n  </md-tab>\r\n</md-tab-group>\r\n<table #table datatable class=\"mdl-data-table\" style=\"width : 100%;\">\r\n</table>"
+module.exports = "<md-tab-group id=\"search-tab\" (selectChange)=\"onChangeTab($event)\" [selectedIndex]=\"tabIndex\">\r\n  <md-tab label=\"{{search.layername}}\" *ngFor=\"let search of found\"> \r\n  </md-tab>\r\n</md-tab-group>\r\n<table #table datatable class=\"mdl-data-table\" style=\"width : 100%;\">\r\n</table>"
 
 /***/ })
 ]));

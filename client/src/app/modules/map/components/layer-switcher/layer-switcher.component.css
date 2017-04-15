@@ -7,6 +7,12 @@
     height: 0px;
 }
 
+.list-item.collapsed {
+    display : none;
+    height: 0px;
+    transform: translateX(-100%);
+}
+
 .group .list-item {
     padding-left: 15px;
     background: #f7f7f7;

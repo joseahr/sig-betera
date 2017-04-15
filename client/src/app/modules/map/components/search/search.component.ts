@@ -90,6 +90,7 @@ export class SearchComponent implements OnInit {
   private searchLayer = new layer.Vector({
     source : new source.Vector()
   });
+  private selectedTabIndex = 0;
 
   @Input('map') map : Map;
 
@@ -124,7 +125,7 @@ export class SearchComponent implements OnInit {
     this.search(feature);
   }
 
-  openDialog(){
+  openDialog(newSearch? : boolean){
     if(!this.found) return;
     this.state = 'invisible';
     this.closeState = 'visible';
@@ -133,9 +134,13 @@ export class SearchComponent implements OnInit {
       height : '90vh',
       width : '90vh'
     });
+
     dialogRef.componentInstance.found = this.found;
+    dialogRef.componentInstance.tabIndex = newSearch ? 0 : this.selectedTabIndex;
+
     dialogRef.afterClosed().subscribe(()=>{
       //this.dialogCollapsed = true;
+      this.selectedTabIndex = dialogRef.componentInstance.tabIndex;
       this.closeState = 'invisible';
       this.state = 'visible';
     });
@@ -143,18 +148,21 @@ export class SearchComponent implements OnInit {
     dialogRef.componentInstance.rowClicked.subscribe(
       (data)=>{
         if(!data) return;
-        //console.log('rowClicked -- ', data);
+        console.log('rowClicked -- ', data);
         let feature : any = this.geojsonParser.readFeature(data, {
           dataProjection : this.map.getView().getProjection(),
           featureProjection : this.map.getView().getProjection()
         });
+
         this.searchLayer.getSource().clear();
         this.searchLayer.getSource().addFeature(feature);
+        this.searchLayer.getSource().changed();
         this.dialogRef.close();
         let view : any = this.map.getView();
-        //console.log(feature.getGeometry(), 'geom')
+        console.log(feature.getGeometry(), 'geom')
         view.fit( feature.getGeometry(), {
-          duration : 1000
+          duration : 1000,
+          maxZoom : 15
         });
       }
     );
@@ -162,12 +170,14 @@ export class SearchComponent implements OnInit {
   }
 
   search(feature : Feature){
+    //this.addLayer();
     this.zone.run(()=>{ this.loading.setValue(true); this.dialog.closeAll(); });
     let layerNames = this.getActiveLayers();
     //console.log('layerNAmes', layerNames)
     this.userLayerService.getFeatures(feature, layerNames).subscribe(
       (data)=>{
         this.zone.run(()=>{
+          this.selectedTabIndex = 0;
           this.loading.setValue(false);
           let features = data
             .filter( f => f.found.features );
@@ -177,7 +187,7 @@ export class SearchComponent implements OnInit {
           this.found = features;
           this.map.render();
           //console.log(features, 'featurrees');
-          this.openDialog();
+          this.openDialog(true);
         });
       }, 
       (err)=>{
@@ -204,6 +214,7 @@ export class SearchComponent implements OnInit {
     if(!value){
       this.active = false;
       this.found = null;
+      this.selectedTabIndex = 0;
       this.activeInteraction = null;
       this.map.removeInteraction(this.boxInteraction);
       olObs.unByKey(this.clickInteraction);
@@ -217,9 +228,13 @@ export class SearchComponent implements OnInit {
       if(!interaction) return;
       this.active = true;
       this.setInteraction(interaction);
-      if(!this.map.getLayers().getArray().find( l => l.get('name') == 'SearchLayer')){
-        this.map.addLayer(this.searchLayer);
-      }
+      this.addLayer();
+    }
+  }
+
+  addLayer(){
+    if(!this.map.getLayers().getArray().find( l => l.get('name') == 'SearchLayer')){
+      this.map.addLayer(this.searchLayer);
     }
   }
 
@@ -251,7 +266,7 @@ export class SearchComponentDialog {
 
   found;
   selectedTabData;
-  tabIndex : number = 0;
+  tabIndex : number;
   rowClicked : Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective) dtElement : DataTableDirective;
   @ViewChild('table') table : ElementRef;
@@ -260,7 +275,7 @@ export class SearchComponentDialog {
 
   ngOnInit(){
     //console.log('oninit');
-    this.dtElement.dtOptions = this.getTableOptions(0);
+    this.dtElement.dtOptions = this.getTableOptions(this.tabIndex);
     let subject : any = new Subject<any>();
     this.dtElement.dtTrigger = subject;
   }

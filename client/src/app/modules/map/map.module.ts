@@ -14,6 +14,12 @@ import { AddWmsComponent, LayerSwitcherComponent, SearchComponent, SearchCompone
 const mapRoutes : Route[] =  [{
     path : '',
     component : MapComponent
+}, {
+    path : ':id',
+    component : MapComponent   
+}, {
+    path : ':id/:name',
+    component : MapComponent   
 }]
 
 @NgModule({

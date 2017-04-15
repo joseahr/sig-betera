@@ -13,7 +13,8 @@ import {
   transition,
   animate
 } from '@angular/core';
-import {  } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { MdSidenav, MdDialog } from '@angular/material';
 import * as ol from 'openlayers';
 import { ProjectionService, Profile3DService, UserMapsService } from '../../services';
@@ -51,7 +52,9 @@ export class MapComponent implements OnInit {
   map : ol.Map;
   overviewCtrl : ol.Map;
   sideNavMapInterval : any;
-  customComponentsWithInteractions : Component[];
+  customComponentsWithInteractions : Component[] = [];
+  accesibleMaps = [];
+  actualMap = -1;
   
   mapsControlVisible = 'invisible';
   toolsControlVisible = 'invisible';
@@ -68,6 +71,9 @@ export class MapComponent implements OnInit {
     private zone : NgZone,
     private dialog : MdDialog,
     private el : ElementRef,
+    private route : ActivatedRoute,
+    private router : Router,
+    private location : Location,
     private userMapsService : UserMapsService,
     private projService : ProjectionService, 
     private profileService : Profile3DService,
@@ -78,21 +84,12 @@ export class MapComponent implements OnInit {
     this.sidenav.onCloseStart.subscribe(this.setIntervalUpdateMapSize.bind(this));
     this.sidenav.onOpen.subscribe(this.clearIntervalUpdateMapSize.bind(this));
     this.sidenav.onClose.subscribe(this.clearIntervalUpdateMapSize.bind(this));
-    this.zone.runOutsideAngular(this.createMap.bind(this));
+    this.createMap();
+    this.route.params.subscribe(()=>this.addUserMaps());
     //this.map.getLayers().on('change:length', ()=>{ this.updateMapAndOverview() });
     this.customComponentsWithInteractions = [
       this.searchControl, this.profileControl
-    ]
-  }
-
-  getBackgroundColor(bool : Boolean){
-    return bool ? '#8BC34A' : '#f7f7f7';
-  }
-
-  disableControls(){
-    this.customComponentsWithInteractions.forEach( (control : any )=>{
-      control.setActive(false);
-    });
+    ];
   }
 
   ngAfterViewInit() {
@@ -103,6 +100,20 @@ export class MapComponent implements OnInit {
     /*let toolbar = <HTMLElement>document.querySelector('md-toolbar');
     toolbar.style.boxShadow = '0 4px 6px 0 rgba(0,0,0,.3);';*/
     //this.createMap();
+  }
+
+  onChangeMap(){
+    this.router.navigate(['/map', this.actualMap]);
+  }
+
+  getBackgroundColor(bool : Boolean){
+    return bool ? '#8BC34A' : '#f7f7f7';
+  }
+
+  disableControls(){
+    this.customComponentsWithInteractions.forEach( (control : any )=>{
+      control.setActive(false);
+    });
   }
 
   setIntervalUpdateMapSize(){
@@ -167,7 +178,7 @@ export class MapComponent implements OnInit {
     this.projService.setProjection(this.map, '25830');
 
     //this.addDummyLayers(this.map);
-    this.addUserMaps();
+    //this.addUserMaps();
   }
 
   createOverviewMap(){
@@ -193,25 +204,36 @@ export class MapComponent implements OnInit {
   }
 
   addUserMaps(){
-    let visibleMap = false;
+    this.disableControls();
     this.map.getLayers().clear();
+
+    let params : any = this.route.snapshot.params;
+    let idMap = params.id;
+
+    let visibleMap = false;
 
     this.userMapsService.getUserMaps()
     .subscribe( mapas =>{
+      if(!idMap){
+        let firstMap = mapas[0].id;
+        if(firstMap === undefined) return;
+        this.router.navigateByUrl(`/map/${firstMap}`);
+        return;
+      }
+
+      this.accesibleMaps = mapas;
+      this.actualMap = mapas.find( m => m.id == idMap ).id;
+      this.location.replaceState(`/map/${this.actualMap}/${mapas.find( m => m.id == this.actualMap ).name}`)
       // Obtenemos una lista de mapas con las capas ya ordenadas
       // y la recorremos 
       mapas.forEach( (mapa, index, arr) => {
+        if(mapa.id != idMap) return;
         //console.log('mapa', mapa);
         // Creamos un grupo de capas vacío
-        let groupCapasMap = new ol.layer.Group({
-            visible : mapa.visible === true 
-                ? true
-                : mapa.visible === false 
-                ? false 
-                : !visibleMap && ( index == arr.length - 1)
-        });
+        let groupCapasMap = new ol.layer.Group();
         // Le damos un nombre
         groupCapasMap.set('name', mapa.name);
+        groupCapasMap.set('collapsed', 'invisible');
         // Lo añadimos al mapa
         this.map.addLayer(groupCapasMap);
 
@@ -281,11 +303,14 @@ export class MapComponent implements OnInit {
       (wmsGroup)=>{
         if(!wmsGroup) return;
         let group = new ol.layer.Group();
+        let idx = this.map.getLayers().getArray().findIndex( l => l.get('showInLayerSwitcher') === false );
+            idx = ( idx === -1 ? this.map.getLayers().getArray().length : idx );
+        console.log(idx);
         group.set('name', wmsGroup.serviceURL);
         let layers = wmsGroup.layers
           .map( l => this.getTile({ service_url : wmsGroup.serviceURL,  layers : l.Name, name : l.Name }) );
         group.getLayers().extend(layers);
-        this.map.addLayer(group);
+        this.map.getLayers().insertAt(idx, group);
       }
     );
   }

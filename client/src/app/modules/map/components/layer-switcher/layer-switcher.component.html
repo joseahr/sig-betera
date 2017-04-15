@@ -1,10 +1,10 @@
 <div #mapsDetailsContainer *ngIf="map && map.getLayers()" class="list" [dragula]='"layers"' [dragulaModel]='map.getLayers().getArray()'>
-  <div class="list-item" [style.display]="getDisplay(layer)" *ngFor="let layer of map.getLayers().getArray(); let i = index; ">
+  <div [@collapsed]="getDisplay(layer)" class="list-item"  *ngFor="let layer of map.getLayers().getArray(); let i = index; ">
     <div class="buttons">
       <button md-button 
         *ngIf="i > 0" 
         (click)= "moveLayerDown(i)"><md-icon>keyboard_arrow_up</md-icon></button>
-      <button md-button *ngIf="i < map.getLayers().getArray().length - 1" (click)="moveLayerUp(i)"><md-icon>keyboard_arrow_down</md-icon></button>
+      <button md-button *ngIf="i < getLengthWithoutNotVisibleLayers() - 1" (click)="moveLayerUp(i)"><md-icon>keyboard_arrow_down</md-icon></button>
     </div>
     <div class="content">
       <md-slide-toggle (change)="changeVisible($event, i)" [checked]="layer.getVisible()">
@@ -14,13 +14,13 @@
       </md-slider>
       <div class="actions" [style.display]="getDisplay(layer)">
         <div class="separator"></div>
-        <button *ngIf="layer.get('layers')" md-button (click)="groups._results[i].nativeElement.classList.toggle('collapsed')"><md-icon>add</md-icon></button>
+        <button *ngIf="layer.get('layers')" md-button (click)="layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )"><md-icon>add</md-icon></button>
         <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->
         <!--<button md-button><md-icon>map</md-icon></button>-->
         <button md-button class="handle" style="float : right;"><md-icon>drag_handle</md-icon></button>
       </div>
     </div>
-    <div #group class="group collapsed">
+    <div [@collapsed]="layer.get('collapsed')" #group class="group">
       <div *ngIf="layer.get('layers')" [dragula]='"layerGroup"' [dragulaModel]="layer.get('layers').getArray()">
         <div class="list-item" *ngFor="let layer_ of layer.get('layers').getArray(); let j = index">
           <div class="buttons">

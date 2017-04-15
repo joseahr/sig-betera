@@ -26,7 +26,10 @@
       <md-icon>layers</md-icon>MAPAS
     </button>
     <!-- control de capas -->
-    <app-layer-switcher [@collapsed]="mapsControlVisible" [map]="map" (layersChanged)="updateMapAndOverview()"></app-layer-switcher>
+    <md-select [@collapsed]="mapsControlVisible" placeholder="Mapa actual" (change)="onChangeMap()" [(ngModel)]="actualMap" style="margin-top : 20px; margin-left : 2.5%; width : 95%;">
+      <md-option *ngFor="let map of accesibleMaps" [value]="map.id">{{ map.name }}</md-option>
+    </md-select>
+    <app-layer-switcher [@collapsed]="mapsControlVisible" [visibility]="mapsControlVisible" [map]="map" (layersChanged)="updateMapAndOverview()"></app-layer-switcher>
     <!-- END control de capas -->
     <button md-button class="list-button main" (click)="toggleOverview()">
       <md-icon>map</md-icon>MINIATURA
@@ -42,7 +45,7 @@
 
   </md-sidenav>
   <div id="map" #mapEl class="example-sidenav-content"
-    [ngClass]="{'map-expanded': sidenav.opened }" 
+    [ngClass]="{ 'map-expanded': sidenav.opened }" 
   >    
   </div>
 

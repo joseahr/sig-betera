@@ -1,4 +1,4 @@
-<md-tab-group id="search-tab" (selectChange)="onChangeTab($event)">
+<md-tab-group id="search-tab" (selectChange)="onChangeTab($event)" [selectedIndex]="tabIndex">
   <md-tab label="{{search.layername}}" *ngFor="let search of found"> 
   </md-tab>
 </md-tab-group>

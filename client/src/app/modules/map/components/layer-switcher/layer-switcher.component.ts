@@ -1,4 +1,9 @@
 import { Component, OnInit, ViewChild, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter,
+  trigger,
+  state,
+  style,
+  transition,
+  animate
 } from '@angular/core';
 import { DragulaService, DragulaDirective } from 'ng2-dragula';
 import { Map } from 'openlayers';
@@ -7,14 +12,30 @@ import { Map } from 'openlayers';
   selector: 'app-layer-switcher',
   templateUrl: './layer-switcher.component.html',
   styleUrls: ['./layer-switcher.component.css'],
-  providers : [ DragulaService ]
+  providers : [ DragulaService ],
+  animations: [
+    trigger('collapsed', [
+      state('invisible', style({
+        transform : 'translateX(-100%)',
+        opacity : 0,
+        display : 'none'
+      })),
+      state('visible', style({
+        transform : 'translateX(0%)',
+        opacity : 1,
+        display : ''
+      })),
+      transition('invisible => visible', animate('500ms ease-in')),
+      transition('visible => invisible', animate('500ms ease-out'))
+    ])
+  ],
 })
 export class LayerSwitcherComponent implements OnInit {
   
   @ViewChild('mapsDetailsContainer') mapsDetailsContainer: ElementRef;
-  @ViewChildren('group') groups: QueryList<ElementRef>;
   @Input('map') map : Map;
   @Output('layersChanged') emmiter : EventEmitter<any> = new EventEmitter();
+  @Input('visibility') collapsed;
 
   constructor(
     private dragulaService: DragulaService
@@ -27,6 +48,7 @@ export class LayerSwitcherComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.dragulaService.setOptions('layers', {
       moves : (el, container, handle) => handle.classList.contains('handle'),
       accepts : (el, target, source, sibling) => target.attributes[2].value == 'layers'
@@ -39,7 +61,13 @@ export class LayerSwitcherComponent implements OnInit {
       ()=>{
         this.emmiter.next();
       }
-    )
+    );
+  }
+
+  getLengthWithoutNotVisibleLayers(){
+    console.log(this.map.getLayers().getArray());
+    console.log(this.map.getLayers().getArray().filter( m => !(m.get('showInLayerSwitcher') === false) ), 'arrrr');
+    return this.map.getLayers().getArray().filter( m => !(m.get('showInLayerSwitcher') === false) ).length;
   }
 
   toggleMaps(){
@@ -47,7 +75,9 @@ export class LayerSwitcherComponent implements OnInit {
   }
 
   getDisplay(layer){
-    return layer.get('showInLayerSwitcher') === false ? 'none' : '';
+    return layer.get('showInLayerSwitcher') === false 
+      ? 'invisible' 
+      : this.collapsed;
   }
 
   changeVisible(event, indexGroup){
