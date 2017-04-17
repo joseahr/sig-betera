@@ -26773,8 +26773,8 @@ var LayerSwitcherComponent = (function () {
         });
     };
     LayerSwitcherComponent.prototype.getLengthWithoutNotVisibleLayers = function () {
-        console.log(this.map.getLayers().getArray());
-        console.log(this.map.getLayers().getArray().filter(function (m) { return !(m.get('showInLayerSwitcher') === false); }), 'arrrr');
+        //console.log(this.map.getLayers().getArray());
+        //console.log(this.map.getLayers().getArray().filter( m => !(m.get('showInLayerSwitcher') === false) ), 'arrrr');
         return this.map.getLayers().getArray().filter(function (m) { return !(m.get('showInLayerSwitcher') === false); }).length;
     };
     LayerSwitcherComponent.prototype.toggleMaps = function () {
@@ -27255,7 +27255,8 @@ var MapComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(757);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_openlayers__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services__ = __webpack_require__(783);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services__ = __webpack_require__(783);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -27270,9 +27271,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ProfileComponent = (function () {
-    function ProfileComponent(loading, profileService, zone) {
+    function ProfileComponent(loading, snackbar, profileService, zone) {
         this.loading = loading;
+        this.snackbar = snackbar;
         this.profileService = profileService;
         this.zone = zone;
         this.active = false;
@@ -27313,6 +27316,7 @@ var ProfileComponent = (function () {
         this.pointLayer.set('showInLayerSwitcher', false);
         this.drawProfileLayer.set('showInLayerSwitcher', false);
         this.drawProfileLayer.set('name', 'DrawProfileLayer');
+        this.drawProfileLayer.set('name', 'pointProfileLayer');
     };
     ProfileComponent.prototype.loadInteraction = function () {
         this.drawProfileInteraction = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["interaction"].Draw({
@@ -27324,10 +27328,14 @@ var ProfileComponent = (function () {
         if (value) {
             this.enableDraw();
             this.active = true;
+            this.snackbar.open('Dibuja un perfil', 'CERRAR');
         }
         else {
             this.disableDraw();
             this.active = false;
+            if (this.snackbar._openedSnackBarRef) {
+                this.snackbar._openedSnackBarRef.dismiss();
+            }
         }
     };
     ProfileComponent.prototype.enableDraw = function () {
@@ -27338,11 +27346,24 @@ var ProfileComponent = (function () {
             _this.pointLayer.getSource().clear();
             _this.pointLayer.getSource().changed();
             _this.profileGeom = null;
+            var feature = e.feature;
+            feature.getGeometry().on('change', function () {
+                var length = (feature.getGeometry().getLength() || 0).toFixed(3);
+                if (!_this.snackbar._openedSnackBarRef) {
+                    _this.snackbar.open("Perfil dibujado : " + length + " metros", 'CERRAR');
+                }
+                else {
+                    _this.snackbar._openedSnackBarRef.instance.message = "Perfil dibujado : " + length + " metros";
+                }
+            });
         });
         var drawEnd = this.drawProfileInteraction.on('drawend', function (e) {
             _this.zone.run(function () { return _this.loading.setValue(true); });
             _this.profileService.getProfile(e.feature).subscribe(function (res) {
                 _this.zone.run(function () {
+                    if (_this.snackbar._openedSnackBarRef) {
+                        _this.snackbar._openedSnackBarRef.dismiss();
+                    }
                     _this.profileGeom = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["geom"].LineString(res.json().coordinates, 'XYZ');
                     _this.setProfile();
                     _this.loading.setValue(false);
@@ -27472,12 +27493,12 @@ var ProfileComponent = (function () {
             selector: 'app-map-profile',
             template: __webpack_require__(1261),
             styles: [__webpack_require__(1240)],
-            providers: [__WEBPACK_IMPORTED_MODULE_3__services__["c" /* Profile3DService */]]
+            providers: [__WEBPACK_IMPORTED_MODULE_4__services__["c" /* Profile3DService */]]
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services__["c" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services__["c" /* Profile3DService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__services__["c" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__services__["c" /* Profile3DService */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _e) || Object])
     ], ProfileComponent);
     return ProfileComponent;
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
 }());
 //# sourceMappingURL=profile.component.js.map
 
@@ -28361,7 +28382,7 @@ module.exports = "<md-card style=\"margin : -15px;\">\n  <!--<div [style.backgro
 /* 1259 */
 /***/ (function(module, exports) {
 
-module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" class=\"list\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n  <div [@collapsed]=\"getDisplay(layer)\" class=\"list-item\"  *ngFor=\"let layer of map.getLayers().getArray(); let i = index; \">\n    <div class=\"buttons\">\n      <button md-button \n        *ngIf=\"i > 0\" \n        (click)= \"moveLayerDown(i)\"><md-icon>keyboard_arrow_up</md-icon></button>\n      <button md-button *ngIf=\"i < getLengthWithoutNotVisibleLayers() - 1\" (click)=\"moveLayerUp(i)\"><md-icon>keyboard_arrow_down</md-icon></button>\n    </div>\n    <div class=\"content\">\n      <md-slide-toggle (change)=\"changeVisible($event, i)\" [checked]=\"layer.getVisible()\">\n        {{ layer.get('name') }}\n      </md-slide-toggle>\n      <md-slider (input)=\"changeOpacity($event, i)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n      </md-slider>\n      <div class=\"actions\" [style.display]=\"getDisplay(layer)\">\n        <div class=\"separator\"></div>\n        <button *ngIf=\"layer.get('layers')\" md-button (click)=\"layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )\"><md-icon>add</md-icon></button>\n        <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n        <!--<button md-button><md-icon>map</md-icon></button>-->\n        <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n      </div>\n    </div>\n    <div [@collapsed]=\"layer.get('collapsed')\" #group class=\"group\">\n      <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n        <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n          <div class=\"buttons\">\n            <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(i, j)\"><md-icon>keyboard_arrow_up</md-icon></button>\n            <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(i, j)\"><md-icon>keyboard_arrow_down</md-icon></button>\n          </div>\n          <div class=\"content\">\n            <md-slide-toggle (change)=\"changeVisibleGroupLayer($event, i, j)\" [checked]=\"layer_.getVisible()\">\n              {{ layer_.get('name') }}\n            </md-slide-toggle>\n            <md-slider (input)=\"changeOpacityGroupLayer($event, i, j)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer_.getOpacity()\">\n            </md-slider>\n            <div class=\"actions\">\n              <div class=\"separator\"></div>\n              <button md-button><md-icon>info</md-icon></button>\n              <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n              <!--<button md-button><md-icon>map</md-icon></button>-->\n              <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" class=\"list\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n  <div [@collapsed]=\"getDisplay(layer)\" class=\"list-item\"  *ngFor=\"let layer of map.getLayers().getArray(); let i = index; \">\n    <div class=\"buttons\">\n      <button md-button \n        *ngIf=\"i > 0\" \n        (click)= \"moveLayerDown(i)\"><md-icon>keyboard_arrow_up</md-icon></button>\n      <button md-button *ngIf=\"i < getLengthWithoutNotVisibleLayers() - 1\" (click)=\"moveLayerUp(i)\"><md-icon>keyboard_arrow_down</md-icon></button>\n    </div>\n    <div class=\"content\">\n      <md-slide-toggle (change)=\"changeVisible($event, i)\" [checked]=\"layer.getVisible()\">\n        {{ layer.get('name') }}\n      </md-slide-toggle>\n      <md-slider (input)=\"changeOpacity($event, i)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n      </md-slider>\n      <div class=\"actions\" [style.display]=\"getDisplay(layer)\">\n        <div class=\"separator\"></div>\n        <button *ngIf=\"layer.get('layers') && layer.get('layers').getArray().length\" md-button (click)=\"layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )\"><md-icon>add</md-icon></button>\n        <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n        <!--<button md-button><md-icon>map</md-icon></button>-->\n        <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n      </div>\n    </div>\n    <div [@collapsed]=\"layer.get('collapsed')\" #group class=\"group\">\n      <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n        <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n          <div class=\"buttons\">\n            <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(i, j)\"><md-icon>keyboard_arrow_up</md-icon></button>\n            <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(i, j)\"><md-icon>keyboard_arrow_down</md-icon></button>\n          </div>\n          <div class=\"content\">\n            <md-slide-toggle (change)=\"changeVisibleGroupLayer($event, i, j)\" [checked]=\"layer_.getVisible()\">\n              {{ layer_.get('name') }}\n            </md-slide-toggle>\n            <md-slider (input)=\"changeOpacityGroupLayer($event, i, j)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer_.getOpacity()\">\n            </md-slider>\n            <div class=\"actions\">\n              <div class=\"separator\"></div>\n              <button md-button><md-icon>info</md-icon></button>\n              <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n              <!--<button md-button><md-icon>map</md-icon></button>-->\n              <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 /* 1260 */

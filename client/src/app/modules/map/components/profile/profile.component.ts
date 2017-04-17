@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Input, NgZone } from '@angula
 import * as highcharts from 'highcharts';
 import { LoadingAnimateService } from 'ng2-loading-animate';
 import * as ol from 'openlayers';
+import { MdSnackBar } from '@angular/material';
 import { Profile3DService } from '../../services';
 
 @Component({
@@ -29,6 +30,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private loading : LoadingAnimateService,
+    private snackbar : MdSnackBar,
     private profileService : Profile3DService,
     private zone : NgZone
   ) {
@@ -69,6 +71,7 @@ export class ProfileComponent implements OnInit {
     this.pointLayer.set('showInLayerSwitcher', false);
     this.drawProfileLayer.set('showInLayerSwitcher', false);
     this.drawProfileLayer.set('name', 'DrawProfileLayer');
+    this.drawProfileLayer.set('name', 'pointProfileLayer');
   }
 
   loadInteraction(){
@@ -82,25 +85,41 @@ export class ProfileComponent implements OnInit {
     if(value){
       this.enableDraw();
       this.active = true;
+      this.snackbar.open('Dibuja un perfil', 'CERRAR');
     } else {
       this.disableDraw();
       this.active = false;
+      if(this.snackbar._openedSnackBarRef){
+        this.snackbar._openedSnackBarRef.dismiss();
+      }
     }
   }
 
   enableDraw(){
-    let drawStart = this.drawProfileInteraction.on('drawstart', (e)=>{
+    let drawStart = this.drawProfileInteraction.on('drawstart', (e : ol.interaction.DrawEvent)=>{
       this.drawProfileLayer.getSource().clear();
       this.drawProfileLayer.getSource().changed();
       this.pointLayer.getSource().clear();
       this.pointLayer.getSource().changed();
       this.profileGeom = null;
+      let feature : ol.Feature | any = e.feature;
+      feature.getGeometry().on('change', ()=>{
+        let length = (feature.getGeometry().getLength() || 0).toFixed(3);
+        if(!this.snackbar._openedSnackBarRef){
+          this.snackbar.open(`Perfil dibujado : ${length} metros`, 'CERRAR');
+        } else {
+          this.snackbar._openedSnackBarRef.instance.message = `Perfil dibujado : ${length} metros`;
+        }
+      })
     });
     let drawEnd = this.drawProfileInteraction.on('drawend', (e : ol.interaction.DrawEvent)=>{
       this.zone.run( ()=> this.loading.setValue(true) );
       this.profileService.getProfile(e.feature).subscribe(
         (res)=> {
           this.zone.run( ()=>{
+            if(this.snackbar._openedSnackBarRef){
+              this.snackbar._openedSnackBarRef.dismiss();
+            }
             this.profileGeom = new ol.geom.LineString(res.json().coordinates, 'XYZ');
             this.setProfile();
             this.loading.setValue(false);

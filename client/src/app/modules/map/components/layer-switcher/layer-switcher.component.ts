@@ -65,8 +65,8 @@ export class LayerSwitcherComponent implements OnInit {
   }
 
   getLengthWithoutNotVisibleLayers(){
-    console.log(this.map.getLayers().getArray());
-    console.log(this.map.getLayers().getArray().filter( m => !(m.get('showInLayerSwitcher') === false) ), 'arrrr');
+    //console.log(this.map.getLayers().getArray());
+    //console.log(this.map.getLayers().getArray().filter( m => !(m.get('showInLayerSwitcher') === false) ), 'arrrr');
     return this.map.getLayers().getArray().filter( m => !(m.get('showInLayerSwitcher') === false) ).length;
   }
 

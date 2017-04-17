@@ -28910,7 +28910,7 @@ module.exports = "<loading-animate></loading-animate>\r\n<div [@routerTransition
 /* 1245 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  kdjlekjled\n</div>\n"
+module.exports = "<div class=\"admin-page-margin\" style=\"background: url('http://www.betera.es/fileadmin/user_upload/home.jpg'); background-size : contain; background-position: center; background-repeat: no-repeat; height: 80%;\">\n</div>\n"
 
 /***/ }),
 /* 1246 */

@@ -14,7 +14,7 @@
       </md-slider>
       <div class="actions" [style.display]="getDisplay(layer)">
         <div class="separator"></div>
-        <button *ngIf="layer.get('layers')" md-button (click)="layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )"><md-icon>add</md-icon></button>
+        <button *ngIf="layer.get('layers') && layer.get('layers').getArray().length" md-button (click)="layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )"><md-icon>add</md-icon></button>
         <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->
         <!--<button md-button><md-icon>map</md-icon></button>-->
         <button md-button class="handle" style="float : right;"><md-icon>drag_handle</md-icon></button>

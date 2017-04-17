@@ -25,6 +25,11 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
 
   authUser : any;
+  menuNav = [
+    { title : 'INICIO', link : '', exact : true, icon : 'home' } ,
+    { title : 'MAPA', link : 'map', exact : false, icon : 'map' } ,
+    { title : 'DESCARGAS', link : 'download', icon : 'file_download' } 
+  ]
 
   constructor(
     private loading : LoadingAnimateService,
@@ -47,6 +52,14 @@ export class AppComponent {
     router.events.subscribe((event: RouterEvent) => {
       this._navigationInterceptor(event);
     });
+  }
+
+  toggleNavigation(){
+    document.querySelector('.cd-nav-container').classList.toggle('is-visible');
+    document.querySelector('.cd-overlay').classList.toggle('is-visible');
+    document.querySelector('#app-body').classList.toggle('scale-down');
+    document.querySelector('md-toolbar').classList.toggle('scale-down');
+    document.querySelector('html').classList.toggle('overflow-hidden');
   }
 
   // Shows and hides the loading spinner during RouterEvent changes
