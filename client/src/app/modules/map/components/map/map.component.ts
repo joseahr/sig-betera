@@ -20,6 +20,7 @@ import * as ol from 'openlayers';
 import { ProjectionService, Profile3DService, UserMapsService } from '../../services';
 import { routerTransition } from '../../../../router.transitions';
 import { ProfileComponent, LayerSwitcherComponent, AddWmsComponent, SearchComponent } from '../';
+import { LoadingAnimateService } from 'ng2-loading-animate';
 
 @Component({
   selector: 'app-map',
@@ -74,6 +75,7 @@ export class MapComponent implements OnInit {
     private route : ActivatedRoute,
     private router : Router,
     private location : Location,
+    private loading : LoadingAnimateService,
     private userMapsService : UserMapsService,
     private projService : ProjectionService, 
     private profileService : Profile3DService,
@@ -206,6 +208,7 @@ export class MapComponent implements OnInit {
   addUserMaps(){
     this.disableControls();
     this.map.getLayers().clear();
+    this.loading.setValue(true);
 
     let params : any = this.route.snapshot.params;
     let idMap = params.id;
@@ -214,9 +217,11 @@ export class MapComponent implements OnInit {
 
     this.userMapsService.getUserMaps()
     .subscribe( mapas =>{
+      this.loading.setValue(false);
+
       if(!idMap){
+        if(!mapas[0]) return;
         let firstMap = mapas[0].id;
-        if(firstMap === undefined) return;
         this.router.navigateByUrl(`/map/${firstMap}`);
         return;
       }
@@ -246,7 +251,11 @@ export class MapComponent implements OnInit {
         });
 
       });
-    })
+      if(this.overviewCtrl){
+        this.overviewCtrl.getLayers().clear();
+        this.overviewCtrl.getLayers().extend([...this.map.getLayers().getArray()]);
+      }
+    });
   }
 
   getTile(opts : any){
@@ -307,6 +316,7 @@ export class MapComponent implements OnInit {
             idx = ( idx === -1 ? this.map.getLayers().getArray().length : idx );
         console.log(idx);
         group.set('name', wmsGroup.serviceURL);
+        group.set('removable', true)
         let layers = wmsGroup.layers
           .map( l => this.getTile({ service_url : wmsGroup.serviceURL,  layers : l.Name, name : l.Name }) );
         group.getLayers().extend(layers);

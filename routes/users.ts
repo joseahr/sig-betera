@@ -71,7 +71,7 @@ router.get('/logout', (req, res)=>{
   res.status(200).send('logged out');
 });
 
-router.get('/validar/:token', (req, res)=>{
+router.get('/validate/:token', (req, res)=>{
   let token = req.params.token;
   db.one("SELECT EXISTS ( SELECT token FROM users_not_valid_yet WHERE token = '${token#}' ) AS exist", { token })
   .then( ( result : any ) =>{
@@ -134,8 +134,8 @@ router.get('/password/:token', (req, res)=>{
   let token = req.params.token;
   db.one("SELECT token FROM public.users_change_password_token WHERE token = '${token#}'", {token})
   .then( ( user : any ) => {
-    let token = user.token;
-    res.render('password-token', {token})
+    //res.render('password-token', {token})
+    res.json({token})
   })
   .catch( ( err : any ) => res.status(500).json('No existe un usuario que concuerde con el token') );
 });

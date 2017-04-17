@@ -6,6 +6,9 @@ import * as capabilitiesParser from '../core/capabilities-parser';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as Multer from '../core/multer';
+import * as btoa from 'btoa';
+import * as request from 'request-promise';
+
 const multer = Multer.createMulter(Multer.TEMP_DIR_SHP, Multer.fileNameSHP, 50*1024*1024).array('shp[]', 3) // .shp .dbf .shx;
 
 export let router = express.Router();
@@ -97,6 +100,13 @@ router.route('/groups')
 })
 .post( (req, res)=>{
     let { name } = req.body;
+    // /rest/usergroup/[service/<serviceName>/]group/<group>
+    /*let opts = {
+        method : 'POST', uri : `http://localhost:8080/geoserver/rest/usergroup/default/group/${name}`,
+        headers : { Authorization : 'Basic ' + btoa('admin:geoserver') }
+    }
+    
+    let promise = db.admin.createGroup(name).then( ()=> request(opts) );*/
     handle(db.admin.createGroup(name), res);
 })
 .put( (req, res)=>{

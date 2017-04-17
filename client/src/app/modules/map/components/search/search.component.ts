@@ -132,7 +132,6 @@ export class SearchComponent implements OnInit {
     //this.dialogCollapsed = false;
     let dialogRef = this.dialogRef = this.dialog.open(SearchComponentDialog, {
       height : '90vh',
-      width : '90vh'
     });
 
     dialogRef.componentInstance.found = this.found;

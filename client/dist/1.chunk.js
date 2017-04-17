@@ -11,11 +11,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_dragula___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_dragula__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_datatables__ = __webpack_require__(771);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components__ = __webpack_require__(891);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_material__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_material__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_forms__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_highcharts__ = __webpack_require__(1221);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_highcharts__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular_pipes__ = __webpack_require__(898);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ng2_truncate__ = __webpack_require__(1263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_ng2_loading_animate__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MapModule", function() { return MapModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -26,6 +29,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
 
 
 
@@ -68,6 +73,8 @@ var MapModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_7__angular_forms__["FormsModule"],
                 __WEBPACK_IMPORTED_MODULE_4_angular_datatables__["a" /* DataTablesModule */],
                 __WEBPACK_IMPORTED_MODULE_9_angular_pipes__["b" /* NgObjectPipesModule */],
+                __WEBPACK_IMPORTED_MODULE_10_ng2_truncate__["a" /* TruncateModule */],
+                __WEBPACK_IMPORTED_MODULE_11_ng2_loading_animate__["LoadingAnimateModule"],
                 __WEBPACK_IMPORTED_MODULE_6__angular_material__["a" /* MaterialModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* RouterModule */].forChild(mapRoutes)
             ],
@@ -2249,8 +2256,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ArrayObservable_1 = __webpack_require__(78);
 var isArray_1 = __webpack_require__(168);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 var none = {};
 /* tslint:enable:max-line-length */
 /**
@@ -2408,8 +2415,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 var ArrayObservable_1 = __webpack_require__(78);
 var isArray_1 = __webpack_require__(168);
 var Subscriber_1 = __webpack_require__(15);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 var iterator_1 = __webpack_require__(169);
 /* tslint:enable:max-line-length */
 /**
@@ -8350,8 +8357,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /* tslint:enable:max-line-length */
 /**
  * Projects each source value to the same Observable which is merged multiple
@@ -8513,8 +8520,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var FromObservable_1 = __webpack_require__(486);
 var isArray_1 = __webpack_require__(168);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /* tslint:enable:max-line-length */
 function onErrorResumeNext() {
     var nextSources = [];
@@ -8595,8 +8602,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var isArray_1 = __webpack_require__(168);
 var ArrayObservable_1 = __webpack_require__(78);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /* tslint:enable:max-line-length */
 /**
  * Returns an Observable that mirrors the first source Observable to emit an item
@@ -16744,8 +16751,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = __webpack_require__(1);
-var subscribeToResult_1 = __webpack_require__(76);
-var OuterSubscriber_1 = __webpack_require__(75);
+var subscribeToResult_1 = __webpack_require__(77);
+var OuterSubscriber_1 = __webpack_require__(76);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @extends {Ignored}
@@ -17197,8 +17204,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = __webpack_require__(1);
-var subscribeToResult_1 = __webpack_require__(76);
-var OuterSubscriber_1 = __webpack_require__(75);
+var subscribeToResult_1 = __webpack_require__(77);
+var OuterSubscriber_1 = __webpack_require__(76);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @extends {Ignored}
@@ -17786,8 +17793,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = __webpack_require__(1);
-var subscribeToResult_1 = __webpack_require__(76);
-var OuterSubscriber_1 = __webpack_require__(75);
+var subscribeToResult_1 = __webpack_require__(77);
+var OuterSubscriber_1 = __webpack_require__(76);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @extends {Ignored}
@@ -18420,8 +18427,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var tryCatch_1 = __webpack_require__(272);
 var errorObject_1 = __webpack_require__(167);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Ignores source values for a duration determined by another Observable, then
  * emits the most recent value from the source Observable, then repeats this
@@ -18534,8 +18541,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Buffers the source Observable values until `closingNotifier` emits.
  *
@@ -18935,8 +18942,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscription_1 = __webpack_require__(51);
-var subscribeToResult_1 = __webpack_require__(76);
-var OuterSubscriber_1 = __webpack_require__(75);
+var subscribeToResult_1 = __webpack_require__(77);
+var OuterSubscriber_1 = __webpack_require__(76);
 /**
  * Buffers the source Observable values starting from an emission from
  * `openings` and ending when the output of `closingSelector` emits.
@@ -19095,8 +19102,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Subscription_1 = __webpack_require__(51);
 var tryCatch_1 = __webpack_require__(272);
 var errorObject_1 = __webpack_require__(167);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Buffers the source Observable values, using a factory function of closing
  * Observables to determine when to close, emit, and reset the buffer.
@@ -19460,8 +19467,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Emits a value from the source Observable only after a particular time span
  * determined by another Observable has passed without another source emission.
@@ -19941,8 +19948,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Subscriber_1 = __webpack_require__(15);
 var Observable_1 = __webpack_require__(1);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Delays the emission of items from the source Observable by a given time span
  * determined by the emissions of another Observable.
@@ -20216,8 +20223,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 var Set_1 = __webpack_require__(1182);
 /**
  * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from previous items.
@@ -20524,8 +20531,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Converts a higher-order Observable into a first-order Observable by dropping
  * inner Observables while the previous inner Observable has not yet completed.
@@ -20619,8 +20626,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /* tslint:enable:max-line-length */
 /**
  * Projects each source value to an Observable which is merged in the output
@@ -20765,8 +20772,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var tryCatch_1 = __webpack_require__(272);
 var errorObject_1 = __webpack_require__(167);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /* tslint:enable:max-line-length */
 /**
  * Recursively projects each source value to an Observable which is merged in
@@ -21551,8 +21558,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var tryCatch_1 = __webpack_require__(272);
 var errorObject_1 = __webpack_require__(167);
-var subscribeToResult_1 = __webpack_require__(76);
-var OuterSubscriber_1 = __webpack_require__(75);
+var subscribeToResult_1 = __webpack_require__(77);
+var OuterSubscriber_1 = __webpack_require__(76);
 /**
  * Applies an accumulator function over the source Observable where the
  * accumulator function itself returns an Observable, then each intermediate
@@ -22106,8 +22113,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Subject_1 = __webpack_require__(9);
 var tryCatch_1 = __webpack_require__(272);
 var errorObject_1 = __webpack_require__(167);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Returns an Observable that mirrors the source Observable with the exception of a `complete`. If the source
  * Observable calls `complete`, this method will emit to the Observable returned from `notifier`. If that Observable
@@ -22291,8 +22298,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Subject_1 = __webpack_require__(9);
 var tryCatch_1 = __webpack_require__(272);
 var errorObject_1 = __webpack_require__(167);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Returns an Observable that mirrors the source Observable with the exception of an `error`. If the source Observable
  * calls `error`, this method will emit the Throwable that caused the error to the Observable returned from `notifier`.
@@ -22395,8 +22402,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Emits the most recently emitted value from the source Observable whenever
  * another Observable, the `notifier`, emits.
@@ -23037,8 +23044,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Returns an Observable that skips items emitted by the source Observable until a second Observable emits an item.
  *
@@ -23221,8 +23228,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Converts a higher-order Observable into a first-order Observable by
  * subscribing to only the most recently emitted of those inner Observables.
@@ -23335,8 +23342,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /* tslint:enable:max-line-length */
 /**
  * Projects each source value to the same Observable which is flattened multiple
@@ -23674,8 +23681,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Emits the values emitted by the source Observable until a `notifier`
  * Observable emits a value.
@@ -23853,8 +23860,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Emits a value from the source Observable, then ignores subsequent source
  * values for a duration determined by another Observable, then repeats this
@@ -24177,8 +24184,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var async_1 = __webpack_require__(463);
 var isDate_1 = __webpack_require__(769);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /* tslint:enable:max-line-length */
 /**
  * @param due
@@ -24344,8 +24351,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subject_1 = __webpack_require__(9);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Branch out the source Observable values as a nested Observable whenever
  * `windowBoundaries` emits.
@@ -24767,8 +24774,8 @@ var Subject_1 = __webpack_require__(9);
 var Subscription_1 = __webpack_require__(51);
 var tryCatch_1 = __webpack_require__(272);
 var errorObject_1 = __webpack_require__(167);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Branch out the source Observable values as a nested Observable starting from
  * an emission from `openings` and ending when the output of `closingSelector`
@@ -24952,8 +24959,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Subject_1 = __webpack_require__(9);
 var tryCatch_1 = __webpack_require__(272);
 var errorObject_1 = __webpack_require__(167);
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /**
  * Branch out the source Observable values as a nested Observable using a
  * factory function of closing Observables to determine when to start a new
@@ -25082,8 +25089,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(75);
-var subscribeToResult_1 = __webpack_require__(76);
+var OuterSubscriber_1 = __webpack_require__(76);
+var subscribeToResult_1 = __webpack_require__(77);
 /* tslint:enable:max-line-length */
 /**
  * Combines the source Observable with other Observables to create an Observable
@@ -26651,7 +26658,7 @@ var KeysPipe = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(783);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddWmsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26752,9 +26759,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var LayerSwitcherComponent = (function () {
     function LayerSwitcherComponent(dragulaService) {
         this.dragulaService = dragulaService;
+        this.maxLayerNameLength = 40;
         this.emmiter = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         //console.log('maaap');
     }
+    LayerSwitcherComponent.prototype.updateLayerNamesLength = function (e) {
+        this.maxLayerNameLength = (e.target.innerWidth < 500 ? 12 : 40);
+    };
     LayerSwitcherComponent.prototype.getReversed = function (array) {
         return array.reverse();
     };
@@ -26864,6 +26875,12 @@ var LayerSwitcherComponent = (function () {
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])('visibility'), 
         __metadata('design:type', Object)
     ], LayerSwitcherComponent.prototype, "collapsed", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])('window:resize', ['$event']), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', [Object]), 
+        __metadata('design:returntype', void 0)
+    ], LayerSwitcherComponent.prototype, "updateLayerNamesLength", null);
     LayerSwitcherComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-layer-switcher',
@@ -26902,12 +26919,14 @@ var LayerSwitcherComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_openlayers__ = __webpack_require__(757);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_openlayers__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(783);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__router_transitions__ = __webpack_require__(464);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7____ = __webpack_require__(891);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_loading_animate__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_ng2_loading_animate__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -26926,14 +26945,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var MapComponent = (function () {
-    function MapComponent(zone, dialog, el, route, router, location, userMapsService, projService, profileService) {
+    function MapComponent(zone, dialog, el, route, router, location, loading, userMapsService, projService, profileService) {
         this.zone = zone;
         this.dialog = dialog;
         this.el = el;
         this.route = route;
         this.router = router;
         this.location = location;
+        this.loading = loading;
         this.userMapsService = userMapsService;
         this.projService = projService;
         this.profileService = profileService;
@@ -27062,15 +27083,17 @@ var MapComponent = (function () {
         var _this = this;
         this.disableControls();
         this.map.getLayers().clear();
+        this.loading.setValue(true);
         var params = this.route.snapshot.params;
         var idMap = params.id;
         var visibleMap = false;
         this.userMapsService.getUserMaps()
             .subscribe(function (mapas) {
+            _this.loading.setValue(false);
             if (!idMap) {
-                var firstMap = mapas[0].id;
-                if (firstMap === undefined)
+                if (!mapas[0])
                     return;
+                var firstMap = mapas[0].id;
                 _this.router.navigateByUrl("/map/" + firstMap);
                 return;
             }
@@ -27098,6 +27121,10 @@ var MapComponent = (function () {
                         _this.addLayerToGroup(capa, groupCapasMap);
                 });
             });
+            if (_this.overviewCtrl) {
+                _this.overviewCtrl.getLayers().clear();
+                _this.overviewCtrl.getLayers().extend(_this.map.getLayers().getArray().slice());
+            }
         });
     };
     MapComponent.prototype.getTile = function (opts) {
@@ -27155,6 +27182,7 @@ var MapComponent = (function () {
             idx = (idx === -1 ? _this.map.getLayers().getArray().length : idx);
             console.log(idx);
             group.set('name', wmsGroup.serviceURL);
+            group.set('removable', true);
             var layers = wmsGroup.layers
                 .map(function (l) { return _this.getTile({ service_url: wmsGroup.serviceURL, layers: l.Name, name: l.Name }); });
             group.getLayers().extend(layers);
@@ -27238,10 +27266,10 @@ var MapComponent = (function () {
             ],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _g) || Object, (typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */]) === 'function' && _h) || Object, (typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _j) || Object, (typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _k) || Object, (typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _l) || Object, (typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"]) === 'function' && _m) || Object, (typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_5__services__["e" /* UserMapsService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["e" /* UserMapsService */]) === 'function' && _o) || Object, (typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_5__services__["d" /* ProjectionService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["d" /* ProjectionService */]) === 'function' && _p) || Object, (typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_5__services__["c" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["c" /* Profile3DService */]) === 'function' && _q) || Object])
+        __metadata('design:paramtypes', [(typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _g) || Object, (typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */]) === 'function' && _h) || Object, (typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _j) || Object, (typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _k) || Object, (typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _l) || Object, (typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"]) === 'function' && _m) || Object, (typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_8_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_8_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _o) || Object, (typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_5__services__["e" /* UserMapsService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["e" /* UserMapsService */]) === 'function' && _p) || Object, (typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_5__services__["d" /* ProjectionService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["d" /* ProjectionService */]) === 'function' && _q) || Object, (typeof (_r = typeof __WEBPACK_IMPORTED_MODULE_5__services__["c" /* Profile3DService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["c" /* Profile3DService */]) === 'function' && _r) || Object])
     ], MapComponent);
     return MapComponent;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
 }());
 //# sourceMappingURL=map.component.js.map
 
@@ -27255,7 +27283,7 @@ var MapComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers__ = __webpack_require__(757);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_openlayers__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services__ = __webpack_require__(783);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -27316,7 +27344,7 @@ var ProfileComponent = (function () {
         this.pointLayer.set('showInLayerSwitcher', false);
         this.drawProfileLayer.set('showInLayerSwitcher', false);
         this.drawProfileLayer.set('name', 'DrawProfileLayer');
-        this.drawProfileLayer.set('name', 'pointProfileLayer');
+        this.pointLayer.set('name', 'PointProfileLayer');
     };
     ProfileComponent.prototype.loadInteraction = function () {
         this.drawProfileInteraction = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["interaction"].Draw({
@@ -27512,7 +27540,7 @@ var ProfileComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_openlayers__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__(772);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_pipes_src_object_keys_pipe__ = __webpack_require__(1193);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_loading_animate__);
@@ -27587,7 +27615,6 @@ var SearchComponent = (function () {
         //this.dialogCollapsed = false;
         var dialogRef = this.dialogRef = this.dialog.open(SearchComponentDialog, {
             height: '90vh',
-            width: '90vh'
         });
         dialogRef.componentInstance.found = this.found;
         dialogRef.componentInstance.tabIndex = newSearch ? 0 : this.selectedTabIndex;
@@ -28297,7 +28324,7 @@ exports = module.exports = __webpack_require__(23)();
 
 
 // module
-exports.push([module.i, ".group {\r\n    -webkit-transition: all 1s cubic-bezier(.39,.575,.565,1);\r\n    transition: all 1s cubic-bezier(.39,.575,.565,1);\r\n}\r\n\r\n.collapsed {\r\n    display : none;\r\n    height: 0px;\r\n}\r\n\r\n.list-item.collapsed {\r\n    display : none;\r\n    height: 0px;\r\n    -webkit-transform: translateX(-100%);\r\n            transform: translateX(-100%);\r\n}\r\n\r\n.group .list-item {\r\n    padding-left: 15px;\r\n    background: #f7f7f7;\r\n    border-radius: 0px;\r\n}\r\n\r\n.content .actions {\r\n    display : block;\r\n    min-height: 50px;\r\n}\r\n\r\n.actions button {\r\n    min-width: 20px !important;\r\n}\r\n\r\n.buttons {\r\n    display : block;\r\n    max-width: 50px;\r\n    max-height: 50px;\r\n    float : right;\r\n}\r\n\r\n.buttons button {\r\n    float : right;\r\n    display : block;\r\n    min-width: 30px !important;\r\n}\r\n\r\n.list {\r\n    height: auto;\r\n}\r\n\r\n.list-item {\r\n    min-height: 100px;\r\n    height : auto;\r\n    background: #fff;\r\n    padding : 5px;\r\n    margin-bottom : 10px;\r\n    box-shadow: 0 0px 4px 0 rgba(0,0,0,.3);\r\n    border-radius: 2px;\r\n    margin-left : 10px;\r\n    margin-right: 10px;\r\n}\r\n\r\nmd-slider {\r\n    display: block;\r\n    width: 85%;\r\n    min-width: 105px;\r\n}", ""]);
+exports.push([module.i, ".group {\r\n    -webkit-transition: all 1s cubic-bezier(.39,.575,.565,1);\r\n    transition: all 1s cubic-bezier(.39,.575,.565,1);\r\n}\r\n\r\n.collapsed {\r\n    display : none;\r\n    height: 0px;\r\n}\r\n\r\n.list-item.collapsed {\r\n    display : none;\r\n    height: 0px;\r\n    -webkit-transform: translateX(-100%);\r\n            transform: translateX(-100%);\r\n}\r\n\r\n.group .list-item {\r\n    padding-left: 15px;\r\n    background: #f7f7f7;\r\n    border-radius: 0px;\r\n}\r\n\r\n.content .actions {\r\n    display : block;\r\n    min-height: 50px;\r\n}\r\n\r\n.actions button {\r\n    min-width: 20px !important;\r\n}\r\n\r\n.buttons {\r\n    display : block;\r\n    max-width: 50px;\r\n    max-height: 50px;\r\n    float : right;\r\n}\r\n\r\n.buttons button {\r\n    float : right;\r\n    display : block;\r\n    min-width: 30px !important;\r\n}\r\n\r\n.list {\r\n    height: auto;\r\n}\r\n\r\n.list-item {\r\n    min-height: 100px;\r\n    height : auto;\r\n    background: #fff;\r\n    padding : 5px;\r\n    margin-bottom : 10px;\r\n    box-shadow: 0 0px 4px 0 rgba(0,0,0,.3);\r\n    border-radius: 2px;\r\n    margin-left : 10px;\r\n    margin-right: 10px;\r\n}\r\n\r\nmd-slider {\r\n    display: block;\r\n    width: 85%;\r\n    min-width: 105px;\r\n}\r\n\r\n.layer-toggle {\r\n    max-width: 20%;\r\n    display: inline-block;\r\n}\r\n\r\n.layer-name {\r\n    display: inline;\r\n}", ""]);
 
 // exports
 
@@ -28382,13 +28409,13 @@ module.exports = "<md-card style=\"margin : -15px;\">\n  <!--<div [style.backgro
 /* 1259 */
 /***/ (function(module, exports) {
 
-module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" class=\"list\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n  <div [@collapsed]=\"getDisplay(layer)\" class=\"list-item\"  *ngFor=\"let layer of map.getLayers().getArray(); let i = index; \">\n    <div class=\"buttons\">\n      <button md-button \n        *ngIf=\"i > 0\" \n        (click)= \"moveLayerDown(i)\"><md-icon>keyboard_arrow_up</md-icon></button>\n      <button md-button *ngIf=\"i < getLengthWithoutNotVisibleLayers() - 1\" (click)=\"moveLayerUp(i)\"><md-icon>keyboard_arrow_down</md-icon></button>\n    </div>\n    <div class=\"content\">\n      <md-slide-toggle (change)=\"changeVisible($event, i)\" [checked]=\"layer.getVisible()\">\n        {{ layer.get('name') }}\n      </md-slide-toggle>\n      <md-slider (input)=\"changeOpacity($event, i)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n      </md-slider>\n      <div class=\"actions\" [style.display]=\"getDisplay(layer)\">\n        <div class=\"separator\"></div>\n        <button *ngIf=\"layer.get('layers') && layer.get('layers').getArray().length\" md-button (click)=\"layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )\"><md-icon>add</md-icon></button>\n        <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n        <!--<button md-button><md-icon>map</md-icon></button>-->\n        <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n      </div>\n    </div>\n    <div [@collapsed]=\"layer.get('collapsed')\" #group class=\"group\">\n      <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n        <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n          <div class=\"buttons\">\n            <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(i, j)\"><md-icon>keyboard_arrow_up</md-icon></button>\n            <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(i, j)\"><md-icon>keyboard_arrow_down</md-icon></button>\n          </div>\n          <div class=\"content\">\n            <md-slide-toggle (change)=\"changeVisibleGroupLayer($event, i, j)\" [checked]=\"layer_.getVisible()\">\n              {{ layer_.get('name') }}\n            </md-slide-toggle>\n            <md-slider (input)=\"changeOpacityGroupLayer($event, i, j)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer_.getOpacity()\">\n            </md-slider>\n            <div class=\"actions\">\n              <div class=\"separator\"></div>\n              <button md-button><md-icon>info</md-icon></button>\n              <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n              <!--<button md-button><md-icon>map</md-icon></button>-->\n              <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" class=\"list\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n  <div [@collapsed]=\"getDisplay(layer)\" class=\"list-item\"  *ngFor=\"let layer of map.getLayers().getArray(); let i = index; \">\n    <div class=\"buttons\">\n      <button md-button \n        *ngIf=\"i > 0\" \n        (click)= \"moveLayerDown(i)\"><md-icon>keyboard_arrow_up</md-icon></button>\n      <button md-button *ngIf=\"i < getLengthWithoutNotVisibleLayers() - 1\" (click)=\"moveLayerUp(i)\"><md-icon>keyboard_arrow_down</md-icon></button>\n    </div>\n    <div class=\"content\">\n      <md-slide-toggle \n        class=\"layer-toggle\"\n        (change)=\"changeVisible($event, i)\" \n        [checked]=\"layer.getVisible()\"\n      >\n      </md-slide-toggle>\n      <span\n        class=\"layer-name\"\n        mdTooltipPosition=\"above\"\n        [mdTooltip]=\"layer.get('name')\" \n      >\n        {{ layer.get('name') | truncate : maxLayerNameLength }}\n      </span>\n      <md-slider (input)=\"changeOpacity($event, i)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n      </md-slider>\n      <div class=\"actions\" [style.display]=\"getDisplay(layer)\">\n        <div class=\"separator\"></div>\n        <button *ngIf=\"layer.get('layers') && layer.get('layers').getArray().length\" md-button (click)=\"layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )\"><md-icon>add</md-icon></button>\n        <button \n          md-button\n          *ngIf=\"layer.get('removable') === true\"\n          (click)=\"map.removeLayer(layer)\"\n        >\n          <md-icon>remove_circle_outline</md-icon>\n        </button>\n        <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n        <!--<button md-button><md-icon>map</md-icon></button>-->\n        <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n      </div>\n    </div>\n    <div [@collapsed]=\"layer.get('collapsed')\" #group class=\"group\">\n      <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n        <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n          <div class=\"buttons\">\n            <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(i, j)\"><md-icon>keyboard_arrow_up</md-icon></button>\n            <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(i, j)\"><md-icon>keyboard_arrow_down</md-icon></button>\n          </div>\n          <div class=\"content\">\n            <md-slide-toggle \n              class=\"layer-toggle\"\n              (change)=\"changeVisibleGroupLayer($event, i, j)\" \n              [checked]=\"layer_.getVisible()\"\n            >\n            </md-slide-toggle>\n            <span\n              class=\"layer-name\"\n              mdTooltipPosition=\"above\"\n              [mdTooltip]=\"layer_.get('name')\" \n            >\n              {{ layer_.get('name') | truncate : maxLayerNameLength }}\n            </span>\n            <md-slider (input)=\"changeOpacityGroupLayer($event, i, j)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer_.getOpacity()\">\n            </md-slider>\n            <div class=\"actions\">\n              <div class=\"separator\"></div>\n              <button md-button><md-icon>info</md-icon></button>\n              <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n              <!--<button md-button><md-icon>map</md-icon></button>-->\n              <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 /* 1260 */
 /***/ (function(module, exports) {
 
-module.exports = "<button\n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button main\" (click)=\"toggleTools()\">\n      <md-icon>apps</md-icon>HERRAMIENTAS\n    </button>\n    <div [@collapsed]=\"toolsControlVisible\">\n      <button md-button class=\"list-button\" (click)=\"toggleProfileControl()\" [style.background-color]=\"getBackgroundColor(profileControl.active)\">\n        <md-icon>terrain</md-icon>PERFIL\n      </button>\n      <button md-button (click)=\"toggleSearchControl(1)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 1)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR PUNTO\n      </button>\n      <button md-button (click)=\"toggleSearchControl(2)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE\n      </button>\n    </div>\n\n    <button md-button class=\"list-button main\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <md-select [@collapsed]=\"mapsControlVisible\" placeholder=\"Mapa actual\" (change)=\"onChangeMap()\" [(ngModel)]=\"actualMap\" style=\"margin-top : 20px; margin-left : 2.5%; width : 95%;\">\n      <md-option *ngFor=\"let map of accesibleMaps\" [value]=\"map.id\">{{ map.name }}</md-option>\n    </md-select>\n    <app-layer-switcher [@collapsed]=\"mapsControlVisible\" [visibility]=\"mapsControlVisible\" [map]=\"map\" (layersChanged)=\"updateMapAndOverview()\"></app-layer-switcher>\n    <!-- END control de capas -->\n    <button md-button class=\"list-button main\" (click)=\"toggleOverview()\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div [@collapsed]=\"overviewControlVisible\" #overviewMap class=\"overview-map\"></div>\n    <button md-button class=\"list-button main\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n\n    <button md-button class=\"list-button main\" (click)=\"openWMSDialog()\">\n      <md-icon>map</md-icon>AÑADIR WMS\n    </button>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{ 'map-expanded': sidenav.opened }\" \n  >    \n  </div>\n\n  <app-map-profile\n    [map]=\"map\"\n  ></app-map-profile>\n\n  <app-search [map]=\"map\"></app-search>\n\n</md-sidenav-container>\n"
+module.exports = "<loading-animate></loading-animate>\n<button\n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button main\" (click)=\"toggleTools()\">\n      <md-icon>apps</md-icon>HERRAMIENTAS\n    </button>\n    <div [@collapsed]=\"toolsControlVisible\">\n      <button md-button class=\"list-button\" (click)=\"toggleProfileControl()\" [style.background-color]=\"getBackgroundColor(profileControl.active)\">\n        <md-icon>terrain</md-icon>PERFIL\n      </button>\n      <button md-button (click)=\"toggleSearchControl(1)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 1)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR PUNTO\n      </button>\n      <button md-button (click)=\"toggleSearchControl(2)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE\n      </button>\n    </div>\n\n    <button md-button class=\"list-button main\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <md-select [@collapsed]=\"mapsControlVisible\" placeholder=\"Mapa actual\" (change)=\"onChangeMap()\" [(ngModel)]=\"actualMap\" style=\"margin-top : 20px; margin-left : 2.5%; width : 95%;\">\n      <md-option *ngFor=\"let map of accesibleMaps\" [value]=\"map.id\">{{ map.name }}</md-option>\n    </md-select>\n    <app-layer-switcher [@collapsed]=\"mapsControlVisible\" [visibility]=\"mapsControlVisible\" [map]=\"map\" (layersChanged)=\"updateMapAndOverview()\"></app-layer-switcher>\n    <!-- END control de capas -->\n    <button md-button class=\"list-button main\" (click)=\"toggleOverview()\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div [@collapsed]=\"overviewControlVisible\" #overviewMap class=\"overview-map\"></div>\n    <button md-button class=\"list-button main\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n\n    <button md-button class=\"list-button main\" (click)=\"openWMSDialog()\">\n      <md-icon>map</md-icon>AÑADIR WMS\n    </button>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{ 'map-expanded': sidenav.opened }\" \n  >    \n  </div>\n\n  <app-map-profile\n    [map]=\"map\"\n  ></app-map-profile>\n\n  <app-search [map]=\"map\"></app-search>\n\n</md-sidenav-container>\n"
 
 /***/ }),
 /* 1261 */
@@ -28401,6 +28428,133 @@ module.exports = "<div\r\n    id=\"profile-container\"\r\n    [ngClass]=\"{'open
 /***/ (function(module, exports) {
 
 module.exports = "<md-tab-group id=\"search-tab\" (selectChange)=\"onChangeTab($event)\" [selectedIndex]=\"tabIndex\">\r\n  <md-tab label=\"{{search.layername}}\" *ngFor=\"let search of found\"> \r\n  </md-tab>\r\n</md-tab-group>\r\n<table #table datatable class=\"mdl-data-table\" style=\"width : 100%;\">\r\n</table>"
+
+/***/ }),
+/* 1263 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__truncate_module__ = __webpack_require__(1266);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__truncate_module__["a"]; });
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 1264 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TruncateCharactersPipe; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var TruncateCharactersPipe = (function () {
+    function TruncateCharactersPipe() {
+    }
+    TruncateCharactersPipe.prototype.transform = function (value, limit, trail) {
+        if (limit === void 0) { limit = 40; }
+        if (trail === void 0) { trail = '…'; }
+        if (limit < 0) {
+            limit *= -1;
+            return value.length > limit ? trail + value.substring(value.length - limit, value.length) : value;
+        }
+        else {
+            return value.length > limit ? value.substring(0, limit) + trail : value;
+        }
+    };
+    return TruncateCharactersPipe;
+}());
+TruncateCharactersPipe = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'truncate'
+    })
+], TruncateCharactersPipe);
+
+//# sourceMappingURL=truncate-characters.pipe.js.map
+
+/***/ }),
+/* 1265 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TruncateWordsPipe; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var TruncateWordsPipe = (function () {
+    function TruncateWordsPipe() {
+    }
+    TruncateWordsPipe.prototype.transform = function (value, limit, trail) {
+        if (limit === void 0) { limit = 40; }
+        if (trail === void 0) { trail = '…'; }
+        var result = value;
+        if (value) {
+            var words = value.split(/\s+/);
+            if (words.length > Math.abs(limit)) {
+                if (limit < 0) {
+                    limit *= -1;
+                    result = trail + words.slice(words.length - limit, words.length).join(' ');
+                }
+                else {
+                    result = words.slice(0, limit).join(' ') + trail;
+                }
+            }
+        }
+        return result;
+    };
+    return TruncateWordsPipe;
+}());
+TruncateWordsPipe = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'words'
+    })
+], TruncateWordsPipe);
+
+//# sourceMappingURL=truncate-words.pipe.js.map
+
+/***/ }),
+/* 1266 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__truncate_characters_pipe__ = __webpack_require__(1264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__truncate_words_pipe__ = __webpack_require__(1265);
+/* unused harmony export TRUNCATE_PIPES */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TruncateModule; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var TRUNCATE_PIPES = [__WEBPACK_IMPORTED_MODULE_1__truncate_characters_pipe__["a" /* TruncateCharactersPipe */], __WEBPACK_IMPORTED_MODULE_2__truncate_words_pipe__["a" /* TruncateWordsPipe */]];
+var TruncateModule = (function () {
+    function TruncateModule() {
+    }
+    return TruncateModule;
+}());
+TruncateModule = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+        declarations: [TRUNCATE_PIPES],
+        exports: [TRUNCATE_PIPES]
+    })
+], TruncateModule);
+
+//# sourceMappingURL=truncate.module.js.map
 
 /***/ })
 ]));

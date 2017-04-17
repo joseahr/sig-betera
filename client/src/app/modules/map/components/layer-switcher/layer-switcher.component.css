@@ -62,3 +62,12 @@ md-slider {
     width: 85%;
     min-width: 105px;
 }
+
+.layer-toggle {
+    max-width: 20%;
+    display: inline-block;
+}
+
+.layer-name {
+    display: inline;
+}

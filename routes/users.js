@@ -61,7 +61,7 @@ exports.router.get('/logout', function (req, res) {
     req.logout();
     res.status(200).send('logged out');
 });
-exports.router.get('/validar/:token', function (req, res) {
+exports.router.get('/validate/:token', function (req, res) {
     var token = req.params.token;
     db_1.db.one("SELECT EXISTS ( SELECT token FROM users_not_valid_yet WHERE token = '${token#}' ) AS exist", { token: token })
         .then(function (result) {
@@ -120,8 +120,8 @@ exports.router.get('/password/:token', function (req, res) {
     var token = req.params.token;
     db_1.db.one("SELECT token FROM public.users_change_password_token WHERE token = '${token#}'", { token: token })
         .then(function (user) {
-        var token = user.token;
-        res.render('password-token', { token: token });
+        //res.render('password-token', {token})
+        res.json({ token: token });
     })
         .catch(function (err) { return res.status(500).json('No existe un usuario que concuerde con el token'); });
 });

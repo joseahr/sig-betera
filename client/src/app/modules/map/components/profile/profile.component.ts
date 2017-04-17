@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
     this.pointLayer.set('showInLayerSwitcher', false);
     this.drawProfileLayer.set('showInLayerSwitcher', false);
     this.drawProfileLayer.set('name', 'DrawProfileLayer');
-    this.drawProfileLayer.set('name', 'pointProfileLayer');
+    this.pointLayer.set('name', 'PointProfileLayer');
   }
 
   loadInteraction(){

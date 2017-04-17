@@ -7,14 +7,31 @@
       <button md-button *ngIf="i < getLengthWithoutNotVisibleLayers() - 1" (click)="moveLayerUp(i)"><md-icon>keyboard_arrow_down</md-icon></button>
     </div>
     <div class="content">
-      <md-slide-toggle (change)="changeVisible($event, i)" [checked]="layer.getVisible()">
-        {{ layer.get('name') }}
+      <md-slide-toggle 
+        class="layer-toggle"
+        (change)="changeVisible($event, i)" 
+        [checked]="layer.getVisible()"
+      >
       </md-slide-toggle>
+      <span
+        class="layer-name"
+        mdTooltipPosition="above"
+        [mdTooltip]="layer.get('name')" 
+      >
+        {{ layer.get('name') | truncate : maxLayerNameLength }}
+      </span>
       <md-slider (input)="changeOpacity($event, i)" step="0.05" [min]="0" [max]="1" [value]="layer.getOpacity()">
       </md-slider>
       <div class="actions" [style.display]="getDisplay(layer)">
         <div class="separator"></div>
         <button *ngIf="layer.get('layers') && layer.get('layers').getArray().length" md-button (click)="layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )"><md-icon>add</md-icon></button>
+        <button 
+          md-button
+          *ngIf="layer.get('removable') === true"
+          (click)="map.removeLayer(layer)"
+        >
+          <md-icon>remove_circle_outline</md-icon>
+        </button>
         <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->
         <!--<button md-button><md-icon>map</md-icon></button>-->
         <button md-button class="handle" style="float : right;"><md-icon>drag_handle</md-icon></button>
@@ -28,9 +45,19 @@
             <button *ngIf="j < layer.get('layers').getArray().length - 1" md-button (click)="moveLayerInGroupUp(i, j)"><md-icon>keyboard_arrow_down</md-icon></button>
           </div>
           <div class="content">
-            <md-slide-toggle (change)="changeVisibleGroupLayer($event, i, j)" [checked]="layer_.getVisible()">
-              {{ layer_.get('name') }}
+            <md-slide-toggle 
+              class="layer-toggle"
+              (change)="changeVisibleGroupLayer($event, i, j)" 
+              [checked]="layer_.getVisible()"
+            >
             </md-slide-toggle>
+            <span
+              class="layer-name"
+              mdTooltipPosition="above"
+              [mdTooltip]="layer_.get('name')" 
+            >
+              {{ layer_.get('name') | truncate : maxLayerNameLength }}
+            </span>
             <md-slider (input)="changeOpacityGroupLayer($event, i, j)" step="0.05" [min]="0" [max]="1" [value]="layer_.getOpacity()">
             </md-slider>
             <div class="actions">

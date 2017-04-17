@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter,
+import { 
+  Component, 
+  OnInit, 
+  ViewChild, 
+  ElementRef, 
+  Input, 
+  Output, 
+  EventEmitter,
+  HostListener,
   trigger,
   state,
   style,
@@ -32,6 +40,8 @@ import { Map } from 'openlayers';
 })
 export class LayerSwitcherComponent implements OnInit {
   
+  maxLayerNameLength = 40;
+
   @ViewChild('mapsDetailsContainer') mapsDetailsContainer: ElementRef;
   @Input('map') map : Map;
   @Output('layersChanged') emmiter : EventEmitter<any> = new EventEmitter();
@@ -41,6 +51,11 @@ export class LayerSwitcherComponent implements OnInit {
     private dragulaService: DragulaService
   ) {
     //console.log('maaap');
+  }
+
+  @HostListener('window:resize', ['$event'])
+  updateLayerNamesLength(e){
+    this.maxLayerNameLength = (e.target.innerWidth < 500 ? 12 : 40);
   }
 
   getReversed(array : any[]){

@@ -8,7 +8,8 @@ import { MaterialModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { ChartModule } from 'angular2-highcharts';
 import { NgObjectPipesModule } from 'angular-pipes';
-import { ReverseLayersPipe } from './pipes';
+import { TruncateModule } from 'ng2-truncate';
+import { LoadingAnimateModule } from 'ng2-loading-animate';
 import { AddWmsComponent, LayerSwitcherComponent, SearchComponent, SearchComponentDialog } from './components';
 
 const mapRoutes : Route[] =  [{
@@ -40,6 +41,8 @@ const mapRoutes : Route[] =  [{
         FormsModule,
         DataTablesModule,
         NgObjectPipesModule,
+        TruncateModule,
+        LoadingAnimateModule,
         MaterialModule.forRoot(),
         RouterModule.forChild(mapRoutes)
     ],

@@ -88,6 +88,13 @@ exports.router.route('/groups')
 })
     .post(function (req, res) {
     var name = req.body.name;
+    // /rest/usergroup/[service/<serviceName>/]group/<group>
+    /*let opts = {
+        method : 'POST', uri : `http://localhost:8080/geoserver/rest/usergroup/default/group/${name}`,
+        headers : { Authorization : 'Basic ' + btoa('admin:geoserver') }
+    }
+    
+    let promise = db.admin.createGroup(name).then( ()=> request(opts) );*/
     handle(db_1.db.admin.createGroup(name), res);
 })
     .put(function (req, res) {
