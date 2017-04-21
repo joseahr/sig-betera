@@ -1,0 +1,50 @@
+.mouse-position-container {
+    position: absolute;
+    pointer-events: none;
+    right: 0.5em;
+    bottom: 0.5em;
+    height: auto;
+    width : 100%;
+    max-height: 130px;
+    max-width: 130px;
+    background: rgba(255, 255, 255, 0.50);
+    border-radius: 2px;
+    z-index : 1;
+    padding: 10px;
+    box-shadow: 2px 8px 12px 8px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+md-grid-tile {
+    font-size: 0.85em;
+}
+
+md-grid-tile.title {
+    font-size: 0.7em;
+    font-weight: bold;
+    color : #fff;
+    background: rgba(103, 58, 183, 0.3);
+}
+
+.mouse-position-button {
+    position : absolute; 
+    right : 0.5em; 
+    bottom : 0.5em;
+    z-index: 2;
+}
+
+.mouse-position-button {
+    background: #f7f7f7;
+}
+
+.mouse-position-button.active {
+    background:  #673ab7;
+}
+
+.mouse-position-button md-icon {
+    color : #000;
+}
+
+.mouse-position-button.active md-icon {
+    color : #fff;
+}

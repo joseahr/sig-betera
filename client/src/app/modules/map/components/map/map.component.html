@@ -21,6 +21,12 @@
       <button md-button (click)="toggleSearchControl(2)" class="list-button" [style.background-color]="getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)">
         <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE
       </button>
+      <button md-button (click)="toggleMeasureControl(1)" class="list-button" [style.background-color]="getBackgroundColor(measureControl.active && measureControl.activeInteraction == 1)">
+        <md-icon>trending_flat</md-icon>MEDIR PERÍMETRO
+      </button>
+      <button md-button (click)="toggleMeasureControl(2)" class="list-button" [style.background-color]="getBackgroundColor(measureControl.active && measureControl.activeInteraction == 2)">
+        <md-icon>branding_watermark</md-icon>MEDIR ÁREA
+      </button>
     </div>
 
     <button md-button class="list-button main" (click)="toggleMaps()">
@@ -36,7 +42,7 @@
       <md-icon>map</md-icon>MINIATURA
     </button>
     <div [@collapsed]="overviewControlVisible" #overviewMap class="overview-map"></div>
-    <button md-button class="list-button main">
+    <button md-button class="list-button main" (click)="exportMap($event)" download="mapa.pdf">
       <md-icon>file_download</md-icon>DESCARGAR MAPA
     </button>
 
@@ -55,5 +61,9 @@
   ></app-map-profile>
 
   <app-search [map]="map"></app-search>
+
+  <app-measure [map]="map"></app-measure>
+
+  <app-mouse-position [map]="map"></app-mouse-position>
 
 </md-sidenav-container>

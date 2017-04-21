@@ -1,0 +1,46 @@
+<button #btnToggle md-mini-fab (click)="toggleControl()" class="mouse-position-button active" >
+  <md-icon *ngIf="containerVisibility == 'invisible' && active">close</md-icon>
+  <md-icon *ngIf="containerVisibility == 'visible' || !active">pin_drop</md-icon>
+</button>
+<div #mousePosition class="mouse-position-container" [@collapsed]="containerVisibility">
+  <md-grid-list cols="1" rowHeight="20px" *ngIf="coordinate25830 && coordinate4258">
+    <md-grid-tile
+        class="title"
+        style="max-height: 15px;"
+        colspan=1
+        [rowspan]=1
+    >
+      ETRS89 UTM HUSO 30
+    </md-grid-tile>
+    <md-grid-tile
+        *ngIf="coordinate25830"
+        colspan=1
+        [rowspan]=1
+    >
+      <span style="position : absolute; left: 0px;">X : {{coordinate25830[0]}}</span>
+    </md-grid-tile>
+
+    <md-grid-tile
+        *ngIf="coordinate25830"
+        colspan=1
+        [rowspan]=1
+    >
+      <span style="position : absolute; left: 0px;">Y : {{coordinate25830[1]}}</span>
+    </md-grid-tile>
+    <md-grid-tile
+        *ngIf="coordinate4258"
+        colspan=1
+        [rowspan]=1
+    >
+      <span style="position : absolute; left: 0px;">λ : {{coordinate4258[0]}}</span>
+    </md-grid-tile>
+    <md-grid-tile
+        *ngIf="coordinate4258"
+        colspan=1
+        [rowspan]=1
+    >
+     <span style="position : absolute; left: 0px;">φ : {{coordinate4258[1]}}</span>
+    </md-grid-tile>
+
+  </md-grid-list>
+</div>

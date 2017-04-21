@@ -17,16 +17,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { MdSidenav, MdDialog } from '@angular/material';
 import * as ol from 'openlayers';
-import { ProjectionService, Profile3DService, UserMapsService } from '../../services';
+import { ProjectionService, Profile3DService, UserMapsService, ExportMapService } from '../../services';
 import { routerTransition } from '../../../../router.transitions';
-import { ProfileComponent, LayerSwitcherComponent, AddWmsComponent, SearchComponent } from '../';
+import { ProfileComponent, LayerSwitcherComponent, AddWmsComponent, SearchComponent, MeasureComponent } from '../';
 import { LoadingAnimateService } from 'ng2-loading-animate';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
-  providers: [ProjectionService, Profile3DService, UserMapsService],
+  providers: [ProjectionService, Profile3DService, UserMapsService, ExportMapService],
   animations: [
     routerTransition(),
     trigger('collapsed', [
@@ -61,6 +61,7 @@ export class MapComponent implements OnInit {
   toolsControlVisible = 'invisible';
   overviewControlVisible = 'visible';
 
+  @ViewChild(forwardRef(() => MeasureComponent)) measureControl : MeasureComponent;
   @ViewChild(forwardRef(() => SearchComponent)) searchControl : SearchComponent;
   @ViewChild(forwardRef(() => ProfileComponent)) profileControl : ProfileComponent;
   @ViewChild(forwardRef(() => LayerSwitcherComponent)) layerSwitcherControl : LayerSwitcherComponent;
@@ -79,6 +80,7 @@ export class MapComponent implements OnInit {
     private userMapsService : UserMapsService,
     private projService : ProjectionService, 
     private profileService : Profile3DService,
+    private exportMapService : ExportMapService
   ) {}
 
   ngOnInit(){
@@ -90,8 +92,12 @@ export class MapComponent implements OnInit {
     this.route.params.subscribe(()=>this.addUserMaps());
     //this.map.getLayers().on('change:length', ()=>{ this.updateMapAndOverview() });
     this.customComponentsWithInteractions = [
-      this.searchControl, this.profileControl
+      this.searchControl, this.profileControl, this.measureControl
     ];
+  }
+
+  exportMap(event){
+    this.exportMapService.exportMap(this.map, {}, event);
   }
 
   ngAfterViewInit() {
@@ -178,7 +184,9 @@ export class MapComponent implements OnInit {
 
     this.map = new ol.Map(this.mapProperties);
     this.projService.setProjection(this.map, '25830');
-
+    let view : any = this.map.getView();
+    this.map.once('postcompose', ()=> 
+      view.fit(ol.proj.transformExtent( [-0.4958, 39.563, -0.44153, 39.633], 'EPSG:4326', this.map.getView().getProjection()) ) );
     //this.addDummyLayers(this.map);
     //this.addUserMaps();
   }
@@ -290,7 +298,7 @@ export class MapComponent implements OnInit {
         layers : params.layers,
         gutter : 250,
         wms_externo : true,
-        crossOrigin : ''  
+        crossOrigin : '', 
     });
     tile.set('wms_externo', true);
     group.getLayers().extend([tile]);
@@ -302,6 +310,7 @@ export class MapComponent implements OnInit {
       layers : params.name, 
       name : params.name,
       type : 'layer',
+      crossOrigin : ''
     });
     group.getLayers().extend([tile]);
   }
@@ -323,6 +332,24 @@ export class MapComponent implements OnInit {
         this.map.getLayers().insertAt(idx, group);
       }
     );
+  }
+
+  toggleMeasureControl(interaction?){
+    if(interaction && this.measureControl.activeInteraction != interaction){
+      this.disableControls();
+      this.measureControl.setActive(true, interaction);
+      this.sidenav.close();
+      return;
+    }
+    if(!this.measureControl.active) {
+      this.disableControls();
+      this.measureControl.setActive(true, interaction);
+    }
+    else {
+      this.disableControls();
+      this.measureControl.setActive(false);
+    }
+    this.sidenav.close();
   }
 
   toggleSearchControl(interaction?){

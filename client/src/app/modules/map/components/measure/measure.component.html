@@ -1,0 +1,14 @@
+<p *ngIf="measure && interactionType == 1 && measure >= 100">
+    Perímetro : {{(Math.round(measure / 1000 * 100) / 100)}} km
+</p>
+<p *ngIf="measure && interactionType == 1 && measure < 100">
+    Perímetro : {{(Math.round(measure * 100) / 100)}} km
+</p>
+<p *ngIf="measure && interactionType == 2 && measure >= 10000">
+    Área : {{(Math.round(measure / 1000000 * 100) / 100)}} km<sup>2</sup>
+</p>
+<p *ngIf="measure && interactionType == 2 && measure < 10000">
+    Área : {{(Math.round(measure * 100) / 100)}} m<sup>2</sup>
+</p>
+<p *ngIf="!measure && interactionType == 1">Medir Perímetro</p>
+<p *ngIf="!measure && interactionType == 2">Medir Área</p>

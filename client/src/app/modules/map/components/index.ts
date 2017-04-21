@@ -3,3 +3,4 @@ export * from './profile/profile.component';
 export * from './layer-switcher/layer-switcher.component';
 export * from './add-wms/add-wms.component';
 export * from './search/search.component';
+export * from './measure/measure.component';

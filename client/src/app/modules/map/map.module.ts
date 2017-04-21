@@ -10,7 +10,9 @@ import { ChartModule } from 'angular2-highcharts';
 import { NgObjectPipesModule } from 'angular-pipes';
 import { TruncateModule } from 'ng2-truncate';
 import { LoadingAnimateModule } from 'ng2-loading-animate';
-import { AddWmsComponent, LayerSwitcherComponent, SearchComponent, SearchComponentDialog } from './components';
+import { AddWmsComponent, LayerSwitcherComponent, SearchComponent, SearchComponentDialog, MeasureSnackBar } from './components';
+import { MeasureComponent } from './components/measure/measure.component';
+import { MousePositionComponent } from './components/mouse-position/mouse-position.component';
 
 const mapRoutes : Route[] =  [{
     path : '',
@@ -30,7 +32,9 @@ const mapRoutes : Route[] =  [{
         LayerSwitcherComponent,
         AddWmsComponent,
         SearchComponent,
-        SearchComponentDialog
+        SearchComponentDialog,
+        MeasureComponent, 
+        MeasureSnackBar, MousePositionComponent
     ],
     providers : [
     ],
@@ -47,7 +51,7 @@ const mapRoutes : Route[] =  [{
         RouterModule.forChild(mapRoutes)
     ],
     entryComponents: [
-        AddWmsComponent, SearchComponentDialog
+        AddWmsComponent, SearchComponentDialog, MeasureSnackBar
     ]
 })
 export class MapModule {
