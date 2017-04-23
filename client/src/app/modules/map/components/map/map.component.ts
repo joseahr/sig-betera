@@ -225,6 +225,7 @@ export class MapComponent implements OnInit {
 
     this.userMapsService.getUserMaps()
     .subscribe( mapas =>{
+      console.log('mapas', mapas);
       this.loading.setValue(false);
 
       if(!idMap){
@@ -287,6 +288,7 @@ export class MapComponent implements OnInit {
 
       tile.set('name', opts.name);
       tile.set('type', opts.type);
+      tile.set('rol', opts.rol);
       return tile;
   }
 
@@ -310,7 +312,8 @@ export class MapComponent implements OnInit {
       layers : params.name, 
       name : params.name,
       type : 'layer',
-      crossOrigin : ''
+      crossOrigin : '',
+      rol : params.rol
     });
     group.getLayers().extend([tile]);
   }

@@ -1,4 +1,4 @@
-<button #btnToggle md-mini-fab (click)="toggleControl()" class="mouse-position-button active" >
+<button #btnToggle md-mini-fab (click)="toggleControl()" class="mouse-position-button" >
   <md-icon *ngIf="containerVisibility == 'invisible' && active">close</md-icon>
   <md-icon *ngIf="containerVisibility == 'visible' || !active">pin_drop</md-icon>
 </button>

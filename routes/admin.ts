@@ -273,4 +273,3 @@ function handleWithData(promise : Promise<any>, res : express.Response){
     .then(  (data)=> res.status(200).json(data) )
     .catch( (err)=> res.status(500).json({ msg : err }) );
 }
-

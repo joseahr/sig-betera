@@ -49,7 +49,8 @@ export class MeasureComponent {
       this.active = false;
       this.activeInteraction = null;
       this.measureLayer.getSource().clear();
-      this.map.removeLayer(this.measureLayer);
+      //this.map.removeLayer(this.measureLayer);
+      this.measureLayer.setMap(null);
       this.map.removeInteraction(this.drawInteraction);
       if(this.listenerGeomChange){
         ol.Observable.unByKey(this.listenerGeomChange);
@@ -65,9 +66,7 @@ export class MeasureComponent {
   }
 
   addLayer(){
-    if(!this.map.getLayers().getArray().find( l => l.get('name') == 'MeasureLayer')){
-      this.map.addLayer(this.measureLayer);
-    }
+    this.measureLayer.setMap(this.map);
   }
 
   setInteraction(interaction : MeasureInteraction){

@@ -44056,7 +44056,8 @@ var MeasureComponent = (function () {
             this.active = false;
             this.activeInteraction = null;
             this.measureLayer.getSource().clear();
-            this.map.removeLayer(this.measureLayer);
+            //this.map.removeLayer(this.measureLayer);
+            this.measureLayer.setMap(null);
             this.map.removeInteraction(this.drawInteraction);
             if (this.listenerGeomChange) {
                 __WEBPACK_IMPORTED_MODULE_1_openlayers__["Observable"].unByKey(this.listenerGeomChange);
@@ -44073,9 +44074,7 @@ var MeasureComponent = (function () {
         }
     };
     MeasureComponent.prototype.addLayer = function () {
-        if (!this.map.getLayers().getArray().find(function (l) { return l.get('name') == 'MeasureLayer'; })) {
-            this.map.addLayer(this.measureLayer);
-        }
+        this.measureLayer.setMap(this.map);
     };
     MeasureComponent.prototype.setInteraction = function (interaction) {
         //console.log(interaction, this.activeInteraction, SearchInteraction.Point, SearchInteraction.Box, 'slsjlsk');
@@ -44932,6 +44931,7 @@ var MapComponent = (function () {
         var visibleMap = false;
         this.userMapsService.getUserMaps()
             .subscribe(function (mapas) {
+            console.log('mapas', mapas);
             _this.loading.setValue(false);
             if (!idMap) {
                 if (!mapas[0])
@@ -44990,6 +44990,7 @@ var MapComponent = (function () {
         });
         tile.set('name', opts.name);
         tile.set('type', opts.type);
+        tile.set('rol', opts.rol);
         return tile;
     };
     MapComponent.prototype.addBaseLayerToGroup = function (params, group) {
@@ -45011,7 +45012,8 @@ var MapComponent = (function () {
             layers: params.name,
             name: params.name,
             type: 'layer',
-            crossOrigin: ''
+            crossOrigin: '',
+            rol: params.rol
         });
         group.getLayers().extend([tile]);
     };
@@ -45165,10 +45167,10 @@ var MousePositionComponent = (function () {
         this.projectionService = projectionService;
         this.zone = zone;
         this.containerVisibility = 'invisible';
-        this.active = true;
+        this.active = false;
     }
     MousePositionComponent.prototype.ngOnInit = function () {
-        this.addListener();
+        //this.addListener();
         this.proj4258 = this.projectionService.getDefaultProjection(4258);
         this.proj25830 = this.projectionService.getDefaultProjection(25830);
         this.name25830 = this.projectionService.defaultProjections[0].name;
@@ -45289,6 +45291,7 @@ var ProfileComponent = (function () {
         this.profileService = profileService;
         this.zone = zone;
         this.active = false;
+        this.opened = false;
         this.events = [];
         this.dataChartArray = [];
         this.loadLayers();
@@ -45323,10 +45326,10 @@ var ProfileComponent = (function () {
                 })
             ]
         });
-        this.pointLayer.set('showInLayerSwitcher', false);
-        this.drawProfileLayer.set('showInLayerSwitcher', false);
-        this.drawProfileLayer.set('name', 'DrawProfileLayer');
-        this.pointLayer.set('name', 'PointProfileLayer');
+        //this.pointLayer.set('showInLayerSwitcher', false);
+        //this.drawProfileLayer.set('showInLayerSwitcher', false);
+        //this.drawProfileLayer.set('name', 'DrawProfileLayer');
+        //this.pointLayer.set('name', 'PointProfileLayer');
     };
     ProfileComponent.prototype.loadInteraction = function () {
         this.drawProfileInteraction = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["interaction"].Draw({
@@ -45383,19 +45386,26 @@ var ProfileComponent = (function () {
             });
         });
         this.events.push(drawStart, drawEnd);
-        this.map.addLayer(this.drawProfileLayer);
-        this.map.addLayer(this.pointLayer);
+        //this.map.addLayer(this.drawProfileLayer);
+        //this.map.addLayer(this.pointLayer);
+        this.drawProfileLayer.setMap(this.map);
+        this.pointLayer.setMap(this.map);
         this.map.addInteraction(this.drawProfileInteraction);
     };
     ProfileComponent.prototype.disableDraw = function () {
         this.events.forEach(function (e) { __WEBPACK_IMPORTED_MODULE_2_openlayers__["Observable"].unByKey(e); });
         this.drawProfileLayer.getSource().clear();
         this.pointLayer.getSource().clear();
-        this.map.removeLayer(this.drawProfileLayer);
-        this.map.removeLayer(this.pointLayer);
+        //this.map.removeLayer(this.drawProfileLayer);
+        //this.map.removeLayer(this.pointLayer);
+        this.drawProfileLayer.setMap(null);
+        this.pointLayer.setMap(null);
         this.map.removeInteraction(this.drawProfileInteraction);
         this.profileGeom = null;
         this.events = [];
+    };
+    ProfileComponent.prototype.setOpened = function (bool) {
+        this.opened = bool;
     };
     ProfileComponent.prototype.saveInstance = function (chartInstance) {
         var _this = this;
@@ -45437,6 +45447,7 @@ var ProfileComponent = (function () {
         }
         //console.log(dist, points[points.length - 1], i, points.length, points[i]);
         //console.log(this.dataChartArray);
+        this.setOpened(true);
         if (this.chart) {
             if (this.chart.series[0])
                 this.chart.series[0].remove();
@@ -45458,6 +45469,10 @@ var ProfileComponent = (function () {
                 { name: 'Perfil', data: this.dataChartArray }
             ]
         };
+    };
+    ProfileComponent.prototype.onDeselectProfile = function () {
+        this.pointLayer.getSource().clear();
+        this.pointLayer.getSource().changed();
     };
     ProfileComponent.prototype.onSelectProfile = function (event) {
         var dist = event.context.x;
@@ -45641,6 +45656,13 @@ var SearchComponent = (function () {
                 features
                     .forEach(function (d) { return d.found.features.forEach(function (f) { return f.properties.data_urls = (f.properties.data_urls || []).map(function (du) { return du.url; }); }); });
                 //features.forEach(f => console.log(f.layername))
+                if (!features.length) {
+                    _this.snackbar.open('No se encontraron features', null, { duration: 2000 });
+                    return setTimeout(function () {
+                        var msg = _this.activeInteraction == SearchInteraction.Point ? 'Haz click' : 'Dibuja un recuadro';
+                        _this.snackbar.open(msg + " para realizar la b\u00FAsqueda", 'CERRAR');
+                    }, 2000);
+                }
                 _this.found = features;
                 _this.map.render();
                 //console.log(features, 'featurrees');
@@ -45675,7 +45697,8 @@ var SearchComponent = (function () {
             this.searchLayer.getSource().clear();
             //this.dialogCollapsed = false;
             this.snackbar._openedSnackBarRef ? this.snackbar._openedSnackBarRef.dismiss() : '';
-            this.map.removeLayer(this.searchLayer);
+            //this.map.removeLayer(this.searchLayer);
+            this.searchLayer.setMap(null);
             this.state = 'invisible';
             this.closeState = 'invisible';
         }
@@ -45688,9 +45711,7 @@ var SearchComponent = (function () {
         }
     };
     SearchComponent.prototype.addLayer = function () {
-        if (!this.map.getLayers().getArray().find(function (l) { return l.get('name') == 'SearchLayer'; })) {
-            this.map.addLayer(this.searchLayer);
-        }
+        this.searchLayer.setMap(this.map);
     };
     SearchComponent.prototype.setInteraction = function (interaction) {
         var msg = interaction == SearchInteraction.Point ? 'Haz click' : 'Dibuja un recuadro';
@@ -46374,7 +46395,7 @@ exports = module.exports = __webpack_require__(23)();
 
 
 // module
-exports.push([module.i, "#profile-container {\r\n    -webkit-box-flex : 1;\r\n        -ms-flex : 1 1 auto;\r\n            flex : 1 1 auto;\r\n    max-width: 100%;\r\n    height: 0px;\r\n    position: absolute;\r\n    bottom: 0px;\r\n    right: 0.5em;\r\n    left: 0.5em;\r\n    z-index: 2;\r\n    overflow: hidden;\r\n    border-top-left-radius: 4px;\r\n    border-top-right-radius: 4px;\r\n    background: #fff;\r\n    -webkit-transition : all 0.8s;\r\n    transition: all 0.8s;\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.3);\r\n}\r\n\r\n#profile-container.opened {\r\n    height: 200px;\r\n}", ""]);
+exports.push([module.i, "#profile-container {\r\n    -webkit-box-flex : 1;\r\n        -ms-flex : 1 1 auto;\r\n            flex : 1 1 auto;\r\n    max-width: 100%;\r\n    height: 0px;\r\n    position: absolute;\r\n    bottom: 0px;\r\n    right: 0.5em;\r\n    left: 0.5em;\r\n    z-index: 2;\r\n    overflow: hidden;\r\n    border-top-left-radius: 4px;\r\n    border-top-right-radius: 4px;\r\n    background: #fff;\r\n    -webkit-transition : all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);\r\n    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.3);\r\n}\r\n\r\n#profile-container.opened {\r\n    height: 200px;\r\n}", ""]);
 
 // exports
 
@@ -46552,7 +46573,7 @@ module.exports = "<md-card style=\"margin : -15px;\">\n  <!--<div [style.backgro
 /* 1271 */
 /***/ (function(module, exports) {
 
-module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" class=\"list\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n  <div [@collapsed]=\"getDisplay(layer)\" class=\"list-item\"  *ngFor=\"let layer of map.getLayers().getArray(); let i = index; \">\n    <div class=\"buttons\">\n      <button md-button \n        *ngIf=\"i > 0\" \n        (click)= \"moveLayerDown(i)\"><md-icon>keyboard_arrow_up</md-icon></button>\n      <button md-button *ngIf=\"i < getLengthWithoutNotVisibleLayers() - 1\" (click)=\"moveLayerUp(i)\"><md-icon>keyboard_arrow_down</md-icon></button>\n    </div>\n    <div class=\"content\">\n      <md-slide-toggle \n        class=\"layer-toggle\"\n        (change)=\"changeVisible($event, i)\" \n        [checked]=\"layer.getVisible()\"\n      >\n      </md-slide-toggle>\n      <span\n        class=\"layer-name\"\n        mdTooltipPosition=\"above\"\n        [mdTooltip]=\"layer.get('name')\" \n      >\n        {{ layer.get('name') | truncate : maxLayerNameLength }}\n      </span>\n      <md-slider (input)=\"changeOpacity($event, i)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n      </md-slider>\n      <div class=\"actions\" [style.display]=\"getDisplay(layer)\">\n        <div class=\"separator\"></div>\n        <button *ngIf=\"layer.get('layers') && layer.get('layers').getArray().length\" md-button (click)=\"layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )\"><md-icon>add</md-icon></button>\n        <button \n          md-button\n          *ngIf=\"layer.get('removable') === true\"\n          (click)=\"map.removeLayer(layer)\"\n        >\n          <md-icon>remove_circle_outline</md-icon>\n        </button>\n        <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n        <!--<button md-button><md-icon>map</md-icon></button>-->\n        <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n      </div>\n    </div>\n    <div [@collapsed]=\"layer.get('collapsed')\" #group class=\"group\">\n      <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n        <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n          <div class=\"buttons\">\n            <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(i, j)\"><md-icon>keyboard_arrow_up</md-icon></button>\n            <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(i, j)\"><md-icon>keyboard_arrow_down</md-icon></button>\n          </div>\n          <div class=\"content\">\n            <md-slide-toggle \n              class=\"layer-toggle\"\n              (change)=\"changeVisibleGroupLayer($event, i, j)\" \n              [checked]=\"layer_.getVisible()\"\n            >\n            </md-slide-toggle>\n            <span\n              class=\"layer-name\"\n              mdTooltipPosition=\"above\"\n              [mdTooltip]=\"layer_.get('name')\" \n            >\n              {{ layer_.get('name') | truncate : maxLayerNameLength }}\n            </span>\n            <md-slider (input)=\"changeOpacityGroupLayer($event, i, j)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer_.getOpacity()\">\n            </md-slider>\n            <div class=\"actions\">\n              <div class=\"separator\"></div>\n              <button md-button><md-icon>info</md-icon></button>\n              <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n              <!--<button md-button><md-icon>map</md-icon></button>-->\n              <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" class=\"list\" [dragula]='\"layers\"' [dragulaModel]='map.getLayers().getArray()'>\n  <div [@collapsed]=\"getDisplay(layer)\" class=\"list-item\"  *ngFor=\"let layer of map.getLayers().getArray(); let i = index; \">\n    <div class=\"buttons\">\n      <button md-button \n        *ngIf=\"i > 0\" \n        (click)= \"moveLayerDown(i)\"><md-icon>keyboard_arrow_up</md-icon></button>\n      <button md-button *ngIf=\"i < getLengthWithoutNotVisibleLayers() - 1\" (click)=\"moveLayerUp(i)\"><md-icon>keyboard_arrow_down</md-icon></button>\n    </div>\n    <div class=\"content\">\n      <md-slide-toggle \n        class=\"layer-toggle\"\n        (change)=\"changeVisible($event, i)\" \n        [checked]=\"layer.getVisible()\"\n      >\n      </md-slide-toggle>\n      <span\n        class=\"layer-name\"\n        mdTooltipPosition=\"above\"\n        [mdTooltip]=\"layer.get('name')\" \n      >\n        {{ layer.get('name') | truncate : maxLayerNameLength }}\n      </span>\n      <md-slider (input)=\"changeOpacity($event, i)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer.getOpacity()\">\n      </md-slider>\n      <div class=\"actions\" [style.display]=\"getDisplay(layer)\">\n        <div class=\"separator\"></div>\n        <button *ngIf=\"layer.get('layers') && layer.get('layers').getArray().length\" md-button (click)=\"layer.set('collapsed', layer.get('collapsed') === 'invisible' ? 'visible' : 'invisible' )\"><md-icon>add</md-icon></button>\n        <button \n          md-button\n          *ngIf=\"layer.get('removable') === true\"\n          (click)=\"map.removeLayer(layer)\"\n        >\n          <md-icon>remove_circle_outline</md-icon>\n        </button>\n        <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n        <!--<button md-button><md-icon>map</md-icon></button>-->\n        <button md-button class=\"handle\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n      </div>\n    </div>\n    <div [@collapsed]=\"layer.get('collapsed')\" #group class=\"group\">\n      <div *ngIf=\"layer.get('layers')\" [dragula]='\"layerGroup\"' [dragulaModel]=\"layer.get('layers').getArray()\">\n        <div class=\"list-item\" *ngFor=\"let layer_ of layer.get('layers').getArray(); let j = index\">\n          <div class=\"buttons\">\n            <button *ngIf=\"j > 0\" md-button (click)=\"moveLayerInGroupDown(i, j)\"><md-icon>keyboard_arrow_up</md-icon></button>\n            <button *ngIf=\"j < layer.get('layers').getArray().length - 1\" md-button (click)=\"moveLayerInGroupUp(i, j)\"><md-icon>keyboard_arrow_down</md-icon></button>\n          </div>\n          <div class=\"content\">\n            <md-slide-toggle \n              class=\"layer-toggle\"\n              (change)=\"changeVisibleGroupLayer($event, i, j)\" \n              [checked]=\"layer_.getVisible()\"\n            >\n            </md-slide-toggle>\n            <span\n              class=\"layer-name\"\n              mdTooltipPosition=\"above\"\n              [mdTooltip]=\"layer_.get('name')\" \n            >\n              {{ layer_.get('name') | truncate : maxLayerNameLength }}\n            </span>\n            <md-slider (input)=\"changeOpacityGroupLayer($event, i, j)\" step=\"0.05\" [min]=\"0\" [max]=\"1\" [value]=\"layer_.getOpacity()\">\n            </md-slider>\n            <div class=\"actions\">\n              <div class=\"separator\"></div>\n              <!--<button md-button><md-icon>info</md-icon></button>-->\n              <button md-button *ngIf=\"layer_.get('rol') == 'e' ||  layer_.get('rol') == 'd' \"><md-icon>mode_edit</md-icon></button>\n              <!--<button md-button><md-icon>zoom_out_map</md-icon></button>-->\n              <!--<button md-button><md-icon>map</md-icon></button>-->\n              <button md-button class=\"handleGroup\" style=\"float : right;\"><md-icon>drag_handle</md-icon></button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 /* 1272 */
@@ -46570,13 +46591,13 @@ module.exports = "<p *ngIf=\"measure && interactionType == 1 && measure >= 100\"
 /* 1274 */
 /***/ (function(module, exports) {
 
-module.exports = "<button #btnToggle md-mini-fab (click)=\"toggleControl()\" class=\"mouse-position-button active\" >\n  <md-icon *ngIf=\"containerVisibility == 'invisible' && active\">close</md-icon>\n  <md-icon *ngIf=\"containerVisibility == 'visible' || !active\">pin_drop</md-icon>\n</button>\n<div #mousePosition class=\"mouse-position-container\" [@collapsed]=\"containerVisibility\">\n  <md-grid-list cols=\"1\" rowHeight=\"20px\" *ngIf=\"coordinate25830 && coordinate4258\">\n    <md-grid-tile\n        class=\"title\"\n        style=\"max-height: 15px;\"\n        colspan=1\n        [rowspan]=1\n    >\n      ETRS89 UTM HUSO 30\n    </md-grid-tile>\n    <md-grid-tile\n        *ngIf=\"coordinate25830\"\n        colspan=1\n        [rowspan]=1\n    >\n      <span style=\"position : absolute; left: 0px;\">X : {{coordinate25830[0]}}</span>\n    </md-grid-tile>\n\n    <md-grid-tile\n        *ngIf=\"coordinate25830\"\n        colspan=1\n        [rowspan]=1\n    >\n      <span style=\"position : absolute; left: 0px;\">Y : {{coordinate25830[1]}}</span>\n    </md-grid-tile>\n    <md-grid-tile\n        *ngIf=\"coordinate4258\"\n        colspan=1\n        [rowspan]=1\n    >\n      <span style=\"position : absolute; left: 0px;\">λ : {{coordinate4258[0]}}</span>\n    </md-grid-tile>\n    <md-grid-tile\n        *ngIf=\"coordinate4258\"\n        colspan=1\n        [rowspan]=1\n    >\n     <span style=\"position : absolute; left: 0px;\">φ : {{coordinate4258[1]}}</span>\n    </md-grid-tile>\n\n  </md-grid-list>\n</div>"
+module.exports = "<button #btnToggle md-mini-fab (click)=\"toggleControl()\" class=\"mouse-position-button\" >\n  <md-icon *ngIf=\"containerVisibility == 'invisible' && active\">close</md-icon>\n  <md-icon *ngIf=\"containerVisibility == 'visible' || !active\">pin_drop</md-icon>\n</button>\n<div #mousePosition class=\"mouse-position-container\" [@collapsed]=\"containerVisibility\">\n  <md-grid-list cols=\"1\" rowHeight=\"20px\" *ngIf=\"coordinate25830 && coordinate4258\">\n    <md-grid-tile\n        class=\"title\"\n        style=\"max-height: 15px;\"\n        colspan=1\n        [rowspan]=1\n    >\n      ETRS89 UTM HUSO 30\n    </md-grid-tile>\n    <md-grid-tile\n        *ngIf=\"coordinate25830\"\n        colspan=1\n        [rowspan]=1\n    >\n      <span style=\"position : absolute; left: 0px;\">X : {{coordinate25830[0]}}</span>\n    </md-grid-tile>\n\n    <md-grid-tile\n        *ngIf=\"coordinate25830\"\n        colspan=1\n        [rowspan]=1\n    >\n      <span style=\"position : absolute; left: 0px;\">Y : {{coordinate25830[1]}}</span>\n    </md-grid-tile>\n    <md-grid-tile\n        *ngIf=\"coordinate4258\"\n        colspan=1\n        [rowspan]=1\n    >\n      <span style=\"position : absolute; left: 0px;\">λ : {{coordinate4258[0]}}</span>\n    </md-grid-tile>\n    <md-grid-tile\n        *ngIf=\"coordinate4258\"\n        colspan=1\n        [rowspan]=1\n    >\n     <span style=\"position : absolute; left: 0px;\">φ : {{coordinate4258[1]}}</span>\n    </md-grid-tile>\n\n  </md-grid-list>\n</div>"
 
 /***/ }),
 /* 1275 */
 /***/ (function(module, exports) {
 
-module.exports = "<div\r\n    id=\"profile-container\"\r\n    [ngClass]=\"{'opened' : profileGeom }\"\r\n>\r\n    <chart (load)=\"saveInstance($event.context)\" [options]=\"options\">\r\n        <series>\r\n            <point (mouseOver)=\"onSelectProfile($event)\"></point>\r\n        </series>\r\n    </chart>\r\n</div>"
+module.exports = "<div\r\n    id=\"profile-container\"\r\n    [ngClass]=\"{'opened' : profileGeom  && opened }\"\r\n>\r\n    <chart (load)=\"saveInstance($event.context)\" [options]=\"options\">\r\n        <series>\r\n            <point (mouseOver)=\"onSelectProfile($event)\" (mouseOut)=\"onDeselectProfile()\"></point>\r\n        </series>\r\n    </chart>\r\n</div>\r\n<button\r\n    (click)=\"setOpened(true)\"\r\n    *ngIf=\"profileGeom && !opened\"\r\n    md-mini-fab style=\"position : absolute; left : 0.5em; bottom : 0.5em;z-index : 2;\"\r\n>\r\n    <md-icon>terrain</md-icon>\r\n</button>\r\n<button\r\n(click)=\"setOpened(false)\"\r\n    *ngIf=\"profileGeom && opened\"\r\n    md-mini-fab style=\"position : absolute; left : 0.5em; bottom : 0.5em;z-index : 2;\"\r\n>\r\n    <md-icon>close</md-icon>\r\n</button>"
 
 /***/ }),
 /* 1276 */

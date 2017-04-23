@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
   pointLayer : ol.layer.Vector;
   drawProfileLayer : ol.layer.Vector;
   drawProfileInteraction : ol.interaction.Draw;
-
+  opened = false;
   events = [];
   
   profileGeom;
@@ -68,10 +68,10 @@ export class ProfileComponent implements OnInit {
         })
       ]
     });
-    this.pointLayer.set('showInLayerSwitcher', false);
-    this.drawProfileLayer.set('showInLayerSwitcher', false);
-    this.drawProfileLayer.set('name', 'DrawProfileLayer');
-    this.pointLayer.set('name', 'PointProfileLayer');
+    //this.pointLayer.set('showInLayerSwitcher', false);
+    //this.drawProfileLayer.set('showInLayerSwitcher', false);
+    //this.drawProfileLayer.set('name', 'DrawProfileLayer');
+    //this.pointLayer.set('name', 'PointProfileLayer');
   }
 
   loadInteraction(){
@@ -131,8 +131,10 @@ export class ProfileComponent implements OnInit {
       );
     });
     this.events.push(drawStart, drawEnd);
-    this.map.addLayer(this.drawProfileLayer);
-    this.map.addLayer(this.pointLayer);
+    //this.map.addLayer(this.drawProfileLayer);
+    //this.map.addLayer(this.pointLayer);
+    this.drawProfileLayer.setMap(this.map);
+    this.pointLayer.setMap(this.map);
     this.map.addInteraction(this.drawProfileInteraction);
   }
 
@@ -140,11 +142,18 @@ export class ProfileComponent implements OnInit {
     this.events.forEach( e => { ol.Observable.unByKey(e) });
     this.drawProfileLayer.getSource().clear();
     this.pointLayer.getSource().clear();
-    this.map.removeLayer(this.drawProfileLayer);
-    this.map.removeLayer(this.pointLayer);
+    //this.map.removeLayer(this.drawProfileLayer);
+    //this.map.removeLayer(this.pointLayer);
+    this.drawProfileLayer.setMap(null);
+    this.pointLayer.setMap(null);
+    
     this.map.removeInteraction(this.drawProfileInteraction);
     this.profileGeom = null;
     this.events = [];
+  }
+
+  setOpened(bool : boolean){
+    this.opened = bool;
   }
 
   saveInstance(chartInstance) {
@@ -189,6 +198,7 @@ export class ProfileComponent implements OnInit {
     }
     //console.log(dist, points[points.length - 1], i, points.length, points[i]);
     //console.log(this.dataChartArray);
+    this.setOpened(true);
     if(this.chart){
       if(this.chart.series[0]) this.chart.series[0].remove();
       this.zone.run(()=>{
@@ -212,6 +222,10 @@ export class ProfileComponent implements OnInit {
           { name : 'Perfil', data : this.dataChartArray }
         ]
     };
+  }
+  onDeselectProfile(){
+    this.pointLayer.getSource().clear();
+    this.pointLayer.getSource().changed();
   }
 
   onSelectProfile(event){

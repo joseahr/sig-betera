@@ -4,9 +4,10 @@ LEFT JOIN Maps m ON m.id = um.id_map
 LEFT JOIN LATERAL (
     SELECT json_agg(ll) as layers
     FROM (
-        SELECT ul.*, l.*, 'layer' as type
+        SELECT ul.*, l.*, 'layer' as type, COALESCE(rl.rol::text, 'r'::text) AS rol
         FROM Map_Layers ul
-        LEFT JOIN Layers l ON l.id = ul.id_layer 
+        LEFT JOIN Layers l ON l.id = ul.id_layer
+        LEFT JOIN Roles rl ON rl.id_user = ${id_user} AND rl.id_layer = ul.id_layer
         WHERE ul.id_map = m.id
     ) ll
 ) lay ON TRUE

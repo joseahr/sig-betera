@@ -1,10 +1,24 @@
 <div
     id="profile-container"
-    [ngClass]="{'opened' : profileGeom }"
+    [ngClass]="{'opened' : profileGeom  && opened }"
 >
     <chart (load)="saveInstance($event.context)" [options]="options">
         <series>
-            <point (mouseOver)="onSelectProfile($event)"></point>
+            <point (mouseOver)="onSelectProfile($event)" (mouseOut)="onDeselectProfile()"></point>
         </series>
     </chart>
 </div>
+<button
+    (click)="setOpened(true)"
+    *ngIf="profileGeom && !opened"
+    md-mini-fab style="position : absolute; left : 0.5em; bottom : 0.5em;z-index : 2;"
+>
+    <md-icon>terrain</md-icon>
+</button>
+<button
+(click)="setOpened(false)"
+    *ngIf="profileGeom && opened"
+    md-mini-fab style="position : absolute; left : 0.5em; bottom : 0.5em;z-index : 2;"
+>
+    <md-icon>close</md-icon>
+</button>

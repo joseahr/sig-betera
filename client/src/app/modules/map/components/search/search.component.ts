@@ -183,6 +183,13 @@ export class SearchComponent implements OnInit {
           features
             .forEach( d => d.found.features.forEach( (f : any) => f.properties.data_urls = (f.properties.data_urls || []).map(du => du.url) ) );
           //features.forEach(f => console.log(f.layername))
+          if(!features.length){ 
+            this.snackbar.open('No se encontraron features', null, { duration : 2000 });
+            return setTimeout( ()=>{
+                let msg = this.activeInteraction == SearchInteraction.Point ? 'Haz click' : 'Dibuja un recuadro';
+                this.snackbar.open(`${msg} para realizar la búsqueda`, 'CERRAR');
+            }, 2000);
+          }
           this.found = features;
           this.map.render();
           //console.log(features, 'featurrees');
@@ -220,7 +227,9 @@ export class SearchComponent implements OnInit {
       this.searchLayer.getSource().clear();
       //this.dialogCollapsed = false;
       this.snackbar._openedSnackBarRef ? this.snackbar._openedSnackBarRef.dismiss() : '';
-      this.map.removeLayer(this.searchLayer);
+      //this.map.removeLayer(this.searchLayer);
+      this.searchLayer.setMap(null);
+
       this.state = 'invisible';
       this.closeState = 'invisible';
     } else {
@@ -232,9 +241,7 @@ export class SearchComponent implements OnInit {
   }
 
   addLayer(){
-    if(!this.map.getLayers().getArray().find( l => l.get('name') == 'SearchLayer')){
-      this.map.addLayer(this.searchLayer);
-    }
+    this.searchLayer.setMap(this.map);
   }
 
   setInteraction(interaction : SearchInteraction){

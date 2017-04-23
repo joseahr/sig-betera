@@ -70,3 +70,22 @@ exports.router
         .then(function (baseLayer) { return res.status(200).json(baseLayer); })
         .catch(function (err) { return res.status(404).json(err); });
 });
+exports.router
+    .get('/:id_layer/geojson', function (req, res, next) {
+    if (!req.user)
+        return res.status(401).json({ msg: 'No permitido' });
+    var id_layer = req.params.id_layer;
+    console.log('id_layer as geojson', id_layer);
+    // Solo se permitirá el acceso si tiene permiso de editar/eliminar
+    db_1.db.roles.hasPerms(req.user.id, id_layer, 'e', 'd').then(function (perm) {
+        if (!perm)
+            return res.status(403).json({ msg: 'No permitido' });
+        db_1.db.layers.getLayerNames(id_layer).then(function (layerName) {
+            if (!layerName[0])
+                return res.status(404).json({ msg: 'No existe la capa' });
+            layerName = layerName[0].name;
+            db_1.db.layers.getLayerAsGeoJSON(layerName).then(function (layer) { return res.status(200).json(layer); });
+        });
+    })
+        .catch(function (err) { return res.status(500).json(err); });
+});

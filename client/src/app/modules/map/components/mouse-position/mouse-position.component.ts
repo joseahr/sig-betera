@@ -35,7 +35,7 @@ export class MousePositionComponent implements OnInit {
 
   containerVisibility : string = 'invisible';
 
-  active : Boolean = true;
+  active : Boolean = false;
 
   proj25830;
   proj4258;
@@ -56,7 +56,7 @@ export class MousePositionComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.addListener();
+    //this.addListener();
     this.proj4258 = this.projectionService.getDefaultProjection(4258);
     this.proj25830 = this.projectionService.getDefaultProjection(25830);
     this.name25830 = this.projectionService.defaultProjections[0].name;

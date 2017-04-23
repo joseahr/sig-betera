@@ -69,3 +69,20 @@ router
     .then( ( baseLayer : any ) => res.status(200).json(baseLayer) )
     .catch( ( err : any ) => res.status(404).json(err) );
 });
+
+router
+.get('/:id_layer/geojson', (req, res, next)=>{
+    if(!req.user) return res.status(401).json({ msg : 'No permitido' });
+    let { id_layer } = req.params;
+    console.log('id_layer as geojson', id_layer);
+    // Solo se permitirá el acceso si tiene permiso de editar/eliminar
+    db.roles.hasPerms(req.user.id, id_layer, 'e', 'd').then( perm => {
+        if(!perm) return res.status(403).json({ msg : 'No permitido' });
+        db.layers.getLayerNames(id_layer).then( layerName =>{
+            if(!layerName[0]) return res.status(404).json({ msg : 'No existe la capa' })
+            layerName = layerName[0].name;
+            db.layers.getLayerAsGeoJSON(layerName).then( layer => res.status(200).json(layer) );
+        })
+    })
+    .catch( err => res.status(500).json(err) );
+});

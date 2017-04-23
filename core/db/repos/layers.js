@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var sqlProvider = require("../sql");
 var child_process_1 = require("child_process");
 var config_1 = require("../../config");
-var spawn = require('bluebird').promisify(child_process_1.exec);
+var exec = require('bluebird').promisify(child_process_1.exec);
 var sql = sqlProvider.layers;
 /*
  This repository mixes hard-coded and dynamic SQL,
@@ -47,7 +47,7 @@ var Repository = (function () {
         //require('fs').readFile(`${shpPath}`, (err, file)=>console.log(err, file, 'guaa'));
         var command = "shp2pgsql -I -s 25830 -W \"LATIN1\" " + shpPath + " \"capas\".\"" + tableName + "\" | psql -d " + config_1.dbConfig.database + " -U postgres";
         console.log(command);
-        return spawn(command, { env: { 'PGPASSWORD': config_1.dbConfig.password } });
+        return exec(command, { env: { 'PGPASSWORD': config_1.dbConfig.password } });
         /*let proceso = exec(command, { env : { 'PGPASSWORD' : dbConfig.password} })
         proceso.stdout.on('data', (data)=>{
             console.log('stdout', data);
@@ -108,21 +108,23 @@ var Repository = (function () {
     // Obtener una capa como GeoJSON
     Repository.prototype.getLayerAsGeoJSON = function (layerName) {
         var _this = this;
+        var geomColumn, properties;
         return this.getLayerSchema(layerName)
             .then(function (schema) {
             // Obtenemos todas las columnas de la Tabla (schema)
-            var geomColumn = schema.find(function (col) { return col.type === 'USER-DEFINED' && col.udt === 'geometry'; }).name;
+            geomColumn = schema.find(function (col) { return col.type === 'USER-DEFINED' && col.udt === 'geometry'; }).name;
             // Obtenemos la columna de Geometría (para ello nos fijamos en el udt_name)
-            var properties = schema.filter(function (col) { return col.name !== geomColumn; });
+            properties = schema.filter(function (col) { return col.name !== geomColumn; });
             //console.log('geomColum :', geomColumn, 'properties :', properties)
             return _this.db.one(sql.getLayerAsGeoJSON, {
                 geomColumn: _this.pgp.as.name(geomColumn),
                 properties: properties.map(function (prop) { return _this.pgp.as.name(prop.name); }).join(),
                 layerName: layerName
             })
+                .then(function (layer) { return layer.result; })
                 .then(function (layer) {
                 return _this.getLayerGeometryType(layerName, geomColumn)
-                    .then(function (geomColumnType) { return ({ layerName: layerName, geomColumnType: geomColumnType, layer: layer.result }); });
+                    .then(function (geomColumnType) { return ({ layerName: layerName, geomColumn: geomColumn, properties: properties, geomColumnType: geomColumnType, layer: layer }); });
             });
         });
     };

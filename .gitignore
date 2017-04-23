@@ -1,4 +1,4 @@
-**/**.backup
+**/*.backup
 
 **/node_modules
 **/config/**

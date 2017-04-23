@@ -1,9 +1,9 @@
 import { IDatabase, IMain } from 'pg-promise';
 import sqlProvider = require('../sql');
-import { exec } from 'child_process';
+import { exec as exec_ } from 'child_process';
 import { dbConfig } from '../../config';
 
-const spawn = require('bluebird').promisify(exec);
+const exec = require('bluebird').promisify(exec_);
 
 var sql = sqlProvider.layers;
 
@@ -65,7 +65,7 @@ export class Repository {
         //require('fs').readFile(`${shpPath}`, (err, file)=>console.log(err, file, 'guaa'));
         let command = `shp2pgsql -I -s 25830 -W "LATIN1" ${shpPath} "capas"."${tableName}" | psql -d ${dbConfig.database} -U postgres`;
         console.log(command);
-        return spawn(command, { env : { 'PGPASSWORD' : dbConfig.password} });
+        return exec(command, { env : { 'PGPASSWORD' : dbConfig.password} });
         /*let proceso = exec(command, { env : { 'PGPASSWORD' : dbConfig.password} })
         proceso.stdout.on('data', (data)=>{
             console.log('stdout', data);
@@ -131,12 +131,13 @@ export class Repository {
 
     // Obtener una capa como GeoJSON
     getLayerAsGeoJSON(layerName : string){
+        let geomColumn : any, properties : any[];
         return this.getLayerSchema(layerName)
         .then( ( schema : any ) =>{
             // Obtenemos todas las columnas de la Tabla (schema)
-            let geomColumn = schema.find( ( col : any )=> col.type === 'USER-DEFINED' && col.udt === 'geometry' ).name;
+            geomColumn = schema.find( ( col : any )=> col.type === 'USER-DEFINED' && col.udt === 'geometry' ).name;
             // Obtenemos la columna de Geometría (para ello nos fijamos en el udt_name)
-            let properties = schema.filter( ( col : any ) => col.name !== geomColumn );
+            properties = schema.filter( ( col : any ) => col.name !== geomColumn );
             //console.log('geomColum :', geomColumn, 'properties :', properties)
             return this.db.one(sql.getLayerAsGeoJSON, {
                 geomColumn : this.pgp.as.name(geomColumn),
@@ -145,9 +146,10 @@ export class Repository {
             })
             // Devolvemos un objeto 
             // {layerName : 'Nombre de la capa', layer : 'Capa en formato GeoJSON'}
+            .then( ( layer : any) => layer.result)
             .then( ( layer : any ) =>{
                 return this.getLayerGeometryType(layerName, geomColumn)
-                .then( ( geomColumnType : any ) => ({ layerName, geomColumnType, layer : layer.result }))
+                .then( ( geomColumnType : any ) => ({ layerName, geomColumn, properties, geomColumnType, layer }))
             })
         })
     }

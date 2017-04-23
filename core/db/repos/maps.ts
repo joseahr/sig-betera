@@ -53,8 +53,8 @@ export class Repository {
         });
     }
 
-    getDefaultMaps(){
-        return this.db.any(sql.getDefaultMaps);
+    getDefaultMaps(id_user? : (string | number) ){
+        return this.db.any(sql.getDefaultMaps, { id_user });
     }
 
     getMapById(id : number){
@@ -65,9 +65,9 @@ export class Repository {
         return this.db.any(sql.getAllMaps);
     }
 
-  	getMapsAndLayers(id_user: (string | number)) {
+  	getMapsAndLayers(id_user?: (string | number)) {
   		return this.db.task(t => {
-  			var queries = [t.maps.getDefaultMaps()];
+  			var queries = [t.maps.getDefaultMaps(id_user)];
   			if (id_user) {
   				queries.push(t.maps.getMaps(id_user));
   			}

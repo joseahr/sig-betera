@@ -40,8 +40,8 @@ var Repository = (function () {
             id_user: this.pgp.as.value(id_user)
         });
     };
-    Repository.prototype.getDefaultMaps = function () {
-        return this.db.any(sql.getDefaultMaps);
+    Repository.prototype.getDefaultMaps = function (id_user) {
+        return this.db.any(sql.getDefaultMaps, { id_user: id_user });
     };
     Repository.prototype.getMapById = function (id) {
         return this.db.one(sql.byId, { id: id });
@@ -51,7 +51,7 @@ var Repository = (function () {
     };
     Repository.prototype.getMapsAndLayers = function (id_user) {
         return this.db.task(function (t) {
-            var queries = [t.maps.getDefaultMaps()];
+            var queries = [t.maps.getDefaultMaps(id_user)];
             if (id_user) {
                 queries.push(t.maps.getMaps(id_user));
             }
