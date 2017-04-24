@@ -2,7 +2,7 @@ import { exec as exec_ } from 'child_process';
 import { dbConfig } from '../../config';
 
 const exec = require('bluebird').promisify(exec_);
-let execOpts = { env : { 'PGPASSWORD' : dbConfig.password} };
+let execOpts = { env : { 'PGPASSWORD' : dbConfig.password } };
 
 async function existDatabase(){
     console.log(`Comprobando si existe la base de datos ${dbConfig.database}`);
@@ -27,7 +27,7 @@ async function createExtensions() {
 
 async function createTables() {
     console.log(`Creando las tablas del schema public`);
-    let command = `pg_restore --host localhost --port 5432 --username "${dbConfig.user}" --dbname "${dbConfig.database}" --no-password  --section pre-data --section post-data --schema public --verbose "db-only.backup"`;
+    let command = `pg_restore --host localhost --port 5432 --username "${dbConfig.user}" --dbname "${dbConfig.database}" --section pre-data --section post-data --schema public "db-only.backup"`;
     let promise = exec(command, execOpts);
     return await promise;
 }
@@ -48,16 +48,16 @@ async function createEventTriggers() {
 
 async function addCapas() {
     console.log(`Creando capas`);
-    let command = `pg_restore.exe --host localhost --port 5432 --username "${dbConfig.user}" --dbname "${dbConfig.database}" --no-password  --schema capas --verbose "capas.backup"`;
-    let promise = exec(command, execOpts);
+    let command = `pg_restore -U postgres --host localhost --port 5432 --username "${dbConfig.user}" --dbname "${dbConfig.database}" --section pre-data --section data --schema capas "capas.backup"`;
+    let promise = exec(command, { execOpts }).catch(err => console.log(err));
     return await promise;
 }
 
 async function addDatos(){
     console.log(`Añadiendo datos`)
-    let commandDisableTrigger = `psql -U ${dbConfig.user} -c "ALTER TABLE datos DISABLE TRIGGER trg_check_gid_layer_exists"`;
-    let commandEnableTrigger = `psql -U ${dbConfig.user} -c "ALTER TABLE datos ENABLE TRIGGER trg_check_gid_layer_exists"`;
-    let commandAdd = `pg_restore.exe --host localhost --port 5432 --username "${dbConfig.user}" --dbname "${dbConfig.database}" --no-password  --data-only --table datos --schema public --verbose "tabla-datos.backup"`;
+    let commandDisableTrigger = `psql -U ${dbConfig.user} -d "${dbConfig.database}" -c "ALTER TABLE datos DISABLE TRIGGER trg_check_gid_layer_exists"`;
+    let commandEnableTrigger = `psql -U ${dbConfig.user} -d "${dbConfig.database}" -c "ALTER TABLE datos ENABLE TRIGGER trg_check_gid_layer_exists"`;
+    let commandAdd = `pg_restore --host localhost --port 5432 --username "${dbConfig.user}" --dbname "${dbConfig.database}" --section data --table datos --schema public --verbose "tabla-datos.backup"`;
     await exec(commandDisableTrigger, execOpts);
     await exec(commandAdd);
     await exec(commandEnableTrigger, execOpts);
@@ -77,3 +77,4 @@ async function create(){
 }
 
 create();
+// C:/Program Files/PostgreSQL/9.5/bin\pg_restore.exe --host localhost --port 5432 --username "postgres" --dbname "Betera-test" --no-password  --schema capas --verbose "D:\Programacion\sig-betera\core\db\create-db\capas.backup"

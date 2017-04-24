@@ -91,7 +91,7 @@ function createTables() {
             switch (_a.label) {
                 case 0:
                     console.log("Creando las tablas del schema public");
-                    command = "pg_restore --host localhost --port 5432 --username \"" + config_1.dbConfig.user + "\" --dbname \"" + config_1.dbConfig.database + "\" --no-password  --section pre-data --section post-data --schema public --verbose \"db-only.backup\"";
+                    command = "pg_restore --host localhost --port 5432 --username \"" + config_1.dbConfig.user + "\" --dbname \"" + config_1.dbConfig.database + "\" --section pre-data --section post-data --schema public \"db-only.backup\"";
                     promise = exec(command, execOpts);
                     return [4 /*yield*/, promise];
                 case 1: return [2 /*return*/, _a.sent()];
@@ -136,8 +136,8 @@ function addCapas() {
             switch (_a.label) {
                 case 0:
                     console.log("Creando capas");
-                    command = "pg_restore.exe --host localhost --port 5432 --username \"" + config_1.dbConfig.user + "\" --dbname \"" + config_1.dbConfig.database + "\" --no-password  --schema capas --verbose \"capas.backup\"";
-                    promise = exec(command, execOpts);
+                    command = "pg_restore -U postgres --host localhost --port 5432 --username \"" + config_1.dbConfig.user + "\" --dbname \"" + config_1.dbConfig.database + "\" --section pre-data --section data --schema capas \"capas.backup\"";
+                    promise = exec(command, { execOpts: execOpts }).catch(function (err) { return console.log(err); });
                     return [4 /*yield*/, promise];
                 case 1: return [2 /*return*/, _a.sent()];
             }
@@ -151,9 +151,9 @@ function addDatos() {
             switch (_a.label) {
                 case 0:
                     console.log("A\u00F1adiendo datos");
-                    commandDisableTrigger = "psql -U " + config_1.dbConfig.user + " -c \"ALTER TABLE datos DISABLE TRIGGER trg_check_gid_layer_exists\"";
-                    commandEnableTrigger = "psql -U " + config_1.dbConfig.user + " -c \"ALTER TABLE datos ENABLE TRIGGER trg_check_gid_layer_exists\"";
-                    commandAdd = "pg_restore.exe --host localhost --port 5432 --username \"" + config_1.dbConfig.user + "\" --dbname \"" + config_1.dbConfig.database + "\" --no-password  --data-only --table datos --schema public --verbose \"tabla-datos.backup\"";
+                    commandDisableTrigger = "psql -U " + config_1.dbConfig.user + " -d \"" + config_1.dbConfig.database + "\" -c \"ALTER TABLE datos DISABLE TRIGGER trg_check_gid_layer_exists\"";
+                    commandEnableTrigger = "psql -U " + config_1.dbConfig.user + " -d \"" + config_1.dbConfig.database + "\" -c \"ALTER TABLE datos ENABLE TRIGGER trg_check_gid_layer_exists\"";
+                    commandAdd = "pg_restore --host localhost --port 5432 --username \"" + config_1.dbConfig.user + "\" --dbname \"" + config_1.dbConfig.database + "\" --section data --table datos --schema public --verbose \"tabla-datos.backup\"";
                     return [4 /*yield*/, exec(commandDisableTrigger, execOpts)];
                 case 1:
                     _a.sent();
@@ -205,3 +205,4 @@ function create() {
     });
 }
 create();
+// C:/Program Files/PostgreSQL/9.5/bin\pg_restore.exe --host localhost --port 5432 --username "postgres" --dbname "Betera-test" --no-password  --schema capas --verbose "D:\Programacion\sig-betera\core\db\create-db\capas.backup" 

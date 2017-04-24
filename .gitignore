@@ -1,4 +1,5 @@
-**/*.backup
+**/tabla-datos.backup
+**/capas.backup
 
 **/node_modules
 **/config/**
