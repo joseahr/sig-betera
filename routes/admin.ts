@@ -169,10 +169,22 @@ router.route('/maps/order')
     handle(db.admin.addMapOrder(id_map, order), res);
 });
 
-
 router.route('/layers')
 .get( (req, res)=>{
-    handleWithData(db.layers.getAllLayers(), res);
+    let opts = {
+        method : 'GET', uri : `http://localhost:8080/geoserver/rest/layers.json`,
+        headers : { Authorization : 'Basic ' + btoa('admin:geoserver') }
+    }
+    let promises = Promise.all([  db.layers.getAllLayers(), request(opts) ])
+    .then( ([layers, publishedLayers])=>{
+        console.log(layers, 'aaaaa', publishedLayers);
+        let publishedNames = JSON.parse(publishedLayers).layers.layer.map( l => l.name );
+        return (layers || []).map( (layer)=>{
+            return Object.assign(layer, { published : publishedNames.includes(layer.name) });
+        });
+    });
+
+    handleWithData(promises, res);
 })
 .put( (req, res)=>{
     let { old_name , new_name } = req.body;
@@ -219,6 +231,36 @@ router.route('/layers')
 .delete( (req, res)=>{
     let { tableName } = req.body;
     handle(db.admin.removeLayer(tableName), res);
+});
+
+router
+.route('/layers/geoserver/:name')
+.get( (req, res)=>{
+    let { name } = req.params;
+    if(!req.params.name) return handle(Promise.reject('No se ha proporcionado id de la capa a publicar'), res);
+    let opts = {
+        method : 'POST', uri : `http://localhost:8080/geoserver/rest/workspaces/betera-workspace/datastores/betera-postgis/featuretypes`,
+        headers : { Authorization : 'Basic ' + btoa('admin:geoserver'), "Content-Type" :  'application/json' },
+        body : JSON.stringify({ featureType : { name } })
+    }
+    let promise : any = request(opts);
+    handleWithData(promise, res);
+})
+.delete( (req, res)=>{
+    let { name } = req.params;
+    if(!req.params.name) return handle(Promise.reject('No se ha proporcionado id de la capa a publicar'), res);
+    let optsLayer = {
+        method : 'DELETE', 
+        uri : `http://localhost:8080/geoserver/rest/layers/${name}`,
+        headers : { Authorization : 'Basic ' + btoa('admin:geoserver') }
+    }
+    let optsFeatureType = {
+        method : 'DELETE', 
+        uri : `http://localhost:8080/geoserver/rest/workspaces/betera-workspace/datastores/betera-postgis/featuretypes/${name}`,
+        headers : { Authorization : 'Basic ' + btoa('admin:geoserver') }
+    }
+    let promise : any = request(optsLayer).then(()=> request(optsFeatureType));
+    handleWithData(promise, res);  
 });
 
 router.route('/baselayers')

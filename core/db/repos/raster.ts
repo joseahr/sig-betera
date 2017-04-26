@@ -33,16 +33,11 @@ export class Repository {
     private pgp:IMain;
 
     getProfile( lineString : string ){
+        console.log('profile');
 
-        let geom;
-        // Comprobar que es un lineString valido
-        try {
-            geom = reader.read(lineString);
-            if (geom.getGeometryType() != 'LineString')
-                throw new Error('Debe pasar un LineString como parámetro');
-        }
-        catch(e){
-            return Promise.reject('WKT no válido:' + e);
+        let geom = reader.read(lineString);
+        if (geom.getGeometryType() != 'LineString'){
+            return Promise.reject('WKT no válido: Debe pasar un LineString como parámetro');
         }
         // Comprobar que está dentro de  los límites de Bétera
 
@@ -51,6 +46,6 @@ export class Repository {
         let step   = getStep(length);
         // Obtener el número de puntos a usar para obtener el perfil
         // de acuerdo a la longitud del lineString pasado
-        return this.db.one(sql.perfil, { wkt : `SRID=${SRID};${lineString}` })
+        return this.db.one(sql.perfil, { wkt : `SRID=${SRID};${lineString}` });
     }
 }

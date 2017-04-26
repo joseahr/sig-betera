@@ -285,7 +285,7 @@ export class MapComponent implements OnInit {
               }
           })
       });
-
+      tile.set('service', opts.service_url);
       tile.set('name', opts.name);
       tile.set('type', opts.type);
       tile.set('rol', opts.rol);

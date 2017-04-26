@@ -24,12 +24,12 @@ import { Map } from 'openlayers';
   animations: [
     trigger('collapsed', [
       state('invisible', style({
-        transform : 'translateX(-100%)',
+        transform : 'translateY(-200%)',
         opacity : 0,
         display : 'none'
       })),
       state('visible', style({
-        transform : 'translateX(0%)',
+        transform : 'translateY(0%)',
         opacity : 1,
         display : ''
       })),
@@ -166,4 +166,10 @@ export class LayerSwitcherComponent implements OnInit {
     .setOpacity(event.value);
   }
 
+  getOpacity(layer : ol.layer.Layer){
+    if(layer.getSource().getState() == 'ready'  ) return 1;
+    if(layer.getSource().getState() == 'loading') return 0.75;
+    if(layer.getSource().getState() == 'error' || 
+       layer.getSource().getState() == 'undefined'  ) return 0.4;
+  }
 }

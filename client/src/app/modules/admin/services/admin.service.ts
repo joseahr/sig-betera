@@ -148,4 +148,12 @@ export class AdminService {
         return this.http.post('/api/admin/mail/send', { titulo, cuerpo, destinatarios });
     }
 
+    publishLayer(name : string){
+        return this.http.get(`/api/admin/layers/geoserver/${name}`);
+    }
+
+    unpublishLayer(name : string){
+        return this.http.delete(`/api/admin/layers/geoserver/${name}`);
+    }
+
 }

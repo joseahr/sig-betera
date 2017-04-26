@@ -71,6 +71,14 @@ export class AdminLayersComponent implements OnInit {
         { title: 'ID', data: 'id'}, 
         { title: 'Nombre', data: 'name' }, 
         { title: 'OID', data: 'oid' },
+        { title: 'Publicada GS', data: 'published' },
+        {
+          title : 'Publicar/Eliminar de GS',
+          defaultContent : `
+          <button md-button class="mat-button publish-layer">
+            <md-icon style="color : #00bbff" class="material-icons mat-icon">publish</md-icon>
+          </button>`
+        },
       ]
     };
 
@@ -99,7 +107,7 @@ export class AdminLayersComponent implements OnInit {
         { title: 'ID', data: 'id'}, 
         { title: 'Nombre', data: 'name' }, 
         { title: 'Capas', data: 'layers' }, 
-        { title: 'URL', data: 'service_url' },
+        { title: 'URL', data: 'service_url' }
       ]
     };
   }
@@ -137,6 +145,11 @@ export class AdminLayersComponent implements OnInit {
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();
         self.openEditLayerNameDialog(row);
+      });
+      dtInstance.on('click', '.publish-layer', function(){
+        let row_dom = $(this).closest('tr');
+        let row = dtInstance.row(row_dom).data();
+        self.publishLayer(row);
       });
     });
     this.dtElements._results[1].dtInstance.then(dtInstance =>{
@@ -180,6 +193,21 @@ export class AdminLayersComponent implements OnInit {
         if(data) this.dtInstances[0].ajax.reload();
       }
     )
+  }
+
+  publishLayer(data){
+    let { published, name } = data;
+    let obs;
+    this.loading.setValue(true);
+    if(published){
+      obs = this.adminService.unpublishLayer(name);
+    } else {
+      obs = this.adminService.publishLayer(name);
+    }
+    obs.subscribe(()=>{
+      this.dtInstances[0].ajax.reload();
+      this.loading.setValue(false);
+    });
   }
 
 }

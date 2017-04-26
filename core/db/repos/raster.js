@@ -19,15 +19,10 @@ var Repository = (function () {
         this.pgp = pgp; // library's root, if ever needed;
     }
     Repository.prototype.getProfile = function (lineString) {
-        var geom;
-        // Comprobar que es un lineString valido
-        try {
-            geom = reader.read(lineString);
-            if (geom.getGeometryType() != 'LineString')
-                throw new Error('Debe pasar un LineString como parámetro');
-        }
-        catch (e) {
-            return Promise.reject('WKT no válido:' + e);
+        console.log('profile');
+        var geom = reader.read(lineString);
+        if (geom.getGeometryType() != 'LineString') {
+            return Promise.reject('WKT no válido: Debe pasar un LineString como parámetro');
         }
         // Comprobar que está dentro de  los límites de Bétera
         // Obtener la longitud del lineString

@@ -6,6 +6,8 @@ var mailer = require("../core/mailer");
 var capabilitiesParser = require("../core/capabilities-parser");
 var path = require("path");
 var Multer = require("../core/multer");
+var btoa = require("btoa");
+var request = require("request-promise");
 var multer = Multer.createMulter(Multer.TEMP_DIR_SHP, Multer.fileNameSHP, 50 * 1024 * 1024).array('shp[]', 3); // .shp .dbf .shx;
 exports.router = express.Router();
 exports.router.use(function (req, res, next) {
@@ -153,7 +155,20 @@ exports.router.route('/maps/order')
 });
 exports.router.route('/layers')
     .get(function (req, res) {
-    handleWithData(db_1.db.layers.getAllLayers(), res);
+    var opts = {
+        method: 'GET', uri: "http://localhost:8080/geoserver/rest/layers.json",
+        headers: { Authorization: 'Basic ' + btoa('admin:geoserver') }
+    };
+    var promises = Promise.all([db_1.db.layers.getAllLayers(), request(opts)])
+        .then(function (_a) {
+        var layers = _a[0], publishedLayers = _a[1];
+        console.log(layers, 'aaaaa', publishedLayers);
+        var publishedNames = JSON.parse(publishedLayers).layers.layer.map(function (l) { return l.name; });
+        return (layers || []).map(function (layer) {
+            return Object.assign(layer, { published: publishedNames.includes(layer.name) });
+        });
+    });
+    handleWithData(promises, res);
 })
     .put(function (req, res) {
     var _a = req.body, old_name = _a.old_name, new_name = _a.new_name;
@@ -191,6 +206,37 @@ exports.router.route('/layers')
     .delete(function (req, res) {
     var tableName = req.body.tableName;
     handle(db_1.db.admin.removeLayer(tableName), res);
+});
+exports.router
+    .route('/layers/geoserver/:name')
+    .get(function (req, res) {
+    var name = req.params.name;
+    if (!req.params.name)
+        return handle(Promise.reject('No se ha proporcionado id de la capa a publicar'), res);
+    var opts = {
+        method: 'POST', uri: "http://localhost:8080/geoserver/rest/workspaces/betera-workspace/datastores/betera-postgis/featuretypes",
+        headers: { Authorization: 'Basic ' + btoa('admin:geoserver'), "Content-Type": 'application/json' },
+        body: JSON.stringify({ featureType: { name: name } })
+    };
+    var promise = request(opts);
+    handleWithData(promise, res);
+})
+    .delete(function (req, res) {
+    var name = req.params.name;
+    if (!req.params.name)
+        return handle(Promise.reject('No se ha proporcionado id de la capa a publicar'), res);
+    var optsLayer = {
+        method: 'DELETE',
+        uri: "http://localhost:8080/geoserver/rest/layers/" + name,
+        headers: { Authorization: 'Basic ' + btoa('admin:geoserver') }
+    };
+    var optsFeatureType = {
+        method: 'DELETE',
+        uri: "http://localhost:8080/geoserver/rest/workspaces/betera-workspace/datastores/betera-postgis/featuretypes/" + name,
+        headers: { Authorization: 'Basic ' + btoa('admin:geoserver') }
+    };
+    var promise = request(optsLayer).then(function () { return request(optsFeatureType); });
+    handleWithData(promise, res);
 });
 exports.router.route('/baselayers')
     .get(function (req, res) {

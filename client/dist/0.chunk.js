@@ -45052,6 +45052,11 @@ var AdminLayersComponent = (function () {
                 { title: 'ID', data: 'id' },
                 { title: 'Nombre', data: 'name' },
                 { title: 'OID', data: 'oid' },
+                { title: 'Publicada GS', data: 'published' },
+                {
+                    title: 'Publicar/Eliminar de GS',
+                    defaultContent: "\n          <button md-button class=\"mat-button publish-layer\">\n            <md-icon style=\"color : #00bbff\" class=\"material-icons mat-icon\">publish</md-icon>\n          </button>"
+                },
             ]
         };
         this.dtOptionsBase = {
@@ -45076,7 +45081,7 @@ var AdminLayersComponent = (function () {
                 { title: 'ID', data: 'id' },
                 { title: 'Nombre', data: 'name' },
                 { title: 'Capas', data: 'layers' },
-                { title: 'URL', data: 'service_url' },
+                { title: 'URL', data: 'service_url' }
             ]
         };
     }
@@ -45110,6 +45115,11 @@ var AdminLayersComponent = (function () {
                 var row_dom = $(this).closest('tr');
                 var row = dtInstance.row(row_dom).data();
                 self.openEditLayerNameDialog(row);
+            });
+            dtInstance.on('click', '.publish-layer', function () {
+                var row_dom = $(this).closest('tr');
+                var row = dtInstance.row(row_dom).data();
+                self.publishLayer(row);
             });
         });
         this.dtElements._results[1].dtInstance.then(function (dtInstance) {
@@ -45146,6 +45156,22 @@ var AdminLayersComponent = (function () {
         dialog.afterClosed().subscribe(function (data) {
             if (data)
                 _this.dtInstances[0].ajax.reload();
+        });
+    };
+    AdminLayersComponent.prototype.publishLayer = function (data) {
+        var _this = this;
+        var published = data.published, name = data.name;
+        var obs;
+        this.loading.setValue(true);
+        if (published) {
+            obs = this.adminService.unpublishLayer(name);
+        }
+        else {
+            obs = this.adminService.publishLayer(name);
+        }
+        obs.subscribe(function () {
+            _this.dtInstances[0].ajax.reload();
+            _this.loading.setValue(false);
         });
     };
     __decorate([
@@ -46214,6 +46240,12 @@ var AdminService = (function () {
     };
     AdminService.prototype.sendMail = function (titulo, cuerpo, destinatarios) {
         return this.http.post('/api/admin/mail/send', { titulo: titulo, cuerpo: cuerpo, destinatarios: destinatarios });
+    };
+    AdminService.prototype.publishLayer = function (name) {
+        return this.http.get("/api/admin/layers/geoserver/" + name);
+    };
+    AdminService.prototype.unpublishLayer = function (name) {
+        return this.http.delete("/api/admin/layers/geoserver/" + name);
     };
     AdminService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
