@@ -1,63 +1,6 @@
 webpackJsonp([4,7],{
 
-/***/ 23:
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function() {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		var result = [];
-		for(var i = 0; i < this.length; i++) {
-			var item = this[i];
-			if(item[2]) {
-				result.push("@media " + item[2] + "{" + item[1] + "}");
-			} else {
-				result.push(item[1]);
-			}
-		}
-		return result.join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-
-/***/ }),
-
-/***/ 271:
+/***/ 299:
 /***/ (function(module, exports) {
 
 /*
@@ -310,16 +253,73 @@ function updateLink(linkElement, obj) {
 
 /***/ }),
 
-/***/ 458:
+/***/ 36:
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+
+/***/ }),
+
+/***/ 513:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(707);
+var content = __webpack_require__(861);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(271)(content, {});
+var update = __webpack_require__(299)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -337,16 +337,16 @@ if(false) {
 
 /***/ }),
 
-/***/ 459:
+/***/ 514:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(708);
+var content = __webpack_require__(862);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(271)(content, {});
+var update = __webpack_require__(299)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -364,16 +364,16 @@ if(false) {
 
 /***/ }),
 
-/***/ 460:
+/***/ 515:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(709);
+var content = __webpack_require__(863);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(271)(content, {});
+var update = __webpack_require__(299)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -391,10 +391,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 706:
+/***/ 860:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(23)();
+exports = module.exports = __webpack_require__(36)();
 // imports
 
 
@@ -406,10 +406,10 @@ exports.push([module.i, ".mat-elevation-z0{box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0
 
 /***/ }),
 
-/***/ 707:
+/***/ 861:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(23)();
+exports = module.exports = __webpack_require__(36)();
 // imports
 
 
@@ -421,10 +421,10 @@ exports.push([module.i, ".gu-mirror {\n  position: fixed !important;\n  margin: 
 
 /***/ }),
 
-/***/ 708:
+/***/ 862:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(23)();
+exports = module.exports = __webpack_require__(36)();
 // imports
 
 
@@ -436,30 +436,30 @@ exports.push([module.i, ".ol-control,.ol-scale-line{position:absolute;padding:2p
 
 /***/ }),
 
-/***/ 709:
+/***/ 863:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(23)();
+exports = module.exports = __webpack_require__(36)();
 // imports
-exports.i(__webpack_require__(706), "");
+exports.i(__webpack_require__(860), "");
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\nhtml, body {\n    margin : 0px;\n    width : 100%;\n    max-height : 100%;\n    overflow-x : hidden;\n}\n\n.overview-map > .ol-viewport {\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\n}\n\n.active-link {\n    background: #f3e5f5;\n    font-weight: bold;\n}\n\n\nchart {\n    width: 100% !important;\n    display : block;\n    height: 200px;\n}\n\n.ol-rotate {\n    top: 3em !important;\n}\n\n.card-margin {\n    margin : 15px 10px 5px 10px;\n}\n\nmd-toolbar {\n    position: fixed !important;\n}\n\n.admin-page-margin {\n    margin-top : 70px;\n}\n\ntable.dataTable td {\n    text-align: center;\n}\n\n.error-msg {\n    border-left: 3px solid #ff0000;\n    padding: 10px;\n    margin-top: 5px;\n    background: rgba(255, 0, 0, 0.15);\n}\n\n.loader {\n    background: rgba(0,0,0,0.3) !important;\n}\n\n.overflow-hidden {\n    overflow: hidden;\n}\n\n.paginate_button {\n    color : #000;\n    box-sizing: border-box;\n    position: relative;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    outline: 0;\n    border: none;\n    display: inline-block;\n    white-space: nowrap;\n    text-decoration: none;\n    vertical-align: baseline;\n    font-size: 14px;\n    font-family: Roboto,\"Helvetica Neue\",sans-serif;\n    font-weight: 500;\n    text-align: center;\n    margin: 0;\n    line-height: 36px;\n    padding: 0 16px;\n    border-radius: 2px;\n}\n\n.paginate_button.current {\n    background: #673ab7;\n    color : #fff;\n}\n\n.paginate_button:hover:not(.current){\n    background: rgba(0,0,0,0.2);\n}\n\n.dataTables_length label select {\n    width: 100%;\n    height: 30px;\n    border : 1px solid rgba(0,0,0,0.15);\n    background: #f7f7f7;\n}\n\n.dataTables_filter label input {\n    width: 100%;\n    height : 30px;\n    background: #f7f7f7;\n    margin-left: 0px !important;\n    margin-top: 5px;\n    border : 1px solid rgba(0,0,0,0.15);\n    -webkit-transition-property : border-color, border-size;\n    transition-property: border-color, border-size;\n    -webkit-transition-duration: 0.5s;\n            transition-duration: 0.5s;\n}\n\n.dataTables_filter label input:focus {\n    border-bottom: 3px solid #673ab7;\n}\n\n.dataTables_scroll {\n    overflow: hidden;\n}\n\n.dataTables_scrollBody {\n    padding-right: 17px;\n    margin-bottom: -12px;\n}\n\n.fp-controlArrow.fp-next {\n    bottom: 4.7em;\n    top: auto;\n}\n\n.fp-controlArrow.fp-prev {\n    bottom: 4.7em;\n    top: auto; \n}\n\n.mdl-data-table thead tr th {\n    text-align: center;\n}\n\n.mdl-data-table{position:relative;border:1px solid rgba(0,0,0,.12);border-collapse:collapse;white-space:nowrap;font-size:13px;background-color:#fff}.mdl-data-table thead{padding-bottom:3px}.mdl-data-table thead .mdl-data-table__select{margin-top:0}.mdl-data-table tbody tr{position:relative;height:48px;-webkit-transition-duration:.28s;transition-duration:.28s;-webkit-transition-timing-function:cubic-bezier(.4,0,.2,1);transition-timing-function:cubic-bezier(.4,0,.2,1);-webkit-transition-property : background-color;transition-property:background-color}.mdl-data-table tbody tr.is-selected{background-color:#e0e0e0}.mdl-data-table tbody tr:hover{background-color:#eee}.mdl-data-table td,.mdl-data-table th{padding:0 18px 12px;text-align:right}.mdl-data-table td:first-of-type,.mdl-data-table th:first-of-type{padding-left:24px}.mdl-data-table td:last-of-type,.mdl-data-table th:last-of-type{padding-right:24px}.mdl-data-table td,.mdl-data-table th{position:relative;height:48px;box-sizing:border-box}.mdl-data-table td{border-top:1px solid rgba(0,0,0,.12);border-bottom:1px solid rgba(0,0,0,.12);padding-top:12px;vertical-align:middle}.mdl-data-table td .mdl-data-table__select{vertical-align:middle}.mdl-data-table th{vertical-align:bottom;text-overflow:ellipsis;font-weight:700;line-height:24px;letter-spacing:0;font-size:12px;color:rgba(0,0,0,.54);padding-bottom:8px}.mdl-data-table th .mdl-data-table__header--sorted-ascending,.mdl-data-table th .mdl-data-table__header--sorted-descending{color:rgba(0,0,0,.87)}.mdl-data-table th .mdl-data-table__header--sorted-ascending:before,.mdl-data-table th .mdl-data-table__header--sorted-descending:before{font-family:'Material Icons';font-weight:400;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;word-wrap:normal;font-feature-settings:'liga';-webkit-font-feature-settings:'liga';-webkit-font-smoothing:antialiased}.mdl-data-table th .mdl-data-table__header--sorted-ascending:before{content:\"\\E5D8\"}.mdl-data-table th .mdl-data-table__header--sorted-descending:before{content:\"\\E5DB\"}.mdl-data-table__select{width:16px}.mdl-data-table__cell--non-numeric.mdl-data-table__cell--non-numeric{text-align:left}\n\nbody {\n    font-family: Roboto,\"Helvetica Neue\",sans-serif;\n}", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\nhtml, body {\n    margin : 0px;\n    width : 100%;\n    max-height : 100%;\n    overflow-x : hidden;\n}\n\n.overview-map > .ol-viewport {\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\n}\n\n.active-link {\n    background: #f3e5f5;\n    font-weight: bold;\n}\n\n\nchart {\n    width: 100% !important;\n    display : block;\n    height: 200px;\n}\n\n.ol-rotate {\n    top: 3em !important;\n}\n\n.card-margin {\n    margin : 15px 10px 5px 10px;\n}\n\nmd-toolbar {\n    position: fixed !important;\n}\n\n.admin-page-margin {\n    margin-top : 70px;\n}\n\ntable.dataTable td {\n    text-align: center;\n}\n\n.error-msg {\n    border-left: 3px solid #ff0000;\n    padding: 10px;\n    margin-top: 5px;\n    background: rgba(255, 0, 0, 0.15);\n}\n\n.loader {\n    background: rgba(0,0,0,0.3) !important;\n}\n\n.overflow-hidden {\n    overflow: hidden;\n}\n\n.paginate_button {\n    color : #000;\n    box-sizing: border-box;\n    position: relative;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    outline: 0;\n    border: none;\n    display: inline-block;\n    white-space: nowrap;\n    text-decoration: none;\n    vertical-align: baseline;\n    font-size: 14px;\n    font-family: Roboto,\"Helvetica Neue\",sans-serif;\n    font-weight: 500;\n    text-align: center;\n    margin: 0;\n    line-height: 36px;\n    padding: 0 16px;\n    border-radius: 2px;\n}\n\n.paginate_button.current {\n    background: #673ab7;\n    color : #fff;\n}\n\n.paginate_button:hover:not(.current){\n    background: rgba(0,0,0,0.2);\n}\n\n.dataTables_length label select {\n    width: 100%;\n    height: 30px;\n    border : 1px solid rgba(0,0,0,0.15);\n    background: #f7f7f7;\n}\n\n.dataTables_filter label input {\n    width: 100%;\n    height : 30px;\n    background: #f7f7f7;\n    margin-left: 0px !important;\n    margin-top: 5px;\n    border : 1px solid rgba(0,0,0,0.15);\n    -webkit-transition-property : border-color, border-size;\n    transition-property: border-color, border-size;\n    -webkit-transition-duration: 0.5s;\n            transition-duration: 0.5s;\n}\n\n.dataTables_filter label input:focus {\n    border-bottom: 3px solid #673ab7;\n}\n\n.dataTables_scroll {\n    overflow: hidden;\n}\n\n.dataTables_scrollBody {\n    /*padding-right: 17px;*/\n    margin-bottom: -12px;\n}\n\n.fp-controlArrow.fp-next {\n    bottom: 4.7em;\n    top: auto;\n}\n\n.fp-controlArrow.fp-prev {\n    bottom: 4.7em;\n    top: auto; \n}\n\n.mdl-data-table thead tr th {\n    text-align: center;\n}\n\n.mdl-data-table{position:relative;border:1px solid rgba(0,0,0,.12);border-collapse:collapse;white-space:nowrap;font-size:13px;background-color:#fff}.mdl-data-table thead{padding-bottom:3px}.mdl-data-table thead .mdl-data-table__select{margin-top:0}.mdl-data-table tbody tr{position:relative;height:48px;-webkit-transition-duration:.28s;transition-duration:.28s;-webkit-transition-timing-function:cubic-bezier(.4,0,.2,1);transition-timing-function:cubic-bezier(.4,0,.2,1);-webkit-transition-property : background-color;transition-property:background-color}.mdl-data-table tbody tr.is-selected{background-color:#e0e0e0}.mdl-data-table tbody tr:hover{background-color:#eee}.mdl-data-table td,.mdl-data-table th{padding:0 18px 12px;text-align:right}.mdl-data-table td:first-of-type,.mdl-data-table th:first-of-type{padding-left:24px}.mdl-data-table td:last-of-type,.mdl-data-table th:last-of-type{padding-right:24px}.mdl-data-table td,.mdl-data-table th{position:relative;height:48px;box-sizing:border-box}.mdl-data-table td{border-top:1px solid rgba(0,0,0,.12);border-bottom:1px solid rgba(0,0,0,.12);padding-top:12px;vertical-align:middle}.mdl-data-table td .mdl-data-table__select{vertical-align:middle}.mdl-data-table th{vertical-align:bottom;text-overflow:ellipsis;font-weight:700;line-height:24px;letter-spacing:0;font-size:12px;color:rgba(0,0,0,.54);padding-bottom:8px}.mdl-data-table th .mdl-data-table__header--sorted-ascending,.mdl-data-table th .mdl-data-table__header--sorted-descending{color:rgba(0,0,0,.87)}.mdl-data-table th .mdl-data-table__header--sorted-ascending:before,.mdl-data-table th .mdl-data-table__header--sorted-descending:before{font-family:'Material Icons';font-weight:400;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;word-wrap:normal;font-feature-settings:'liga';-webkit-font-feature-settings:'liga';-webkit-font-smoothing:antialiased}.mdl-data-table th .mdl-data-table__header--sorted-ascending:before{content:\"\\E5D8\"}.mdl-data-table th .mdl-data-table__header--sorted-descending:before{content:\"\\E5DB\"}.mdl-data-table__select{width:16px}.mdl-data-table__cell--non-numeric.mdl-data-table__cell--non-numeric{text-align:left}\n\nbody {\n    font-family: Roboto,\"Helvetica Neue\",sans-serif;\n}", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 746:
+/***/ 903:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(458);
-__webpack_require__(459);
-module.exports = __webpack_require__(460);
+__webpack_require__(513);
+__webpack_require__(514);
+module.exports = __webpack_require__(515);
 
 
 /***/ })
 
-},[746]);
+},[903]);
 //# sourceMappingURL=styles.bundle.js.map

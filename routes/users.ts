@@ -4,6 +4,7 @@ import { db } from '../core/db';
 import * as mailer from '../core/mailer';
 import { recaptcha } from '../core/recaptcha';
 
+import * as btoa from 'btoa';
 
 export let router = express.Router();
 
@@ -32,6 +33,8 @@ router.post('/login', (req: express.Request, res: express.Response, next: expres
     // Intentamos logearnos en la sesión
     req.logIn(user, err =>{
       // Enviamos un status 200
+      //res.setHeader('Authorization', 'Basic ' + btoa('admin:geoserver'));
+      //res.removeHeader('Authorization')
       res.status(200).json(user);
     });
   // llamamos a la función middleware que devuelve passport.authenticate() 
@@ -58,16 +61,17 @@ router.post('/signup', recaptcha.middleware.verify, (req, res, next)=>{
     console.log(err, user, token);
     if(err) 
       return res.status(500).json(err);
-
-    res.status(200).json({ user });
+    db.admin.createUserInGS(name, password)
+    .then( () => res.status(200).json({ user }) );
 
   })(req, res, next);
 });
 
-router.get('/logout', (req, res)=>{
+router.get('/logout', (req : Express.Request, res)=>{
   if(!req.user)
     return res.status(404).json('No hay usuario en la sesión');
   req.logout();
+  //res.removeHeader('Authorization');
   res.status(200).send('logged out');
 });
 

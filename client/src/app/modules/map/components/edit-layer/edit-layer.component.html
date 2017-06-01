@@ -1,0 +1,8 @@
+<md-card *ngIf="controlActive" style="position : absolute; bottom: 0.5em; left : 0.5em;">
+    <md-select [(ngModel)]="layerName" placeholder="Selecciona capa" (change)="layerChanged($event)">
+        <md-option *ngFor="let capa of getEditableLayerNames()" [value]="capa">{{ capa }}</md-option>
+    </md-select>
+    <md-select [disabled]="!editingLayer" [(ngModel)]="action" placeholder="Selecciona acción" (change)="actionChanged($event)">
+        <md-option *ngFor="let action of actions" [value]="action.action">{{action.text}}</md-option>
+    </md-select>
+</md-card>

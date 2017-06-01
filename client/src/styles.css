@@ -120,7 +120,7 @@ table.dataTable td {
 }
 
 .dataTables_scrollBody {
-    padding-right: 17px;
+    /*padding-right: 17px;*/
     margin-bottom: -12px;
 }
 

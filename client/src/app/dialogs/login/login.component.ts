@@ -29,9 +29,9 @@ export class LoginComponent {
     let { nameOrEmail, password } = this.userNotLoggedParams;
 
     this.authService.login(nameOrEmail, password).subscribe(
-      (result)=> {
-        this.dialogRef.close(result.json());
-        this.snackBar.open(`¡Hola de nuevo, ${result.json().name}!`, null, { duration : 1000 });
+      (user)=> {
+        this.dialogRef.close(user);
+        this.snackBar.open(`¡Hola de nuevo, ${user.name}!`, null, { duration : 1000 });
       },
       (err) =>{
         //console.log(err);

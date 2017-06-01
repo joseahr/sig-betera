@@ -5,12 +5,13 @@ export let router = express.Router();
 
 router
 .route('/')
-.get( (req, res)=>{
+.get( async (req, res)=>{
     let id = req.user ? req.user.id : null;
-    db.maps.getMapsAndLayers(id)
-    .then( ( mapsAndLayers : any ) => res.status(200).json(mapsAndLayers) )
-    .catch( ( err : any ) => {
+    try {
+        let mapsAndLayers = await db.maps.getMapsAndLayers(id);
+        res.status(200).json(mapsAndLayers);
+    } catch(err){
         console.log(err);
         res.status(500).json(err);
-    });
+    }
 });

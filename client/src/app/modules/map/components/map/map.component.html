@@ -27,6 +27,9 @@
       <button md-button (click)="toggleMeasureControl(2)" class="list-button" [style.background-color]="getBackgroundColor(measureControl.active && measureControl.activeInteraction == 2)">
         <md-icon>branding_watermark</md-icon>MEDIR ÁREA
       </button>
+      <button md-button (click)="toggleEditLayers()" class="list-button" [style.background-color]="getBackgroundColor(editLayerControl.controlActive)">
+        <md-icon>branding_watermark</md-icon>EDIRAR CAPAS
+      </button>
     </div>
 
     <button md-button class="list-button main" (click)="toggleMaps()">
@@ -65,5 +68,7 @@
   <app-measure [map]="map"></app-measure>
 
   <app-mouse-position [map]="map"></app-mouse-position>
+
+  <app-edit-layer [map]="map"></app-edit-layer>
 
 </md-sidenav-container>

@@ -19,8 +19,11 @@ import { MdSidenav, MdDialog } from '@angular/material';
 import * as ol from 'openlayers';
 import { ProjectionService, Profile3DService, UserMapsService, ExportMapService } from '../../services';
 import { routerTransition } from '../../../../router.transitions';
-import { ProfileComponent, LayerSwitcherComponent, AddWmsComponent, SearchComponent, MeasureComponent } from '../';
+import { ProfileComponent, LayerSwitcherComponent, AddWmsComponent, SearchComponent, MeasureComponent, EditLayerComponent } from '../';
 import { LoadingAnimateService } from 'ng2-loading-animate';
+declare const XMLHttpRequest : any;
+declare const unescape : any;
+declare const btoa : any;
 
 @Component({
   selector: 'app-map',
@@ -48,7 +51,7 @@ import { LoadingAnimateService } from 'ng2-loading-animate';
 })
 export class MapComponent implements OnInit {
   
-  DEVELOPMENT_GEOSERVER_URL = 'http://localhost:8080/geoserver/betera-workspace/wms';
+  DEVELOPMENT_GEOSERVER_URL = 'http://localhost:8080/geoserver/betera/wms';
   mapProperties : any;
   map : ol.Map;
   overviewCtrl : ol.Map;
@@ -65,6 +68,7 @@ export class MapComponent implements OnInit {
   @ViewChild(forwardRef(() => SearchComponent)) searchControl : SearchComponent;
   @ViewChild(forwardRef(() => ProfileComponent)) profileControl : ProfileComponent;
   @ViewChild(forwardRef(() => LayerSwitcherComponent)) layerSwitcherControl : LayerSwitcherComponent;
+  @ViewChild(forwardRef(() => EditLayerComponent)) editLayerControl : EditLayerComponent;
   @ViewChild('overviewMap') overviewMapEl : ElementRef;
   @ViewChildren('mapTools') toolsContainer : QueryList<ElementRef>;
   @ViewChild('sidenav') sidenav: MdSidenav;
@@ -92,7 +96,7 @@ export class MapComponent implements OnInit {
     this.route.params.subscribe(()=>this.addUserMaps());
     //this.map.getLayers().on('change:length', ()=>{ this.updateMapAndOverview() });
     this.customComponentsWithInteractions = [
-      this.searchControl, this.profileControl, this.measureControl
+      this.searchControl, this.profileControl, this.measureControl, this.editLayerControl
     ];
   }
 
@@ -247,6 +251,7 @@ export class MapComponent implements OnInit {
         let groupCapasMap = new ol.layer.Group();
         // Le damos un nombre
         groupCapasMap.set('name', mapa.name);
+        groupCapasMap.set('group_capas_map', true);
         groupCapasMap.set('collapsed', 'invisible');
         // Lo añadimos al mapa
         this.map.addLayer(groupCapasMap);
@@ -337,13 +342,21 @@ export class MapComponent implements OnInit {
     );
   }
 
+  toggleEditLayers(){
+    let active = !this.editLayerControl.controlActive;
+    if(active) this.disableControls();
+    this.editLayerControl.setActive(active);
+  }
+
   toggleMeasureControl(interaction?){
+    
     if(interaction && this.measureControl.activeInteraction != interaction){
       this.disableControls();
       this.measureControl.setActive(true, interaction);
       this.sidenav.close();
       return;
     }
+
     if(!this.measureControl.active) {
       this.disableControls();
       this.measureControl.setActive(true, interaction);

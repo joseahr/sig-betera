@@ -26,6 +26,7 @@
     "angular2-dropzone-wrapper": "^2.0.3",
     "angular2-highcharts": "^0.5.5",
     "angular2-recaptcha": "^0.3.7",
+    "btoa": "^1.1.2",
     "chart.js": "^2.5.0",
     "core-js": "^2.4.1",
     "datatables.net": "^1.10.13",
@@ -56,7 +57,9 @@
     "@types/node": "~6.0.60",
     "@types/openlayers": "^3.20.4",
     "@types/proj4": "^2.3.2",
+    "classlist.js": "^1.1.20150312",
     "codelyzer": "~2.0.0",
+    "intl": "^1.2.5",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "~1.4.1",
@@ -68,6 +71,7 @@
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.4.2",
-    "typescript": "~2.0.0"
+    "typescript": "~2.0.0",
+    "web-animations-js": "^2.2.5"
   }
 }

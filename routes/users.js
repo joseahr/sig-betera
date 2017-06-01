@@ -29,6 +29,8 @@ exports.router.post('/login', function (req, res, next) {
         // Intentamos logearnos en la sesión
         req.logIn(user, function (err) {
             // Enviamos un status 200
+            //res.setHeader('Authorization', 'Basic ' + btoa('admin:geoserver'));
+            //res.removeHeader('Authorization')
             res.status(200).json(user);
         });
         // llamamos a la función middleware que devuelve passport.authenticate() 
@@ -52,13 +54,15 @@ exports.router.post('/signup', recaptcha_1.recaptcha.middleware.verify, function
         console.log(err, user, token);
         if (err)
             return res.status(500).json(err);
-        res.status(200).json({ user: user });
+        db_1.db.admin.createUserInGS(name, password)
+            .then(function () { return res.status(200).json({ user: user }); });
     })(req, res, next);
 });
 exports.router.get('/logout', function (req, res) {
     if (!req.user)
         return res.status(404).json('No hay usuario en la sesión');
     req.logout();
+    //res.removeHeader('Authorization');
     res.status(200).send('logged out');
 });
 exports.router.get('/validate/:token', function (req, res) {

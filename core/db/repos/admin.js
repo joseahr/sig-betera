@@ -1,15 +1,30 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 var sqlProvider = require("../sql");
+var geoserver_1 = require("../geoserver");
+var GeoserverUser = new geoserver_1.GeoserverAdmin.Users;
 var sql = sqlProvider.admin;
 /*
  This repository mixes hard-coded and dynamic SQL,
  primarily to show a diverse example of using both.
  */
-var Repository = (function () {
+var Repository = (function (_super) {
+    __extends(Repository, _super);
     function Repository(db, pgp) {
-        this.db = db;
-        this.pgp = pgp; // library's root, if ever needed;
+        var _this = _super.call(this) || this;
+        _this.db = db;
+        _this.pgp = pgp; // library's root, if ever needed;
+        return _this;
     }
     // Creates the table;
     Repository.prototype.getUsers = function () {
@@ -136,5 +151,5 @@ var Repository = (function () {
         return this.db.none("DELETE FROM base_layers WHERE id = '${id#}'", { id: id });
     };
     return Repository;
-}());
+}(geoserver_1.GeoserverAdmin.Users));
 exports.Repository = Repository;

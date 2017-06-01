@@ -1,18 +1,31 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 var sqlProvider = require("../sql");
 var child_process_1 = require("child_process");
 var config_1 = require("../../config");
-var exec = require('bluebird').promisify(child_process_1.exec);
+var geoserver_1 = require("../geoserver");
 var sql = sqlProvider.layers;
 /*
  This repository mixes hard-coded and dynamic SQL,
  primarily to show a diverse example of using both.
  */
-var Repository = (function () {
+var Repository = (function (_super) {
+    __extends(Repository, _super);
     function Repository(db, pgp) {
-        this.db = db;
-        this.pgp = pgp; // library's root, if ever needed;
+        var _this = _super.call(this) || this;
+        _this.db = db;
+        _this.pgp = pgp; // library's root, if ever needed;
+        return _this;
     }
     // Devuelve las capas que aparecen en default_maps
     Repository.prototype.getDefaultLayers = function () {
@@ -47,7 +60,7 @@ var Repository = (function () {
         //require('fs').readFile(`${shpPath}`, (err, file)=>console.log(err, file, 'guaa'));
         var command = "shp2pgsql -I -s 25830 -W \"LATIN1\" " + shpPath + " \"capas\".\"" + tableName + "\" | psql -d " + config_1.dbConfig.database + " -U postgres";
         console.log(command);
-        return exec(command, { env: { 'PGPASSWORD': config_1.dbConfig.password } });
+        return child_process_1.exec(command, { env: { 'PGPASSWORD': config_1.dbConfig.password } });
         /*let proceso = exec(command, { env : { 'PGPASSWORD' : dbConfig.password} })
         proceso.stdout.on('data', (data)=>{
             console.log('stdout', data);
@@ -129,5 +142,5 @@ var Repository = (function () {
         });
     };
     return Repository;
-}());
+}(geoserver_1.GeoserverAdmin.Layers));
 exports.Repository = Repository;

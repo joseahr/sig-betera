@@ -6,8 +6,6 @@ import * as capabilitiesParser from '../core/capabilities-parser';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as Multer from '../core/multer';
-import * as btoa from 'btoa';
-import * as request from 'request-promise';
 
 const multer = Multer.createMulter(Multer.TEMP_DIR_SHP, Multer.fileNameSHP, 50*1024*1024).array('shp[]', 3) // .shp .dbf .shx;
 
@@ -170,15 +168,17 @@ router.route('/maps/order')
 });
 
 router.route('/layers')
-.get( (req, res)=>{
-    let opts = {
-        method : 'GET', uri : `http://localhost:8080/geoserver/rest/layers.json`,
-        headers : { Authorization : 'Basic ' + btoa('admin:geoserver') }
-    }
-    let promises = Promise.all([  db.layers.getAllLayers(), request(opts) ])
+.get( async (req, res)=>{
+
+    let promises = Promise.all([  db.layers.getAllLayers(), db.layers.getPublishedLayers() ])
     .then( ([layers, publishedLayers])=>{
-        console.log(layers, 'aaaaa', publishedLayers);
-        let publishedNames = JSON.parse(publishedLayers).layers.layer.map( l => l.name );
+        //console.log(layers, 'aaaaa', publishedLayers);
+        let publishedNames : string[];
+        try {
+            publishedNames = JSON.parse(publishedLayers).layers.layer.map( l => l.name );
+        } catch(e){
+            publishedNames = []
+        }
         return (layers || []).map( (layer)=>{
             return Object.assign(layer, { published : publishedNames.includes(layer.name) });
         });
@@ -238,28 +238,15 @@ router
 .get( (req, res)=>{
     let { name } = req.params;
     if(!req.params.name) return handle(Promise.reject('No se ha proporcionado id de la capa a publicar'), res);
-    let opts = {
-        method : 'POST', uri : `http://localhost:8080/geoserver/rest/workspaces/betera-workspace/datastores/betera-postgis/featuretypes`,
-        headers : { Authorization : 'Basic ' + btoa('admin:geoserver'), "Content-Type" :  'application/json' },
-        body : JSON.stringify({ featureType : { name } })
-    }
-    let promise : any = request(opts);
+
+    let promise : any = db.layers.publishLayerInGeoserver(name);
     handleWithData(promise, res);
 })
 .delete( (req, res)=>{
     let { name } = req.params;
     if(!req.params.name) return handle(Promise.reject('No se ha proporcionado id de la capa a publicar'), res);
-    let optsLayer = {
-        method : 'DELETE', 
-        uri : `http://localhost:8080/geoserver/rest/layers/${name}`,
-        headers : { Authorization : 'Basic ' + btoa('admin:geoserver') }
-    }
-    let optsFeatureType = {
-        method : 'DELETE', 
-        uri : `http://localhost:8080/geoserver/rest/workspaces/betera-workspace/datastores/betera-postgis/featuretypes/${name}`,
-        headers : { Authorization : 'Basic ' + btoa('admin:geoserver') }
-    }
-    let promise : any = request(optsLayer).then(()=> request(optsFeatureType));
+
+    let promise : any = db.layers.unpublishLayerInGeoserver(name);
     handleWithData(promise, res);  
 });
 
@@ -304,14 +291,22 @@ router.route('/mail/send')
     handle(mailer.sendHTMLMailTo(titulo, decodeURIComponent(cuerpo), ...destinatarios), res);
 });
 
-function handle(promise : Promise<any>, res : express.Response){
-    promise
-    .then(  ()=> res.status(200).json({ msg : 'OK' }) )
-    .catch( (err)=> res.status(500).json({ msg : err }) );
+async function handle(promise : Promise<any>, res : express.Response){7
+    try {
+        await promise;
+        res.status(200).json({ msg : 'OK' })
+    } catch(err){
+        console.log(err);
+        res.status(500).json({ msg : err })
+    }
 }
 
-function handleWithData(promise : Promise<any>, res : express.Response){
-    promise
-    .then(  (data)=> res.status(200).json(data) )
-    .catch( (err)=> res.status(500).json({ msg : err }) );
+async function handleWithData(promise : Promise<any>, res : express.Response){
+    try {
+        let data = await promise;
+        res.status(200).json(data)
+    } catch(err){
+        console.log(err);
+        res.status(500).json({ msg : err })
+    }
 }

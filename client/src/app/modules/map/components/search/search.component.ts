@@ -30,8 +30,9 @@ import { KeysPipe } from 'angular-pipes/src/object/keys.pipe';
 import { LoadingAnimateService } from 'ng2-loading-animate';
 import { DataTableDirective } from 'angular-datatables';
 import { UserLayersService } from '../../services';
-
 declare const $;
+
+const basenameFn = path => path.split(/[\\/]/).pop();
 
 enum SearchInteraction {
   Point = 1, Box
@@ -346,11 +347,26 @@ export class SearchComponentDialog {
       ...Object.keys(features[0].properties).map( key => ({ title : key, data : key }) )
     ];
     //console.log('FEATURES - ', features, 'DATA - ', data, 'COLUMNS - ', columns);
+    let renderData = ( data, type, row ) => {
+      if(!data) return '';
+      let _data = data;
+      if(!Array.isArray(data)) _data = [data];
+      return _data.map((url : string) =>{
+        if(url.match(/\.jpg|\.jpeg|\.png|\.bmp|\.ico|\.gif|\.svg/))
+          return `<img src="${url}" style="max-width : 50px; max-height : 50px;margin-left : 5px;" >`;
+        return `<a target="_blank" download="${basenameFn(url)}" href="${url}" style="margin-left : 5px;">${basenameFn(url)}</a><br>`;
+      }).join('');   
+    };
+    let indexData = Object.keys(features[0].properties).indexOf('data_urls');
+
     return {
       scrollX : true,
       scrollY : '50vh',
       scrollCollapse : true,
       data, columns,
+      columnDefs : [
+        { render : renderData, targets : -1 }
+      ],
       dom : 'frtlip',
       language : {
         "lengthMenu":     "_MENU_",

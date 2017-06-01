@@ -27,7 +27,7 @@ export class AuthService {
     }
 
     login(username, password){
-        return this.http.post('/api/user/login', { username, password });
+        return this.http.post('/api/user/login', { username, password }).map( res => res.json() );
     }
 
     logout(){

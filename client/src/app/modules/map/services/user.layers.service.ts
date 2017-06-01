@@ -36,4 +36,23 @@ export class UserLayersService {
         }).map( res => res.json() );
     }
 
+    addFeature(layerName : string, geometry, properties){
+        return this.http.post(`/api/layers/${layerName}/transaction`, {
+            geometry, properties
+        }).map( res => res.json() )
+    }
+
+    editFeature(layerName : string, geometry, properties){
+        return this.http.put(`/api/layers/${layerName}/transaction`, {
+            geometry, properties
+        })
+    }
+
+    deleteFeature(layerName : string, gid : number | string){
+        return this.http.delete(`/api/layers/${layerName}/transaction`, {
+            body : {
+                gid
+            }
+        })
+    }
 }

@@ -1,20 +1,21 @@
 import { IDatabase, IMain } from 'pg-promise';
 import sqlProvider = require('../sql');
-import { exec as exec_ } from 'child_process';
+import { exec } from 'child_process';
 import { dbConfig } from '../../config';
-
-const exec = require('bluebird').promisify(exec_);
+import { GeoserverAdmin } from '../geoserver';
 
 var sql = sqlProvider.layers;
+
 
 /*
  This repository mixes hard-coded and dynamic SQL,
  primarily to show a diverse example of using both.
  */
 
-export class Repository {
+export class Repository extends GeoserverAdmin.Layers {
 
     constructor(db:any, pgp: IMain) {
+        super();
         this.db = db;
         this.pgp = pgp; // library's root, if ever needed;
     }
@@ -24,7 +25,7 @@ export class Repository {
     private db:IDatabase<any>;
 
     private pgp:IMain;
-    
+
     // Devuelve las capas que aparecen en default_maps
     getDefaultLayers(){
         return this.db.any(`

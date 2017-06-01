@@ -1,5 +1,7 @@
 import { IDatabase, IMain } from 'pg-promise';
 import sqlProvider = require('../sql');
+import { GeoserverAdmin } from '../geoserver';
+const GeoserverUser = new GeoserverAdmin.Users
 
 var sql = sqlProvider.admin;
 
@@ -8,9 +10,10 @@ var sql = sqlProvider.admin;
  primarily to show a diverse example of using both.
  */
 
-export class Repository {
+export class Repository extends GeoserverAdmin.Users {
 
     constructor(db:any, pgp: IMain) {
+        super();
         this.db = db;
         this.pgp = pgp; // library's root, if ever needed;
     }
