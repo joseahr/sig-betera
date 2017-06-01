@@ -10,7 +10,7 @@ import { ChartModule } from 'angular2-highcharts';
 import { NgObjectPipesModule } from 'angular-pipes';
 import { TruncateModule } from 'ng2-truncate';
 import { LoadingAnimateModule } from 'ng2-loading-animate';
-import { AddWmsComponent, LayerSwitcherComponent, SearchComponent, SearchComponentDialog, MeasureSnackBar, FeatureEditDialog } from './components';
+import { AddWmsComponent, LayerSwitcherComponent, SearchComponent, SearchComponentDialog, MeasureSnackBar, FeatureEditDialog, FeatureDeleteDialog } from './components';
 import { MeasureComponent } from './components/measure/measure.component';
 import { MousePositionComponent } from './components/mouse-position/mouse-position.component';
 import { EditLayerComponent } from './components/edit-layer/edit-layer.component';
@@ -36,7 +36,8 @@ const mapRoutes : Route[] =  [{
         SearchComponentDialog,
         MeasureComponent, 
         MeasureSnackBar, MousePositionComponent, EditLayerComponent,
-        FeatureEditDialog
+        FeatureEditDialog, 
+        FeatureDeleteDialog
     ],
     providers : [
     ],
@@ -53,7 +54,7 @@ const mapRoutes : Route[] =  [{
         RouterModule.forChild(mapRoutes)
     ],
     entryComponents: [
-        AddWmsComponent, SearchComponentDialog, MeasureSnackBar, FeatureEditDialog
+        AddWmsComponent, SearchComponentDialog, MeasureSnackBar, FeatureEditDialog, FeatureDeleteDialog
     ]
 })
 export class MapModule {

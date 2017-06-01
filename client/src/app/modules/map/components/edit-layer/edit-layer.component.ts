@@ -130,6 +130,11 @@ export class EditLayerComponent implements OnInit {
           dialogRef.componentInstance.fields  = this.layerSchema;
           dialogRef.componentInstance.action = this.action;
           dialogRef.componentInstance.layerName = this.layerName;
+          dialogRef.afterClosed().subscribe(val => {
+            if(val == -1){
+              this.interaction.getSource().removeFeature(e.feature);
+            }
+          })
           console.log('add', e.feature);
         });
         break;
@@ -191,24 +196,40 @@ export class EditLayerComponent implements OnInit {
 
         this.interaction.getFeatures().on('add', e => {
           //transactWFS('delete', e.target.item(0));
-          console.log('delete', e.target.item(0))
-          this.interactionSelectPointerMove.getFeatures().clear();
-          this.interaction.getFeatures().clear();
+          let dialogRef = this.dialog.open(FeatureDeleteDialog, { disableClose : true });
+          dialogRef.componentInstance.layerName = this.layerName;
+          dialogRef.componentInstance.gid = e.element.getProperties().gid;
+          
+          dialogRef.afterClosed().subscribe( val => {
+            if(val == 0){
+              console.log('okkk')
+              console.log('delete', e.target.item(0), e.element)
+
+            } else {
+              console.log('err')
+            }
+            this.interactionSelectPointerMove.getFeatures().clear();
+            this.interaction.getFeatures().clear();
+          });
+
         });
         this.map.addInteraction(this.interaction);
         break;
       case Actions.PAN :
       default: return;
     }
+    this.editingLayer.getSource().refresh();
+    //this.layerChanged({ value : this.layerName })
   }
 
   setActive(active : boolean){
     if(this.controlActive == active) return;
     this.controlActive = active;
-    if(active){
-
-    } else {
-
+    if(!active){
+      this.map.removeInteraction(this.interaction);
+      this.interactionSelect.getFeatures().clear();
+      this.map.removeInteraction(this.interactionSelect);
+      this.map.removeInteraction(this.interactionDoubleClick);
     }
 
   }
@@ -270,7 +291,7 @@ export class EditLayerComponent implements OnInit {
             </div>
         </div>
         <div md-dialog-actions>
-          <button md-button (click)="dialogRef.close()">Cancelar</button>
+          <button md-button (click)="dialogRef.close(-1)">Cancelar</button>
           <button md-button (click)="saveFeature()">Guardar</button>
         </div>
     `,
@@ -303,6 +324,10 @@ export class FeatureEditDialog {
         this.properties = this.feature.getProperties() || {};
     }
 
+    close(){
+
+    }
+
     saveFeature(){
       console.log('SAVE FEATURE', this.action, this.layerName, Object.assign({}, this.properties), this.properties );
       let geometry = wktParser.writeFeature(this.feature);
@@ -311,8 +336,11 @@ export class FeatureEditDialog {
       console.log('cccc', geometry)
       if(this.action == Actions.CREATE) {
         this.userLayersService.addFeature(this.layerName, geometry, this.properties )
-        .subscribe( e => {
+        .subscribe( res => {
+          console.log(res);
+          let { gid } = res;
           this.feature.setProperties(this.properties);
+          this.feature.set('gid', gid);
           this.dialogRef.close();
         }, err => console.log(err.json()) );
       } 
@@ -324,5 +352,38 @@ export class FeatureEditDialog {
         }, err => console.log(err.json()) );
       }
     }
+
+}
+
+
+@Component({
+    template : `
+        <div md-dialog-content>
+            <h4>¿Deseas eliminar la feature?</h4>
+            <ul>
+              <li>capa : {{layerName}}</li>
+              <li>gid  : {{gid}}</li>
+            </ul>
+        </div>
+        <div md-dialog-actions>
+          <button md-button (click)="dialogRef.close()">Cancelar</button>
+          <button md-button (click)="deleteFeature()">Eliminar</button>
+        </div>
+    `,
+    providers : [UserLayersService]
+})
+export class FeatureDeleteDialog {
+
+  layerName;
+  gid;
+
+  constructor(private userLayersService : UserLayersService, private dialogRef : MdDialogRef<FeatureDeleteDialog>){
+
+  }
+
+  deleteFeature(){
+    this.userLayersService.deleteFeature(this.layerName, this.gid)
+    .subscribe( e => { this.dialogRef.close(0), err => { this.dialogRef.close(1) } })
+  }
 
 }

@@ -134,7 +134,7 @@ exports.router.get('/schema/:layerName', function (req, res) { return __awaiter(
 exports.router
     .route('/:layerName/transaction')
     .post(function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var id, layerName, _a, geometry, properties, layersWithPerms, layerSchema, geomColumn, fields, values, cs, query, response, e_3;
+    var id, layerName, _a, geometry, properties, layersWithPerms, layerSchema, geomColumn, fields, values, cs, query, gid, e_3;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -181,11 +181,11 @@ exports.router
                 //console.log(layersWithPerms);
                 console.log(layerName);
                 cs = new db_1.pgp.helpers.ColumnSet(fields, { table: { table: layerName, schema: 'capas' } });
-                query = db_1.pgp.helpers.insert(values, cs);
-                return [4 /*yield*/, db_1.db.none(query)];
+                query = db_1.pgp.helpers.insert(values, cs) + ' RETURNING gid';
+                return [4 /*yield*/, db_1.db.one(query)];
             case 3:
-                response = _b.sent();
-                res.status(200).json({ msg: 'OK' });
+                gid = (_b.sent()).gid;
+                res.status(200).json({ msg: 'OK', gid: gid });
                 return [3 /*break*/, 5];
             case 4:
                 e_3 = _b.sent();
@@ -252,9 +252,30 @@ exports.router
         }
     });
 }); })
-    .delete(function (req, res) {
-    var gid = req.body.gid;
-});
+    .delete(function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    var gid, layerName, table, e_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                gid = req.body.gid;
+                layerName = req.params.layerName;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                table = new db_1.pgp.helpers.TableName(layerName, 'capas');
+                return [4 /*yield*/, db_1.db.none('DELETE FROM $1 WHERE gid = $2', [table, gid])];
+            case 2:
+                _a.sent();
+                res.status(200).json({ msg: 'OK' });
+                return [3 /*break*/, 4];
+            case 3:
+                e_5 = _a.sent();
+                res.status(500).json({ msg: e_5 });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 /*
 router
 .route('/:id_layer')

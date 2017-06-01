@@ -72,7 +72,8 @@ var MapModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_5__components__["f" /* SearchComponentDialog */],
                 __WEBPACK_IMPORTED_MODULE_12__components_measure_measure_component__["a" /* MeasureComponent */],
                 __WEBPACK_IMPORTED_MODULE_5__components__["g" /* MeasureSnackBar */], __WEBPACK_IMPORTED_MODULE_13__components_mouse_position_mouse_position_component__["a" /* MousePositionComponent */], __WEBPACK_IMPORTED_MODULE_14__components_edit_layer_edit_layer_component__["a" /* EditLayerComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__components__["h" /* FeatureEditDialog */]
+                __WEBPACK_IMPORTED_MODULE_5__components__["h" /* FeatureEditDialog */],
+                __WEBPACK_IMPORTED_MODULE_5__components__["i" /* FeatureDeleteDialog */]
             ],
             providers: [],
             imports: [
@@ -88,7 +89,7 @@ var MapModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* RouterModule */].forChild(mapRoutes)
             ],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_5__components__["d" /* AddWmsComponent */], __WEBPACK_IMPORTED_MODULE_5__components__["f" /* SearchComponentDialog */], __WEBPACK_IMPORTED_MODULE_5__components__["g" /* MeasureSnackBar */], __WEBPACK_IMPORTED_MODULE_5__components__["h" /* FeatureEditDialog */]
+                __WEBPACK_IMPORTED_MODULE_5__components__["d" /* AddWmsComponent */], __WEBPACK_IMPORTED_MODULE_5__components__["f" /* SearchComponentDialog */], __WEBPACK_IMPORTED_MODULE_5__components__["g" /* MeasureSnackBar */], __WEBPACK_IMPORTED_MODULE_5__components__["h" /* FeatureEditDialog */], __WEBPACK_IMPORTED_MODULE_5__components__["i" /* FeatureDeleteDialog */]
             ]
         }), 
         __metadata('design:paramtypes', [])
@@ -9470,10 +9471,11 @@ function takeWhile(input, predicate) {
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_4__search_search_component__["b"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__measure_measure_component__ = __webpack_require__(1348);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_5__measure_measure_component__["b"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_5__measure_measure_component__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_5__measure_measure_component__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__edit_layer_edit_layer_component__ = __webpack_require__(1347);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_6__edit_layer_edit_layer_component__["b"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_6__edit_layer_edit_layer_component__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_6__edit_layer_edit_layer_component__["c"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_6__edit_layer_edit_layer_component__["a"]; });
 
 
 
@@ -44047,6 +44049,7 @@ module.exports = __webpack_amd_options__;
 /* unused harmony export Actions */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditLayerComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return FeatureEditDialog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return FeatureDeleteDialog; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44145,6 +44148,11 @@ var EditLayerComponent = (function () {
                     dialogRef.componentInstance.fields = _this.layerSchema;
                     dialogRef.componentInstance.action = _this.action;
                     dialogRef.componentInstance.layerName = _this.layerName;
+                    dialogRef.afterClosed().subscribe(function (val) {
+                        if (val == -1) {
+                            _this.interaction.getSource().removeFeature(e.feature);
+                        }
+                    });
                     console.log('add', e.feature);
                 });
                 break;
@@ -44194,23 +44202,38 @@ var EditLayerComponent = (function () {
                 });
                 this.interaction.getFeatures().on('add', function (e) {
                     //transactWFS('delete', e.target.item(0));
-                    console.log('delete', e.target.item(0));
-                    _this.interactionSelectPointerMove.getFeatures().clear();
-                    _this.interaction.getFeatures().clear();
+                    var dialogRef = _this.dialog.open(FeatureDeleteDialog, { disableClose: true });
+                    dialogRef.componentInstance.layerName = _this.layerName;
+                    dialogRef.componentInstance.gid = e.element.getProperties().gid;
+                    dialogRef.afterClosed().subscribe(function (val) {
+                        if (val == 0) {
+                            console.log('okkk');
+                            console.log('delete', e.target.item(0), e.element);
+                        }
+                        else {
+                            console.log('err');
+                        }
+                        _this.interactionSelectPointerMove.getFeatures().clear();
+                        _this.interaction.getFeatures().clear();
+                    });
                 });
                 this.map.addInteraction(this.interaction);
                 break;
             case Actions.PAN:
             default: return;
         }
+        this.editingLayer.getSource().refresh();
+        //this.layerChanged({ value : this.layerName })
     };
     EditLayerComponent.prototype.setActive = function (active) {
         if (this.controlActive == active)
             return;
         this.controlActive = active;
-        if (active) {
-        }
-        else {
+        if (!active) {
+            this.map.removeInteraction(this.interaction);
+            this.interactionSelect.getFeatures().clear();
+            this.map.removeInteraction(this.interactionSelect);
+            this.map.removeInteraction(this.interactionDoubleClick);
         }
     };
     EditLayerComponent.prototype.getEditableLayerNames = function () {
@@ -44284,6 +44307,8 @@ var FeatureEditDialog = (function () {
         this.excludedProperties.push(geomColumnName);
         this.properties = this.feature.getProperties() || {};
     };
+    FeatureEditDialog.prototype.close = function () {
+    };
     FeatureEditDialog.prototype.saveFeature = function () {
         var _this = this;
         console.log('SAVE FEATURE', this.action, this.layerName, Object.assign({}, this.properties), this.properties);
@@ -44292,8 +44317,11 @@ var FeatureEditDialog = (function () {
         console.log('cccc', geometry);
         if (this.action == Actions.CREATE) {
             this.userLayersService.addFeature(this.layerName, geometry, this.properties)
-                .subscribe(function (e) {
+                .subscribe(function (res) {
+                console.log(res);
+                var gid = res.gid;
                 _this.feature.setProperties(_this.properties);
+                _this.feature.set('gid', gid);
                 _this.dialogRef.close();
             }, function (err) { return console.log(err.json()); });
         }
@@ -44307,12 +44335,32 @@ var FeatureEditDialog = (function () {
     };
     FeatureEditDialog = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            template: "\n        <div md-dialog-content>\n            <div *ngFor=\"let field of fields\">\n                <md-input-container>\n                    <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                </md-input-container>\n                <br>\n            </div>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close()\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
+            template: "\n        <div md-dialog-content>\n            <div *ngFor=\"let field of fields\">\n                <md-input-container>\n                    <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                </md-input-container>\n                <br>\n            </div>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close(-1)\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
             providers: [__WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]) === 'function' && _b) || Object])
     ], FeatureEditDialog);
     return FeatureEditDialog;
+    var _a, _b;
+}());
+var FeatureDeleteDialog = (function () {
+    function FeatureDeleteDialog(userLayersService, dialogRef) {
+        this.userLayersService = userLayersService;
+        this.dialogRef = dialogRef;
+    }
+    FeatureDeleteDialog.prototype.deleteFeature = function () {
+        var _this = this;
+        this.userLayersService.deleteFeature(this.layerName, this.gid)
+            .subscribe(function (e) { _this.dialogRef.close(0), function (err) { _this.dialogRef.close(1); }; });
+    };
+    FeatureDeleteDialog = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            template: "\n        <div md-dialog-content>\n            <h4>\u00BFDeseas eliminar la feature?</h4>\n            <ul>\n              <li>capa : {{layerName}}</li>\n              <li>gid  : {{gid}}</li>\n            </ul>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close()\">Cancelar</button>\n          <button md-button (click)=\"deleteFeature()\">Eliminar</button>\n        </div>\n    ",
+            providers: [__WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]]
+        }), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */]) === 'function' && _b) || Object])
+    ], FeatureDeleteDialog);
+    return FeatureDeleteDialog;
     var _a, _b;
 }());
 //# sourceMappingURL=edit-layer.component.js.map
@@ -45408,8 +45456,8 @@ var MapComponent = (function () {
         this.sidenav.close();
     };
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_7____["i" /* MeasureComponent */]; })), 
-        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_7____["i" /* MeasureComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7____["i" /* MeasureComponent */]) === 'function' && _a) || Object)
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_7____["j" /* MeasureComponent */]; })), 
+        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_7____["j" /* MeasureComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7____["j" /* MeasureComponent */]) === 'function' && _a) || Object)
     ], MapComponent.prototype, "measureControl", void 0);
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_7____["e" /* SearchComponent */]; })), 
@@ -45424,8 +45472,8 @@ var MapComponent = (function () {
         __metadata('design:type', (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7____["c" /* LayerSwitcherComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7____["c" /* LayerSwitcherComponent */]) === 'function' && _d) || Object)
     ], MapComponent.prototype, "layerSwitcherControl", void 0);
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_7____["j" /* EditLayerComponent */]; })), 
-        __metadata('design:type', (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7____["j" /* EditLayerComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7____["j" /* EditLayerComponent */]) === 'function' && _e) || Object)
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return __WEBPACK_IMPORTED_MODULE_7____["k" /* EditLayerComponent */]; })), 
+        __metadata('design:type', (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7____["k" /* EditLayerComponent */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7____["k" /* EditLayerComponent */]) === 'function' && _e) || Object)
     ], MapComponent.prototype, "editLayerControl", void 0);
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('overviewMap'), 

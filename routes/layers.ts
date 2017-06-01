@@ -109,10 +109,10 @@ router
         //console.log(layersWithPerms);
         console.log(layerName);
         let cs = new pgp.helpers.ColumnSet(fields, { table: { table : layerName, schema : 'capas' } });
-        let query = pgp.helpers.insert(values, cs);
-        let response = await db.none(query);
+        let query = pgp.helpers.insert(values, cs) + ' RETURNING gid';
+        let { gid } = await db.one(query);
         
-        res.status(200).json({ msg : 'OK' });
+        res.status(200).json({ msg : 'OK', gid : gid });
     } catch(e){
         console.log(e);
         res.status(500).json({ msg : e })
@@ -171,8 +171,20 @@ router
         res.status(500).json({ msg : e })
     }
 })
-.delete( (req, res)=>{
+.delete( async (req, res)=>{
     let { gid } = req.body;
+    let { layerName } = req.params;
+
+    try {
+        let table = new pgp.helpers.TableName(layerName, 'capas');
+    
+        await db.none('DELETE FROM $1 WHERE gid = $2', [table, gid]);
+    
+        res.status(200).json({ msg : 'OK' })
+    } catch(e){
+        res.status(500).json({ msg : e });
+    }
+
 })
 
 /*
