@@ -52,7 +52,7 @@
                 <h4 md-line>#{{layer.id_layer}} {{layer.name}}</h4>
                 <div md-line>
                   <md-select (change)="changeRolOfLayer($event, layer)" [ngModel]="layer.rol" placeholder="Permiso sobre la capa {{layer.name}}" style="margin : 20px 0px 20px 0px; width : 100%;">
-                    <md-option *ngFor="let rol of ['r', 'e', 'd']" [value]="rol">{{ rol }}</md-option>
+                    <md-option *ngFor="let rol of ['r', 'c', 'e', 'd']" [value]="rol">{{ rol }}</md-option>
                   </md-select>
                 </div>
             </md-list-item>

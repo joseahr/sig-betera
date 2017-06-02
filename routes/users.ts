@@ -61,8 +61,7 @@ router.post('/signup', recaptcha.middleware.verify, (req, res, next)=>{
     console.log(err, user, token);
     if(err) 
       return res.status(500).json(err);
-    db.admin.createUserInGS(name, password)
-    .then( () => res.status(200).json({ user }) );
+    res.status(200).json({ user });
 
   })(req, res, next);
 });

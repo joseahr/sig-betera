@@ -36,6 +36,8 @@ export class EditLayerComponent implements OnInit {
   layerName;
 
   editingLayer : ol.layer.Vector;
+  layerRol : string;
+  layerWMS;
 
   controlActive : boolean = false;
 
@@ -72,10 +74,33 @@ export class EditLayerComponent implements OnInit {
     //this.startEditing('aljubs');
   }
 
+  getActionDisable(action : Actions){
+    if(!this.layerWMS){
+      return false;
+    }
+
+    //console.log(action, this.layerWMS.get('rol'))
+
+    switch(action){
+      case Actions.CREATE :
+        return ['c', 'e', 'd'].includes(this.layerWMS.get('rol')) === false;
+      case Actions.UPDATE :
+        return ['e', 'd'].includes(this.layerWMS.get('rol')) === false;
+      case Actions.DELETE :
+        return ['d'].includes(this.layerWMS.get('rol')) === false;
+      case Actions.PAN : 
+        return false;
+      default : 
+        return true;
+    }
+  }
+
 
   layerChanged(event){
     console.log(event);
     let capa = event.value;
+    this.layerWMS = this.getEditableLayers().find( l => l.get('name') == capa );
+
     this.map.removeInteraction(this.interactionSelectPointerMove);
 
     this.startEditing(capa);
@@ -99,6 +124,7 @@ export class EditLayerComponent implements OnInit {
     });
 
     //this.map.addInteraction(this.interactionSelectPointerMove);
+    this.actionChanged({ value : Actions.PAN })
   }
 
   actionChanged(event){
@@ -210,6 +236,11 @@ export class EditLayerComponent implements OnInit {
             }
             this.interactionSelectPointerMove.getFeatures().clear();
             this.interaction.getFeatures().clear();
+            this.editingLayer.getSource().clear();
+            this.editingLayer.getSource().refresh();
+            //let layerWMS = this.getEditableLayers().find( l => l.get('name') == this.layerName );
+            //console.log(layerWMS);
+            this.layerWMS.getSource().updateParams({"time": Date.now()});
           });
 
         });
@@ -218,7 +249,6 @@ export class EditLayerComponent implements OnInit {
       case Actions.PAN :
       default: return;
     }
-    this.editingLayer.getSource().refresh();
     //this.layerChanged({ value : this.layerName })
   }
 
@@ -234,15 +264,15 @@ export class EditLayerComponent implements OnInit {
 
   }
 
-  getEditableLayerNames(){
+  getEditableLayers(){
     return this.map
     .getLayers()
     .getArray()
     .filter( l => l.get('group_capas_map') === true )[0]
     .get('layers')
     .getArray()
-    .filter( l =>  l.get('rol') == 'e' || l.get('rol') == 'd' )
-    .map( l => l.get('name') )
+    .filter( l =>  l.get('rol') == 'c' || l.get('rol') == 'e' || l.get('rol') == 'd' )
+    //.map( l => l.get('name') )
   }
 
   startEditing(layerName : string){

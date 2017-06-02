@@ -54,8 +54,7 @@ exports.router.post('/signup', recaptcha_1.recaptcha.middleware.verify, function
         console.log(err, user, token);
         if (err)
             return res.status(500).json(err);
-        db_1.db.admin.createUserInGS(name, password)
-            .then(function () { return res.status(200).json({ user: user }); });
+        res.status(200).json({ user: user });
     })(req, res, next);
 });
 exports.router.get('/logout', function (req, res) {

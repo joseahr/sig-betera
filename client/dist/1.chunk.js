@@ -44101,9 +44101,28 @@ var EditLayerComponent = (function () {
     EditLayerComponent.prototype.ngAfterViewInit = function () {
         //this.startEditing('aljubs');
     };
+    EditLayerComponent.prototype.getActionDisable = function (action) {
+        if (!this.layerWMS) {
+            return false;
+        }
+        //console.log(action, this.layerWMS.get('rol'))
+        switch (action) {
+            case Actions.CREATE:
+                return ['c', 'e', 'd'].includes(this.layerWMS.get('rol')) === false;
+            case Actions.UPDATE:
+                return ['e', 'd'].includes(this.layerWMS.get('rol')) === false;
+            case Actions.DELETE:
+                return ['d'].includes(this.layerWMS.get('rol')) === false;
+            case Actions.PAN:
+                return false;
+            default:
+                return true;
+        }
+    };
     EditLayerComponent.prototype.layerChanged = function (event) {
         console.log(event);
         var capa = event.value;
+        this.layerWMS = this.getEditableLayers().find(function (l) { return l.get('name') == capa; });
         this.map.removeInteraction(this.interactionSelectPointerMove);
         this.startEditing(capa);
         this.interactionSelectPointerMove = new __WEBPACK_IMPORTED_MODULE_2_openlayers__["interaction"].Select({
@@ -44122,6 +44141,7 @@ var EditLayerComponent = (function () {
             source: this.editingLayer.getSource()
         });
         //this.map.addInteraction(this.interactionSelectPointerMove);
+        this.actionChanged({ value: Actions.PAN });
     };
     EditLayerComponent.prototype.actionChanged = function (event) {
         var _this = this;
@@ -44215,6 +44235,11 @@ var EditLayerComponent = (function () {
                         }
                         _this.interactionSelectPointerMove.getFeatures().clear();
                         _this.interaction.getFeatures().clear();
+                        _this.editingLayer.getSource().clear();
+                        _this.editingLayer.getSource().refresh();
+                        //let layerWMS = this.getEditableLayers().find( l => l.get('name') == this.layerName );
+                        //console.log(layerWMS);
+                        _this.layerWMS.getSource().updateParams({ "time": Date.now() });
                     });
                 });
                 this.map.addInteraction(this.interaction);
@@ -44222,7 +44247,6 @@ var EditLayerComponent = (function () {
             case Actions.PAN:
             default: return;
         }
-        this.editingLayer.getSource().refresh();
         //this.layerChanged({ value : this.layerName })
     };
     EditLayerComponent.prototype.setActive = function (active) {
@@ -44236,15 +44260,15 @@ var EditLayerComponent = (function () {
             this.map.removeInteraction(this.interactionDoubleClick);
         }
     };
-    EditLayerComponent.prototype.getEditableLayerNames = function () {
+    EditLayerComponent.prototype.getEditableLayers = function () {
         return this.map
             .getLayers()
             .getArray()
             .filter(function (l) { return l.get('group_capas_map') === true; })[0]
             .get('layers')
             .getArray()
-            .filter(function (l) { return l.get('rol') == 'e' || l.get('rol') == 'd'; })
-            .map(function (l) { return l.get('name'); });
+            .filter(function (l) { return l.get('rol') == 'c' || l.get('rol') == 'e' || l.get('rol') == 'd'; });
+        //.map( l => l.get('name') )
     };
     EditLayerComponent.prototype.startEditing = function (layerName) {
         var _this = this;
@@ -46986,7 +47010,7 @@ module.exports = "<md-card style=\"margin : -15px;\">\n  <!--<div [style.backgro
 /* 1430 */
 /***/ (function(module, exports) {
 
-module.exports = "<md-card *ngIf=\"controlActive\" style=\"position : absolute; bottom: 0.5em; left : 0.5em;\">\r\n    <md-select [(ngModel)]=\"layerName\" placeholder=\"Selecciona capa\" (change)=\"layerChanged($event)\">\r\n        <md-option *ngFor=\"let capa of getEditableLayerNames()\" [value]=\"capa\">{{ capa }}</md-option>\r\n    </md-select>\r\n    <md-select [disabled]=\"!editingLayer\" [(ngModel)]=\"action\" placeholder=\"Selecciona acción\" (change)=\"actionChanged($event)\">\r\n        <md-option *ngFor=\"let action of actions\" [value]=\"action.action\">{{action.text}}</md-option>\r\n    </md-select>\r\n</md-card>\r\n"
+module.exports = "<md-card *ngIf=\"controlActive\" style=\"position : absolute; bottom: 0.5em; left : 0.5em;\">\r\n    <md-select [(ngModel)]=\"layerName\" placeholder=\"Selecciona capa\" (change)=\"layerChanged($event)\">\r\n        <md-option *ngFor=\"let capa of getEditableLayers()\" [value]=\"capa.get('name')\">{{ capa.get('name') }}</md-option>\r\n    </md-select>\r\n    <md-select [disabled]=\"!editingLayer\" [(ngModel)]=\"action\" placeholder=\"Selecciona acción\" (change)=\"actionChanged($event)\">\r\n        <md-option [disabled]=\"getActionDisable(action.action)\" *ngFor=\"let action of actions\" [value]=\"action.action\">\r\n            {{action.text}}\r\n        </md-option>\r\n    </md-select>\r\n</md-card>\r\n"
 
 /***/ }),
 /* 1431 */

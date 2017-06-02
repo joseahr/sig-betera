@@ -7,6 +7,22 @@ const wktReader = new jsts.io.WKTReader();
 
 export let router = express.Router();
 
+const rolesGuardMiddleware = ( ...checkPerms : string[] ) => 
+    async (req : express.Request, res : express.Response, next : express.NextFunction) =>{
+    
+        let { id } = req.user;
+        let { layerName } = req.params;
+    
+        let layersWithPerms = (await db.roles.getLayerNamesByPerms(id, ...checkPerms ))
+            .map( l => l.name );
+        
+        if(!layersWithPerms.includes(layerName)){
+            return res.status(403).json({ msg : 'No permitido' })
+        }
+    
+        next();
+    }
+
 router.route('/features')
 .post( async (req, res)=>{
     let { user } = req;
@@ -59,24 +75,14 @@ router.get('/schema/:layerName', async (req, res)=>{
 
 router
 .route('/:layerName/transaction')
-.post( async (req, res)=>{
+.post( [rolesGuardMiddleware('c', 'e', 'd')], async (req, res)=>{
     try {
-        let { id } = req.user;
     
         let { layerName } = req.params;
         
         let { geometry, properties } = req.body;
     
         console.log(geometry, properties);
-
-        if(!id) return res.status(403).json({ msg : 'No permitido' })
-    
-        let layersWithPerms = (await db.roles.getLayerNamesByPerms(id, 'e', 'd'))
-            .map( l => l.name );
-        
-        if(!layersWithPerms.includes(layerName)){
-            return res.status(403).json({ msg : 'No permitido' })
-        }
 
         let layerSchema = await db.layers.getLayerSchema(layerName);
 
@@ -118,10 +124,8 @@ router
         res.status(500).json({ msg : e })
     }
 })
-.put( async(req, res)=>{
-    try {
-        let { id } = req.user;
-    
+.put( [rolesGuardMiddleware('e', 'd')], async(req, res)=>{
+    try {    
         let { layerName } = req.params;
         
         let { geometry, properties } = req.body;
@@ -130,15 +134,6 @@ router
 
         delete properties['gid'];
     
-        if(!id) return res.status(403).json({ msg : 'No permitido' })
-    
-        let layersWithPerms = (await db.roles.getLayerNamesByPerms(id, 'e', 'd'))
-            .map( l => l.name );
-        
-        if(!layersWithPerms.includes(layerName)){
-            return res.status(403).json({ msg : 'No permitido' })
-        }
-
         let layerSchema = await db.layers.getLayerSchema(layerName);
 
         let geomColumn = layerSchema.find( col => col.type === 'USER-DEFINED' && col.udt === 'geometry' ).name;
@@ -171,7 +166,7 @@ router
         res.status(500).json({ msg : e })
     }
 })
-.delete( async (req, res)=>{
+.delete( [rolesGuardMiddleware('d')], async (req, res)=>{
     let { gid } = req.body;
     let { layerName } = req.params;
 
