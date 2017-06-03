@@ -9889,6 +9889,10 @@ var UserLayersService = (function () {
             wkt: wkt, layers: layers
         }).map(function (res) { return res.json(); });
     };
+    UserLayersService.prototype.getFeatureData = function (layerName, gid) {
+        return this.http.get("/api/layers/" + layerName + "/data/" + gid)
+            .map(function (res) { return res.json(); });
+    };
     UserLayersService.prototype.addFeature = function (layerName, geometry, properties) {
         return this.http.post("/api/layers/" + layerName + "/transaction", {
             geometry: geometry, properties: properties
@@ -44170,7 +44174,7 @@ var EditLayerComponent = (function () {
                     dialogRef.componentInstance.layerName = _this.layerName;
                     dialogRef.afterClosed().subscribe(function (val) {
                         if (val == -1) {
-                            _this.interaction.getSource().removeFeature(e.feature);
+                            _this.editingLayer.getSource().removeFeature(e.feature);
                         }
                     });
                     console.log('add', e.feature);
@@ -44196,6 +44200,11 @@ var EditLayerComponent = (function () {
                     dialogRef.componentInstance.feature = e.element;
                     dialogRef.componentInstance.action = _this.action;
                     dialogRef.componentInstance.layerName = _this.layerName;
+                    dialogRef.afterClosed().subscribe(function () {
+                        _this.editingLayer.getSource().clear();
+                        _this.editingLayer.getSource().refresh();
+                        _this.layerWMS.getSource().updateParams({ "time": Date.now() });
+                    });
                     console.log('add', e.element.getProperties());
                 });
                 this.interactionSelect.getFeatures().on('add', function (e) {
@@ -44213,6 +44222,11 @@ var EditLayerComponent = (function () {
                         dialogRef.componentInstance.feature = f;
                         dialogRef.componentInstance.action = _this.action;
                         dialogRef.componentInstance.layerName = _this.layerName;
+                        dialogRef.afterClosed().subscribe(function () {
+                            _this.editingLayer.getSource().clear();
+                            _this.editingLayer.getSource().refresh();
+                            _this.layerWMS.getSource().updateParams({ "time": Date.now() });
+                        });
                     }
                 });
                 break;
@@ -44255,20 +44269,25 @@ var EditLayerComponent = (function () {
         this.controlActive = active;
         if (!active) {
             this.map.removeInteraction(this.interaction);
-            this.interactionSelect.getFeatures().clear();
+            if (this.interactionSelect)
+                this.interactionSelect.getFeatures().clear();
             this.map.removeInteraction(this.interactionSelect);
             this.map.removeInteraction(this.interactionDoubleClick);
         }
     };
     EditLayerComponent.prototype.getEditableLayers = function () {
-        return this.map
-            .getLayers()
-            .getArray()
-            .filter(function (l) { return l.get('group_capas_map') === true; })[0]
-            .get('layers')
-            .getArray()
-            .filter(function (l) { return l.get('rol') == 'c' || l.get('rol') == 'e' || l.get('rol') == 'd'; });
-        //.map( l => l.get('name') )
+        try {
+            return this.map
+                .getLayers()
+                .getArray()
+                .filter(function (l) { return l.get('group_capas_map') === true; })[0]
+                .get('layers')
+                .getArray()
+                .filter(function (l) { return l.get('rol') == 'c' || l.get('rol') == 'e' || l.get('rol') == 'd'; });
+        }
+        catch (e) {
+            return [];
+        }
     };
     EditLayerComponent.prototype.startEditing = function (layerName) {
         var _this = this;
@@ -44330,8 +44349,9 @@ var FeatureEditDialog = (function () {
         var geomColumnName = this.getGeomColumn().name;
         this.excludedProperties.push(geomColumnName);
         this.properties = this.feature.getProperties() || {};
-    };
-    FeatureEditDialog.prototype.close = function () {
+        if (this.feature.get('gid')) {
+            this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid'));
+        }
     };
     FeatureEditDialog.prototype.saveFeature = function () {
         var _this = this;
@@ -44359,7 +44379,7 @@ var FeatureEditDialog = (function () {
     };
     FeatureEditDialog = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            template: "\n        <div md-dialog-content>\n            <div *ngFor=\"let field of fields\">\n                <md-input-container>\n                    <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                </md-input-container>\n                <br>\n            </div>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close(-1)\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
+            template: "\n        <div md-dialog-content>\n            <div *ngFor=\"let field of fields\">\n                <md-input-container>\n                    <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                </md-input-container>\n                <br>\n            </div>\n            <div>Datos relacionados</div>\n            <p *ngFor=\"let data of (featureData | async)\"><a href=\"{{data.url}}\">{{data.url}}</a></p>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close(-1)\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
             providers: [__WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]) === 'function' && _b) || Object])
@@ -45433,6 +45453,7 @@ var MapComponent = (function () {
         if (active)
             this.disableControls();
         this.editLayerControl.setActive(active);
+        this.sidenav.close();
     };
     MapComponent.prototype.toggleMeasureControl = function (interaction) {
         if (interaction && this.measureControl.activeInteraction != interaction) {
@@ -47010,7 +47031,7 @@ module.exports = "<md-card style=\"margin : -15px;\">\n  <!--<div [style.backgro
 /* 1430 */
 /***/ (function(module, exports) {
 
-module.exports = "<md-card *ngIf=\"controlActive\" style=\"position : absolute; bottom: 0.5em; left : 0.5em;\">\r\n    <md-select [(ngModel)]=\"layerName\" placeholder=\"Selecciona capa\" (change)=\"layerChanged($event)\">\r\n        <md-option *ngFor=\"let capa of getEditableLayers()\" [value]=\"capa.get('name')\">{{ capa.get('name') }}</md-option>\r\n    </md-select>\r\n    <md-select [disabled]=\"!editingLayer\" [(ngModel)]=\"action\" placeholder=\"Selecciona acción\" (change)=\"actionChanged($event)\">\r\n        <md-option [disabled]=\"getActionDisable(action.action)\" *ngFor=\"let action of actions\" [value]=\"action.action\">\r\n            {{action.text}}\r\n        </md-option>\r\n    </md-select>\r\n</md-card>\r\n"
+module.exports = "<loading-animate></loading-animate>\r\n<md-card *ngIf=\"controlActive\" style=\"position : absolute; bottom: 0.5em; left : 0.5em;\">\r\n    <md-select [(ngModel)]=\"layerName\" placeholder=\"Selecciona capa\" (change)=\"layerChanged($event)\">\r\n        <md-option *ngFor=\"let capa of getEditableLayers()\" [value]=\"capa.get('name')\">{{ capa.get('name') }}</md-option>\r\n    </md-select>\r\n    <md-select [disabled]=\"!editingLayer\" [(ngModel)]=\"action\" placeholder=\"Selecciona acción\" (change)=\"actionChanged($event)\">\r\n        <md-option [disabled]=\"getActionDisable(action.action)\" *ngFor=\"let action of actions\" [value]=\"action.action\">\r\n            {{action.text}}\r\n        </md-option>\r\n    </md-select>\r\n</md-card>\r\n"
 
 /***/ }),
 /* 1431 */
@@ -47022,7 +47043,7 @@ module.exports = "<div #mapsDetailsContainer *ngIf=\"map && map.getLayers()\" cl
 /* 1432 */
 /***/ (function(module, exports) {
 
-module.exports = "<loading-animate></loading-animate>\n<button\n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button main\" (click)=\"toggleTools()\">\n      <md-icon>apps</md-icon>HERRAMIENTAS\n    </button>\n    <div [@collapsed]=\"toolsControlVisible\">\n      <button md-button class=\"list-button\" (click)=\"toggleProfileControl()\" [style.background-color]=\"getBackgroundColor(profileControl.active)\">\n        <md-icon>terrain</md-icon>PERFIL\n      </button>\n      <button md-button (click)=\"toggleSearchControl(1)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 1)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR PUNTO\n      </button>\n      <button md-button (click)=\"toggleSearchControl(2)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE\n      </button>\n      <button md-button (click)=\"toggleMeasureControl(1)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(measureControl.active && measureControl.activeInteraction == 1)\">\n        <md-icon>trending_flat</md-icon>MEDIR PERÍMETRO\n      </button>\n      <button md-button (click)=\"toggleMeasureControl(2)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(measureControl.active && measureControl.activeInteraction == 2)\">\n        <md-icon>branding_watermark</md-icon>MEDIR ÁREA\n      </button>\n      <button md-button (click)=\"toggleEditLayers()\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(editLayerControl.controlActive)\">\n        <md-icon>branding_watermark</md-icon>EDIRAR CAPAS\n      </button>\n    </div>\n\n    <button md-button class=\"list-button main\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <md-select [@collapsed]=\"mapsControlVisible\" placeholder=\"Mapa actual\" (change)=\"onChangeMap()\" [(ngModel)]=\"actualMap\" style=\"margin-top : 20px; margin-left : 2.5%; width : 95%;\">\n      <md-option *ngFor=\"let map of accesibleMaps\" [value]=\"map.id\">{{ map.name }}</md-option>\n    </md-select>\n    <app-layer-switcher [@collapsed]=\"mapsControlVisible\" [visibility]=\"mapsControlVisible\" [map]=\"map\" (layersChanged)=\"updateMapAndOverview()\"></app-layer-switcher>\n    <!-- END control de capas -->\n    <button md-button class=\"list-button main\" (click)=\"toggleOverview()\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div [@collapsed]=\"overviewControlVisible\" #overviewMap class=\"overview-map\"></div>\n    <button md-button class=\"list-button main\" (click)=\"exportMap($event)\" download=\"mapa.pdf\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n\n    <button md-button class=\"list-button main\" (click)=\"openWMSDialog()\">\n      <md-icon>map</md-icon>AÑADIR WMS\n    </button>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{ 'map-expanded': sidenav.opened }\" \n  >    \n  </div>\n\n  <app-map-profile\n    [map]=\"map\"\n  ></app-map-profile>\n\n  <app-search [map]=\"map\"></app-search>\n\n  <app-measure [map]=\"map\"></app-measure>\n\n  <app-mouse-position [map]=\"map\"></app-mouse-position>\n\n  <app-edit-layer [map]=\"map\"></app-edit-layer>\n\n</md-sidenav-container>\n"
+module.exports = "<loading-animate></loading-animate>\n<button\n  md-mini-fab class=\"burguer\" \n  [ngClass]=\"{'burguer-expanded': sidenav.opened }\"\n  (click)=\"sidenav.opened ? sidenav.close() : sidenav.open();\">\n  <md-icon>add</md-icon>\n</button>\n<md-sidenav-container [@routerTransition]=\"\" class=\"example-container\">\n  <md-sidenav #sidenav class=\"example-sidenav\">\n\n    <button md-button class=\"list-button main\" (click)=\"toggleTools()\">\n      <md-icon>apps</md-icon>HERRAMIENTAS\n    </button>\n    <div [@collapsed]=\"toolsControlVisible\">\n      <button md-button class=\"list-button\" (click)=\"toggleProfileControl()\" [style.background-color]=\"getBackgroundColor(profileControl.active)\">\n        <md-icon>terrain</md-icon>PERFIL\n      </button>\n      <button md-button (click)=\"toggleSearchControl(1)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 1)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR PUNTO\n      </button>\n      <button md-button (click)=\"toggleSearchControl(2)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)\">\n        <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE\n      </button>\n      <button md-button (click)=\"toggleMeasureControl(1)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(measureControl.active && measureControl.activeInteraction == 1)\">\n        <md-icon>trending_flat</md-icon>MEDIR PERÍMETRO\n      </button>\n      <button md-button (click)=\"toggleMeasureControl(2)\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(measureControl.active && measureControl.activeInteraction == 2)\">\n        <md-icon>branding_watermark</md-icon>MEDIR ÁREA\n      </button>\n      <button md-button [disabled]=\"editLayerControl.getEditableLayers().length <= 0\" (click)=\"toggleEditLayers()\" class=\"list-button\" [style.background-color]=\"getBackgroundColor(editLayerControl.controlActive)\">\n        <md-icon>mode_edit</md-icon>EDITAR CAPAS\n      </button>\n    </div>\n\n    <button md-button class=\"list-button main\" (click)=\"toggleMaps()\">\n      <md-icon>layers</md-icon>MAPAS\n    </button>\n    <!-- control de capas -->\n    <md-select [@collapsed]=\"mapsControlVisible\" placeholder=\"Mapa actual\" (change)=\"onChangeMap()\" [(ngModel)]=\"actualMap\" style=\"margin-top : 20px; margin-left : 2.5%; width : 95%;\">\n      <md-option *ngFor=\"let map of accesibleMaps\" [value]=\"map.id\">{{ map.name }}</md-option>\n    </md-select>\n    <app-layer-switcher [@collapsed]=\"mapsControlVisible\" [visibility]=\"mapsControlVisible\" [map]=\"map\" (layersChanged)=\"updateMapAndOverview()\"></app-layer-switcher>\n    <!-- END control de capas -->\n    <button md-button class=\"list-button main\" (click)=\"toggleOverview()\">\n      <md-icon>map</md-icon>MINIATURA\n    </button>\n    <div [@collapsed]=\"overviewControlVisible\" #overviewMap class=\"overview-map\"></div>\n    <button md-button class=\"list-button main\" (click)=\"exportMap($event)\" download=\"mapa.pdf\">\n      <md-icon>file_download</md-icon>DESCARGAR MAPA\n    </button>\n\n    <button md-button class=\"list-button main\" (click)=\"openWMSDialog()\">\n      <md-icon>map</md-icon>AÑADIR WMS\n    </button>\n\n  </md-sidenav>\n  <div id=\"map\" #mapEl class=\"example-sidenav-content\"\n    [ngClass]=\"{ 'map-expanded': sidenav.opened }\" \n  >    \n  </div>\n\n  <app-map-profile\n    [map]=\"map\"\n  ></app-map-profile>\n\n  <app-search [map]=\"map\"></app-search>\n\n  <app-measure [map]=\"map\"></app-measure>\n\n  <app-mouse-position [map]=\"map\"></app-mouse-position>\n\n  <app-edit-layer [map]=\"map\"></app-edit-layer>\n\n</md-sidenav-container>\n"
 
 /***/ }),
 /* 1433 */

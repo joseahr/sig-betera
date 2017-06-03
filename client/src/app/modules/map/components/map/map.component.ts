@@ -346,6 +346,7 @@ export class MapComponent implements OnInit {
     let active = !this.editLayerControl.controlActive;
     if(active) this.disableControls();
     this.editLayerControl.setActive(active);
+    this.sidenav.close();
   }
 
   toggleMeasureControl(interaction?){

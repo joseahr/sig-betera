@@ -10009,6 +10009,10 @@ var UserLayersService = (function () {
             wkt: wkt, layers: layers
         }).map(function (res) { return res.json(); });
     };
+    UserLayersService.prototype.getFeatureData = function (layerName, gid) {
+        return this.http.get("/api/layers/" + layerName + "/data/" + gid)
+            .map(function (res) { return res.json(); });
+    };
     UserLayersService.prototype.addFeature = function (layerName, geometry, properties) {
         return this.http.post("/api/layers/" + layerName + "/transaction", {
             geometry: geometry, properties: properties

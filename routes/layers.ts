@@ -7,6 +7,56 @@ const wktReader = new jsts.io.WKTReader();
 
 export let router = express.Router();
 
+const getFeatureDataGuard = () => 
+    async (req : express.Request, res : express.Response, next : express.NextFunction) =>{
+
+        let { id } = req.user || { id : null };
+        
+        let { layerName } = req.params;
+
+        if(!layerName) return res.status(500).json('Debe seleccionar la capa');
+
+        try {
+            let maps = await db.maps.getMapsAndLayers(id) || [];
+            let layersIcanSee = []
+                .concat( ...maps.map( m => m.layers ) )
+                .map( l => l.name ); 
+            
+            if(!layersIcanSee.includes(layerName)){
+                return res.status(403).json({ msg : 'No permitido' })
+            }
+
+            next();
+        } catch(e){
+            res.status(500).json({ msg : e })
+        }
+
+    }
+
+const getFeaturesGuard = () => 
+    async (req : express.Request, res : express.Response, next : express.NextFunction) =>{
+
+        let { id } = req.user || { id : null };
+        
+        let { layers } = req.body;
+
+        if(!layers || !layers.length) return res.status(500).json('Debe enviar al menos una capa en la que buscar.');
+
+        try {
+            let maps = await db.maps.getMapsAndLayers(id) || [];
+            let layersIcanSee = []
+                .concat( ...maps.map( m => m.layers ) )
+                .map( l => l.name ); 
+
+            req.body.layers = layers.filter( l => layersIcanSee.includes(l) )
+            console.log(layersIcanSee, layers);
+            next();
+        } catch(e){
+            res.status(500).json({ msg : e })
+        }
+
+    }
+
 const rolesGuardMiddleware = ( ...checkPerms : string[] ) => 
     async (req : express.Request, res : express.Response, next : express.NextFunction) =>{
     
@@ -19,23 +69,18 @@ const rolesGuardMiddleware = ( ...checkPerms : string[] ) =>
         if(!layersWithPerms.includes(layerName)){
             return res.status(403).json({ msg : 'No permitido' })
         }
-    
         next();
     }
 
+
 router.route('/features')
-.post( async (req, res)=>{
+.post( [getFeaturesGuard()], async (req, res)=>{
     let { user } = req;
     let { wkt, layers } = req.body;
     //console.log('byGeom');
     if(!wkt) return res.status(500).json('Debe enviar una extensión, área o punto.');
-    if(!layers || !layers.length) return res.status(500).json('Debe enviar al menos una capa en la que buscar.');
     //if(typeof req.body.layers === 'string') req.body.layers = req.body.layers.split(',');
     try {
-        let defaultLayers = await db.layers.getDefaultLayers();
-        if(!user){
-            layers = layers.filter( (l : any) => defaultLayers.find( (dl : any) => dl.name == l) );
-        }
         
         let features = await db.layers.getFeaturesIntersecting(wkt, ...layers);
         res.status(200).json(features)
@@ -72,6 +117,31 @@ router.get('/schema/:layerName', async (req, res)=>{
         res.status(500).json({ msg : e });
     }
 });
+
+router.
+route('/:layerName/data/:gid')
+.get([getFeatureDataGuard()], async (req, res)=>{
+    try {
+        let { layerName, gid } = req.params;
+        let data = await db.any('SELECT * from datos WHERE capa = $1 and gid = $2', [layerName, gid])
+        console.log(data)
+        res.status(200).json(data)
+    } catch(e){
+        res.status(500).json({ msg : e });
+    }
+})
+.post([rolesGuardMiddleware('e', 'd')], async (req, res) =>{
+    try {
+        let { id } = req.user;
+        let { url } = req.body;
+        let { layerName, gid } = req.params;
+        let data = await db.any('INSERT INTO datos(capa, gid, url, id_user) VALUES($1, $2, $3, $4)', [layerName, gid, url, id])
+        console.log(data)
+        res.status(200).json(data)
+    } catch(e){
+        res.status(500).json({ msg : e });
+    }
+})
 
 router
 .route('/:layerName/transaction')

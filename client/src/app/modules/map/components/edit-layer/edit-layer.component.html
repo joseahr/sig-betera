@@ -1,3 +1,4 @@
+<loading-animate></loading-animate>
 <md-card *ngIf="controlActive" style="position : absolute; bottom: 0.5em; left : 0.5em;">
     <md-select [(ngModel)]="layerName" placeholder="Selecciona capa" (change)="layerChanged($event)">
         <md-option *ngFor="let capa of getEditableLayers()" [value]="capa.get('name')">{{ capa.get('name') }}</md-option>

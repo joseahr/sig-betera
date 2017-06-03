@@ -158,7 +158,7 @@ export class EditLayerComponent implements OnInit {
           dialogRef.componentInstance.layerName = this.layerName;
           dialogRef.afterClosed().subscribe(val => {
             if(val == -1){
-              this.interaction.getSource().removeFeature(e.feature);
+              this.editingLayer.getSource().removeFeature(e.feature);
             }
           })
           console.log('add', e.feature);
@@ -190,7 +190,12 @@ export class EditLayerComponent implements OnInit {
           dialogRef.componentInstance.feature = e.element;
           dialogRef.componentInstance.action = this.action;
           dialogRef.componentInstance.layerName = this.layerName;
-
+          
+          dialogRef.afterClosed().subscribe( () => {
+            this.editingLayer.getSource().clear();
+            this.editingLayer.getSource().refresh();
+            this.layerWMS.getSource().updateParams({"time": Date.now()});
+          });
           console.log('add', e.element.getProperties());
         });
 
@@ -210,6 +215,12 @@ export class EditLayerComponent implements OnInit {
             dialogRef.componentInstance.feature = f;
             dialogRef.componentInstance.action = this.action;
             dialogRef.componentInstance.layerName = this.layerName;
+
+            dialogRef.afterClosed().subscribe( () => {
+              this.editingLayer.getSource().clear();
+              this.editingLayer.getSource().refresh();
+              this.layerWMS.getSource().updateParams({"time": Date.now()});
+            });
             //transactWFS('update', clone);
             // Abrir diálogo que se encargue de modificar propiedades y guardar
           }
@@ -257,7 +268,7 @@ export class EditLayerComponent implements OnInit {
     this.controlActive = active;
     if(!active){
       this.map.removeInteraction(this.interaction);
-      this.interactionSelect.getFeatures().clear();
+      if(this.interactionSelect) this.interactionSelect.getFeatures().clear();
       this.map.removeInteraction(this.interactionSelect);
       this.map.removeInteraction(this.interactionDoubleClick);
     }
@@ -265,14 +276,17 @@ export class EditLayerComponent implements OnInit {
   }
 
   getEditableLayers(){
-    return this.map
-    .getLayers()
-    .getArray()
-    .filter( l => l.get('group_capas_map') === true )[0]
-    .get('layers')
-    .getArray()
-    .filter( l =>  l.get('rol') == 'c' || l.get('rol') == 'e' || l.get('rol') == 'd' )
-    //.map( l => l.get('name') )
+    try {
+      return this.map
+      .getLayers()
+      .getArray()
+      .filter( l => l.get('group_capas_map') === true )[0]
+      .get('layers')
+      .getArray()
+      .filter( l =>  l.get('rol') == 'c' || l.get('rol') == 'e' || l.get('rol') == 'd' )
+    } catch(e){
+      return [];
+    }
   }
 
   startEditing(layerName : string){
@@ -319,6 +333,8 @@ export class EditLayerComponent implements OnInit {
                 </md-input-container>
                 <br>
             </div>
+            <div>Datos relacionados</div>
+            <p *ngFor="let data of (featureData | async)"><a href="{{data.url}}">{{data.url}}</a></p>
         </div>
         <div md-dialog-actions>
           <button md-button (click)="dialogRef.close(-1)">Cancelar</button>
@@ -334,6 +350,7 @@ export class FeatureEditDialog {
     excludedProperties = ['gid'];
     action;
     layerName;
+    featureData;
 
     constructor(
       private dialogRef : MdDialogRef<FeatureEditDialog>,
@@ -352,10 +369,9 @@ export class FeatureEditDialog {
         let geomColumnName = this.getGeomColumn().name;
         this.excludedProperties.push(geomColumnName);
         this.properties = this.feature.getProperties() || {};
-    }
-
-    close(){
-
+        if( this.feature.get('gid') ) {
+          this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid') )
+        }
     }
 
     saveFeature(){

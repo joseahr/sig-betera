@@ -36,6 +36,11 @@ export class UserLayersService {
         }).map( res => res.json() );
     }
 
+    getFeatureData(layerName : string, gid : number){
+        return this.http.get(`/api/layers/${layerName}/data/${gid}`)
+            .map( res => res.json() )
+    }
+
     addFeature(layerName : string, geometry, properties){
         return this.http.post(`/api/layers/${layerName}/transaction`, {
             geometry, properties
