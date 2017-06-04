@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import * as ol from 'openlayers';
 import { LoadingAnimateService } from 'ng2-loading-animate';
@@ -333,8 +333,22 @@ export class EditLayerComponent implements OnInit {
                 </md-input-container>
                 <br>
             </div>
-            <div>Datos relacionados</div>
-            <p *ngFor="let data of (featureData | async)"><a href="{{data.url}}">{{data.url}}</a></p>
+            <md-list>
+              <h3 md-subheader>Archivos Relacionados</h3>
+              <md-list-item>
+                <md-icon md-list-icon>file_upload</md-icon>
+                <h4 md-line>Añade un archivo (Imagen, PDF, ...)</h4>
+                <input #uploadFileForm md-line type="file">
+                <button md-line md-button (click)="uploadFile()">Subir</button>
+              </md-list-item>
+              <md-list-item *ngFor="let data of (featureData | async)">
+                <md-icon md-list-icon>insert_drive_files</md-icon>
+                <h4 md-line>
+                  <a href="{{data.url}}">{{data.url}}</a>
+                </h4>
+                <button md-mini-fab><md-icon>remove</md-icon></button>
+              </md-list-item>
+            </md-list>
         </div>
         <div md-dialog-actions>
           <button md-button (click)="dialogRef.close(-1)">Cancelar</button>
@@ -351,6 +365,8 @@ export class FeatureEditDialog {
     action;
     layerName;
     featureData;
+
+    @ViewChild('uploadFileForm') fileForm : ElementRef;
 
     constructor(
       private dialogRef : MdDialogRef<FeatureEditDialog>,
@@ -372,6 +388,12 @@ export class FeatureEditDialog {
         if( this.feature.get('gid') ) {
           this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid') )
         }
+    }
+
+    uploadFile(){
+      let file = this.fileForm.nativeElement.files[0];
+      console.log(file);
+      //this.userLayersService.addFeatureData()
     }
 
     saveFeature(){

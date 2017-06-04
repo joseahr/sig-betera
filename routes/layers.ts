@@ -135,13 +135,31 @@ route('/:layerName/data/:gid')
         let { id } = req.user;
         let { url } = req.body;
         let { layerName, gid } = req.params;
-        let data = await db.any('INSERT INTO datos(capa, gid, url, id_user) VALUES($1, $2, $3, $4)', [layerName, gid, url, id])
+
+        let fields = ['capa', 'gid', 'url', 'id_user'].map( name => ({ name }) );
+        let values = { capa : layerName, gid, url, id_user : id };
+
+        let cs = new pgp.helpers.ColumnSet(fields, { table: { table : 'datos' } });
+        let query = pgp.helpers.insert(values, cs);
+        let data = await db.query(query);
+
         console.log(data)
         res.status(200).json(data)
     } catch(e){
         res.status(500).json({ msg : e });
     }
 })
+.delete([rolesGuardMiddleware('d')], async (req, res) =>{
+    try {
+        let { id } = req.user;
+        let { layerName, gid } = req.params;
+        let data = await db.any('DELETE FROM datos WHERE capa = $1 AND gid = $2 and id = $3', [layerName, gid, id])
+        console.log(data)
+        res.status(200).json(data)
+    } catch(e){
+        res.status(500).json({ msg : e });
+    }
+});
 
 router
 .route('/:layerName/transaction')

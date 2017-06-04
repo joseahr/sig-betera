@@ -10013,6 +10013,14 @@ var UserLayersService = (function () {
         return this.http.get("/api/layers/" + layerName + "/data/" + gid)
             .map(function (res) { return res.json(); });
     };
+    UserLayersService.prototype.addFeatureData = function (layerName, gid, url) {
+        return this.http.post("/api/layers/" + layerName + "/data/" + gid, { url: url })
+            .map(function (res) { return res.json(); });
+    };
+    UserLayersService.prototype.deleteFeatureData = function (layerName, gid, id) {
+        return this.http.delete("/api/layers/" + layerName + "/data/" + gid, { body: { id: id } })
+            .map(function (res) { return res.json(); });
+    };
     UserLayersService.prototype.addFeature = function (layerName, geometry, properties) {
         return this.http.post("/api/layers/" + layerName + "/transaction", {
             geometry: geometry, properties: properties

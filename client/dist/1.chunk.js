@@ -9893,6 +9893,14 @@ var UserLayersService = (function () {
         return this.http.get("/api/layers/" + layerName + "/data/" + gid)
             .map(function (res) { return res.json(); });
     };
+    UserLayersService.prototype.addFeatureData = function (layerName, gid, url) {
+        return this.http.post("/api/layers/" + layerName + "/data/" + gid, { url: url })
+            .map(function (res) { return res.json(); });
+    };
+    UserLayersService.prototype.deleteFeatureData = function (layerName, gid, id) {
+        return this.http.delete("/api/layers/" + layerName + "/data/" + gid, { body: { id: id } })
+            .map(function (res) { return res.json(); });
+    };
     UserLayersService.prototype.addFeature = function (layerName, geometry, properties) {
         return this.http.post("/api/layers/" + layerName + "/transaction", {
             geometry: geometry, properties: properties
@@ -44353,6 +44361,11 @@ var FeatureEditDialog = (function () {
             this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid'));
         }
     };
+    FeatureEditDialog.prototype.uploadFile = function () {
+        var file = this.fileForm.nativeElement.files[0];
+        console.log(file);
+        //this.userLayersService.addFeatureData()
+    };
     FeatureEditDialog.prototype.saveFeature = function () {
         var _this = this;
         console.log('SAVE FEATURE', this.action, this.layerName, Object.assign({}, this.properties), this.properties);
@@ -44377,15 +44390,19 @@ var FeatureEditDialog = (function () {
             }, function (err) { return console.log(err.json()); });
         }
     };
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('uploadFileForm'), 
+        __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object)
+    ], FeatureEditDialog.prototype, "fileForm", void 0);
     FeatureEditDialog = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            template: "\n        <div md-dialog-content>\n            <div *ngFor=\"let field of fields\">\n                <md-input-container>\n                    <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                </md-input-container>\n                <br>\n            </div>\n            <div>Datos relacionados</div>\n            <p *ngFor=\"let data of (featureData | async)\"><a href=\"{{data.url}}\">{{data.url}}</a></p>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close(-1)\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
+            template: "\n        <div md-dialog-content>\n            <div *ngFor=\"let field of fields\">\n                <md-input-container>\n                    <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                </md-input-container>\n                <br>\n            </div>\n            <md-list>\n              <h3 md-subheader>Archivos Relacionados</h3>\n              <md-list-item>\n                <md-icon md-list-icon>file_upload</md-icon>\n                <h4 md-line>A\u00F1ade un archivo (Imagen, PDF, ...)</h4>\n                <input #uploadFileForm md-line type=\"file\">\n                <button md-line md-button (click)=\"uploadFile()\">Subir</button>\n              </md-list-item>\n              <md-list-item *ngFor=\"let data of (featureData | async)\">\n                <md-icon md-list-icon>insert_drive_files</md-icon>\n                <h4 md-line>\n                  <a href=\"{{data.url}}\">{{data.url}}</a>\n                </h4>\n                <button md-mini-fab><md-icon>remove</md-icon></button>\n              </md-list-item>\n            </md-list>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close(-1)\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
             providers: [__WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]) === 'function' && _c) || Object])
     ], FeatureEditDialog);
     return FeatureEditDialog;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 var FeatureDeleteDialog = (function () {
     function FeatureDeleteDialog(userLayersService, dialogRef) {

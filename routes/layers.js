@@ -235,7 +235,7 @@ exports.router.
     });
 }); })
     .post([rolesGuardMiddleware('e', 'd')], function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var id, url, _a, layerName, gid, data, e_6;
+    var id, url, _a, layerName, gid, fields, values, cs, query, data, e_6;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -243,7 +243,11 @@ exports.router.
                 id = req.user.id;
                 url = req.body.url;
                 _a = req.params, layerName = _a.layerName, gid = _a.gid;
-                return [4 /*yield*/, db_1.db.any('INSERT INTO datos(capa, gid, url, id_user) VALUES($1, $2, $3, $4)', [layerName, gid, url, id])];
+                fields = ['capa', 'gid', 'url', 'id_user'].map(function (name) { return ({ name: name }); });
+                values = { capa: layerName, gid: gid, url: url, id_user: id };
+                cs = new db_1.pgp.helpers.ColumnSet(fields, { table: { table: 'datos' } });
+                query = db_1.pgp.helpers.insert(values, cs);
+                return [4 /*yield*/, db_1.db.query(query)];
             case 1:
                 data = _b.sent();
                 console.log(data);
@@ -256,11 +260,33 @@ exports.router.
             case 3: return [2 /*return*/];
         }
     });
+}); })
+    .delete([rolesGuardMiddleware('d')], function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    var id, _a, layerName, gid, data, e_7;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                id = req.user.id;
+                _a = req.params, layerName = _a.layerName, gid = _a.gid;
+                return [4 /*yield*/, db_1.db.any('DELETE FROM datos WHERE capa = $1 AND gid = $2 and id = $3', [layerName, gid, id])];
+            case 1:
+                data = _b.sent();
+                console.log(data);
+                res.status(200).json(data);
+                return [3 /*break*/, 3];
+            case 2:
+                e_7 = _b.sent();
+                res.status(500).json({ msg: e_7 });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
 }); });
 exports.router
     .route('/:layerName/transaction')
     .post([rolesGuardMiddleware('c', 'e', 'd')], function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var layerName, _a, geometry, properties, layerSchema, geomColumn, fields, values, cs, query, gid, e_7;
+    var layerName, _a, geometry, properties, layerSchema, geomColumn, fields, values, cs, query, gid, e_8;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -304,16 +330,16 @@ exports.router
                 res.status(200).json({ msg: 'OK', gid: gid });
                 return [3 /*break*/, 4];
             case 3:
-                e_7 = _b.sent();
-                console.log(e_7);
-                res.status(500).json({ msg: e_7 });
+                e_8 = _b.sent();
+                console.log(e_8);
+                res.status(500).json({ msg: e_8 });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); })
     .put([rolesGuardMiddleware('e', 'd')], function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var layerName, _a, geometry, properties, gid, layerSchema, geomColumn, fields, values, cs, query, response, e_8;
+    var layerName, _a, geometry, properties, gid, layerSchema, geomColumn, fields, values, cs, query, response, e_9;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -350,16 +376,16 @@ exports.router
                 res.status(200).json({ msg: 'OK' });
                 return [3 /*break*/, 4];
             case 3:
-                e_8 = _b.sent();
-                console.log(e_8);
-                res.status(500).json({ msg: e_8 });
+                e_9 = _b.sent();
+                console.log(e_9);
+                res.status(500).json({ msg: e_9 });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); })
     .delete([rolesGuardMiddleware('d')], function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var gid, layerName, table, e_9;
+    var gid, layerName, table, e_10;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -375,8 +401,8 @@ exports.router
                 res.status(200).json({ msg: 'OK' });
                 return [3 /*break*/, 4];
             case 3:
-                e_9 = _a.sent();
-                res.status(500).json({ msg: e_9 });
+                e_10 = _a.sent();
+                res.status(500).json({ msg: e_10 });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
