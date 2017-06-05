@@ -12,8 +12,7 @@ import { DragulaService } from 'ng2-dragula';
 import { MdDialog } from '@angular/material';
 import { LoadingAnimateService } from 'ng2-loading-animate';
 
-import { LoginComponent } from './dialogs/login/login.component';
-import { SignupComponent } from './dialogs/signup/signup.component';
+import { LoginComponent, SignupComponent, ForgotComponent } from './dialogs';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -115,4 +114,14 @@ export class AppComponent {
       }
     )
   }
+
+  openForgotDialog(){
+    let dialogRef = this.dialog.open(ForgotComponent);
+    dialogRef.afterClosed().subscribe(
+      result => {
+        // Hacer algo
+      }
+    )
+  }
+
 }

@@ -49,7 +49,16 @@ var AuthService = (function () {
         return this.http.post('/api/user/signup', user);
     };
     AuthService.prototype.validateUserByToken = function (token) {
-        return this.http.get("/api/user/validar/" + token);
+        return this.http.get("/api/user/validate/" + token).map(function (res) { return res.json(); });
+    };
+    AuthService.prototype.sendPasswordToken = function (email) {
+        return this.http.post("/api/user/password", { email: email }).map(function (res) { return res.json(); });
+    };
+    AuthService.prototype.isValidToken = function (token) {
+        return this.http.get("/api/user/password/" + token).map(function (res) { return res.json(); });
+    };
+    AuthService.prototype.updatePassword = function (token, password, repassword) {
+        return this.http.put("/api/user/password", { token: token, password: password, repassword: repassword }).map(function (res) { return res.json(); });
     };
     AuthService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
@@ -62,17 +71,230 @@ var AuthService = (function () {
 
 /***/ }),
 
+/***/ 1437:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(525);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ValidateTokenComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var ValidateTokenComponent = (function () {
+    function ValidateTokenComponent(authService, route, router, snackbar, loading) {
+        this.authService = authService;
+        this.route = route;
+        this.router = router;
+        this.snackbar = snackbar;
+        this.loading = loading;
+    }
+    ValidateTokenComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var token = this.route.snapshot.params.token;
+        this.loading.setValue(true);
+        this.authService.validateUserByToken(token)
+            .subscribe(function () {
+            console.log('OK');
+            _this.snackbar.open('Usuario validado con éxito', 'CERRAR', { duration: 1500 })
+                .afterDismissed()
+                .subscribe(function () {
+                _this.loading.setValue(false);
+                _this.router.navigateByUrl('/');
+            });
+        }, function (err) {
+            console.log(err);
+            _this.snackbar.open('Fallo al validar usuario', 'CERRAR', { duration: 1500 })
+                .afterDismissed()
+                .subscribe(function () {
+                _this.loading.setValue(false);
+                _this.router.navigateByUrl('/');
+            });
+        });
+    };
+    ValidateTokenComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-validate-token',
+            template: __webpack_require__(1439),
+            styles: [__webpack_require__(1438)],
+            providers: [__WEBPACK_IMPORTED_MODULE_2__services__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]]
+        }), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AuthService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _e) || Object])
+    ], ValidateTokenComponent);
+    return ValidateTokenComponent;
+    var _a, _b, _c, _d, _e;
+}());
+//# sourceMappingURL=validate-token.component.js.map
+
+/***/ }),
+
+/***/ 1438:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(36)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ 1439:
+/***/ (function(module, exports) {
+
+module.exports = "<loading-animate></loading-animate>\n"
+
+/***/ }),
+
+/***/ 1440:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services__ = __webpack_require__(525);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChangePasswordTokenComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var ChangePasswordTokenComponent = (function () {
+    function ChangePasswordTokenComponent(authService, route, router, snackbar, loading) {
+        this.authService = authService;
+        this.route = route;
+        this.router = router;
+        this.snackbar = snackbar;
+        this.loading = loading;
+    }
+    ChangePasswordTokenComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var token = this.route.snapshot.params.token;
+        this.token = token;
+        this.loading.setValue(true);
+        this.authService.isValidToken(token)
+            .subscribe(function () {
+            _this.loading.setValue(false);
+        }, function (err) {
+            _this.loading.setValue(false);
+            _this.snackbar.open('El token no es válido o ha expirado', 'CERRAR', { duration: 1500 })
+                .afterDismissed()
+                .subscribe(function () {
+                _this.router.navigateByUrl('/');
+            });
+        });
+    };
+    ChangePasswordTokenComponent.prototype.updatePassword = function () {
+        var _this = this;
+        if (!this.password || this.password !== this.repassword) {
+            return this.snackbar.open('Las contraseñas deben coincidir', 'CERRAR', { duration: 1500 });
+        }
+        if (this.password.length < 5) {
+            return this.snackbar.open('Las contraseña debe tener al menos 5 caracteres', 'CERRAR', { duration: 1500 });
+        }
+        this.loading.setValue(true);
+        this.authService.updatePassword(this.token, this.password, this.repassword)
+            .subscribe(function () {
+            _this.loading.setValue(false);
+            _this.snackbar.open('Contraseña actualizada con éxito', 'CERRAR', { duration: 1500 })
+                .afterDismissed()
+                .subscribe(function () {
+                _this.router.navigateByUrl('/');
+            });
+        }, function (err) {
+            _this.loading.setValue(false);
+            _this.snackbar.open('Hubo un error actualizando la contraseña', 'CERRAR', { duration: 1500 });
+        });
+    };
+    ChangePasswordTokenComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-change-password-token',
+            template: __webpack_require__(1442),
+            styles: [__webpack_require__(1441)],
+            providers: [__WEBPACK_IMPORTED_MODULE_1__services__["a" /* AuthService */]]
+        }), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__services__["a" /* AuthService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _e) || Object])
+    ], ChangePasswordTokenComponent);
+    return ChangePasswordTokenComponent;
+    var _a, _b, _c, _d, _e;
+}());
+//# sourceMappingURL=change-password-token.component.js.map
+
+/***/ }),
+
+/***/ 1441:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(36)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ 1442:
+/***/ (function(module, exports) {
+
+module.exports = "<loading-animate></loading-animate>\n\n<md-card style=\"width : 80%; margin : 0 auto; margin-top : 20px;\">\n  <md-card-header>Recupera tu cuenta</md-card-header>\n  <md-card-content>\n    <md-input-container>\n      <input [(ngModel)]=\"password\" placeholder =\"Contraseña\" mdInput type=\"password\">\n    </md-input-container>\n    <md-input-container>\n      <input [(ngModel)]=\"repassword\" placeholder = \"Repetir contraseña\" mdInput type=\"password\">\n    </md-input-container>\n  </md-card-content>\n  <md-card-actions>\n    <button md-button (click)=\"updatePassword()\">Actualizar</button>\n  </md-card-actions>\n</md-card>"
+
+/***/ }),
+
 /***/ 455:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__secciones__ = __webpack_require__(701);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_transitions__ = __webpack_require__(519);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__(192);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_fullpage_js__ = __webpack_require__(295);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_fullpage_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_fullpage_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs__ = __webpack_require__(704);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(519);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_fullpage_js__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_fullpage_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_fullpage_js__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -88,21 +310,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var HomeComponent = (function () {
-    function HomeComponent(el, ngZone) {
+    function HomeComponent(el, ngZone, http, router, dialog) {
         this.el = el;
         this.ngZone = ngZone;
-        this.secciones = __WEBPACK_IMPORTED_MODULE_1__secciones__["a" /* sections */];
+        this.http = http;
+        this.router = router;
+        this.dialog = dialog;
+        this.layers = [];
     }
+    HomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.getLayers().subscribe(function (layers) {
+            _this.layers = layers;
+            console.log(layers);
+        });
+    };
     HomeComponent.prototype.ngOnDestroy = function () {
         document.getElementsByTagName('html')[0].style.overflow = 'auto';
-        __WEBPACK_IMPORTED_MODULE_3_jquery__["fn"].fullpage.destroy('all');
+        __WEBPACK_IMPORTED_MODULE_6_jquery__["fn"].fullpage.destroy('all');
         console.log('destroyyy');
     };
     HomeComponent.prototype.ngAfterViewInit = function () {
         this.toolbar = this.el.nativeElement.parentNode.parentNode.childNodes[0];
         document.body.style.overflow = '';
         //console.log(this.el.nativeElement.parentNode.childNodes[0], this.el.nativeElement, 'toooooool')
+    };
+    HomeComponent.prototype.getLayers = function () {
+        return this.http.get('/api/maps')
+            .map(function (res) { return res.json(); })
+            .map(function (res) { return (_a = []).concat.apply(_a, res.map(function (m) { return m.layers.map(function (l) { return l.name; }); })); var _a; });
+    };
+    HomeComponent.prototype.openSignupDialog = function () {
+        this.dialog.open(__WEBPACK_IMPORTED_MODULE_4__dialogs__["b" /* SignupComponent */]);
     };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('full'), 
@@ -113,13 +356,13 @@ var HomeComponent = (function () {
             selector: 'app-home',
             template: __webpack_require__(880),
             styles: [__webpack_require__(865)],
-            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__router_transitions__["a" /* routerTransition */])()],
+            animations: [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__router_transitions__["a" /* routerTransition */])()],
             host: { '[@routerTransition]': '' }
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdDialog */]) === 'function' && _f) || Object])
     ], HomeComponent);
     return HomeComponent;
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e, _f;
 }());
 //# sourceMappingURL=home.component.js.map
 
@@ -371,9 +614,8 @@ function slideToLeft() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(301);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs_login_login_component__ = __webpack_require__(456);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dialogs_signup_signup_component__ = __webpack_require__(457);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_auth_service__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs__ = __webpack_require__(704);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(125);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -384,7 +626,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -451,7 +692,7 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.openLoginDialog = function () {
         var _this = this;
-        var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_4__dialogs_login_login_component__["a" /* LoginComponent */]);
+        var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_4__dialogs__["a" /* LoginComponent */]);
         dialogRef.afterClosed().subscribe(function (result) {
             if (!result)
                 return;
@@ -469,7 +710,13 @@ var AppComponent = (function () {
         });
     };
     AppComponent.prototype.openSignupDialog = function () {
-        var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_5__dialogs_signup_signup_component__["a" /* SignupComponent */]);
+        var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_4__dialogs__["b" /* SignupComponent */]);
+        dialogRef.afterClosed().subscribe(function (result) {
+            // Hacer algo
+        });
+    };
+    AppComponent.prototype.openForgotDialog = function () {
+        var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_4__dialogs__["c" /* ForgotComponent */]);
         dialogRef.afterClosed().subscribe(function (result) {
             // Hacer algo
         });
@@ -479,9 +726,9 @@ var AppComponent = (function () {
             selector: 'app-root',
             template: __webpack_require__(879),
             styles: [__webpack_require__(864)],
-            providers: [__WEBPACK_IMPORTED_MODULE_6__services_auth_service__["a" /* AuthService */]]
+            providers: [__WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdDialog */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__services_auth_service__["a" /* AuthService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _e) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdDialog */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdDialog */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _e) || Object])
     ], AppComponent);
     return AppComponent;
     var _a, _b, _c, _d, _e;
@@ -520,6 +767,8 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__dialogs__ = __webpack_require__(704);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_hammerjs__ = __webpack_require__(869);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18_hammerjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_validate_token_validate_token_component__ = __webpack_require__(1437);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_change_password_token_change_password_token_component__ = __webpack_require__(1440);
 /* unused harmony export highchartsFactory */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -531,6 +780,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
 
 
 
@@ -566,6 +817,8 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_17__dialogs__["a" /* LoginComponent */],
                 __WEBPACK_IMPORTED_MODULE_17__dialogs__["b" /* SignupComponent */],
                 __WEBPACK_IMPORTED_MODULE_17__dialogs__["c" /* ForgotComponent */],
+                __WEBPACK_IMPORTED_MODULE_19__components_validate_token_validate_token_component__["a" /* ValidateTokenComponent */],
+                __WEBPACK_IMPORTED_MODULE_20__components_change_password_token_change_password_token_component__["a" /* ChangePasswordTokenComponent */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -576,7 +829,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_8__angular_material__["a" /* MaterialModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_7__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_routes__["a" /* appRoutes */], { useHash: true })
             ],
-            entryComponents: [__WEBPACK_IMPORTED_MODULE_17__dialogs__["a" /* LoginComponent */], __WEBPACK_IMPORTED_MODULE_17__dialogs__["b" /* SignupComponent */]],
+            entryComponents: [__WEBPACK_IMPORTED_MODULE_17__dialogs__["a" /* LoginComponent */], __WEBPACK_IMPORTED_MODULE_17__dialogs__["b" /* SignupComponent */], __WEBPACK_IMPORTED_MODULE_17__dialogs__["c" /* ForgotComponent */]],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_16_ng2_fullpage__["MnFullpageService"],
                 __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__["LoadingAnimateService"],
@@ -601,57 +854,20 @@ var AppModule = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_home_home_component__ = __webpack_require__(455);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components__ = __webpack_require__(702);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__guards__ = __webpack_require__(458);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return appRoutes; });
 
 
 var appRoutes = [
-    { path: '', component: __WEBPACK_IMPORTED_MODULE_0__components_home_home_component__["a" /* HomeComponent */] },
+    { path: '', component: __WEBPACK_IMPORTED_MODULE_0__components__["a" /* HomeComponent */] },
     { path: 'map', loadChildren: './modules/map/map.module#MapModule' },
     { path: 'admin', loadChildren: './modules/admin/admin.module#AdminModule', canActivate: [__WEBPACK_IMPORTED_MODULE_1__guards__["a" /* CanActivateAdmin */]] },
+    { path: 'validate/token/:token', component: __WEBPACK_IMPORTED_MODULE_0__components__["b" /* ValidateTokenComponent */] },
+    { path: 'password/token/:token', component: __WEBPACK_IMPORTED_MODULE_0__components__["c" /* ChangePasswordTokenComponent */] },
     { path: '**', redirectTo: '' }
 ];
 //# sourceMappingURL=app.routes.js.map
-
-/***/ }),
-
-/***/ 701:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return sections; });
-var sections = [
-    {
-        titulo: 'Servicios WMS',
-        subtitulo: 'Servicios WMS',
-        resumen: "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n        Phasellus et ornare erat. Suspendisse dapibus sapien ac elit blandit ullamcorper. \n        Morbi venenatis vestibulum lacus sit amet lacinia. Integer aliquam, tellus sed venenatis dignissim, eros diam finibus libero, ut venenatis lectus elit vitae ipsum. Phasellus tristique tempor diam id ultrices. Phasellus vitae elit sem. Mauris tristique dolor ex, vel auctor eros fringilla sit amet. Etiam in lorem non diam condimentum rutrum. Pellentesque felis velit, consectetur eu ullamcorper eget, dapibus sed dolor. In lacinia purus dictum magna tincidunt, id venenatis erat viverra.\n        ",
-        img: 'http://1.bp.blogspot.com/-vjllfyk5IAk/Ul23gz5r58I/AAAAAAAAGT4/W20TBxDWeJI/s1600/Capture.PNG',
-        color: '#ffbb00'
-    },
-    {
-        titulo: 'Descargas',
-        subtitulo: 'Servicios WMS',
-        resumen: "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n        Phasellus et ornare erat. Suspendisse dapibus sapien ac elit blandit ullamcorper. \n        Morbi venenatis vestibulum lacus sit amet lacinia. Integer aliquam, tellus sed venenatis dignissim, eros diam finibus libero, ut venenatis lectus elit vitae ipsum. Phasellus tristique tempor diam id ultrices. Phasellus vitae elit sem. Mauris tristique dolor ex, vel auctor eros fringilla sit amet. Etiam in lorem non diam condimentum rutrum. Pellentesque felis velit, consectetur eu ullamcorper eget, dapibus sed dolor. In lacinia purus dictum magna tincidunt, id venenatis erat viverra.\n        ",
-        img: 'http://www.betera.com/wp-content/uploads/METRO-OK3.jpg',
-        color: '#00bbff'
-    },
-    {
-        titulo: 'Noticias',
-        subtitulo: 'Servicios WMS',
-        resumen: "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n        Phasellus et ornare erat. Suspendisse dapibus sapien ac elit blandit ullamcorper. \n        Morbi venenatis vestibulum lacus sit amet lacinia. Integer aliquam, tellus sed venenatis dignissim, eros diam finibus libero, ut venenatis lectus elit vitae ipsum. Phasellus tristique tempor diam id ultrices. Phasellus vitae elit sem. Mauris tristique dolor ex, vel auctor eros fringilla sit amet. Etiam in lorem non diam condimentum rutrum. Pellentesque felis velit, consectetur eu ullamcorper eget, dapibus sed dolor. In lacinia purus dictum magna tincidunt, id venenatis erat viverra.\n        ",
-        img: 'http://blog.elrealista.es/wp-content/uploads/2011/07/Catastro1.png',
-        color: '#f7f7f7'
-    },
-    {
-        titulo: 'Blablabla',
-        subtitulo: 'Servicios WMS',
-        resumen: "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n        Phasellus et ornare erat. Suspendisse dapibus sapien ac elit blandit ullamcorper. \n        Morbi venenatis vestibulum lacus sit amet lacinia. Integer aliquam, tellus sed venenatis dignissim, eros diam finibus libero, ut venenatis lectus elit vitae ipsum. Phasellus tristique tempor diam id ultrices. Phasellus vitae elit sem. Mauris tristique dolor ex, vel auctor eros fringilla sit amet. Etiam in lorem non diam condimentum rutrum. Pellentesque felis velit, consectetur eu ullamcorper eget, dapibus sed dolor. In lacinia purus dictum magna tincidunt, id venenatis erat viverra.\n        ",
-        img: 'http://1.bp.blogspot.com/--lMM9MTMf8s/UaJ6zs9CCQI/AAAAAAAByk0/q9Aw-4ZHPjg/s1600/paisaje-natural-con-%C3%A1rboles-y-pasto-verde-.jpg',
-        color: '#f7f7f7'
-    },
-];
-//# sourceMappingURL=secciones.js.map
 
 /***/ }),
 
@@ -661,6 +877,12 @@ var sections = [
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_home_component__ = __webpack_require__(455);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__home_home_component__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__validate_token_validate_token_component__ = __webpack_require__(1437);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__validate_token_validate_token_component__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__change_password_token_change_password_token_component__ = __webpack_require__(1440);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__change_password_token_change_password_token_component__["a"]; });
+
+
 
 //# sourceMappingURL=index.js.map
 
@@ -671,6 +893,11 @@ var sections = [
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__(525);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgotComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -682,20 +909,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
 var ForgotComponent = (function () {
-    function ForgotComponent() {
+    function ForgotComponent(authService, dialogRef, loading, snackbar, router) {
+        this.authService = authService;
+        this.dialogRef = dialogRef;
+        this.loading = loading;
+        this.snackbar = snackbar;
+        this.router = router;
     }
     ForgotComponent.prototype.ngOnInit = function () {
+    };
+    ForgotComponent.prototype.sendToken = function () {
+        var _this = this;
+        this.loading.setValue(true);
+        this.authService.sendPasswordToken(this.email)
+            .subscribe(function () {
+            //console.log('GUAY');
+            _this.loading.setValue(false);
+            _this.dialogRef.close();
+            _this.snackbar.open('Token enviado con éxito. Revisa tu correo.', 'CERRAR', { duration: 2500 })
+                .afterDismissed()
+                .subscribe(function () {
+                _this.router.navigateByUrl('/');
+            });
+        }, function (err) {
+            //console.log(err);
+            _this.loading.setValue(false);
+            _this.snackbar.open('Hubo algún fallo enviando el token.', 'CERRAR', { duration: 2500 });
+        });
     };
     ForgotComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-forgot',
             template: __webpack_require__(881),
-            styles: [__webpack_require__(866)]
+            styles: [__webpack_require__(866)],
+            providers: [__WEBPACK_IMPORTED_MODULE_2__services__["a" /* AuthService */]]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services__["a" /* AuthService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["c" /* MdDialogRef */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4_ng2_loading_animate__["LoadingAnimateService"]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdSnackBar */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === 'function' && _e) || Object])
     ], ForgotComponent);
     return ForgotComponent;
+    var _a, _b, _c, _d, _e;
 }());
 //# sourceMappingURL=forgot.component.js.map
 
@@ -937,14 +1194,14 @@ module.exports = "<loading-animate></loading-animate>\n<md-toolbar #toolbarMenu 
 /***/ 880:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <div #full mnFullpage \r\n      [mnFullpageNavigation]=\"true\" \r\n      [mnFullpageKeyboardScrolling]=\"true\"\r\n      [mnFullpageControlArrows]=\"true\">\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background : url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg')\">\r\n          </div>\r\n          <div class=\"caption\">\r\n            <h1>Bienvenido a SIG Bétera</h1>\r\n          </div>\r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background-color: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background: url('assets/mapa.png');\">\r\n          </div>\r\n          <div class=\"caption\">\r\n            <h1>Visita nuestro mapa</h1>\r\n          </div>\r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background: url('https://geosergio.files.wordpress.com/2010/02/capas_01.jpg')\">\r\n          </div> \r\n          <div class=\"caption\">\r\n            <h1>Descarga información Geográfica</h1>\r\n          </div>\r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\">\r\n            Hazte usuario\r\n          </div> \r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table has-slides\">        \r\n          <div class=\"fp-tableCell\">\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Contacto </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Contacto </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Noticias </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Slide 3 </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Slide 4 </div>\r\n          </div> \r\n      </div>\r\n\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <div #full mnFullpage \r\n      [mnFullpageNavigation]=\"true\" \r\n      [mnFullpageKeyboardScrolling]=\"true\"\r\n      [mnFullpageControlArrows]=\"true\">\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background : url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg')\">\r\n          </div>\r\n          <div class=\"caption\">\r\n            <h1>Bienvenido a SIG Bétera</h1>\r\n          </div>\r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background-color: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background: url('assets/mapa.png');\">\r\n          </div>\r\n          <div class=\"caption\">\r\n            <h1>Visita nuestro mapa</h1>\r\n          </div>\r\n          <md-card style=\"position : absolute; bottom : 10%; right : 10%; z-index : 1;\">\r\n            <md-card-content>\r\n              <button md-button (click)=\"router.navigateByUrl('/map')\">\r\n                IR AL MAPA\r\n              </button>\r\n            </md-card-content>\r\n          </md-card>\r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background: url('https://geosergio.files.wordpress.com/2010/02/capas_01.jpg')\">\r\n          </div> \r\n          <div class=\"caption\">\r\n            <h1>Descarga información Geográfica</h1>\r\n          </div>\r\n          <md-card style=\"position : absolute; bottom : 10%; right : 10%; z-index : 1;\">\r\n            <md-card-content>\r\n              <button md-button>+ INFORMACIÓN</button>\r\n            </md-card-content>\r\n          </md-card>\r\n      </div>\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background: url('http://teshnwritings.com/wp-content/uploads/2013/06/open-doors.jpg')\">\r\n          </div> \r\n          <div class=\"caption\">\r\n            <h1>Hazte usuario</h1>\r\n          </div>\r\n          <md-card style=\"position : absolute; bottom : 10%; right : 10%; z-index : 1;\">\r\n            <md-card-content>\r\n              <button md-button (click)=\"openSignupDialog()\">HAZTE USUARIO</button>\r\n            </md-card-content>\r\n          </md-card>\r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table has-slides\">        \r\n          <div class=\"fp-tableCell\">\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Contacto </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Contacto </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Noticias </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Slide 3 </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Slide 4 </div>\r\n          </div> \r\n      </div>\r\n\r\n  </div>\r\n</div>"
 
 /***/ }),
 
 /***/ 881:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  forgot works!\n</p>\n"
+module.exports = "<loading-animate></loading-animate>\n<div md-dialog-content>\n  <p>Escribe tu correo y te enviaremos los pasos necesarios para recuperar tu cuenta</p>\n  <md-input-container>\n    <input mdInput [(ngModel)]=\"email\" placeholder=\"Correo electrónico\" type=\"email\">\n  </md-input-container>\n</div>\n\n<div md-dialog-actions>\n  <button md-button (click)=\"sendToken()\">Enviar email</button>\n  <button md-button md-dialog-close=\"\">Cancelar</button>\n</div>"
 
 /***/ }),
 

@@ -76,11 +76,11 @@ router.get('/logout', (req : Express.Request, res)=>{
 
 router.get('/validate/:token', (req, res)=>{
   let token = req.params.token;
-  db.one("SELECT EXISTS ( SELECT token FROM users_not_valid_yet WHERE token = '${token#}' ) AS exist", { token })
+  db.one("SELECT EXISTS ( SELECT token FROM users_not_valid_yet WHERE token = ${token} ) AS exist", { token })
   .then( ( result : any ) =>{
     let exist = result.exist;
     if(!exist) return res.status(500).json('No existe ningún usuario no válido con token ' + token);
-    db.none("DELETE FROM users_not_valid_yet WHERE token = '${token#}'", { token })
+    db.none("DELETE FROM users_not_valid_yet WHERE token = ${token}", { token })
     .then( ()=> res.status(200).json('Usuario validado correctamente') )
     .catch( ( err : any ) => res.status(500).json(err) );
   })
@@ -119,12 +119,12 @@ route('/password')
   if(password !== req.body.repassword) return res.status(500).json('Las contraseñas no coinciden');
   if(password.length < 5) return res.status(500).json('La contraseña debe tener al menos 5 caracteres');
 
-  db.one("SELECT id FROM public.users_change_password_token WHERE token = '${token#}'", {token})
+  db.one("SELECT id FROM public.users_change_password_token WHERE token = ${token}", {token})
   .then( ( user : any ) => {
     db.users.genPassword(password)
     .then( ( password : any ) =>{
-      db.none("UPDATE Users SET password = '${password#}' WHERE id = '${id#}'", {id : user.id, password})
-      .then( ()=> db.none("DELETE FROM public.users_change_password_token WHERE token = '${token#}'", {token}) )
+      db.none("UPDATE Users SET password = ${password} WHERE id = ${id}", {id : user.id, password})
+      .then( ()=> db.none("DELETE FROM public.users_change_password_token WHERE token = ${token}", {token}) )
       .then( ()=> res.status(200).json('Contraseña Actualizada') )
       .catch( ( err : any ) => res.status(500).json(err) )
     })
@@ -135,7 +135,7 @@ route('/password')
 
 router.get('/password/:token', (req, res)=>{
   let token = req.params.token;
-  db.one("SELECT token FROM public.users_change_password_token WHERE token = '${token#}'", {token})
+  db.one("SELECT token FROM public.users_change_password_token WHERE token = ${token}", {token})
   .then( ( user : any ) => {
     //res.render('password-token', {token})
     res.json({token})

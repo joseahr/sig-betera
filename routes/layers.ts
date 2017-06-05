@@ -2,8 +2,23 @@ import * as express from 'express';
 import { db, pgp } from '../core/db';
 import * as capabilitiesParser from '../core/capabilities-parser';
 import * as jsts from 'jsts';
+import * as path from 'path';
+import { createMulter, DIR_DATOS, removeFiles } from '../core/multer';
+
+const ACCEPTED_EXTENSIONS = ['jpg', 'png', 'jpeg', 'gif','pdf', 'doc', 'docx', 'xls', 'xlsx','dxf'].map( ext => '.' + ext );
+
+const multer = createMulter(DIR_DATOS, null, 20*1024*1024).single('file')
 
 const wktReader = new jsts.io.WKTReader();
+
+const insertLayerEdition = (id_usuario : number, capa : string, gid : number, ip : string) => {
+    let fields = ['capa', 'gid', 'ip', 'id_usuario'].map( name => ({ name }) );
+    let values = { capa , gid, ip, id_usuario };
+
+    let cs = new pgp.helpers.ColumnSet(fields, { table: { table : 'users_layer_editions' } });
+    let query = pgp.helpers.insert(values, cs);
+    return db.query(query);
+}
 
 export let router = express.Router();
 
@@ -72,24 +87,6 @@ const rolesGuardMiddleware = ( ...checkPerms : string[] ) =>
         next();
     }
 
-
-router.route('/features')
-.post( [getFeaturesGuard()], async (req, res)=>{
-    let { user } = req;
-    let { wkt, layers } = req.body;
-    //console.log('byGeom');
-    if(!wkt) return res.status(500).json('Debe enviar una extensión, área o punto.');
-    //if(typeof req.body.layers === 'string') req.body.layers = req.body.layers.split(',');
-    try {
-        
-        let features = await db.layers.getFeaturesIntersecting(wkt, ...layers);
-        res.status(200).json(features)
-
-    } catch(e){
-        res.status(500).json('Hubo un error durante la búsqueda.')
-    }
-});
-
 router
 .post('/wms/capabilities', async (req, res)=>{
     let serviceUrl = req.body.service_url;
@@ -118,6 +115,74 @@ router.get('/schema/:layerName', async (req, res)=>{
     }
 });
 
+
+router.use( (req, res, next)=>{
+    if(req.isAuthenticated()){
+        return next();
+    }
+
+    return res.status(403).json({ msg : 'Debes estar autenticado' })
+});
+
+router.route('/features')
+.post( [getFeaturesGuard()], async (req, res)=>{
+    let { user } = req;
+    let { wkt, layers } = req.body;
+    //console.log('byGeom');
+    if(!wkt) return res.status(500).json('Debe enviar una extensión, área o punto.');
+    //if(typeof req.body.layers === 'string') req.body.layers = req.body.layers.split(',');
+    try {
+        
+        let features = await db.layers.getFeaturesIntersecting(wkt, ...layers);
+        res.status(200).json(features)
+
+    } catch(e){
+        res.status(500).json('Hubo un error durante la búsqueda.')
+    }
+});
+
+
+router.post('/:layerName/data/:gid/upload', [rolesGuardMiddleware('e', 'd')], (req, res) => {
+    let { layerName, gid } = req.params;
+    let { id } = req.user;
+
+    multer(req, res, async (err) => {
+        if(err){
+            console.log(err);
+            return res.status(500).json({ msg : err });
+        }
+
+        let file = req.file;
+        let url  = file.path;
+
+        let ext = path.extname(file.originalname).toLowerCase();
+        //console.log(file)-
+        if(!ACCEPTED_EXTENSIONS.includes(ext)){
+            await removeFiles(url);
+            return res.status(500).json({ msg : `Extensión "${ext}" no válida. Extensiones aceptadas : ${ACCEPTED_EXTENSIONS.join(',\n')}` }) 
+        }
+
+        // Hacer un pequeño arreglo para que la URL apunte a la
+        // url de archivos estáticos de Bétera
+        // AL IGUAL QUE LA CARPETA DONDE SE GURDE
+
+        let fields = ['capa', 'gid', 'url', 'id_user'].map( name => ({ name }) );
+        let values = { capa : layerName, gid, url, id_user : id };
+
+        let cs = new pgp.helpers.ColumnSet(fields, { table: { table : 'datos' } });
+        let query = pgp.helpers.insert(values, cs);
+
+        try {
+            let data = await db.query(query);
+            await insertLayerEdition(req.user.id, layerName, gid, req.ip);
+            console.log(data)
+            res.status(200).json(data);
+        } catch(err){
+            res.status(500).json({ msg : err });
+        }
+    });
+} );
+
 router.
 route('/:layerName/data/:gid')
 .get([getFeatureDataGuard()], async (req, res)=>{
@@ -142,7 +207,7 @@ route('/:layerName/data/:gid')
         let cs = new pgp.helpers.ColumnSet(fields, { table: { table : 'datos' } });
         let query = pgp.helpers.insert(values, cs);
         let data = await db.query(query);
-
+        await insertLayerEdition(req.user.id, layerName, gid, req.ip);
         console.log(data)
         res.status(200).json(data)
     } catch(e){
@@ -151,9 +216,10 @@ route('/:layerName/data/:gid')
 })
 .delete([rolesGuardMiddleware('d')], async (req, res) =>{
     try {
-        let { id } = req.user;
+        let { id } = req.body;
         let { layerName, gid } = req.params;
         let data = await db.any('DELETE FROM datos WHERE capa = $1 AND gid = $2 and id = $3', [layerName, gid, id])
+        await insertLayerEdition(req.user.id, layerName, gid, req.ip);
         console.log(data)
         res.status(200).json(data)
     } catch(e){
@@ -205,7 +271,7 @@ router
         let cs = new pgp.helpers.ColumnSet(fields, { table: { table : layerName, schema : 'capas' } });
         let query = pgp.helpers.insert(values, cs) + ' RETURNING gid';
         let { gid } = await db.one(query);
-        
+        await insertLayerEdition(req.user.id, layerName, gid, req.ip);
         res.status(200).json({ msg : 'OK', gid : gid });
     } catch(e){
         console.log(e);
@@ -247,7 +313,8 @@ router
         //console.log(layersWithPerms);
         let cs = new pgp.helpers.ColumnSet(fields, { table: { table : layerName, schema : 'capas' } }) ;
         let query = pgp.helpers.update(values, cs);
-        let response = await db.none(query + ' WHERE gid = ${gid}', {gid});
+        let response = await db.none(query + ' WHERE gid = ${gid}', { gid });
+        await insertLayerEdition(req.user.id, layerName, gid, req.ip);
         res.status(200).json({ msg : 'OK' });
     } catch(e){
         console.log(e);
@@ -262,7 +329,7 @@ router
         let table = new pgp.helpers.TableName(layerName, 'capas');
     
         await db.none('DELETE FROM $1 WHERE gid = $2', [table, gid]);
-    
+        await insertLayerEdition(req.user.id, layerName, gid, req.ip);
         res.status(200).json({ msg : 'OK' })
     } catch(e){
         res.status(500).json({ msg : e });

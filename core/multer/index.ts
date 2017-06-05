@@ -1,4 +1,5 @@
 export const TEMP_DIR_SHP = './uploads/shapefiles';
+export const DIR_DATOS = 'D:\\uploads';
 
 import * as multer from 'multer';
 import * as path from 'path';
@@ -14,7 +15,7 @@ const multerOpts = (dest : string, filename : any, fileSize : number) => ({
             console.log('destttttttttttt' + dest);
             cb(null, dest);
         },
-        filename
+        filename : filename || fileNameSHP
     })
 });
 
@@ -22,9 +23,10 @@ const unlink = bluebird.promisify(fs.unlink);
 
 export const removeFiles = (...files : any[])=> Promise.all(files.map(path => unlink(path) ));
 
-export const createMulter = (dest : string, filename : any, fileSize : number) =>
-    multer(multerOpts(dest, filename, fileSize));
+export const createMulter = (dest : string, fileName : any, fileSize : number) =>
+    multer(multerOpts(dest, fileName, fileSize));
 
 export const fileNameSHP = (req : any, file : any, cb : Function)=>{
 	cb(null, file.originalname);
 };
+

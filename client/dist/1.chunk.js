@@ -9893,6 +9893,11 @@ var UserLayersService = (function () {
         return this.http.get("/api/layers/" + layerName + "/data/" + gid)
             .map(function (res) { return res.json(); });
     };
+    UserLayersService.prototype.uploadData = function (layerName, gid, file) {
+        var formData = new FormData();
+        formData.append('file', file);
+        return this.http.post("/api/layers/" + layerName + "/data/" + gid + "/upload", formData);
+    };
     UserLayersService.prototype.addFeatureData = function (layerName, gid, url) {
         return this.http.post("/api/layers/" + layerName + "/data/" + gid, { url: url })
             .map(function (res) { return res.json(); });
@@ -44208,6 +44213,7 @@ var EditLayerComponent = (function () {
                     dialogRef.componentInstance.feature = e.element;
                     dialogRef.componentInstance.action = _this.action;
                     dialogRef.componentInstance.layerName = _this.layerName;
+                    dialogRef.componentInstance.layerWMS = _this.layerWMS;
                     dialogRef.afterClosed().subscribe(function () {
                         _this.editingLayer.getSource().clear();
                         _this.editingLayer.getSource().refresh();
@@ -44230,6 +44236,7 @@ var EditLayerComponent = (function () {
                         dialogRef.componentInstance.feature = f;
                         dialogRef.componentInstance.action = _this.action;
                         dialogRef.componentInstance.layerName = _this.layerName;
+                        dialogRef.componentInstance.layerWMS = _this.layerWMS;
                         dialogRef.afterClosed().subscribe(function () {
                             _this.editingLayer.getSource().clear();
                             _this.editingLayer.getSource().refresh();
@@ -44361,9 +44368,35 @@ var FeatureEditDialog = (function () {
             this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid'));
         }
     };
+    FeatureEditDialog.prototype.addData = function () {
+        var _this = this;
+        if (!this.dataUrl || this.dataUrl.length <= 0) {
+            return;
+        }
+        this.userLayersService.addFeatureData(this.layerName, this.feature.get('gid'), this.dataUrl)
+            .subscribe(function (e) {
+            _this.featureData = _this.userLayersService.getFeatureData(_this.layerName, _this.feature.get('gid'));
+        });
+    };
+    FeatureEditDialog.prototype.deleteData = function (id) {
+        var _this = this;
+        console.log('featureData', this.featureData);
+        console.log('idoieodie', id);
+        this.userLayersService.deleteFeatureData(this.layerName, this.feature.get('gid'), id)
+            .subscribe(function (e) {
+            _this.featureData = _this.userLayersService.getFeatureData(_this.layerName, _this.feature.get('gid'));
+        });
+    };
     FeatureEditDialog.prototype.uploadFile = function () {
+        var _this = this;
         var file = this.fileForm.nativeElement.files[0];
         console.log(file);
+        if (file) {
+            this.userLayersService.uploadData(this.layerName, this.feature.get('gid'), file)
+                .subscribe(function (e) {
+                _this.featureData = _this.userLayersService.getFeatureData(_this.layerName, _this.feature.get('gid'));
+            });
+        }
         //this.userLayersService.addFeatureData()
     };
     FeatureEditDialog.prototype.saveFeature = function () {
@@ -44396,7 +44429,7 @@ var FeatureEditDialog = (function () {
     ], FeatureEditDialog.prototype, "fileForm", void 0);
     FeatureEditDialog = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            template: "\n        <div md-dialog-content>\n            <div *ngFor=\"let field of fields\">\n                <md-input-container>\n                    <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                </md-input-container>\n                <br>\n            </div>\n            <md-list>\n              <h3 md-subheader>Archivos Relacionados</h3>\n              <md-list-item>\n                <md-icon md-list-icon>file_upload</md-icon>\n                <h4 md-line>A\u00F1ade un archivo (Imagen, PDF, ...)</h4>\n                <input #uploadFileForm md-line type=\"file\">\n                <button md-line md-button (click)=\"uploadFile()\">Subir</button>\n              </md-list-item>\n              <md-list-item *ngFor=\"let data of (featureData | async)\">\n                <md-icon md-list-icon>insert_drive_files</md-icon>\n                <h4 md-line>\n                  <a href=\"{{data.url}}\">{{data.url}}</a>\n                </h4>\n                <button md-mini-fab><md-icon>remove</md-icon></button>\n              </md-list-item>\n            </md-list>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close(-1)\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
+            template: "\n        <div md-dialog-content>\n\n\n          <md-tab-group>\n            <md-tab label=\"Atributos\">\n\n              <div *ngFor=\"let field of fields\">\n                  <md-input-container>\n                      <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                  </md-input-container>\n                  <br>\n              </div>\n\n            </md-tab>\n            <md-tab label=\"Datos\" [disabled]=\"action == 1\">\n\n              <h4>A\u00F1adir archivos o enlaces externos</h4>\n              <p md-subheader>A\u00F1ade un archivo (Imagen, PDF, ...)</p>\n              <md-icon md-list-icon>file_upload</md-icon>\n              <button md-button (click)=\"fileForm.nativeElement.click()\">Selecciona el archivo</button>\n              <input #uploadFileForm type=\"file\" style=\"visibility : hidden;\">\n              <button md-button (click)=\"uploadFile()\">Subir</button>\n              <p md-subheader>A\u00F1ade un enlace externo</p>\n              <md-icon md-list-icon>file_upload</md-icon>\n              <md-input-container>\n                <input mdInput [(ngModel)]=\"dataUrl\" type=\"url\">\n              </md-input-container>\n              <button md-button (click)=\"addData()\">Subir</button>\n              <md-list>\n                <h3 md-subheader>Archivos</h3>\n                <md-list-item *ngFor=\"let data of (featureData | async)\">\n                  <md-icon md-list-icon>insert_drive_files</md-icon>\n                  <h4 md-line>\n                    <a href=\"{{data.url}}\">{{data.url}}</a>\n                  </h4>\n                  <button md-mini-fab *ngIf=\" layerWMS && layerWMS.get('rol') == 'd' \" (click)=\"deleteData(data.id)\"><md-icon>remove</md-icon></button>\n                </md-list-item>\n              </md-list>\n\n            </md-tab>\n          </md-tab-group>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close(-1)\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
             providers: [__WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]) === 'function' && _c) || Object])

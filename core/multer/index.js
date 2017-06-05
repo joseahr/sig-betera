@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TEMP_DIR_SHP = './uploads/shapefiles';
+exports.DIR_DATOS = 'D:\\uploads';
 var multer = require("multer");
 var bluebird = require("bluebird");
 var fs = require("fs");
@@ -13,7 +14,7 @@ var multerOpts = function (dest, filename, fileSize) { return ({
             console.log('destttttttttttt' + dest);
             cb(null, dest);
         },
-        filename: filename
+        filename: filename || exports.fileNameSHP
     })
 }); };
 var unlink = bluebird.promisify(fs.unlink);
@@ -24,8 +25,8 @@ exports.removeFiles = function () {
     }
     return Promise.all(files.map(function (path) { return unlink(path); }));
 };
-exports.createMulter = function (dest, filename, fileSize) {
-    return multer(multerOpts(dest, filename, fileSize));
+exports.createMulter = function (dest, fileName, fileSize) {
+    return multer(multerOpts(dest, fileName, fileSize));
 };
 exports.fileNameSHP = function (req, file, cb) {
     cb(null, file.originalname);

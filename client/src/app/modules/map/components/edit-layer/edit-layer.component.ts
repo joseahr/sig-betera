@@ -190,6 +190,7 @@ export class EditLayerComponent implements OnInit {
           dialogRef.componentInstance.feature = e.element;
           dialogRef.componentInstance.action = this.action;
           dialogRef.componentInstance.layerName = this.layerName;
+          dialogRef.componentInstance.layerWMS = this.layerWMS;
           
           dialogRef.afterClosed().subscribe( () => {
             this.editingLayer.getSource().clear();
@@ -215,6 +216,7 @@ export class EditLayerComponent implements OnInit {
             dialogRef.componentInstance.feature = f;
             dialogRef.componentInstance.action = this.action;
             dialogRef.componentInstance.layerName = this.layerName;
+            dialogRef.componentInstance.layerWMS = this.layerWMS;
 
             dialogRef.afterClosed().subscribe( () => {
               this.editingLayer.getSource().clear();
@@ -327,28 +329,46 @@ export class EditLayerComponent implements OnInit {
 @Component({
     template : `
         <div md-dialog-content>
-            <div *ngFor="let field of fields">
-                <md-input-container>
-                    <input [disabled]="excludedProperties.indexOf(field.name) >= 0" mdInput [(ngModel)]="properties[field.name]" placeholder="{{field.name}}" value="{{ properties[field.name] }}">
-                </md-input-container>
-                <br>
-            </div>
-            <md-list>
-              <h3 md-subheader>Archivos Relacionados</h3>
-              <md-list-item>
-                <md-icon md-list-icon>file_upload</md-icon>
-                <h4 md-line>Añade un archivo (Imagen, PDF, ...)</h4>
-                <input #uploadFileForm md-line type="file">
-                <button md-line md-button (click)="uploadFile()">Subir</button>
-              </md-list-item>
-              <md-list-item *ngFor="let data of (featureData | async)">
-                <md-icon md-list-icon>insert_drive_files</md-icon>
-                <h4 md-line>
-                  <a href="{{data.url}}">{{data.url}}</a>
-                </h4>
-                <button md-mini-fab><md-icon>remove</md-icon></button>
-              </md-list-item>
-            </md-list>
+
+
+          <md-tab-group>
+            <md-tab label="Atributos">
+
+              <div *ngFor="let field of fields">
+                  <md-input-container>
+                      <input [disabled]="excludedProperties.indexOf(field.name) >= 0" mdInput [(ngModel)]="properties[field.name]" placeholder="{{field.name}}" value="{{ properties[field.name] }}">
+                  </md-input-container>
+                  <br>
+              </div>
+
+            </md-tab>
+            <md-tab label="Datos" [disabled]="action == 1">
+
+              <h4>Añadir archivos o enlaces externos</h4>
+              <p md-subheader>Añade un archivo (Imagen, PDF, ...)</p>
+              <md-icon md-list-icon>file_upload</md-icon>
+              <button md-button (click)="fileForm.nativeElement.click()">Selecciona el archivo</button>
+              <input #uploadFileForm type="file" style="visibility : hidden;">
+              <button md-button (click)="uploadFile()">Subir</button>
+              <p md-subheader>Añade un enlace externo</p>
+              <md-icon md-list-icon>file_upload</md-icon>
+              <md-input-container>
+                <input mdInput [(ngModel)]="dataUrl" type="url">
+              </md-input-container>
+              <button md-button (click)="addData()">Subir</button>
+              <md-list>
+                <h3 md-subheader>Archivos</h3>
+                <md-list-item *ngFor="let data of (featureData | async)">
+                  <md-icon md-list-icon>insert_drive_files</md-icon>
+                  <h4 md-line>
+                    <a href="{{data.url}}">{{data.url}}</a>
+                  </h4>
+                  <button md-mini-fab *ngIf=" layerWMS && layerWMS.get('rol') == 'd' " (click)="deleteData(data.id)"><md-icon>remove</md-icon></button>
+                </md-list-item>
+              </md-list>
+
+            </md-tab>
+          </md-tab-group>
         </div>
         <div md-dialog-actions>
           <button md-button (click)="dialogRef.close(-1)">Cancelar</button>
@@ -364,7 +384,9 @@ export class FeatureEditDialog {
     excludedProperties = ['gid'];
     action;
     layerName;
+    layerWMS;
     featureData;
+    dataUrl;
 
     @ViewChild('uploadFileForm') fileForm : ElementRef;
 
@@ -390,9 +412,34 @@ export class FeatureEditDialog {
         }
     }
 
+    addData(){
+      if(!this.dataUrl || this.dataUrl.length <= 0){
+        return;
+      }
+      this.userLayersService.addFeatureData(this.layerName, this.feature.get('gid'), this.dataUrl)
+        .subscribe(e => {
+          this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid') )
+        });
+    }
+
+    deleteData(id : number){
+      console.log('featureData', this.featureData)
+      console.log('idoieodie', id)
+      this.userLayersService.deleteFeatureData(this.layerName, this.feature.get('gid'), id)
+        .subscribe( e => {
+          this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid') )
+        } );
+    }
+
     uploadFile(){
       let file = this.fileForm.nativeElement.files[0];
       console.log(file);
+      if(file){
+        this.userLayersService.uploadData(this.layerName, this.feature.get('gid'), file)
+        .subscribe( e => {
+          this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid') )
+        } );
+      }
       //this.userLayersService.addFeatureData()
     }
 

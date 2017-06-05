@@ -39,7 +39,19 @@ export class AuthService {
     }
 
     validateUserByToken(token){
-        return this.http.get(`/api/user/validar/${token}`)
+        return this.http.get(`/api/user/validate/${token}`).map( res => res.json() );
+    }
+
+    sendPasswordToken(email){
+        return this.http.post(`/api/user/password`, { email }).map( res => res.json() );
+    }
+
+    isValidToken(token){
+        return this.http.get(`/api/user/password/${token}`).map( res => res.json() );
+    }
+
+    updatePassword(token, password, repassword){
+        return this.http.put(`/api/user/password`, { token, password, repassword }).map( res => res.json() );
     }
 
 }

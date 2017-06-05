@@ -120,6 +120,7 @@ export class ProfileComponent implements OnInit {
             if(this.snackbar._openedSnackBarRef){
               this.snackbar._openedSnackBarRef.dismiss();
             }
+            console.log(res, res.json(), 'ddddd')
             this.profileGeom = new ol.geom.LineString(res.json().coordinates, 'XYZ');
             this.setProfile();
             this.loading.setValue(false);

@@ -10013,6 +10013,11 @@ var UserLayersService = (function () {
         return this.http.get("/api/layers/" + layerName + "/data/" + gid)
             .map(function (res) { return res.json(); });
     };
+    UserLayersService.prototype.uploadData = function (layerName, gid, file) {
+        var formData = new FormData();
+        formData.append('file', file);
+        return this.http.post("/api/layers/" + layerName + "/data/" + gid + "/upload", formData);
+    };
     UserLayersService.prototype.addFeatureData = function (layerName, gid, url) {
         return this.http.post("/api/layers/" + layerName + "/data/" + gid, { url: url })
             .map(function (res) { return res.json(); });

@@ -66,12 +66,12 @@ exports.router.get('/logout', function (req, res) {
 });
 exports.router.get('/validate/:token', function (req, res) {
     var token = req.params.token;
-    db_1.db.one("SELECT EXISTS ( SELECT token FROM users_not_valid_yet WHERE token = '${token#}' ) AS exist", { token: token })
+    db_1.db.one("SELECT EXISTS ( SELECT token FROM users_not_valid_yet WHERE token = ${token} ) AS exist", { token: token })
         .then(function (result) {
         var exist = result.exist;
         if (!exist)
             return res.status(500).json('No existe ningún usuario no válido con token ' + token);
-        db_1.db.none("DELETE FROM users_not_valid_yet WHERE token = '${token#}'", { token: token })
+        db_1.db.none("DELETE FROM users_not_valid_yet WHERE token = ${token}", { token: token })
             .then(function () { return res.status(200).json('Usuario validado correctamente'); })
             .catch(function (err) { return res.status(500).json(err); });
     })
@@ -106,12 +106,12 @@ exports.router.
         return res.status(500).json('Las contraseñas no coinciden');
     if (password.length < 5)
         return res.status(500).json('La contraseña debe tener al menos 5 caracteres');
-    db_1.db.one("SELECT id FROM public.users_change_password_token WHERE token = '${token#}'", { token: token })
+    db_1.db.one("SELECT id FROM public.users_change_password_token WHERE token = ${token}", { token: token })
         .then(function (user) {
         db_1.db.users.genPassword(password)
             .then(function (password) {
-            db_1.db.none("UPDATE Users SET password = '${password#}' WHERE id = '${id#}'", { id: user.id, password: password })
-                .then(function () { return db_1.db.none("DELETE FROM public.users_change_password_token WHERE token = '${token#}'", { token: token }); })
+            db_1.db.none("UPDATE Users SET password = ${password} WHERE id = ${id}", { id: user.id, password: password })
+                .then(function () { return db_1.db.none("DELETE FROM public.users_change_password_token WHERE token = ${token}", { token: token }); })
                 .then(function () { return res.status(200).json('Contraseña Actualizada'); })
                 .catch(function (err) { return res.status(500).json(err); });
         })
@@ -121,7 +121,7 @@ exports.router.
 });
 exports.router.get('/password/:token', function (req, res) {
     var token = req.params.token;
-    db_1.db.one("SELECT token FROM public.users_change_password_token WHERE token = '${token#}'", { token: token })
+    db_1.db.one("SELECT token FROM public.users_change_password_token WHERE token = ${token}", { token: token })
         .then(function (user) {
         //res.render('password-token', {token})
         res.json({ token: token });

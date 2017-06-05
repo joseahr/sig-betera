@@ -40,7 +40,18 @@ var express = require("express");
 var db_1 = require("../core/db");
 var capabilitiesParser = require("../core/capabilities-parser");
 var jsts = require("jsts");
+var path = require("path");
+var multer_1 = require("../core/multer");
+var ACCEPTED_EXTENSIONS = ['jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'dxf'].map(function (ext) { return '.' + ext; });
+var multer = multer_1.createMulter(multer_1.DIR_DATOS, null, 20 * 1024 * 1024).single('file');
 var wktReader = new jsts.io.WKTReader();
+var insertLayerEdition = function (id_usuario, capa, gid, ip) {
+    var fields = ['capa', 'gid', 'ip', 'id_usuario'].map(function (name) { return ({ name: name }); });
+    var values = { capa: capa, gid: gid, ip: ip, id_usuario: id_usuario };
+    var cs = new db_1.pgp.helpers.ColumnSet(fields, { table: { table: 'users_layer_editions' } });
+    var query = db_1.pgp.helpers.insert(values, cs);
+    return db_1.db.query(query);
+};
 exports.router = express.Router();
 var getFeatureDataGuard = function () {
     return function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
@@ -130,33 +141,6 @@ var rolesGuardMiddleware = function () {
         });
     }); };
 };
-exports.router.route('/features')
-    .post([getFeaturesGuard()], function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var user, _a, wkt, layers, features, e_3, _b;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
-            case 0:
-                user = req.user;
-                _a = req.body, wkt = _a.wkt, layers = _a.layers;
-                //console.log('byGeom');
-                if (!wkt)
-                    return [2 /*return*/, res.status(500).json('Debe enviar una extensión, área o punto.')];
-                _c.label = 1;
-            case 1:
-                _c.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, (_b = db_1.db.layers).getFeaturesIntersecting.apply(_b, [wkt].concat(layers))];
-            case 2:
-                features = _c.sent();
-                res.status(200).json(features);
-                return [3 /*break*/, 4];
-            case 3:
-                e_3 = _c.sent();
-                res.status(500).json('Hubo un error durante la búsqueda.');
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); });
 exports.router
     .post('/wms/capabilities', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
     var serviceUrl, layers, err_1;
@@ -186,7 +170,7 @@ exports.router
     });
 }); });
 exports.router.get('/schema/:layerName', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var layerName, layerSchema, geomColumn, geometryType, e_4;
+    var layerName, layerSchema, geomColumn, geometryType, e_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -204,13 +188,92 @@ exports.router.get('/schema/:layerName', function (req, res) { return __awaiter(
                 res.status(200).json({ layerSchema: layerSchema, geometryType: geometryType });
                 return [3 /*break*/, 5];
             case 4:
-                e_4 = _a.sent();
-                res.status(500).json({ msg: e_4 });
+                e_3 = _a.sent();
+                res.status(500).json({ msg: e_3 });
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
+exports.router.use(function (req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    return res.status(403).json({ msg: 'Debes estar autenticado' });
+});
+exports.router.route('/features')
+    .post([getFeaturesGuard()], function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    var user, _a, wkt, layers, features, e_4, _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                user = req.user;
+                _a = req.body, wkt = _a.wkt, layers = _a.layers;
+                //console.log('byGeom');
+                if (!wkt)
+                    return [2 /*return*/, res.status(500).json('Debe enviar una extensión, área o punto.')];
+                _c.label = 1;
+            case 1:
+                _c.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, (_b = db_1.db.layers).getFeaturesIntersecting.apply(_b, [wkt].concat(layers))];
+            case 2:
+                features = _c.sent();
+                res.status(200).json(features);
+                return [3 /*break*/, 4];
+            case 3:
+                e_4 = _c.sent();
+                res.status(500).json('Hubo un error durante la búsqueda.');
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+exports.router.post('/:layerName/data/:gid/upload', [rolesGuardMiddleware('e', 'd')], function (req, res) {
+    var _a = req.params, layerName = _a.layerName, gid = _a.gid;
+    var id = req.user.id;
+    multer(req, res, function (err) { return __awaiter(_this, void 0, void 0, function () {
+        var file, url, ext, fields, values, cs, query, data, err_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (err) {
+                        console.log(err);
+                        return [2 /*return*/, res.status(500).json({ msg: err })];
+                    }
+                    file = req.file;
+                    url = file.path;
+                    ext = path.extname(file.originalname).toLowerCase();
+                    if (!!ACCEPTED_EXTENSIONS.includes(ext)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, multer_1.removeFiles(url)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/, res.status(500).json({ msg: "Extensi\u00F3n \"" + ext + "\" no v\u00E1lida. Extensiones aceptadas : " + ACCEPTED_EXTENSIONS.join(',\n') })];
+                case 2:
+                    fields = ['capa', 'gid', 'url', 'id_user'].map(function (name) { return ({ name: name }); });
+                    values = { capa: layerName, gid: gid, url: url, id_user: id };
+                    cs = new db_1.pgp.helpers.ColumnSet(fields, { table: { table: 'datos' } });
+                    query = db_1.pgp.helpers.insert(values, cs);
+                    _a.label = 3;
+                case 3:
+                    _a.trys.push([3, 6, , 7]);
+                    return [4 /*yield*/, db_1.db.query(query)];
+                case 4:
+                    data = _a.sent();
+                    return [4 /*yield*/, insertLayerEdition(req.user.id, layerName, gid, req.ip)];
+                case 5:
+                    _a.sent();
+                    console.log(data);
+                    res.status(200).json(data);
+                    return [3 /*break*/, 7];
+                case 6:
+                    err_2 = _a.sent();
+                    res.status(500).json({ msg: err_2 });
+                    return [3 /*break*/, 7];
+                case 7: return [2 /*return*/];
+            }
+        });
+    }); });
+});
 exports.router.
     route('/:layerName/data/:gid')
     .get([getFeatureDataGuard()], function (req, res) { return __awaiter(_this, void 0, void 0, function () {
@@ -239,7 +302,7 @@ exports.router.
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
+                _b.trys.push([0, 3, , 4]);
                 id = req.user.id;
                 url = req.body.url;
                 _a = req.params, layerName = _a.layerName, gid = _a.gid;
@@ -250,14 +313,17 @@ exports.router.
                 return [4 /*yield*/, db_1.db.query(query)];
             case 1:
                 data = _b.sent();
+                return [4 /*yield*/, insertLayerEdition(req.user.id, layerName, gid, req.ip)];
+            case 2:
+                _b.sent();
                 console.log(data);
                 res.status(200).json(data);
-                return [3 /*break*/, 3];
-            case 2:
+                return [3 /*break*/, 4];
+            case 3:
                 e_6 = _b.sent();
                 res.status(500).json({ msg: e_6 });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); })
@@ -266,20 +332,23 @@ exports.router.
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
-                id = req.user.id;
+                _b.trys.push([0, 3, , 4]);
+                id = req.body.id;
                 _a = req.params, layerName = _a.layerName, gid = _a.gid;
                 return [4 /*yield*/, db_1.db.any('DELETE FROM datos WHERE capa = $1 AND gid = $2 and id = $3', [layerName, gid, id])];
             case 1:
                 data = _b.sent();
+                return [4 /*yield*/, insertLayerEdition(req.user.id, layerName, gid, req.ip)];
+            case 2:
+                _b.sent();
                 console.log(data);
                 res.status(200).json(data);
-                return [3 /*break*/, 3];
-            case 2:
+                return [3 /*break*/, 4];
+            case 3:
                 e_7 = _b.sent();
                 res.status(500).json({ msg: e_7 });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
@@ -290,7 +359,7 @@ exports.router
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 3, , 4]);
+                _b.trys.push([0, 4, , 5]);
                 layerName = req.params.layerName;
                 _a = req.body, geometry = _a.geometry, properties = _a.properties;
                 console.log(geometry, properties);
@@ -327,14 +396,17 @@ exports.router
                 return [4 /*yield*/, db_1.db.one(query)];
             case 2:
                 gid = (_b.sent()).gid;
-                res.status(200).json({ msg: 'OK', gid: gid });
-                return [3 /*break*/, 4];
+                return [4 /*yield*/, insertLayerEdition(req.user.id, layerName, gid, req.ip)];
             case 3:
+                _b.sent();
+                res.status(200).json({ msg: 'OK', gid: gid });
+                return [3 /*break*/, 5];
+            case 4:
                 e_8 = _b.sent();
                 console.log(e_8);
                 res.status(500).json({ msg: e_8 });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); })
@@ -343,7 +415,7 @@ exports.router
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 3, , 4]);
+                _b.trys.push([0, 4, , 5]);
                 layerName = req.params.layerName;
                 _a = req.body, geometry = _a.geometry, properties = _a.properties;
                 gid = properties.gid;
@@ -373,14 +445,17 @@ exports.router
                 return [4 /*yield*/, db_1.db.none(query + ' WHERE gid = ${gid}', { gid: gid })];
             case 2:
                 response = _b.sent();
-                res.status(200).json({ msg: 'OK' });
-                return [3 /*break*/, 4];
+                return [4 /*yield*/, insertLayerEdition(req.user.id, layerName, gid, req.ip)];
             case 3:
+                _b.sent();
+                res.status(200).json({ msg: 'OK' });
+                return [3 /*break*/, 5];
+            case 4:
                 e_9 = _b.sent();
                 console.log(e_9);
                 res.status(500).json({ msg: e_9 });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); })
@@ -393,18 +468,21 @@ exports.router
                 layerName = req.params.layerName;
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
+                _a.trys.push([1, 4, , 5]);
                 table = new db_1.pgp.helpers.TableName(layerName, 'capas');
                 return [4 /*yield*/, db_1.db.none('DELETE FROM $1 WHERE gid = $2', [table, gid])];
             case 2:
                 _a.sent();
-                res.status(200).json({ msg: 'OK' });
-                return [3 /*break*/, 4];
+                return [4 /*yield*/, insertLayerEdition(req.user.id, layerName, gid, req.ip)];
             case 3:
+                _a.sent();
+                res.status(200).json({ msg: 'OK' });
+                return [3 /*break*/, 5];
+            case 4:
                 e_10 = _a.sent();
                 res.status(500).json({ msg: e_10 });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); });

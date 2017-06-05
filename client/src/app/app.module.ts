@@ -21,6 +21,8 @@ import {
   ForgotComponent
 } from './dialogs';
 import 'hammerjs';
+import { ValidateTokenComponent } from './components/validate-token/validate-token.component';
+import { ChangePasswordTokenComponent } from './components/change-password-token/change-password-token.component';
 
 export function highchartsFactory() {
   highchartsExporting(highcharts);
@@ -35,6 +37,8 @@ export function highchartsFactory() {
     LoginComponent,
     SignupComponent,
     ForgotComponent,
+    ValidateTokenComponent,
+    ChangePasswordTokenComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,7 @@ export function highchartsFactory() {
     MaterialModule.forRoot(),
     RouterModule.forRoot(appRoutes, { useHash: true })
   ],
-  entryComponents : [LoginComponent, SignupComponent],
+  entryComponents : [LoginComponent, SignupComponent, ForgotComponent],
   providers: [
     MnFullpageService,
     LoadingAnimateService,

@@ -41,6 +41,13 @@ export class UserLayersService {
             .map( res => res.json() )
     }
 
+    uploadData(layerName, gid, file){
+        let formData = new FormData();
+        formData.append('file', file);
+
+        return this.http.post(`/api/layers/${layerName}/data/${gid}/upload`, formData);
+    }
+
     addFeatureData(layerName : string, gid : number, url : string){
         return this.http.post(`/api/layers/${layerName}/data/${gid}`, { url })
             .map( res => res.json() )
