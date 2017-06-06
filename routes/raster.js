@@ -53,7 +53,7 @@ exports.router.post('/perfil', function (req, res) { return __awaiter(_this, voi
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, db_1.db.raster.getProfile(req.body.wkt)];
             case 2:
-                perfil = _a.sent();
+                perfil = (_a.sent()).perfil;
                 res.status(200).json(perfil);
                 return [3 /*break*/, 4];
             case 3:

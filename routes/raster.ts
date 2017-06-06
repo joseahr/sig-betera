@@ -10,7 +10,8 @@ router.post('/perfil', async (req, res)=>{
     }
     
     try {
-        let perfil = await db.raster.getProfile(req.body.wkt);
+        let { perfil } = (<any> await db.raster.getProfile(req.body.wkt));
+
         res.status(200).json(perfil);
     } catch(err){
         res.status(500).json(err)

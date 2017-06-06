@@ -9,7 +9,7 @@
     <md-card-content>
       <h4>Añadir Capa</h4>
       <md-select placeholder="Capa PostGIS" [(ngModel)]="selectedLayerToAdd" style="width : 100%;">
-        <md-option *ngFor="let layer of AllLayersNotInMap" [value]="layer.id">
+        <md-option [disabled]="!layer.published" *ngFor="let layer of AllLayersNotInMap" [value]="layer.id">
           {{layer.name}}
         </md-option>
       </md-select>

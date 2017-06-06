@@ -51,10 +51,10 @@ export class EditLayerComponent implements OnInit {
 
   action = Actions.PAN;
   actions = [
-      { action : Actions.PAN , icon : '', text : 'PAN' },
-      { action : Actions.CREATE, icon : 'add', text : 'CREAR' },
-      { action : Actions.UPDATE, icon : 'update', text : 'ACTUALIZAR' },
-      { action : Actions.DELETE, icon : 'remove', text : 'ELIMINAR' }
+      { action : Actions.PAN , icon : '', text : 'Ninguna' },
+      { action : Actions.CREATE, icon : 'add', text : 'Crear' },
+      { action : Actions.UPDATE, icon : 'update', text : 'Actualizar' },
+      { action : Actions.DELETE, icon : 'remove', text : 'Eliminar' }
   ]
 
   layerSchema;
@@ -342,7 +342,7 @@ export class EditLayerComponent implements OnInit {
               </div>
 
             </md-tab>
-            <md-tab label="Datos" [disabled]="action == 1">
+            <md-tab label="Datos" [disabled]="action == 1" style="overflow: hidden;">
 
               <h4>Añadir archivos o enlaces externos</h4>
               <p md-subheader>Añade un archivo (Imagen, PDF, ...)</p>
