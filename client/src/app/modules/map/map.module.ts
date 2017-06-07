@@ -7,7 +7,7 @@ import { MapComponent, ProfileComponent } from './components';
 import { MaterialModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { ChartModule } from 'angular2-highcharts';
-import { NgObjectPipesModule } from 'angular-pipes';
+import { NgObjectPipesModule, NgMathPipesModule } from 'angular-pipes';
 import { TruncateModule } from 'ng2-truncate';
 import { LoadingAnimateModule } from 'ng2-loading-animate';
 import { AddWmsComponent, LayerSwitcherComponent, SearchComponent, SearchComponentDialog, MeasureSnackBar, FeatureEditDialog, FeatureDeleteDialog } from './components';
@@ -48,6 +48,7 @@ const mapRoutes : Route[] =  [{
         FormsModule,
         DataTablesModule,
         NgObjectPipesModule,
+        NgMathPipesModule,
         TruncateModule,
         LoadingAnimateModule,
         MaterialModule.forRoot(),

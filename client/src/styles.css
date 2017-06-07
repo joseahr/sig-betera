@@ -15,6 +15,7 @@ html, body {
 .active-link {
     background: #f3e5f5;
     font-weight: bold;
+    color : #fff;
 }
 
 

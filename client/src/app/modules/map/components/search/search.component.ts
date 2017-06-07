@@ -131,9 +131,7 @@ export class SearchComponent implements OnInit {
     this.state = 'invisible';
     this.closeState = 'visible';
     //this.dialogCollapsed = false;
-    let dialogRef = this.dialogRef = this.dialog.open(SearchComponentDialog, {
-      height : '90vh',
-    });
+    let dialogRef = this.dialogRef = this.dialog.open(SearchComponentDialog);
 
     dialogRef.componentInstance.found = this.found;
     dialogRef.componentInstance.tabIndex = newSearch ? 0 : this.selectedTabIndex;
@@ -361,7 +359,7 @@ export class SearchComponentDialog {
 
     return {
       scrollX : true,
-      scrollY : '50vh',
+      scrollY : false,
       scrollCollapse : true,
       data, columns,
       columnDefs : [

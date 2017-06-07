@@ -83,6 +83,7 @@ var MapModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_7__angular_forms__["FormsModule"],
                 __WEBPACK_IMPORTED_MODULE_4_angular_datatables__["a" /* DataTablesModule */],
                 __WEBPACK_IMPORTED_MODULE_9_angular_pipes__["b" /* NgObjectPipesModule */],
+                __WEBPACK_IMPORTED_MODULE_9_angular_pipes__["a" /* NgMathPipesModule */],
                 __WEBPACK_IMPORTED_MODULE_10_ng2_truncate__["a" /* TruncateModule */],
                 __WEBPACK_IMPORTED_MODULE_11_ng2_loading_animate__["LoadingAnimateModule"],
                 __WEBPACK_IMPORTED_MODULE_6__angular_material__["a" /* MaterialModule */].forRoot(),
@@ -44063,6 +44064,7 @@ module.exports = __webpack_amd_options__;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_material__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__(933);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angular_pipes_src_math_bytes_pipe__ = __webpack_require__(1360);
 /* unused harmony export Actions */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditLayerComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return FeatureEditDialog; });
@@ -44076,6 +44078,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -44354,6 +44357,7 @@ var FeatureEditDialog = (function () {
         this.dialogRef = dialogRef;
         this.userLayersService = userLayersService;
         this.excludedProperties = ['gid'];
+        this.tabIdx = 1;
     }
     FeatureEditDialog.prototype.getGeomColumn = function () {
         return this.fields.find(function (col) { return col.type === 'USER-DEFINED' && col.udt === 'geometry'; });
@@ -44367,6 +44371,31 @@ var FeatureEditDialog = (function () {
         if (this.feature.get('gid')) {
             this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid'));
         }
+    };
+    FeatureEditDialog.prototype.ngAfterViewInit = function () {
+        this.dropzone.nativeElement.addEventListener('drop', this.handleFileSelect.bind(this), false);
+        this.dropzone.nativeElement.addEventListener('dragover', this.handleDragOver.bind(this), false);
+        this.dropzone.nativeElement.addEventListener('dragleave', this.handleDragLeave.bind(this), false);
+    };
+    FeatureEditDialog.prototype.handleFileSelect = function (evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        this.dropzone.nativeElement.style.opacity = '1';
+    };
+    FeatureEditDialog.prototype.handleDragOver = function (evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+        this.dropzone.nativeElement.style.opacity = '0.3';
+    };
+    FeatureEditDialog.prototype.handleDragLeave = function (evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        this.dropzone.nativeElement.style.opacity = '1';
+    };
+    FeatureEditDialog.prototype.fileSelected = function (e) {
+        console.log(e.target.files);
+        this.selectedFile = e.target.files[0];
     };
     FeatureEditDialog.prototype.addData = function () {
         var _this = this;
@@ -44389,10 +44418,10 @@ var FeatureEditDialog = (function () {
     };
     FeatureEditDialog.prototype.uploadFile = function () {
         var _this = this;
-        var file = this.fileForm.nativeElement.files[0];
-        console.log(file);
-        if (file) {
-            this.userLayersService.uploadData(this.layerName, this.feature.get('gid'), file)
+        //let file = this.fileForm.nativeElement.files[0];
+        console.log(this.selectedFile);
+        if (this.selectedFile) {
+            this.userLayersService.uploadData(this.layerName, this.feature.get('gid'), this.selectedFile)
                 .subscribe(function (e) {
                 _this.featureData = _this.userLayersService.getFeatureData(_this.layerName, _this.feature.get('gid'));
             });
@@ -44424,13 +44453,13 @@ var FeatureEditDialog = (function () {
         }
     };
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('uploadFileForm'), 
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('dropZone'), 
         __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object)
-    ], FeatureEditDialog.prototype, "fileForm", void 0);
+    ], FeatureEditDialog.prototype, "dropzone", void 0);
     FeatureEditDialog = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            template: "\n        <div md-dialog-content>\n\n\n          <md-tab-group>\n            <md-tab label=\"Atributos\">\n\n              <div *ngFor=\"let field of fields\">\n                  <md-input-container>\n                      <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                  </md-input-container>\n                  <br>\n              </div>\n\n            </md-tab>\n            <md-tab label=\"Datos\" [disabled]=\"action == 1\" style=\"overflow: hidden;\">\n\n              <h4>A\u00F1adir archivos o enlaces externos</h4>\n              <p md-subheader>A\u00F1ade un archivo (Imagen, PDF, ...)</p>\n              <md-icon md-list-icon>file_upload</md-icon>\n              <button md-button (click)=\"fileForm.nativeElement.click()\">Selecciona el archivo</button>\n              <input #uploadFileForm type=\"file\" style=\"visibility : hidden;\">\n              <button md-button (click)=\"uploadFile()\">Subir</button>\n              <p md-subheader>A\u00F1ade un enlace externo</p>\n              <md-icon md-list-icon>file_upload</md-icon>\n              <md-input-container>\n                <input mdInput [(ngModel)]=\"dataUrl\" type=\"url\">\n              </md-input-container>\n              <button md-button (click)=\"addData()\">Subir</button>\n              <md-list>\n                <h3 md-subheader>Archivos</h3>\n                <md-list-item *ngFor=\"let data of (featureData | async)\">\n                  <md-icon md-list-icon>insert_drive_files</md-icon>\n                  <h4 md-line>\n                    <a href=\"{{data.url}}\">{{data.url}}</a>\n                  </h4>\n                  <button md-mini-fab *ngIf=\" layerWMS && layerWMS.get('rol') == 'd' \" (click)=\"deleteData(data.id)\"><md-icon>remove</md-icon></button>\n                </md-list-item>\n              </md-list>\n\n            </md-tab>\n          </md-tab-group>\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close(-1)\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
-            providers: [__WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]]
+            template: "\n        <md-tab-group [(selectedIndex)]=\"tabIdx\">\n          <md-tab label=\"Atributos\">\n          </md-tab>\n          <md-tab label=\"Datos\" [disabled]=\"action == 1\" style=\"overflow: hidden;\">\n          </md-tab>\n        </md-tab-group>\n        <div md-dialog-content>\n\n          <div *ngIf=\"tabIdx == 0\">\n            <div *ngFor=\"let field of fields\">\n                <md-input-container>\n                    <input [disabled]=\"excludedProperties.indexOf(field.name) >= 0\" mdInput [(ngModel)]=\"properties[field.name]\" placeholder=\"{{field.name}}\" value=\"{{ properties[field.name] }}\">\n                </md-input-container>\n                <br>\n            </div>\n          </div>\n\n          <div *ngIf=\"tabIdx == 1\">\n            <h4><md-icon>file_upload</md-icon> A\u00F1adir archivos o enlaces externos</h4>\n            <p md-subheader>A\u00F1ade un fichero</p>\n            <input id=\"input-file-id\" type=\"file\" style=\"display: none;\" (change)=\"fileSelected($event)\" name=\"data\" />\n            <label #dropZone for=\"input-file-id\" md-button class=\"mat-button\" style=\"border: 2px solid #000; margin-top: 16px; width: 100%; padding : 10px;\">\n              Selecciona el archivo\n            </label>\n            <button [disabled]=\"!this.selectedFile\" md-button (click)=\"uploadFile()\" style=\"width : 100%;\">Subir</button>\n            <md-list *ngIf=\"selectedFile\">\n              <h3 md-subheader>Archivos a subir</h3>\n              <md-list-item>\n                <md-icon md-list-avatar>attachment</md-icon>\n                <h4 md-line>{{selectedFile.name}}</h4>\n                <p md-line> {{selectedFile?.size | bytes}} {{selectedFile?.lastModified | date}} </p>\n              </md-list-item>\n            </md-list>\n            \n            <p md-subheader>A\u00F1ade un enlace externo</p>\n            \n            <md-input-container style=\"width : 100%;\">\n              <input mdInput [(ngModel)]=\"dataUrl\" type=\"url\">\n            </md-input-container>\n            <button md-button style=\"width : 100%;\" (click)=\"addData()\">Subir</button>\n            <md-list>\n              <h3 md-subheader>Archivos</h3>\n              <md-list-item *ngFor=\"let data of (featureData | async)\">\n                <md-icon md-list-icon>insert_drive_files</md-icon>\n                <h4 md-line>\n                  <a href=\"{{data.url}}\">{{data.url}}</a>\n                </h4>\n                <button md-mini-fab *ngIf=\" layerWMS && layerWMS.get('rol') == 'd' \" (click)=\"deleteData(data.id)\"><md-icon>remove</md-icon></button>\n              </md-list-item>\n            </md-list>\n          </div>\n\n        </div>\n        <div md-dialog-actions>\n          <button md-button (click)=\"dialogRef.close(-1)\">Cancelar</button>\n          <button md-button (click)=\"saveFeature()\">Guardar</button>\n        </div>\n    ",
+            providers: [__WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */], __WEBPACK_IMPORTED_MODULE_6_angular_pipes_src_math_bytes_pipe__["a" /* BytesPipe */]]
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MdDialogRef */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services__["b" /* UserLayersService */]) === 'function' && _c) || Object])
     ], FeatureEditDialog);
@@ -44885,7 +44914,71 @@ exports.ChartYAxisComponent = ChartYAxisComponent;
 /***/ }),
 /* 1358 */,
 /* 1359 */,
-/* 1360 */,
+/* 1360 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_utils__ = __webpack_require__(1051);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BytesPipe; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var BytesPipe = (function () {
+    function BytesPipe() {
+    }
+    BytesPipe.prototype.transform = function (input, decimal, from) {
+        if (decimal === void 0) { decimal = 0; }
+        if (from === void 0) { from = 'B'; }
+        if (!(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_utils__["a" /* isNumberFinite */])(input) &&
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_utils__["a" /* isNumberFinite */])(decimal) &&
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_utils__["b" /* isInteger */])(decimal) &&
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_utils__["c" /* isPositive */])(decimal))) {
+            return input;
+        }
+        var bytes = input;
+        var unit = from;
+        while (unit != 'B') {
+            bytes *= 1024;
+            unit = BytesPipe.formats[unit].prev;
+        }
+        for (var key in BytesPipe.formats) {
+            var format = BytesPipe.formats[key];
+            if (bytes < format.max) {
+                var prev = BytesPipe.formats[format.prev];
+                var result = prev ?
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_utils__["d" /* toDecimal */])(bytes / prev.max, decimal) :
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_utils__["d" /* toDecimal */])(bytes, decimal);
+                return result + " " + key;
+            }
+        }
+    };
+    BytesPipe.formats = {
+        'B': { max: 1024 },
+        'KB': { max: Math.pow(1024, 2), prev: 'B' },
+        'MB': { max: Math.pow(1024, 3), prev: 'KB' },
+        'GB': { max: Math.pow(1024, 4), prev: 'MB' },
+        'TB': { max: Number.MAX_SAFE_INTEGER, prev: 'GB' }
+    };
+    BytesPipe = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+            name: 'bytes'
+        }), 
+        __metadata('design:paramtypes', [])
+    ], BytesPipe);
+    return BytesPipe;
+}());
+//# sourceMappingURL=bytes.pipe.js.map
+
+/***/ }),
 /* 1361 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -46087,9 +46180,7 @@ var SearchComponent = (function () {
         this.state = 'invisible';
         this.closeState = 'visible';
         //this.dialogCollapsed = false;
-        var dialogRef = this.dialogRef = this.dialog.open(SearchComponentDialog, {
-            height: '90vh',
-        });
+        var dialogRef = this.dialogRef = this.dialog.open(SearchComponentDialog);
         dialogRef.componentInstance.found = this.found;
         dialogRef.componentInstance.tabIndex = newSearch ? 0 : this.selectedTabIndex;
         dialogRef.afterClosed().subscribe(function () {
@@ -46331,7 +46422,7 @@ var SearchComponentDialog = (function () {
         var indexData = Object.keys(features[0].properties).indexOf('data_urls');
         return {
             scrollX: true,
-            scrollY: '50vh',
+            scrollY: false,
             scrollCollapse: true,
             data: data, columns: columns,
             columnDefs: [
@@ -47119,7 +47210,7 @@ module.exports = "<div\r\n    id=\"profile-container\"\r\n    [ngClass]=\"{'open
 /* 1441 */
 /***/ (function(module, exports) {
 
-module.exports = "<md-tab-group id=\"search-tab\" (selectChange)=\"onChangeTab($event)\" [selectedIndex]=\"tabIndex\">\r\n  <md-tab label=\"{{search.layername}}\" *ngFor=\"let search of found\"> \r\n  </md-tab>\r\n</md-tab-group>\r\n<table #table datatable class=\"mdl-data-table\" style=\"width : 100%;\">\r\n</table>"
+module.exports = "<md-tab-group id=\"search-tab\" (selectChange)=\"onChangeTab($event)\" [selectedIndex]=\"tabIndex\">\r\n  <md-tab label=\"{{search.layername}}\" *ngFor=\"let search of found\"> \r\n  </md-tab>\r\n</md-tab-group>\r\n<div md-dialog-content>\r\n  <table #table datatable class=\"mdl-data-table\" style=\"width : 100%;\">\r\n  </table>\r\n</div>\r\n\r\n<div md-dialog-actions>\r\n  <button md-button md-dialog-close=\"\">Cerrar</button>\r\n</div>"
 
 /***/ })
 ]));

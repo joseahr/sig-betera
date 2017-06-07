@@ -47,6 +47,8 @@ app.use('/api/admin', admin);
 
 app.use('/', express.static('client/dist'));
 
+app.use('/static', express.static('static'));
+
 // catch 404 and forward to error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   let err = new Error('Not Found');

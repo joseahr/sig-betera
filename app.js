@@ -34,6 +34,7 @@ exports.app.use('/api/maps', maps_1.router);
 exports.app.use('/api/layers', layers_1.router);
 exports.app.use('/api/admin', admin_1.router);
 exports.app.use('/', express.static('client/dist'));
+exports.app.use('/static', express.static('static'));
 // catch 404 and forward to error handler
 exports.app.use(function (req, res, next) {
     var err = new Error('Not Found');

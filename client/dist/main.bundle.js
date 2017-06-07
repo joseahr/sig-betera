@@ -645,10 +645,8 @@ var appRoutes = [
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs__ = __webpack_require__(280);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(521);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery__ = __webpack_require__(195);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_fullpage_js__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_fullpage_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_fullpage_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_fullpage_js__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_fullpage_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_fullpage_js__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -666,7 +664,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var HomeComponent = (function () {
     function HomeComponent(el, ngZone, http, router, dialog) {
         this.el = el;
@@ -675,6 +672,12 @@ var HomeComponent = (function () {
         this.router = router;
         this.dialog = dialog;
         this.layers = [];
+        this.tiles = [
+            { text: 'One', cols: 3, rows: 1, color: 'lightblue' },
+            { text: 'Two', cols: 1, rows: 2, color: 'lightgreen' },
+            { text: 'Three', cols: 1, rows: 1, color: 'lightpink' },
+            { text: 'Four', cols: 2, rows: 1, color: '#DDBDF1' },
+        ];
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -685,7 +688,7 @@ var HomeComponent = (function () {
     };
     HomeComponent.prototype.ngOnDestroy = function () {
         document.getElementsByTagName('html')[0].style.overflow = 'auto';
-        __WEBPACK_IMPORTED_MODULE_6_jquery__["fn"].fullpage.destroy('all');
+        //$.fn.fullpage.destroy('all');
         console.log('destroyyy');
     };
     HomeComponent.prototype.ngAfterViewInit = function () {
@@ -1187,7 +1190,7 @@ module.exports = "<loading-animate></loading-animate>\n\n<md-card style=\"width 
 /***/ 884:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  <div #full mnFullpage \r\n      [mnFullpageNavigation]=\"true\" \r\n      [mnFullpageKeyboardScrolling]=\"true\"\r\n      [mnFullpageControlArrows]=\"true\">\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background : url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg')\">\r\n          </div>\r\n          <div class=\"caption\">\r\n            <h1>Bienvenido a SIG Bétera</h1>\r\n          </div>\r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background-color: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background: url('assets/mapa.png');\">\r\n          </div>\r\n          <div class=\"caption\">\r\n            <h1>Visita nuestro mapa</h1>\r\n          </div>\r\n          <md-card style=\"position : absolute; bottom : 10%; right : 10%; z-index : 1;\">\r\n            <md-card-content>\r\n              <button md-button (click)=\"router.navigateByUrl('/map')\">\r\n                IR AL MAPA\r\n              </button>\r\n            </md-card-content>\r\n          </md-card>\r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background: url('https://geosergio.files.wordpress.com/2010/02/capas_01.jpg')\">\r\n          </div> \r\n          <div class=\"caption\">\r\n            <h1>Descarga información Geográfica</h1>\r\n          </div>\r\n          <md-card style=\"position : absolute; bottom : 10%; right : 10%; z-index : 1;\">\r\n            <md-card-content>\r\n              <button md-button>+ INFORMACIÓN</button>\r\n            </md-card-content>\r\n          </md-card>\r\n      </div>\r\n      <div class=\"section fp-section fp-table\" style=\"background: #fff\">        \r\n          <div class=\"fp-tableCell\" style=\"background: url('http://www.handshakes.com.sg/img/hand.jpg')\">\r\n          </div> \r\n          <div class=\"caption\">\r\n            <h1>Hazte usuario</h1>\r\n          </div>\r\n          <div style=\"position : absolute; top : 20%; left:20%; right : 20%;\">\r\n            <h4>Podrás editar capas y recibir notificaciones</h4>\r\n          </div>\r\n          <md-card style=\"position : absolute; bottom : 10%; right : 10%; z-index : 1;\">\r\n            <md-card-content>\r\n              <button md-button (click)=\"openSignupDialog()\">HAZTE USUARIO</button>\r\n            </md-card-content>\r\n          </md-card>\r\n      </div>\r\n\r\n      <div class=\"section fp-section fp-table has-slides\">        \r\n          <div class=\"fp-tableCell\">\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Contacto </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Contacto </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Noticias </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Slide 3 </div>\r\n            <div class=\"slide\" style=\"background: #f3e5f5\"> Slide 4 </div>\r\n          </div> \r\n      </div>\r\n\r\n  </div>\r\n</div>"
+module.exports = "<div [@routerTransition]=\"\" style=\"position : absolute; top : 0px; bottom : 0px; left : 0px; right : 0px;\">\r\n  <video height=\"100%\" ontimeupdate=\"if(this.currentTime >= 60 ){ this.pause(); }\" onpause=\"this.currentTime= 10; this.play();\" width=\"100%\" onloadedmetadata=\"this.muted = true\" muted loop autoplay style=\"object-fit : cover; opacity : 0.6; position : fixed; top : 0px; bottom : 0px; left : 0px; right : 0px;\">\r\n    <source src=\"http://localhost:3000/static/video.webm\" type=\"video/webm\" >\r\n  </video>\r\n</div>\r\n\r\n<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  fñldkfdlk<br>\r\n  fdlkdfñlkfd<br>\r\n  fdñlkdfñlkfd<br>\r\n  fdñlkfdñlkfd<br>\r\n  fdñlkfdñlkfdfd<br>\r\n  fdñlkdfñlkfdfdñ7<br>\r\n  fdñlkdfñlkfdfdñ7ñl<br>\r\n  fdkñlkfdñlkfd<br>\r\n  fñldkfdlk<br>\r\n  fdlkdfñlkfd<br>\r\n  fdñlkdfñlkfd<br>\r\n  fdñlkfdñlkfd<br>\r\n  fdñlkfdñlkfdfd<br>\r\n  fdñlkdfñlkfdfdñ7<br>\r\n  fdñlkdfñlkfdfdñ7ñl<br>\r\n  fdkñlkfdñlkfd<br>\r\n    fñldkfdlk<br>\r\n  fdlkdfñlkfd<br>\r\n  fdñlkdfñlkfd<br>\r\n  fdñlkfdñlkfd<br>\r\n  fdñlkfdñlkfdfd<br>\r\n  fdñlkdfñlkfdfdñ7<br>\r\n  fdñlkdfñlkfdfdñ7ñl<br>\r\n  fdkñlkfdñlkfd<br>\r\n    fñldkfdlk<br>\r\n  fdlkdfñlkfd<br>\r\n  fdñlkdfñlkfd<br>\r\n  fdñlkfdñlkfd<br>\r\n  fdñlkfdñlkfdfd<br>\r\n  fdñlkdfñlkfdfdñ7<br>\r\n  fdñlkdfñlkfdfdñ7ñl<br>\r\n  fdkñlkfdñlkfd<br>\r\n\r\n\r\n  <md-grid-list cols=4 rowHeight=\"100px\">\r\n    <md-grid-tile\r\n        *ngFor=\"let tile of tiles\"\r\n        [colspan]=\"tile.cols\"\r\n        [rowspan]=\"tile.rows\"\r\n        [style.background]=\"tile.color\">\r\n      {{tile.text}}\r\n    </md-grid-tile>\r\n  </md-grid-list>\r\n\r\n\r\n</div>"
 
 /***/ }),
 

@@ -1,6 +1,6 @@
 **/tabla-datos.backup
 **/capas.backup
-
+static/*
 **/node_modules
 **/config/**
 **/.vscode

@@ -4,6 +4,7 @@ import * as ol from 'openlayers';
 import { LoadingAnimateService } from 'ng2-loading-animate';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { UserLayersService } from '../../services';
+import { BytesPipe } from 'angular-pipes/src/math/bytes.pipe';
 
 const wktParser = new ol.format.WKT();
 
@@ -328,54 +329,65 @@ export class EditLayerComponent implements OnInit {
 
 @Component({
     template : `
+        <md-tab-group [(selectedIndex)]="tabIdx">
+          <md-tab label="Atributos">
+          </md-tab>
+          <md-tab label="Datos" [disabled]="action == 1" style="overflow: hidden;">
+          </md-tab>
+        </md-tab-group>
         <div md-dialog-content>
 
+          <div *ngIf="tabIdx == 0">
+            <div *ngFor="let field of fields">
+                <md-input-container>
+                    <input [disabled]="excludedProperties.indexOf(field.name) >= 0" mdInput [(ngModel)]="properties[field.name]" placeholder="{{field.name}}" value="{{ properties[field.name] }}">
+                </md-input-container>
+                <br>
+            </div>
+          </div>
 
-          <md-tab-group>
-            <md-tab label="Atributos">
+          <div *ngIf="tabIdx == 1">
+            <h4><md-icon>file_upload</md-icon> Añadir archivos o enlaces externos</h4>
+            <p md-subheader>Añade un fichero</p>
+            <input id="input-file-id" type="file" style="display: none;" (change)="fileSelected($event)" name="data" />
+            <label #dropZone for="input-file-id" md-button class="mat-button" style="border: 2px solid #000; margin-top: 16px; width: 100%; padding : 10px;">
+              Selecciona el archivo
+            </label>
+            <button [disabled]="!this.selectedFile" md-button (click)="uploadFile()" style="width : 100%;">Subir</button>
+            <md-list *ngIf="selectedFile">
+              <h3 md-subheader>Archivos a subir</h3>
+              <md-list-item>
+                <md-icon md-list-avatar>attachment</md-icon>
+                <h4 md-line>{{selectedFile.name}}</h4>
+                <p md-line> {{selectedFile?.size | bytes}} {{selectedFile?.lastModified | date}} </p>
+              </md-list-item>
+            </md-list>
+            
+            <p md-subheader>Añade un enlace externo</p>
+            
+            <md-input-container style="width : 100%;">
+              <input mdInput [(ngModel)]="dataUrl" type="url">
+            </md-input-container>
+            <button md-button style="width : 100%;" (click)="addData()">Subir</button>
+            <md-list>
+              <h3 md-subheader>Archivos</h3>
+              <md-list-item *ngFor="let data of (featureData | async)">
+                <md-icon md-list-icon>insert_drive_files</md-icon>
+                <h4 md-line>
+                  <a href="{{data.url}}">{{data.url}}</a>
+                </h4>
+                <button md-mini-fab *ngIf=" layerWMS && layerWMS.get('rol') == 'd' " (click)="deleteData(data.id)"><md-icon>remove</md-icon></button>
+              </md-list-item>
+            </md-list>
+          </div>
 
-              <div *ngFor="let field of fields">
-                  <md-input-container>
-                      <input [disabled]="excludedProperties.indexOf(field.name) >= 0" mdInput [(ngModel)]="properties[field.name]" placeholder="{{field.name}}" value="{{ properties[field.name] }}">
-                  </md-input-container>
-                  <br>
-              </div>
-
-            </md-tab>
-            <md-tab label="Datos" [disabled]="action == 1" style="overflow: hidden;">
-
-              <h4>Añadir archivos o enlaces externos</h4>
-              <p md-subheader>Añade un archivo (Imagen, PDF, ...)</p>
-              <md-icon md-list-icon>file_upload</md-icon>
-              <button md-button (click)="fileForm.nativeElement.click()">Selecciona el archivo</button>
-              <input #uploadFileForm type="file" style="visibility : hidden;">
-              <button md-button (click)="uploadFile()">Subir</button>
-              <p md-subheader>Añade un enlace externo</p>
-              <md-icon md-list-icon>file_upload</md-icon>
-              <md-input-container>
-                <input mdInput [(ngModel)]="dataUrl" type="url">
-              </md-input-container>
-              <button md-button (click)="addData()">Subir</button>
-              <md-list>
-                <h3 md-subheader>Archivos</h3>
-                <md-list-item *ngFor="let data of (featureData | async)">
-                  <md-icon md-list-icon>insert_drive_files</md-icon>
-                  <h4 md-line>
-                    <a href="{{data.url}}">{{data.url}}</a>
-                  </h4>
-                  <button md-mini-fab *ngIf=" layerWMS && layerWMS.get('rol') == 'd' " (click)="deleteData(data.id)"><md-icon>remove</md-icon></button>
-                </md-list-item>
-              </md-list>
-
-            </md-tab>
-          </md-tab-group>
         </div>
         <div md-dialog-actions>
           <button md-button (click)="dialogRef.close(-1)">Cancelar</button>
           <button md-button (click)="saveFeature()">Guardar</button>
         </div>
     `,
-    providers : [UserLayersService]
+    providers : [UserLayersService, BytesPipe]
 })
 export class FeatureEditDialog {
     fields : any[];
@@ -387,8 +399,11 @@ export class FeatureEditDialog {
     layerWMS;
     featureData;
     dataUrl;
+    tabIdx = 1;
 
-    @ViewChild('uploadFileForm') fileForm : ElementRef;
+    selectedFile;
+    
+    @ViewChild('dropZone') dropzone : ElementRef;
 
     constructor(
       private dialogRef : MdDialogRef<FeatureEditDialog>,
@@ -412,6 +427,36 @@ export class FeatureEditDialog {
         }
     }
 
+    ngAfterViewInit(){
+      this.dropzone.nativeElement.addEventListener('drop', this.handleFileSelect.bind(this), false);
+      this.dropzone.nativeElement.addEventListener('dragover', this.handleDragOver.bind(this), false);
+      this.dropzone.nativeElement.addEventListener('dragleave', this.handleDragLeave.bind(this), false);
+    }
+
+    handleFileSelect(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      this.dropzone.nativeElement.style.opacity = '1';
+    }
+  
+    handleDragOver(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+      this.dropzone.nativeElement.style.opacity = '0.3';
+    }
+  
+    handleDragLeave(evt){
+      evt.stopPropagation();
+      evt.preventDefault();
+      this.dropzone.nativeElement.style.opacity = '1';
+    }
+
+    fileSelected(e){
+      console.log(e.target.files)
+      this.selectedFile = e.target.files[0];
+    }
+
     addData(){
       if(!this.dataUrl || this.dataUrl.length <= 0){
         return;
@@ -432,10 +477,10 @@ export class FeatureEditDialog {
     }
 
     uploadFile(){
-      let file = this.fileForm.nativeElement.files[0];
-      console.log(file);
-      if(file){
-        this.userLayersService.uploadData(this.layerName, this.feature.get('gid'), file)
+      //let file = this.fileForm.nativeElement.files[0];
+      console.log(this.selectedFile);
+      if(this.selectedFile){
+        this.userLayersService.uploadData(this.layerName, this.feature.get('gid'), this.selectedFile)
         .subscribe( e => {
           this.featureData = this.userLayersService.getFeatureData(this.layerName, this.feature.get('gid') )
         } );

@@ -1,69 +1,53 @@
+<div [@routerTransition]="" style="position : absolute; top : 0px; bottom : 0px; left : 0px; right : 0px;">
+  <video height="100%" ontimeupdate="if(this.currentTime >= 60 ){ this.pause(); }" onpause="this.currentTime= 10; this.play();" width="100%" onloadedmetadata="this.muted = true" muted loop autoplay style="object-fit : cover; opacity : 0.6; position : fixed; top : 0px; bottom : 0px; left : 0px; right : 0px;">
+    <source src="http://localhost:3000/static/video.webm" type="video/webm" >
+  </video>
+</div>
+
 <div class="container-sections" [@routerTransition]="">
-  <div #full mnFullpage 
-      [mnFullpageNavigation]="true" 
-      [mnFullpageKeyboardScrolling]="true"
-      [mnFullpageControlArrows]="true">
+  fñldkfdlk<br>
+  fdlkdfñlkfd<br>
+  fdñlkdfñlkfd<br>
+  fdñlkfdñlkfd<br>
+  fdñlkfdñlkfdfd<br>
+  fdñlkdfñlkfdfdñ7<br>
+  fdñlkdfñlkfdfdñ7ñl<br>
+  fdkñlkfdñlkfd<br>
+  fñldkfdlk<br>
+  fdlkdfñlkfd<br>
+  fdñlkdfñlkfd<br>
+  fdñlkfdñlkfd<br>
+  fdñlkfdñlkfdfd<br>
+  fdñlkdfñlkfdfdñ7<br>
+  fdñlkdfñlkfdfdñ7ñl<br>
+  fdkñlkfdñlkfd<br>
+    fñldkfdlk<br>
+  fdlkdfñlkfd<br>
+  fdñlkdfñlkfd<br>
+  fdñlkfdñlkfd<br>
+  fdñlkfdñlkfdfd<br>
+  fdñlkdfñlkfdfdñ7<br>
+  fdñlkdfñlkfdfdñ7ñl<br>
+  fdkñlkfdñlkfd<br>
+    fñldkfdlk<br>
+  fdlkdfñlkfd<br>
+  fdñlkdfñlkfd<br>
+  fdñlkfdñlkfd<br>
+  fdñlkfdñlkfdfd<br>
+  fdñlkdfñlkfdfdñ7<br>
+  fdñlkdfñlkfdfdñ7ñl<br>
+  fdkñlkfdñlkfd<br>
 
-      <div class="section fp-section fp-table" style="background: #fff">        
-          <div class="fp-tableCell" style="background : url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg')">
-          </div>
-          <div class="caption">
-            <h1>Bienvenido a SIG Bétera</h1>
-          </div>
-      </div>
 
-      <div class="section fp-section fp-table" style="background-color: #fff">        
-          <div class="fp-tableCell" style="background: url('assets/mapa.png');">
-          </div>
-          <div class="caption">
-            <h1>Visita nuestro mapa</h1>
-          </div>
-          <md-card style="position : absolute; bottom : 10%; right : 10%; z-index : 1;">
-            <md-card-content>
-              <button md-button (click)="router.navigateByUrl('/map')">
-                IR AL MAPA
-              </button>
-            </md-card-content>
-          </md-card>
-      </div>
+  <md-grid-list cols=4 rowHeight="100px">
+    <md-grid-tile
+        *ngFor="let tile of tiles"
+        [colspan]="tile.cols"
+        [rowspan]="tile.rows"
+        [style.background]="tile.color">
+      {{tile.text}}
+    </md-grid-tile>
+  </md-grid-list>
 
-      <div class="section fp-section fp-table" style="background: #fff">        
-          <div class="fp-tableCell" style="background: url('https://geosergio.files.wordpress.com/2010/02/capas_01.jpg')">
-          </div> 
-          <div class="caption">
-            <h1>Descarga información Geográfica</h1>
-          </div>
-          <md-card style="position : absolute; bottom : 10%; right : 10%; z-index : 1;">
-            <md-card-content>
-              <button md-button>+ INFORMACIÓN</button>
-            </md-card-content>
-          </md-card>
-      </div>
-      <div class="section fp-section fp-table" style="background: #fff">        
-          <div class="fp-tableCell" style="background: url('http://www.handshakes.com.sg/img/hand.jpg')">
-          </div> 
-          <div class="caption">
-            <h1>Hazte usuario</h1>
-          </div>
-          <div style="position : absolute; top : 20%; left:20%; right : 20%;">
-            <h4>Podrás editar capas y recibir notificaciones</h4>
-          </div>
-          <md-card style="position : absolute; bottom : 10%; right : 10%; z-index : 1;">
-            <md-card-content>
-              <button md-button (click)="openSignupDialog()">HAZTE USUARIO</button>
-            </md-card-content>
-          </md-card>
-      </div>
 
-      <div class="section fp-section fp-table has-slides">        
-          <div class="fp-tableCell">
-            <div class="slide" style="background: #f3e5f5"> Contacto </div>
-            <div class="slide" style="background: #f3e5f5"> Contacto </div>
-            <div class="slide" style="background: #f3e5f5"> Noticias </div>
-            <div class="slide" style="background: #f3e5f5"> Slide 3 </div>
-            <div class="slide" style="background: #f3e5f5"> Slide 4 </div>
-          </div> 
-      </div>
-
-  </div>
 </div>

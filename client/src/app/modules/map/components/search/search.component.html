@@ -2,5 +2,11 @@
   <md-tab label="{{search.layername}}" *ngFor="let search of found"> 
   </md-tab>
 </md-tab-group>
-<table #table datatable class="mdl-data-table" style="width : 100%;">
-</table>
+<div md-dialog-content>
+  <table #table datatable class="mdl-data-table" style="width : 100%;">
+  </table>
+</div>
+
+<div md-dialog-actions>
+  <button md-button md-dialog-close="">Cerrar</button>
+</div>
