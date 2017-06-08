@@ -9,13 +9,14 @@ html, body {
 }
 
 .overview-map > .ol-viewport {
-    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,.3);
 }
 
 .active-link {
-    background: #f3e5f5;
+    background: #673ab7;
     font-weight: bold;
     color : #fff;
+    z-index : -1;
 }
 
 
@@ -148,3 +149,5 @@ body {
 .mat-tab-body-content {
     overflow: hidden !important;
 }
+
+

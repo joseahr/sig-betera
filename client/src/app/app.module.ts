@@ -55,6 +55,7 @@ export function highchartsFactory() {
     LoadingAnimateService,
     AuthService,
     CanActivateAdmin,
+    { provide : 'Window', useValue : window },
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory

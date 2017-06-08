@@ -86,7 +86,7 @@ var AuthService = (function () {
 
 /***/ }),
 
-/***/ 280:
+/***/ 279:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -378,7 +378,7 @@ function slideToLeft() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_loading_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs__ = __webpack_require__(279);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(128);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -396,6 +396,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+window.requestAnimFrame = (function () {
+    return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        function (callback) {
+            window.setTimeout(callback, 1000 / 60);
+        };
+})();
 var AppComponent = (function () {
     function AppComponent(loading, dialog, authService, ngZone, router) {
         var _this = this;
@@ -409,6 +417,7 @@ var AppComponent = (function () {
             { title: 'MAPA', link: 'map', exact: false, icon: 'map' },
             { title: 'DESCARGAS', link: 'download', icon: 'file_download' }
         ];
+        this.showButtonScrollUp = false;
         this.authService.getUser().subscribe(function (user) {
             _this.ngZone.run(function () {
                 if (!user.error) {
@@ -423,6 +432,10 @@ var AppComponent = (function () {
             _this._navigationInterceptor(event);
         });
     }
+    AppComponent.prototype.onWindowScroll = function () {
+        //console.log(window.scrollY, window.innerHeight);
+        this.showButtonScrollUp = window.scrollY >= window.innerHeight;
+    };
     AppComponent.prototype.toggleNavigation = function () {
         document.querySelector('.cd-nav-container').classList.toggle('is-visible');
         document.querySelector('.cd-overlay').classList.toggle('is-visible');
@@ -485,6 +498,52 @@ var AppComponent = (function () {
             // Hacer algo
         });
     };
+    // main function
+    AppComponent.prototype.scrollToY = function (scrollTargetY, speed, easing) {
+        // scrollTargetY: the target scrollY property of the window
+        // speed: time in pixels per second
+        // easing: easing equation to use
+        var scrollY = window.scrollY, scrollTargetY = scrollTargetY || 0, speed = speed || 2000, easing = easing || 'easeOutSine', currentTime = 0;
+        // min time .1, max time .8 seconds
+        var time = Math.max(.1, Math.min(Math.abs(scrollY - scrollTargetY) / speed, .8));
+        // easing equations from https://github.com/danro/easing-js/blob/master/easing.js
+        var PI_D2 = Math.PI / 2, easingEquations = {
+            easeOutSine: function (pos) {
+                return Math.sin(pos * (Math.PI / 2));
+            },
+            easeInOutSine: function (pos) {
+                return (-0.5 * (Math.cos(Math.PI * pos) - 1));
+            },
+            easeInOutQuint: function (pos) {
+                if ((pos /= 0.5) < 1) {
+                    return 0.5 * Math.pow(pos, 5);
+                }
+                return 0.5 * (Math.pow((pos - 2), 5) + 2);
+            }
+        };
+        // add animation loop
+        function tick() {
+            currentTime += 1 / 60;
+            var p = currentTime / time;
+            var t = easingEquations[easing](p);
+            if (p < 1) {
+                window.requestAnimFrame(tick);
+                window.scrollTo(0, scrollY + ((scrollTargetY - scrollY) * t));
+            }
+            else {
+                console.log('scroll done');
+                window.scrollTo(0, scrollTargetY);
+            }
+        }
+        // call it once to get started
+        tick();
+    };
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])("window:scroll", []), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', []), 
+        __metadata('design:returntype', void 0)
+    ], AppComponent.prototype, "onWindowScroll", null);
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-root',
@@ -528,7 +587,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_fullpage__ = __webpack_require__(878);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_fullpage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16_ng2_fullpage__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__dialogs__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__dialogs__ = __webpack_require__(279);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_hammerjs__ = __webpack_require__(872);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18_hammerjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_validate_token_validate_token_component__ = __webpack_require__(459);
@@ -599,6 +658,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_15_ng2_loading_animate__["LoadingAnimateService"],
                 __WEBPACK_IMPORTED_MODULE_14__services__["a" /* AuthService */],
                 __WEBPACK_IMPORTED_MODULE_13__guards__["a" /* CanActivateAdmin */],
+                { provide: 'Window', useValue: window },
                 {
                     provide: __WEBPACK_IMPORTED_MODULE_10_angular2_highcharts_dist_HighchartsService__["HighchartsStatic"],
                     useFactory: highchartsFactory
@@ -643,10 +703,8 @@ var appRoutes = [
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogs__ = __webpack_require__(279);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__router_transitions__ = __webpack_require__(521);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_fullpage_js__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_fullpage_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_fullpage_js__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -657,7 +715,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -696,6 +753,28 @@ var HomeComponent = (function () {
         document.body.style.overflow = '';
         //console.log(this.el.nativeElement.parentNode.childNodes[0], this.el.nativeElement, 'toooooool')
     };
+    HomeComponent.prototype.scrollTo = function (selector) {
+        var node = document.querySelector(selector), val = 0;
+        if (node.offsetParent) {
+            do {
+                val += node.offsetTop;
+            } while (node = node.offsetParent);
+        }
+        else {
+            val = node.offsetTop;
+        }
+        this.scrollToY(val, 1000, 'easeInOutQuint');
+        //console.log(node, val, selector, node.getBoundingClientRect().top, node.offsetHeight);
+    };
+    HomeComponent.prototype.getHeight = function (element) {
+        var height = element.clientHeight;
+        var computedStyle = window.getComputedStyle(element);
+        height += parseInt(computedStyle.marginTop, 10);
+        height += parseInt(computedStyle.marginBottom, 10);
+        height += parseInt(computedStyle.borderTopWidth, 10);
+        height += parseInt(computedStyle.borderBottomWidth, 10);
+        return height;
+    };
     HomeComponent.prototype.getLayers = function () {
         return this.http.get('/api/maps')
             .map(function (res) { return res.json(); })
@@ -703,6 +782,46 @@ var HomeComponent = (function () {
     };
     HomeComponent.prototype.openSignupDialog = function () {
         this.dialog.open(__WEBPACK_IMPORTED_MODULE_4__dialogs__["b" /* SignupComponent */]);
+    };
+    // main function
+    HomeComponent.prototype.scrollToY = function (scrollTargetY, speed, easing) {
+        // scrollTargetY: the target scrollY property of the window
+        // speed: time in pixels per second
+        // easing: easing equation to use
+        var scrollY = window.scrollY, scrollTargetY = scrollTargetY || 0, speed = speed || 2000, easing = easing || 'easeOutSine', currentTime = 0;
+        // min time .1, max time .8 seconds
+        var time = Math.max(.1, Math.min(Math.abs(scrollY - scrollTargetY) / speed, .8));
+        // easing equations from https://github.com/danro/easing-js/blob/master/easing.js
+        var PI_D2 = Math.PI / 2, easingEquations = {
+            easeOutSine: function (pos) {
+                return Math.sin(pos * (Math.PI / 2));
+            },
+            easeInOutSine: function (pos) {
+                return (-0.5 * (Math.cos(Math.PI * pos) - 1));
+            },
+            easeInOutQuint: function (pos) {
+                if ((pos /= 0.5) < 1) {
+                    return 0.5 * Math.pow(pos, 5);
+                }
+                return 0.5 * (Math.pow((pos - 2), 5) + 2);
+            }
+        };
+        // add animation loop
+        function tick() {
+            currentTime += 1 / 60;
+            var p = currentTime / time;
+            var t = easingEquations[easing](p);
+            if (p < 1) {
+                window.requestAnimFrame(tick);
+                window.scrollTo(0, scrollY + ((scrollTargetY - scrollY) * t));
+            }
+            else {
+                console.log('scroll done');
+                window.scrollTo(0, scrollTargetY);
+            }
+        }
+        // call it once to get started
+        tick();
     };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('full'), 
@@ -1055,7 +1174,7 @@ exports = module.exports = __webpack_require__(27)();
 
 
 // module
-exports.push([module.i, ".spacer {\r\n  -webkit-box-flex : 1;\r\n  -ms-flex : 1 1 auto;\r\n  flex : 1 1 auto;\r\n}\r\n\r\nmd-toolbar {\r\n    height: 50px !important;\r\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\r\n    position: relative;\r\n    z-index: 2;\r\n}\r\n\r\nmd-toolbar button {\r\n  -ms-flex-pack: distribute;\r\n      justify-content: space-around;\r\n  margin-left: 5px;\r\n}\r\n\r\n.logo-betera {\r\n  height: 100%;\r\n}\r\n\r\ntitle {\r\n  box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\r\n}\r\n\r\n\r\n/*\r\n@media screen and (max-width: 480px) {\r\n  md-toolbar button {\r\n    visibility: hidden;\r\n  }\r\n\r\n}\r\n*/\r\n\r\n.container-router {\r\n  position : absolute;\r\n  top : 64px;\r\n  bottom : 0px;\r\n  left: 0px;\r\n  right: 0px;\r\n}\r\n\r\n@media (max-width:600px) and (orientation:portrait) {\r\n  .container-router {\r\n    position : absolute;\r\n    top : 56px;\r\n    bottom : 0px;\r\n    left: 0px;\r\n    right: 0px;\r\n  }\r\n}\r\n@media (max-width:960px) and (orientation:landscape) {\r\n  .container-router {\r\n    position : absolute;\r\n    top : 48px;\r\n    bottom : 0px;\r\n    left: 0px;\r\n    right: 0px;\r\n  }\r\n}\r\n\r\n\r\n.cd-nav-container {\r\n  z-index : 1002;\r\n  background: #fff;\r\n  overflow-y: scroll;\r\n  box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.75);\r\n  position: fixed;\r\n  top: 0;\r\n  right: 0;\r\n  bottom : 0;\r\n  width: 80%;\r\n  -webkit-transform: translateX(120%);\r\n          transform: translateX(120%);\r\n  -webkit-transition : -webkit-transform 0.4s;\r\n  transition : -webkit-transform 0.4s;\r\n  transition : transform 0.4s;\r\n  transition: transform 0.4s, -webkit-transform 0.4s;\r\n}\r\n\r\n.cd-nav-container.is-visible {\r\n  -webkit-transform: translateX(0);\r\n          transform: translateX(0);\r\n}\r\n\r\n.cd-nav-container header {\r\n  background: #f7f7f7;\r\n  padding: 10px;\r\n}\r\n\r\n.cd-nav-container header h3, \r\n.cd-nav-container header button  {\r\n  display: inline-block;\r\n} \r\n\r\n.cd-nav-container header h3 {\r\n  margin-left: 0.5em;\r\n}\r\n\r\n.cd-nav-container header button {\r\n  float : right;\r\n  margin: 0.5em;\r\n}\r\n\r\n#app-body, md-toolbar {\r\n  -webkit-transition : -webkit-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  transition : -webkit-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  transition : transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), -webkit-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n}\r\n\r\n#app-body.scale-down, md-toolbar.scale-down {\r\n  -webkit-transform: scale(0.2) rotate(-10deg) translateX(-50%) translateY(50%) ;\r\n          transform: scale(0.2) rotate(-10deg) translateX(-50%) translateY(50%) ;\r\n}\r\n\r\n.cd-overlay.is-visible {\r\n  opacity: 1;\r\n  visibility: visible;\r\n}\r\n\r\n.cd-overlay {\r\n  position: fixed;\r\n  height: 100%;\r\n  width: 100%;\r\n  top: 0;\r\n  left: 0;\r\n  z-index : 1001;\r\n  cursor: pointer;\r\n  background-color: rgba(0, 0, 0, 0.35);\r\n  visibility: hidden;\r\n  opacity: 0;\r\n  -webkit-backface-visibility: hidden;\r\n  backface-visibility: hidden;\r\n  -webkit-transition: opacity 0.4s 0s, visibility 0s 0.4s;\r\n  transition: opacity 0.4s 0s, visibility 0s 0.4s;\r\n}\r\n\r\nmd-grid-tile:not(.active-link):not(.menu-header):hover {\r\n  background: rgba(0,0,0,0.125);\r\n}\r\n\r\nmd-grid-tile:not(.menu-header) {\r\n  cursor: pointer;\r\n}\r\n\r\nmd-grid-list:not(.navigation-grid){\r\n  background: #f7f7f7;\r\n}", ""]);
+exports.push([module.i, ".spacer {\r\n  -webkit-box-flex : 1;\r\n  -ms-flex : 1 1 auto;\r\n  flex : 1 1 auto;\r\n}\r\n\r\nmd-toolbar {\r\n    height: 50px !important;\r\n    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\r\n    position: relative;\r\n    z-index: 2;\r\n}\r\n\r\nmd-toolbar button {\r\n  -ms-flex-pack: distribute;\r\n      justify-content: space-around;\r\n  margin-left: 5px;\r\n}\r\n\r\n.logo-betera {\r\n  height: 100%;\r\n}\r\n\r\ntitle {\r\n  box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);\r\n}\r\n\r\n\r\n/*\r\n@media screen and (max-width: 480px) {\r\n  md-toolbar button {\r\n    visibility: hidden;\r\n  }\r\n\r\n}\r\n*/\r\n\r\n.container-router {\r\n  position : absolute;\r\n  top : 64px;\r\n  bottom : 0px;\r\n  left: 0px;\r\n  right: 0px;\r\n}\r\n\r\n@media (max-width:600px) and (orientation:portrait) {\r\n  .container-router {\r\n    position : absolute;\r\n    top : 56px;\r\n    bottom : 0px;\r\n    left: 0px;\r\n    right: 0px;\r\n  }\r\n}\r\n@media (max-width:960px) and (orientation:landscape) {\r\n  .container-router {\r\n    position : absolute;\r\n    top : 48px;\r\n    bottom : 0px;\r\n    left: 0px;\r\n    right: 0px;\r\n  }\r\n}\r\n\r\n\r\n.cd-nav-container {\r\n  z-index : 1002;\r\n  background: #fff;\r\n  overflow-y: scroll;\r\n  box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.75);\r\n  position: fixed;\r\n  top: 0;\r\n  right: 0;\r\n  bottom : 0;\r\n  width: 80%;\r\n  -webkit-transform: translateX(120%);\r\n          transform: translateX(120%);\r\n  -webkit-transition : -webkit-transform 0.4s;\r\n  transition : -webkit-transform 0.4s;\r\n  transition : transform 0.4s;\r\n  transition: transform 0.4s, -webkit-transform 0.4s;\r\n}\r\n\r\n.cd-nav-container.is-visible {\r\n  -webkit-transform: translateX(0);\r\n          transform: translateX(0);\r\n}\r\n\r\n.cd-nav-container header {\r\n  background: #f7f7f7;\r\n  padding: 10px;\r\n}\r\n\r\n.cd-nav-container header h3, \r\n.cd-nav-container header button  {\r\n  display: inline-block;\r\n} \r\n\r\n.cd-nav-container header h3 {\r\n  margin-left: 0.5em;\r\n}\r\n\r\n.cd-nav-container header button {\r\n  float : right;\r\n  margin: 0.5em;\r\n}\r\n\r\n#app-body, md-toolbar {\r\n  -webkit-transition : -webkit-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  transition : -webkit-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  transition : transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), -webkit-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n}\r\n\r\n#app-body.scale-down, md-toolbar.scale-down {\r\n  -webkit-transform: scale(0.2) rotate(-10deg) translateX(-50%) translateY(50%) ;\r\n          transform: scale(0.2) rotate(-10deg) translateX(-50%) translateY(50%) ;\r\n}\r\n\r\n.cd-overlay.is-visible {\r\n  opacity: 1;\r\n  visibility: visible;\r\n}\r\n\r\n.cd-overlay {\r\n  position: fixed;\r\n  height: 100%;\r\n  width: 100%;\r\n  top: 0;\r\n  left: 0;\r\n  z-index : 1001;\r\n  cursor: pointer;\r\n  background-color: rgba(0, 0, 0, 0.35);\r\n  visibility: hidden;\r\n  opacity: 0;\r\n  -webkit-backface-visibility: hidden;\r\n  backface-visibility: hidden;\r\n  -webkit-transition: opacity 0.4s 0s, visibility 0s 0.4s;\r\n  transition: opacity 0.4s 0s, visibility 0s 0.4s;\r\n}\r\n\r\n.menu-header {\r\n  background: #fff;\r\n  box-shadow: 0px 2px 12px #000;\r\n}\r\n\r\nmd-grid-tile:not(.active-link):not(.menu-header):hover {\r\n  background: rgba(0,0,0,0.125);\r\n  color : #673ab7;\r\n}\r\n\r\nmd-grid-tile:not(.menu-header) {\r\n  cursor: pointer;\r\n}\r\n\r\nmd-grid-list:not(.navigation-grid){\r\n  background: #f7f7f7;\r\n}", ""]);
 
 // exports
 
@@ -1176,7 +1295,7 @@ module.exports = module.exports.toString();
 /***/ 882:
 /***/ (function(module, exports) {
 
-module.exports = "<loading-animate></loading-animate>\n<md-toolbar #toolbarMenu color=\"primary\">\n  <img src=\"assets/escudo.png\" alt=\"\" class=\"logo-betera\">\n  <span class=\"title\">SIG Bétera</span>\n  <span class=\"spacer\"></span>\n\n  <button md-icon-button (click)=\"toggleNavigation()\">\n    <md-icon>menu</md-icon>\n  </button>\n  <button *ngIf=\"!authUser\" md-icon-button [mdMenuTriggerFor]=\"menu\">\n    <md-icon>more_vert</md-icon>\n  </button>\n\n\n  <!-- Menú usuario no logueado -->\n  <md-menu #menu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"!authUser\" (click)=\"openLoginDialog()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Login</span>\n    </button>\n    <button md-menu-item (click)=\"openSignupDialog()\">\n      <md-icon>accessibility</md-icon>\n      <span>Registrarse</span>\n    </button>\n    <button md-menu-item (click)=\"openForgotDialog()\">\n      <md-icon>vpn_key</md-icon>\n      <span>¿Olvidaste credenciales?</span>\n    </button>\n  </md-menu>\n</md-toolbar>\n\n<div class=\"cd-overlay\" (click)=\"toggleNavigation()\"></div>\n<nav class=\"cd-nav-container\" id=\"cd-nav\">\n\n  <md-grid-list cols=\"1\" rowHeight=\"50px\">\n    <md-grid-tile\n        class=\"menu-header\"\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n    >\n      <h3>Menú</h3>\n    </md-grid-tile>\n    <button md-icon-button (click)=\"toggleNavigation()\" style=\"float:right; margin-right: 0.5em; margin-top: 0.5em;\">\n      <md-icon>close</md-icon>\n    </button>\n  </md-grid-list>\n\n  <md-grid-list cols=\"8\" rowHeight=\"45px\" *ngIf=\"authUser\">\n    <md-grid-tile\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"4\"\n        [rowspan]=\"1\"\n    >\n      <img style=\"height : 35px; border-radius: 20px; margin-left : 10px; margin-right: 10px;\" src=\"{{authUser.gravatar}}\">\n      {{authUser.nombre}} {{authUser.apellidos}}\n    </md-grid-tile>\n    <md-grid-tile\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n    >\n      <md-icon>assignment_ind</md-icon>\n    </md-grid-tile>\n    <md-grid-tile\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n    >\n      <md-icon>notifications</md-icon>\n    </md-grid-tile>\n    <md-grid-tile\n        (click)=\"toggleNavigation(); logout();\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n    >\n      <md-icon>exit_to_app</md-icon>\n    </md-grid-tile>\n  </md-grid-list>\n\n  <md-grid-list cols=\"2\" rowHeight=\"150px\" class=\"navigation-grid\">\n    <md-grid-tile\n        class=\"navigation-link\"\n        (click)=\"toggleNavigation()\"\n        *ngFor=\"let item of menuNav\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n        [routerLink]=\"[item.link]\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: item.exact }\"\n    >\n      <md-icon>{{item.icon}}</md-icon> {{item.title}}\n    </md-grid-tile>\n    <md-grid-tile\n        *ngIf=\"authUser && authUser.rol == 'admin'\"\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n        [routerLink]=\"['admin']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: false }\"\n    >\n     <md-icon>dashboard</md-icon> ADMIN\n    </md-grid-tile>\n  </md-grid-list>\n\n</nav>\n\n<div id=\"app-body\" class=\"container-router\">\n  <router-outlet></router-outlet>  \n</div>"
+module.exports = "<loading-animate></loading-animate>\n<md-toolbar #toolbarMenu color=\"primary\">\n  <img src=\"assets/escudo.png\" alt=\"\" class=\"logo-betera\">\n  <span class=\"title\">SIG Bétera</span>\n  <span class=\"spacer\"></span>\n\n  <button md-icon-button (click)=\"toggleNavigation()\">\n    <md-icon>menu</md-icon>\n  </button>\n  <button *ngIf=\"!authUser\" md-icon-button [mdMenuTriggerFor]=\"menu\">\n    <md-icon>more_vert</md-icon>\n  </button>\n\n\n  <!-- Menú usuario no logueado -->\n  <md-menu #menu=\"mdMenu\">\n    <button md-menu-item *ngIf=\"!authUser\" (click)=\"openLoginDialog()\">\n      <md-icon>fingerprint</md-icon>\n      <span>Login</span>\n    </button>\n    <button md-menu-item (click)=\"openSignupDialog()\">\n      <md-icon>accessibility</md-icon>\n      <span>Registrarse</span>\n    </button>\n    <button md-menu-item (click)=\"openForgotDialog()\">\n      <md-icon>vpn_key</md-icon>\n      <span>¿Olvidaste credenciales?</span>\n    </button>\n  </md-menu>\n</md-toolbar>\n\n<div class=\"cd-overlay\" (click)=\"toggleNavigation()\"></div>\n<nav class=\"cd-nav-container\" id=\"cd-nav\">\n\n  <md-grid-list cols=\"1\" rowHeight=\"50px\">\n    <md-grid-tile\n        class=\"menu-header\"\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n    >\n      <h3>Menú</h3>\n    </md-grid-tile>\n    <button md-icon-button (click)=\"toggleNavigation()\" style=\"float:right; margin-right: 0.5em; margin-top: 0.5em;\">\n      <md-icon>close</md-icon>\n    </button>\n  </md-grid-list>\n\n  <md-grid-list cols=\"8\" rowHeight=\"45px\" *ngIf=\"authUser\">\n    <md-grid-tile\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"4\"\n        [rowspan]=\"1\"\n    >\n      <img style=\"height : 35px; border-radius: 20px; margin-left : 10px; margin-right: 10px;\" src=\"{{authUser.gravatar}}\">\n      {{authUser.nombre}} {{authUser.apellidos}}\n    </md-grid-tile>\n    <md-grid-tile\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n    >\n      <md-icon>assignment_ind</md-icon>\n    </md-grid-tile>\n    <md-grid-tile\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n    >\n      <md-icon>notifications</md-icon>\n    </md-grid-tile>\n    <md-grid-tile\n        (click)=\"toggleNavigation(); logout();\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n    >\n      <md-icon>exit_to_app</md-icon>\n    </md-grid-tile>\n  </md-grid-list>\n\n  <md-grid-list cols=\"2\" rowHeight=\"150px\" class=\"navigation-grid\">\n    <md-grid-tile\n        class=\"navigation-link\"\n        (click)=\"toggleNavigation()\"\n        *ngFor=\"let item of menuNav\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n        [routerLink]=\"[item.link]\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: item.exact }\"\n    >\n      <md-icon>{{item.icon}}</md-icon> {{item.title}}\n    </md-grid-tile>\n    <md-grid-tile\n        *ngIf=\"authUser && authUser.rol == 'admin'\"\n        (click)=\"toggleNavigation()\"\n        [colspan]=\"1\"\n        [rowspan]=\"1\"\n        [routerLink]=\"['admin']\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{ exact: false }\"\n    >\n     <md-icon>dashboard</md-icon> ADMIN\n    </md-grid-tile>\n  </md-grid-list>\n\n</nav>\n\n<div id=\"app-body\" class=\"container-router\">\n  <router-outlet></router-outlet>  \n  <button md-icon-button color=\"primary\" *ngIf=\"showButtonScrollUp\" (click)=\"scrollToY(0, 1000, 'easeInOutQuint')\" style=\"position : fixed; bottom : 0.5em; right : 0.5em;\"><md-icon>arrow_upward</md-icon></button>\n</div>"
 
 /***/ }),
 
@@ -1190,7 +1309,7 @@ module.exports = "<loading-animate></loading-animate>\n\n<md-card style=\"width 
 /***/ 884:
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]=\"\" style=\"position : absolute; top : 0px; bottom : 0px; left : 0px; right : 0px;\">\r\n  <video height=\"100%\" ontimeupdate=\"if(this.currentTime >= 60 ){ this.pause(); }\" onpause=\"this.currentTime= 10; this.play();\" width=\"100%\" onloadedmetadata=\"this.muted = true\" muted loop autoplay style=\"object-fit : cover; opacity : 0.6; position : fixed; top : 0px; bottom : 0px; left : 0px; right : 0px;\">\r\n    <source src=\"http://localhost:3000/static/video.webm\" type=\"video/webm\" >\r\n  </video>\r\n</div>\r\n\r\n<div class=\"container-sections\" [@routerTransition]=\"\">\r\n  fñldkfdlk<br>\r\n  fdlkdfñlkfd<br>\r\n  fdñlkdfñlkfd<br>\r\n  fdñlkfdñlkfd<br>\r\n  fdñlkfdñlkfdfd<br>\r\n  fdñlkdfñlkfdfdñ7<br>\r\n  fdñlkdfñlkfdfdñ7ñl<br>\r\n  fdkñlkfdñlkfd<br>\r\n  fñldkfdlk<br>\r\n  fdlkdfñlkfd<br>\r\n  fdñlkdfñlkfd<br>\r\n  fdñlkfdñlkfd<br>\r\n  fdñlkfdñlkfdfd<br>\r\n  fdñlkdfñlkfdfdñ7<br>\r\n  fdñlkdfñlkfdfdñ7ñl<br>\r\n  fdkñlkfdñlkfd<br>\r\n    fñldkfdlk<br>\r\n  fdlkdfñlkfd<br>\r\n  fdñlkdfñlkfd<br>\r\n  fdñlkfdñlkfd<br>\r\n  fdñlkfdñlkfdfd<br>\r\n  fdñlkdfñlkfdfdñ7<br>\r\n  fdñlkdfñlkfdfdñ7ñl<br>\r\n  fdkñlkfdñlkfd<br>\r\n    fñldkfdlk<br>\r\n  fdlkdfñlkfd<br>\r\n  fdñlkdfñlkfd<br>\r\n  fdñlkfdñlkfd<br>\r\n  fdñlkfdñlkfdfd<br>\r\n  fdñlkdfñlkfdfdñ7<br>\r\n  fdñlkdfñlkfdfdñ7ñl<br>\r\n  fdkñlkfdñlkfd<br>\r\n\r\n\r\n  <md-grid-list cols=4 rowHeight=\"100px\">\r\n    <md-grid-tile\r\n        *ngFor=\"let tile of tiles\"\r\n        [colspan]=\"tile.cols\"\r\n        [rowspan]=\"tile.rows\"\r\n        [style.background]=\"tile.color\">\r\n      {{tile.text}}\r\n    </md-grid-tile>\r\n  </md-grid-list>\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]=\"\" style=\"position : absolute; top : 0px; bottom : 0px; left : 0px; right : 0px;\">\r\n  <video height=\"100%\" ontimeupdate=\"if(this.currentTime >= 60 ){ this.pause(); }\" onpause=\"this.currentTime= 10; this.play();\" width=\"100%\" onloadedmetadata=\"this.muted = true\" muted loop autoplay style=\"filter : blur(3px); object-fit : cover; opacity : 0.6; position : fixed; top : 0px; bottom : 0px; left : 0px; right : 0px;\">\r\n    <source src=\"http://localhost:3000/static/video.webm\" type=\"video/webm\" >\r\n  </video>\r\n</div>\r\n\r\n<div class=\"container-sections\" [@routerTransition]=\"\">\r\n\r\n  <md-card style=\"text-align-last : left; background: #303030; line-height : 0.8; color : #fff; width : 80%; margin : 0px auto; margin-top : 5%; mix-blend-mode: multiply;\">\r\n    <h1><md-icon style=\"color : #673ab7;\">pin_drop</md-icon><br>SIG<br>Bétera<br><span style=\"color : #673ab7; font-size : 0.6em; float : left;\">GEOPORTAL</span></h1>\r\n  </md-card>\r\n\r\n\r\n  <md-card style=\"width : 80%; margin : 0px auto; margin-top : 10px; background: rgba(255,255,255,0.6);\">\r\n    <md-card-content>\r\n      <button md-icon-button color=\"primary\"><md-icon>cloud_download</md-icon></button>\r\n      <button md-icon-button><md-icon>map</md-icon></button>\r\n      <button md-icon-button color=\"primary\"><md-icon>fiber_new</md-icon></button>\r\n      <button md-icon-button><md-icon>account_box</md-icon></button>\r\n      <button md-icon-button color=\"primary\"><md-icon>contact_mail</md-icon></button>\r\n    </md-card-content>\r\n  </md-card>\r\n\r\n  <button (click)=\"scrollTo('#home-sections-container', 1000)\" md-icon-button style=\"background : #673ab7; margin-top : -20px;\"><md-icon style=\"color : #fff;\">arrow_downward</md-icon></button>\r\n\r\n  <md-card id=\"home-sections-container\" style=\"background: #fff; position : absolute; top : 100%; left : 0; right : 0;\">\r\n    <md-card-content>\r\n      <h1 id=\"info\" style=\"color : #673ab7;\"><span style=\"color : #444;\">#</span> Acerca de SIG Bétera</h1>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <h1 id=\"\" style=\"color : #673ab7;\"><span style=\"color : #444;\">#</span> Mapa</h1>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <h1 id=\"hazte-user\" style=\"color : #673ab7;\"><span style=\"color : #444;\">#</span> Hazte usuario</h1>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <h1 id=\"descargas\" style=\"color : #673ab7;\"><span style=\"color : #444;\">#</span> Descargas</h1>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <h1 id=\"noticias\" style=\"color : #673ab7;\"><span style=\"color : #444;\">#</span> Noticias</h1>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <h1 id=\"contacto\" style=\"color : #673ab7;\"><span style=\"color : #444;\">#</span> Contacto</h1>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n    </md-card-content>\r\n  </md-card>\r\n</div>"
 
 /***/ }),
 

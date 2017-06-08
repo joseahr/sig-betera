@@ -104,4 +104,5 @@
 
 <div id="app-body" class="container-router">
   <router-outlet></router-outlet>  
+  <button md-icon-button color="primary" *ngIf="showButtonScrollUp" (click)="scrollToY(0, 1000, 'easeInOutQuint')" style="position : fixed; bottom : 0.5em; right : 0.5em;"><md-icon>arrow_upward</md-icon></button>
 </div>
