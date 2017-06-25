@@ -1,0 +1,67 @@
+<loading-animate></loading-animate>
+<div [@routerTransition]="" class="admin-page-margin">
+  <button md-mini-fab (click)="goBack()" style="position : fixed; z-index: 2; left: 0.5em; bottom: 0.5em;">
+    <md-icon>arrow_back</md-icon>
+  </button>
+  <md-card style="margin : 8px; margin-top : 15px;">
+    <!--<div [style.background]="'url(' + userDetail.gravatar + ')'" class="user-avatar"></div>-->
+    <md-card-header>
+      <div md-card-avatar><img src="{{ userDetail?.gravatar }}" alt="" class="user-avatar"></div>
+      <md-card-title>{{userDetail?.name}}</md-card-title>
+      <md-card-subtitle>{{userDetail?.nombre}} {{userDetail?.apellidos}}</md-card-subtitle>
+    </md-card-header>
+    <div md-card-image
+      style="height : 100px; background-position-y : 350px; background: url('http://www.dival.es/sites/default/files/sala-prensa/images/Betera%20044.jpg'); background-size: cover;"
+    >
+    </div>
+    <md-card-content>
+      <md-tab-group>
+        <md-tab label="Grupos">
+          <md-list>
+            <h3 md-subheader>Gestionar grupos del usuario {{userDetail?.name}}</h3>
+            <md-select placeholder="Añadir grupo al usuario" [(ngModel)]="selectedGroupToAdd" style="margin : 20px 0px 20px 0px; width : 100%;">
+              <md-option *ngFor="let group of allNotUserGroups" [value]="group.id">{{ group.name }}</md-option>
+            </md-select>
+            <button md-button [disabled]="!selectedGroupToAdd" (click)="addGroup()" style="margin : 0 auto;">AÑADIR GRUPO</button>
+            <md-list-item *ngFor="let grupo of userDetail?.grupos">
+                <md-icon md-list-avatar>group</md-icon>
+                <h4 md-line>{{grupo.name}}</h4>
+                <button md-mini-fab (click)="deleteGroup(grupo.id)" style="position : absolute; right: 1em;"><md-icon>remove_circle</md-icon></button>
+            </md-list-item>
+          </md-list>
+        </md-tab>
+        <md-tab label="Mapas">
+          <md-list>
+            <h3 md-subheader>Gestionar mapas del usuario {{userDetail?.name}}</h3>
+            <md-select placeholder="Añadir mapa al usuario" [(ngModel)]="selectedMapToAdd" style="margin : 20px 0px 20px 0px; width : 100%;">
+              <md-option *ngFor="let map of userDetail?.not_assigned_maps" [value]="map.id">{{ map.name }}</md-option>
+            </md-select>
+            <button md-button [disabled]="!selectedMapToAdd" (click)="addUserMap()" style="margin : 0 auto;">AÑADIR MAPA</button>
+            <md-list-item *ngFor="let map of userDetail?.maps">
+                <md-icon md-list-avatar>group</md-icon>
+                <h4 md-line>{{map.name}}</h4>
+                <button md-mini-fab (click)="deleteUserMap(map)" style="position : absolute; right: 1em;"><md-icon>remove_circle</md-icon></button>
+            </md-list-item>
+          </md-list>
+        </md-tab>
+        <md-tab label="Permisos">
+          <md-list>
+            <h3 md-subheader>Gestionar permisos del usuario {{userDetail?.name}}</h3>
+            <md-list-item *ngFor="let layer of userDetail?.layers_rol;">
+                <md-icon md-list-avatar>group</md-icon>
+                <h4 md-line>#{{layer.id_layer}} {{layer.name}}</h4>
+                <div md-line>
+                  <md-select (change)="changeRolOfLayer($event, layer)" [ngModel]="layer.rol" placeholder="Permiso sobre la capa {{layer.name}}" style="margin : 20px 0px 20px 0px; width : 100%;">
+                    <md-option *ngFor="let rol of ['r', 'c', 'e', 'd']" [value]="rol">{{ rol }}</md-option>
+                  </md-select>
+                </div>
+            </md-list-item>
+          </md-list>
+        </md-tab>
+      </md-tab-group>
+    </md-card-content>
+    <md-card-actions>
+
+    </md-card-actions>
+  </md-card>
+</div>

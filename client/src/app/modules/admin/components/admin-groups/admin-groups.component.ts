@@ -71,7 +71,7 @@ export class AdminGroupsComponent implements OnInit {
 
   ngAfterViewInit(){
     let self = this;
-    this.datatableElement.dtInstance.then(dtInstance =>{
+    this.datatableElement.dtInstance.then( (dtInstance : any) =>{
       this.dtInstance = dtInstance;
       dtInstance.on('click', '.remove-group', function(){
         let row_dom = $(this).closest('tr');

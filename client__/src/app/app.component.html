@@ -1,0 +1,108 @@
+<loading-animate></loading-animate>
+<md-toolbar #toolbarMenu color="primary">
+  <img src="assets/escudo.png" alt="" class="logo-betera">
+  <span class="title">SIG Bétera</span>
+  <span class="spacer"></span>
+
+  <button md-icon-button (click)="toggleNavigation()">
+    <md-icon>menu</md-icon>
+  </button>
+  <button *ngIf="!authUser" md-icon-button [mdMenuTriggerFor]="menu">
+    <md-icon>more_vert</md-icon>
+  </button>
+
+
+  <!-- Menú usuario no logueado -->
+  <md-menu #menu="mdMenu">
+    <button md-menu-item *ngIf="!authUser" (click)="openLoginDialog()">
+      <md-icon>fingerprint</md-icon>
+      <span>Login</span>
+    </button>
+    <button md-menu-item (click)="openSignupDialog()">
+      <md-icon>accessibility</md-icon>
+      <span>Registrarse</span>
+    </button>
+    <button md-menu-item (click)="openForgotDialog()">
+      <md-icon>vpn_key</md-icon>
+      <span>¿Olvidaste credenciales?</span>
+    </button>
+  </md-menu>
+</md-toolbar>
+
+<div class="cd-overlay" (click)="toggleNavigation()"></div>
+<nav class="cd-nav-container" id="cd-nav">
+
+  <md-grid-list cols="1" rowHeight="50px">
+    <md-grid-tile
+        class="menu-header"
+        (click)="toggleNavigation()"
+        [colspan]="1"
+        [rowspan]="1"
+    >
+      <h3>Menú</h3>
+    </md-grid-tile>
+    <button md-icon-button (click)="toggleNavigation()" style="float:right; margin-right: 0.5em; margin-top: 0.5em;">
+      <md-icon>close</md-icon>
+    </button>
+  </md-grid-list>
+
+  <md-grid-list cols="8" rowHeight="45px" *ngIf="authUser">
+    <md-grid-tile
+        (click)="toggleNavigation()"
+        [colspan]="4"
+        [rowspan]="1"
+    >
+      <img style="height : 35px; border-radius: 20px; margin-left : 10px; margin-right: 10px;" src="{{authUser.gravatar}}">
+      {{authUser.nombre}} {{authUser.apellidos}}
+    </md-grid-tile>
+    <md-grid-tile
+        (click)="toggleNavigation()"
+        [colspan]="1"
+        [rowspan]="1"
+    >
+      <md-icon>assignment_ind</md-icon>
+    </md-grid-tile>
+    <md-grid-tile
+        (click)="toggleNavigation()"
+        [colspan]="1"
+        [rowspan]="1"
+    >
+      <md-icon>notifications</md-icon>
+    </md-grid-tile>
+    <md-grid-tile
+        (click)="toggleNavigation(); logout();"
+        [colspan]="1"
+        [rowspan]="1"
+    >
+      <md-icon>exit_to_app</md-icon>
+    </md-grid-tile>
+  </md-grid-list>
+
+  <md-grid-list cols="2" rowHeight="150px" class="navigation-grid">
+    <md-grid-tile
+        class="navigation-link"
+        (click)="toggleNavigation()"
+        *ngFor="let item of menuNav"
+        [colspan]="1"
+        [rowspan]="1"
+        [routerLink]="[item.link]" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: item.exact }"
+    >
+      <md-icon>{{item.icon}}</md-icon> {{item.title}}
+    </md-grid-tile>
+    <md-grid-tile
+        *ngIf="authUser && authUser.rol == 'admin'"
+        (click)="toggleNavigation()"
+        [colspan]="1"
+        [rowspan]="1"
+        [routerLink]="['admin']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"
+    >
+     <md-icon>dashboard</md-icon> ADMIN
+    </md-grid-tile>
+  </md-grid-list>
+
+</nav>
+
+<div id="app-body" class="container-router">
+  <router-outlet></router-outlet>  
+  <button md-icon-button color="primary" *ngIf="showButtonScrollUp" (click)="scrollToY(0, 1000, 'easeInOutQuint')" style="position : fixed; bottom : 0.5em; right : 0.5em;"><md-icon>arrow_upward</md-icon></button>
+</div>

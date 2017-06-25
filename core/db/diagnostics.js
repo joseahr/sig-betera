@@ -1,6 +1,6 @@
+"use strict";
 // In this example we are showing how to properly use pg-monitor to log
 // errors in a DEV and PROD environments.
-"use strict";
 // As an alternative for a PROD environment, instead of using pg-monitor
 // you could handle event 'error' within initialization options yourself,
 // which may be a little better performing, but lacks all the nice formatting

@@ -1,0 +1,149 @@
+.spacer {
+  -webkit-box-flex : 1;
+  -ms-flex : 1 1 auto;
+  flex : 1 1 auto;
+}
+
+md-toolbar {
+    height: 50px !important;
+    box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
+    position: relative;
+    z-index: 2;
+}
+
+md-toolbar button {
+  justify-content: space-around;
+  margin-left: 5px;
+}
+
+.logo-betera {
+  height: 100%;
+}
+
+title {
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,.3);
+}
+
+
+/*
+@media screen and (max-width: 480px) {
+  md-toolbar button {
+    visibility: hidden;
+  }
+
+}
+*/
+
+.container-router {
+  position : absolute;
+  top : 64px;
+  bottom : 0px;
+  left: 0px;
+  right: 0px;
+}
+
+@media (max-width:600px) and (orientation:portrait) {
+  .container-router {
+    position : absolute;
+    top : 56px;
+    bottom : 0px;
+    left: 0px;
+    right: 0px;
+  }
+}
+@media (max-width:960px) and (orientation:landscape) {
+  .container-router {
+    position : absolute;
+    top : 48px;
+    bottom : 0px;
+    left: 0px;
+    right: 0px;
+  }
+}
+
+
+.cd-nav-container {
+  z-index : 1002;
+  background: #fff;
+  overflow-y: scroll;
+  box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.75);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom : 0;
+  width: 80%;
+  transform: translateX(120%);
+  transition: transform 0.4s;
+}
+
+.cd-nav-container.is-visible {
+  transform: translateX(0);
+}
+
+.cd-nav-container header {
+  background: #f7f7f7;
+  padding: 10px;
+}
+
+.cd-nav-container header h3, 
+.cd-nav-container header button  {
+  display: inline-block;
+} 
+
+.cd-nav-container header h3 {
+  margin-left: 0.5em;
+}
+
+.cd-nav-container header button {
+  float : right;
+  margin: 0.5em;
+}
+
+#app-body, md-toolbar {
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+#app-body.scale-down, md-toolbar.scale-down {
+  transform: scale(0.2) rotate(-10deg) translateX(-50%) translateY(50%) ;
+}
+
+.cd-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cd-overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index : 1001;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.35);
+  visibility: hidden;
+  opacity: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: opacity 0.4s 0s, visibility 0s 0.4s;
+  -moz-transition: opacity 0.4s 0s, visibility 0s 0.4s;
+  transition: opacity 0.4s 0s, visibility 0s 0.4s;
+}
+
+.menu-header {
+  background: #fff;
+  box-shadow: 0px 2px 12px #000;
+}
+
+md-grid-tile:not(.active-link):not(.menu-header):hover {
+  background: rgba(0,0,0,0.125);
+  color : #673ab7;
+}
+
+md-grid-tile:not(.menu-header) {
+  cursor: pointer;
+}
+
+md-grid-list:not(.navigation-grid){
+  background: #f7f7f7;
+}

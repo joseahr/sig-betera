@@ -151,3 +151,7 @@ body {
 }
 
 
+md-dialog-container {
+    margin : 0px auto;
+}
+

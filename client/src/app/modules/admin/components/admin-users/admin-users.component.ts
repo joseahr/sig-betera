@@ -64,7 +64,7 @@ export class AdminUsersComponent implements OnInit {
 
   ngAfterViewInit(){
     let self = this;
-    this.datatableElement.dtInstance.then(dtInstance =>{
+    this.datatableElement.dtInstance.then( (dtInstance : any) =>{
       dtInstance.on('click', '.edit-user', function(){
         let row_dom = $(this).closest('tr');
         let row = dtInstance.row(row_dom).data();

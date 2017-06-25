@@ -4,124 +4,106 @@
   </video>
 </div>
 
-<div class="container-sections" [@routerTransition]="">
+<div class="container-sections" [@routerTransition]="" style="background: rgba(0,0,0,0);">
 
   <md-card style="text-align-last : left; background: #303030; line-height : 0.8; color : #fff; width : 80%; margin : 0px auto; margin-top : 5%; mix-blend-mode: multiply;">
-    <h1><md-icon style="color : #673ab7;">pin_drop</md-icon><br>SIG<br>Bétera<br><span style="color : #673ab7; font-size : 0.6em; float : left;">GEOPORTAL</span></h1>
+    <h1 style="line-height : 0.9">
+      <md-icon color="primary">pin_drop</md-icon><br>SIG<br>Bétera<br><span style="color : #673ab7; font-size : 0.6em; float : left;">GEOPORTAL</span>
+    </h1>
   </md-card>
 
 
   <md-card style="width : 80%; margin : 0px auto; margin-top : 10px; background: rgba(255,255,255,0.6);">
     <md-card-content>
-      <button md-icon-button color="primary"><md-icon>cloud_download</md-icon></button>
-      <button md-icon-button><md-icon>map</md-icon></button>
-      <button md-icon-button color="primary"><md-icon>fiber_new</md-icon></button>
-      <button md-icon-button><md-icon>account_box</md-icon></button>
-      <button md-icon-button color="primary"><md-icon>contact_mail</md-icon></button>
+      <button md-icon-button color="primary" (click)="scrollTo('#descargas', 1000)"><md-icon>cloud_download</md-icon></button>
+      <button md-icon-button (click)="scrollTo('#visit-map', 1000)"><md-icon>map</md-icon></button>
+      <button md-icon-button color="primary" (click)="scrollTo('#noticias', 1000)"><md-icon>fiber_new</md-icon></button>
+      <!--<button md-icon-button><md-icon>account_box</md-icon></button>-->
+      <a md-icon-button href="http://sig.betera.es/visor/ventanaContacto.php" target="__blank" color="primary"><md-icon>contact_mail</md-icon></a>
     </md-card-content>
   </md-card>
 
-  <button (click)="scrollTo('#home-sections-container', 1000)" md-icon-button style="background : #673ab7; margin-top : -20px;"><md-icon style="color : #fff;">arrow_downward</md-icon></button>
+  <button (click)="scrollTo('#info', 1000)" md-icon-button style="background : #673ab7; margin-top : -20px;"><md-icon style="color : #fff;">arrow_downward</md-icon></button>
 
-  <md-card id="home-sections-container" style="background: #fff; position : absolute; top : 100%; left : 0; right : 0;">
-    <md-card-content>
-      <h1 id="info" style="color : #673ab7;"><span style="color : #444;">#</span> Acerca de SIG Bétera</h1>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <h1 id="" style="color : #673ab7;"><span style="color : #444;">#</span> Mapa</h1>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <h1 id="hazte-user" style="color : #673ab7;"><span style="color : #444;">#</span> Hazte usuario</h1>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <h1 id="descargas" style="color : #673ab7;"><span style="color : #444;">#</span> Descargas</h1>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <h1 id="noticias" style="color : #673ab7;"><span style="color : #444;">#</span> Noticias</h1>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <h1 id="contacto" style="color : #673ab7;"><span style="color : #444;">#</span> Contacto</h1>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-    </md-card-content>
-  </md-card>
+  <div id="home-sections-container" style="position : absolute; top : 100%; left : 0; right : 0; padding-top : 10vh; background : rgba(255, 255, 255, .3)">
+    <md-card id="info" style="width : 80%; margin : 0px auto;">
+      <md-card-title  style="color : #673ab7;">¿Qué ofrece SIG Bétera?</md-card-title>
+      <img md-card-image src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Estaci%C3%B3n_de_B%C3%A9tera_03.JPG/1500px-Estaci%C3%B3n_de_B%C3%A9tera_03.JPG" alt="">
+      <md-card-content>
+        <ul style="text-align : left;">
+          <li>Diversidad de información geográfica</li>
+          <li>Visor Web y descargas</li>
+          <li>Noticias y actualidad</li>
+          <li>Notificaciones (Hazte usuario)</li>  
+        </ul> 
+      </md-card-content>
+    </md-card>
+
+    <md-card id="visit-map" style="width : 80%; margin : 0px auto; margin-top : 25vh;">
+      <md-card-title style="color : #673ab7;">Visita el mapa</md-card-title>
+      <img md-card-image src="assets/mapaSB.png" style="filter: invert(1) contrast(0.4);">
+      <md-card-content>
+        <p>Dispondrás de distintas funcionalidades para interactuar con la Información Geográfica</p>
+        <h4 color="primary">¡¡¿A qué esperas?!!</h4>
+      </md-card-content>
+      <md-card-actions>
+        <a color="primary" md-raised-button href="/#/map">Visitar el Mapa</a>
+      </md-card-actions>
+    </md-card>
+
+    <md-card id="descargas" style="width : 80%; margin : 0px auto; margin-top : 25vh;">
+      <md-card-title style="color : #673ab7;">Descargas</md-card-title>
+      <md-card-content>
+        <p>Disponemos de <a href="{{GEOSERVER_URL}}" target="_blank">numerosas capas</a> que puedes descargar en distintos formatos.</p>
+        <p>Puedes utilizar la siguiente utilidad para descargar desde aquí: </p>
+        <form style="margin-top : 10px;">
+          <md-select placeholder="Selecciona una capa" [(ngModel)]="selectedLayer" name="layerDownload" style="width : 80%">
+            <md-option *ngFor="let layer of layers | async" [value]="layer">
+              {{layer}}
+            </md-option>
+          </md-select>
+        </form>
+        <br>
+        <form style="margin-top : 10px;">
+          <md-select placeholder="Selecciona un formato" [(ngModel)]="selectedFormat" name="formatDownload" style="width : 80%">
+            <md-option *ngFor="let format of formats" [value]="format.mime">
+              {{format.name}}
+            </md-option>
+          </md-select>
+        </form>
+      </md-card-content>
+      <md-card-actions>
+        <button [disabled]="!seledtedLayer && !selectedFormat" md-raised-button (click)="dowloadFromGeoserver()" color="primary">Descargar</button>
+        <button [disabled]="!seledtedLayer && !selectedFormat" md-raised-button (click)="openMapBBOXDialog()" color="primary">Descargar (Por recuadro)</button>
+      </md-card-actions>
+    </md-card>
+
+    <md-card id="noticias" style="width : 80%; margin : 0px auto; margin-top : 25vh;">
+      <md-card-title style="color : #673ab7;">Noticias</md-card-title>
+      <md-card-content>
+        En mantenimiento...
+      </md-card-content>
+    </md-card>
+
+
+
+    <md-toolbar color="primary" style="position : relative !important; margin-top : 25vh;">
+      <span>Geoportal SIG Bétera</span>
+
+      <md-toolbar-row>
+        <a md-raised-button href="http://www.betera.es" target="__blank" style="color : #673ab7; margin: 2px;">Betera.es</a>
+        <a md-raised-button href="http://sig.betera.es/visor/noticias/Terminos_Condiciones.pdf" target="__blank" style="color : #673ab7; margin: 2px;">Términos y condiciones</a>
+        <a md-raised-button href="http://sig.betera.es/visor/ventanaRecomendaciones.php" target="__blank" style="color : #673ab7; margin: 2px;">Recomendaciones</a>
+        <a md-raised-button href="http://sig.betera.es/visor/ventanaFAQs.php" target="__blank" style="color : #673ab7; margin: 2px;">Preguntas Frecuentas</a>
+        <a md-raised-button href="http://sig.betera.es/visor/ventanaContacto.php" target="__blank" style="color : #673ab7; margin: 2px;">Contacto</a>
+
+      </md-toolbar-row>
+    </md-toolbar>
+    <md-toolbar style="position : relative !important; background : #4527a0; color : #fff; text-align : center;">
+      <span style="margin : 0px auto;">&copy; 2017 SIG Bétera</span>
+    </md-toolbar>
+
+
+
+  </div>
 </div>

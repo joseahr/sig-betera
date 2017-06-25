@@ -1,0 +1,12 @@
+<loading-animate></loading-animate>
+<div md-dialog-content>
+  <p>Escribe tu correo y te enviaremos los pasos necesarios para recuperar tu cuenta</p>
+  <md-input-container>
+    <input mdInput [(ngModel)]="email" placeholder="Correo electrónico" type="email">
+  </md-input-container>
+</div>
+
+<div md-dialog-actions>
+  <button md-button (click)="sendToken()">Enviar email</button>
+  <button md-button md-dialog-close="">Cancelar</button>
+</div>

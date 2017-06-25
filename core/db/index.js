@@ -1,5 +1,5 @@
-/// <reference path='../../typings/index.d.ts' />
 "use strict";
+/// <reference path='../../typings/index.d.ts' />
 Object.defineProperty(exports, "__esModule", { value: true });
 // Bluebird is the best promise library available today, and is the one recommended here:
 var promise = require("bluebird");

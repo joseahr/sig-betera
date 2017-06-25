@@ -1,0 +1,52 @@
+<loading-animate></loading-animate>
+<div [@routerTransition]="" class="admin-page-margin">
+  <md-card class="card-margin">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Añadir Capas</md-card-title>
+      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <h4>Añadir Capa</h4>
+      <md-select placeholder="Capa PostGIS" [(ngModel)]="selectedLayerToAdd" style="width : 100%;">
+        <md-option [disabled]="!layer.published" *ngFor="let layer of AllLayersNotInMap" [value]="layer.id">
+          {{layer.name}}
+        </md-option>
+      </md-select>
+      <h4>Añadir Capa Base</h4>
+      <md-select placeholder="Capas Base" [(ngModel)]="selectedBaseLayerToAdd" style="width : 100%;">
+        <md-option *ngFor="let layer of AllBaseLayersNotInMap" [value]="layer.id">
+          {{layer.name}}
+        </md-option>
+      </md-select>
+    </md-card-content>
+    <md-card-actions>
+      <button [disabled]="!selectedLayerToAdd" md-button (click)="addSelectedLayer()">AÑADIR CAPA SELECCIONADA</button>
+      <button [disabled]="!selectedBaseLayerToAdd" md-button (click)="addSelectedBaseLayer()">AÑADIR CAPA BASE SELECCIONADA</button>
+    </md-card-actions>
+  </md-card>
+  <md-card class="card-margin">
+    <md-card-header>
+      <div md-card-avatar></div>
+      <md-card-title>Alterar orden</md-card-title>
+      <md-card-subtitle>#{{map?.id}} {{map?.name}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <h4>Orden de las capas</h4>
+      <div *ngIf="map?.orden" [dragula]='"order"' [(dragulaModel)]="map.orden">
+        <md-card *ngFor="let capa of map?.orden; let i = index;" style="background : #f7f7f7; margin : 3px;">
+          <md-card-header>
+            <md-icon md-card-avatar [style.color]="getColor(capa)" style="cursor: pointer; padding:5px; border-radius : 25px; background: rgba(0,0,0,0.05);" md-list-avatar class="handle">layers</md-icon>
+            <md-card-title>#{{i}} {{capa.name}}</md-card-title>
+            <md-card-subtitle>ID Capa : {{capa.id_layer}}</md-card-subtitle>
+            <button md-mini-fab *ngIf="capa.layer_type == 'layer'" (click)="deleteLayerFromMap(capa.id_layer)" style="position : absolute; right: 1em;"><md-icon>remove_circle</md-icon></button>
+            <button md-mini-fab *ngIf="capa.layer_type == 'base'" (click)="deleteBaseLayerFromMap(capa.id_layer)" style="position : absolute; right: 1em;"><md-icon>remove_circle</md-icon></button>
+          </md-card-header>
+        </md-card>
+      </div>
+    </md-card-content>
+    <md-card-actions>
+      <button [disabled]="!hasChangedOrder" md-button (click)="saveOrder()">GUARDAR ORDEN</button>
+    </md-card-actions>
+  </md-card>
+</div>

@@ -1,0 +1,74 @@
+<loading-animate></loading-animate>
+<button
+  md-mini-fab class="burguer" 
+  [ngClass]="{'burguer-expanded': sidenav.opened }"
+  (click)="sidenav.opened ? sidenav.close() : sidenav.open();">
+  <md-icon>add</md-icon>
+</button>
+<md-sidenav-container [@routerTransition]="" class="example-container">
+  <md-sidenav #sidenav class="example-sidenav">
+
+    <button md-button class="list-button main" (click)="toggleTools()">
+      <md-icon>apps</md-icon>HERRAMIENTAS
+    </button>
+    <div [@collapsed]="toolsControlVisible">
+      <button md-button class="list-button" (click)="toggleProfileControl()" [style.background-color]="getBackgroundColor(profileControl.active)">
+        <md-icon>terrain</md-icon>PERFIL
+      </button>
+      <button md-button (click)="toggleSearchControl(1)" class="list-button" [style.background-color]="getBackgroundColor(searchControl.active && searchControl.activeInteraction == 1)">
+        <md-icon>search</md-icon>BÚSQUEDA POR PUNTO
+      </button>
+      <button md-button (click)="toggleSearchControl(2)" class="list-button" [style.background-color]="getBackgroundColor(searchControl.active && searchControl.activeInteraction == 2)">
+        <md-icon>search</md-icon>BÚSQUEDA POR ENCUADRE
+      </button>
+      <button md-button (click)="toggleMeasureControl(1)" class="list-button" [style.background-color]="getBackgroundColor(measureControl.active && measureControl.activeInteraction == 1)">
+        <md-icon>trending_flat</md-icon>MEDIR PERÍMETRO
+      </button>
+      <button md-button (click)="toggleMeasureControl(2)" class="list-button" [style.background-color]="getBackgroundColor(measureControl.active && measureControl.activeInteraction == 2)">
+        <md-icon>branding_watermark</md-icon>MEDIR ÁREA
+      </button>
+      <button md-button [disabled]="editLayerControl.getEditableLayers().length <= 0" (click)="toggleEditLayers()" class="list-button" [style.background-color]="getBackgroundColor(editLayerControl.controlActive)">
+        <md-icon>mode_edit</md-icon>EDITAR CAPAS
+      </button>
+    </div>
+
+    <button md-button class="list-button main" (click)="toggleMaps()">
+      <md-icon>layers</md-icon>MAPAS
+    </button>
+    <!-- control de capas -->
+    <md-select [@collapsed]="mapsControlVisible" placeholder="Mapa actual" (change)="onChangeMap()" [(ngModel)]="actualMap" style="margin-top : 20px; margin-left : 2.5%; width : 95%;">
+      <md-option *ngFor="let map of accesibleMaps" [value]="map.id">{{ map.name }}</md-option>
+    </md-select>
+    <app-layer-switcher [@collapsed]="mapsControlVisible" [visibility]="mapsControlVisible" [map]="map" (layersChanged)="updateMapAndOverview()"></app-layer-switcher>
+    <!-- END control de capas -->
+    <button md-button class="list-button main" (click)="toggleOverview()">
+      <md-icon>map</md-icon>MINIATURA
+    </button>
+    <div [@collapsed]="overviewControlVisible" #overviewMap class="overview-map"></div>
+    <button md-button class="list-button main" (click)="exportMap($event)" download="mapa.pdf">
+      <md-icon>file_download</md-icon>DESCARGAR MAPA
+    </button>
+
+    <button md-button class="list-button main" (click)="openWMSDialog()">
+      <md-icon>map</md-icon>AÑADIR WMS
+    </button>
+
+  </md-sidenav>
+  <div id="map" #mapEl class="example-sidenav-content"
+    [ngClass]="{ 'map-expanded': sidenav.opened }" 
+  >    
+  </div>
+
+  <app-map-profile
+    [map]="map"
+  ></app-map-profile>
+
+  <app-search [map]="map"></app-search>
+
+  <app-measure [map]="map"></app-measure>
+
+  <app-mouse-position [map]="map"></app-mouse-position>
+
+  <app-edit-layer [map]="map"></app-edit-layer>
+
+</md-sidenav-container>

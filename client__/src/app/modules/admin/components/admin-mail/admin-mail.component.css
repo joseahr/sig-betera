@@ -1,0 +1,12 @@
+.user-avatar {
+    float: left;
+    box-sizing: border-box;
+    height: 40px;
+    width: 40px;
+    border-radius: 24px;
+    background-size: cover !important;
+    display: flex;
+    flex-direction: row;
+    margin: -8px 0 16px;
+}
+

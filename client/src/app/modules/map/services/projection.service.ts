@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import * as ol from 'openlayers';
-import * as proj4 from 'proj4';
+import * as proj4x from 'proj4';
+let proj4 = (proj4x as any).default
 
 ol.proj.setProj4(proj4);
 
@@ -32,6 +33,7 @@ export class ProjectionService {
         let proj = this.defaultProjections.find(p => p.code == `${code}`);
         if(!proj){ return; }
         
+        proj4.defs
         proj4.defs(`EPSG:${code}`, proj.proj4);
         let projection = ol.proj.get(`EPSG:${code}`);
 

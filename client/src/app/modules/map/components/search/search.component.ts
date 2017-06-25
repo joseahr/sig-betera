@@ -293,7 +293,7 @@ export class SearchComponentDialog {
   }
 
   addRowClickListener(){
-    this.dtElement.dtInstance.then( dtInstance =>{
+    this.dtElement.dtInstance.then( (dtInstance : any) =>{
       let table = this.table.nativeElement;
       let tabIndex = this.tabIndex;
       let data = this.found[tabIndex];
@@ -357,7 +357,7 @@ export class SearchComponentDialog {
     };
     let indexData = Object.keys(features[0].properties).indexOf('data_urls');
 
-    return {
+    return <any>{
       scrollX : true,
       scrollY : false,
       scrollCollapse : true,

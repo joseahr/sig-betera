@@ -14,7 +14,7 @@ import {
   animate
 } from '@angular/core';
 import { DragulaService, DragulaDirective } from 'ng2-dragula';
-import { Map } from 'openlayers';
+import * as ol from 'openlayers';
 
 @Component({
   selector: 'app-layer-switcher',
@@ -43,7 +43,7 @@ export class LayerSwitcherComponent implements OnInit {
   maxLayerNameLength = 40;
 
   @ViewChild('mapsDetailsContainer') mapsDetailsContainer: ElementRef;
-  @Input('map') map : Map;
+  @Input('map') map : ol.Map;
   @Output('layersChanged') emmiter : EventEmitter<any> = new EventEmitter();
   @Input('visibility') collapsed;
 
